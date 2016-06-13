@@ -1,0 +1,96 @@
+<link rel="stylesheet" type="text/css" href="../../css/cita.css">
+<div ng-init="initTallerCita()">
+    <div class="headTitleTallerCita">
+        <span class="title"> Consulta de Citas<span class="subtitle">Call Center / Taller</span></span>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">Citas</a></li>
+                    <!-- <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">Citas Rechazadas</a></li> -->
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <div class="col-lg-3" id="calendario">
+                                    <div class="form-group" id="calendar">
+                                        <div class="input-group date">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" class="form-control" ng-model="fecha" ng-change="busquedaCita(fecha)" value={{fecha}}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                                <table class="table table-striped table-bordered table-hover dataTableCitaTaller">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Taller</th>
+                                            <th>Dirección Taller</th>
+                                            <th># Eco</th>
+                                            <th>Marca - Modelo</th>
+                                            <th>Trabajo</th>
+                                            <th>Observaciones</th>
+                                            <th>Estatus</th>
+                                            <th>Agendó</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="cita in listaCitas">
+                                            <td>{{ cita.Fecha | date:'dd-MM-yyyy HH:mm'}} </td>
+                                            <td>{{ cita.razonSocial }}</td>
+                                            <td>{{ cita.direccion }}</td>
+                                            <td>{{ cita.numEconomico }}</td>
+                                            <td>{{ cita.modeloMarca }}</td>
+                                            <td>{{ cita.trabajo }}</td>
+                                            <td>{{ cita.observacion }}</td>
+                                            <td>{{ cita.estatus }}</td>
+                                            <td>{{ cita.nombreCompleto }} </td>
+                                            <td>
+                                                <button ng-hide="cita.idEstatus == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" ng-disabled="cita.idTrabajo != null" class="btn btn-success" type="button" data-toggle="tooltip" tooltip="Cargar Comprobante de Recepción" id="btnCotizar" tooltip-placement="top" ng-click="formatoRecepcion(cita)">
+                                                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                                                </button>
+                                                <button ng-hide="cita.idEstatus == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" ng-disabled="cita.idTrabajo == null" class="btn btn-info" type="button" data-toggle="tooltip" tooltip="Cotizar" id="btnCotizar" tooltip-placement="top" ng-click="nuevaCotizacion(cita)">
+                                                    <span class="glyphicon glyphicon-usd"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            Citas Rechazadas
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+    </div>
+</div>
+<div id="evidencia" class="modal inmodal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cargar Comprobante de Recepción</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive m-t" style="margin-left:10%">
+                    <iframe src="/AngularJS/Templates/uploader.html" width="680px" height="380px" frameborder="0" id="uploader" scrolling="no" ></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="recepcion()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
