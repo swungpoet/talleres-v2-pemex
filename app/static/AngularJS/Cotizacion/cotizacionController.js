@@ -482,7 +482,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         cotizacionRepository.busquedaServicioDetalle(idCita)
             .then(function (result) {
                 $scope.arrayItem = result.data;
-                $scope.arrayCambios = $scope.arrayItemarrayItem.slice();
+                $scope.arrayCambios = $scope.arrayItem.slice();
                 //$scope.importe = calcularImporte();
                 $scope.total = calculaTotalEditar();
                 $scope.sub = calcularSubtotal();
