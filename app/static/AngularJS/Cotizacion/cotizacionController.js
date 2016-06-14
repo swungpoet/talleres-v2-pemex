@@ -178,7 +178,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     importe: pieza.precio * 1,
                     idTipoElemento: pieza.idTipoElemento,
                     valorIva: pieza.valorIva,
-                    idEstatus: 8
+                    idEstatus: 8,
+                    idNivelAutorizacion: pieza.idNivel
                 });
                 $scope.sub = calcularSubtotal();
                 $scope.iva = calcularIva();
@@ -584,22 +585,5 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             });
         });
         return $scope.filesName;
-    }
-
-    //Insertar evidencia
-    var insertEvidencia = function (idCotizacion) {
-        if ($scope.filesName != null) {
-            $scope.filesName.forEach(function (item, i) {
-                var ext = obtenerExtArchivo(item.nombre);
-                var tipoArchivo = obtenerTipoArchivo(ext);
-                cotizacionRepository.insertEvidencia(2, tipoArchivo, $scope.userData.idUsuario,
-                    idCotizacion, item.nombre, 1, 0).then(function (result) {
-                    if (result.data[0].idEvidencia > 0)
-                        alertFactory.success('Evidencias insertadas correctamente');
-                }, function (error) {
-                    alertFactory.error('Error');
-                });
-            });
-        }
     }
 });

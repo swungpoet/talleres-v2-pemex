@@ -66,95 +66,13 @@ var storage = multer.diskStorage({
         }
     },
     filename: function (req, file, cb) {
-        //var dirname = 'C:/Produccion/Talleres/talleres-v2/app';
-        /*var dirname = 'C:/Desarrollo/talleres-v2/app';
-        var idTrabajo = req.body.idTrabajo;
-        var idCotizacion = req.body.idCotizacion;
-        var extensionFile = obtenerExtArchivo(file.originalname);
-        var ruta = dirname + '/static/uploads/files/' + idTrabajo + '/documentos';*/
-
         cb(null, file.originalname);
-        /*if (req.body.idCategoria == '2') {
-            if (req.body.idNombreEspecial == '1') {
-                //var consecutivo = obtieneConsecutivo(ruta);
-                cb(null, 'ComprobanteRecepcion' + req.consecutivo + extensionFile);
-                //cb(null, file.originalname);
-            }
-            if (req.body.idNombreEspecial == '2') {
-                cb(null, 'HojaCalidad' + extensionFile);
-            }
-        /* var consecutivo = obtieneConsecutivo(ruta);
-         cb(null, 'ComprobanteRecepcion' + consecutivo + extensionFile);*/
-        //if (req.body.idCategoria == '2') {
-
-        //if (req.body.idNombreEspecial == '1') {
-        /* var consecutivo = obtieneConsecutivo('C:/Desarrollo/talleres-v2/app/static/uploads/files/44/documentos');
-            cb(null, 'ComprobanteRecepcion' + consecutivo + extensionFile);
-            cb(null, file.originalname);
-        //}
-        /*if (req.body.idNombreEspecial == '2') {
-            cb(null, 'HojaCalidad' + extensionFile);
-        }*/
-
-        /*} else {
-            cb(null, file.originalname);
-        }*/
     }
 });
 
 var upload = multer({
     storage: storage//console.log("File name : "+ file.name +"\n"+ "FilePath: "+ file.path)
 });
-
-//Método para la validación de terminación de subida de archivos
-/*Cotizacion.prototype.post_uploadfiles = function(req,res){
-	//upload(req,res,function(err) {
-		console.log(req.body);
-		console.log(req.files);
-		//if(err) {console.log(res.finished);
-			//return res.end("Error uploading file.");
-		//}
-		res.end("File is uploaded");
-        console.log(res.finished);
-	//});
-};*/
-
-//Método para insertar evidencia
-/*Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
-    //Objeto que almacena la respuesta
-    var object = {};
-    //Referencia a la clase para callback
-    var self = this;
-    
-    res.end("File is uploaded");
-//    if (req.body.vTrabajo === "1") {
-//        sIdProcesoEvidencia = req.body.idTrabajo;
-//    } else {
-//        sIdProcesoEvidencia = req.body.idCotizacion;
-//    }
-    var params = [];
-    
-    var arrayEvidencia = [];
-    for (var i = 0; i < req.files.length; i++) {
-        arrayEvidencia.push({
-            idTipoEvidencia: req.body.idTipoEvidencia,
-            idTipoArchivo: 2,
-            idUsuario: req.body.idUsuario,
-            idProcesoEvidencia: 63,
-            idCategoria: req.body.idCategoria,
-            nombreArchivo: req.files[i].filename,
-            idNombreEspecial: req.body.idNombreEspecial
-        });
-    }
-    
-    this.model.evidencia(arrayEvidencia, function (error, result) {
-    //Callback
-        object.error = error;
-        object.result = result;
-
-        //self.view.expositor(res, object);
-    });
-}*/
 
 //Obtener el tipo de archivo
 var obtenerTipoArchivo = function (ext) {

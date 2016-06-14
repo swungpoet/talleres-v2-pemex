@@ -27,16 +27,15 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     var data = {};
     // if (req.query.noReporte, ...) { Validacion de campos
 		    data = {
-		        noReporte: req.query.noReporte,
-						solpe: req.query.solpe,
-		        ordenSurtimiento: req.query.ordenSurtimiento,
-		        montoOS: req.query.montoOS,
-		        pedidoAsociado: req.query.pedidoAsociado,
-
-            nombreEmisor: req.query.nombreEmisor,
-		        nombreProveedor: req.query.nombreProveedor,
-		        puestoProveedor: req.query.puestoProveedor,
-		        fecha: new Date()
+                    noReporte: req.query.noReporte,
+                    solpe: req.query.solpe,
+                    ordenSurtimiento: req.query.ordenSurtimiento,
+                    montoOS: req.query.montoOS,
+                    pedidoAsociado: req.query.pedidoAsociado,
+                    nombreEmisor: req.query.nombreEmisor,
+                    nombreProveedor: req.query.nombreProveedor,
+                    puestoProveedor: req.query.puestoProveedor,
+                    fecha: new Date()
 		    }
 
 		    //this.model.query('NOMBRE DEL_SP', params, function(error, result) { Se obtinen los datos asociados
