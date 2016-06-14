@@ -217,7 +217,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
        idCategoria = contentForm.document.getElementById("idCategoria");
        idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
        idTrabajoEdit.value = $scope.idTrabajo;
-       vTrabajo.value = "1";
        idTipoEvidencia.value = 1;
        idCategoria.value = 2;
        idNombreEspecial.value = 2;

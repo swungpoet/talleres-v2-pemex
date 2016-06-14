@@ -81,7 +81,7 @@
                                     <td>{{piezas.cantidad}}</td>
                                     <td>{{piezas.precio | currency}}</td>
                                     <td>{{(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100))) | currency}}</td>
-                                     <td>{{((piezas.cantidad * piezas.precio) +(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100)))) | currency}}</td>   
+                                    <td>{{((piezas.cantidad * piezas.precio) +(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100)))) | currency}}</td>
                                     <td>
                                         <button class="btn btn-danger" type="button" id="btnCotizar" ng-click="quitarPieza(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Quitar">
                                             <span class="glyphicon glyphicon-remove"></span>
@@ -125,11 +125,11 @@
     </div>
     <div class="col-md-6">
         <textarea class="form-control" id="observaciones" ng-model="observaciones" placeholder="Observaciones"></textarea>
-        <button ng-show="estado==1" type="button" class="btn btn-info buttonEnviar" ng-click="enviarAutorizacion(observaciones)" data-toggle="tooltip" tooltip-placement="top" tooltip="Enviar Autorización">
+        <button id="btnEnviaCotizacion" ng-show="estado==1" type="button" class="ladda-button ladda-button-demo btn btn-primary buttonEnviar" data-toggle="tooltip" tooltip-placement="top" tooltip="Enviar Autorización">
             <span class="glyphicon glyphicon-saved"></span> Guardar Cotización
         </button>
         <button id="btnUpdateCotizacion" class="ladda-button ladda-button-demo btn btn-primary buttonEnviar" data-style="expand-right" ng-show="estado==2">Actualizar Cotización</button>
-        <button ng-show="estado==3" type="button" data-toggle="tooltip" tooltip-placement="top" tooltip="Guardar Cotización" class="btn btn-info buttonEnviar" ng-click="enviarAutorizacionOrden(observaciones)"> Guardar Cotización
+        <button id="btnNuevaCotizacion" ng-show="estado==3" type="button" data-toggle="tooltip" tooltip-placement="top" tooltip="Guardar Cotización" class="ladda-button ladda-button-demo btn btn-primary buttonEnviar"> Guardar Cotización
             <span class="glyphicon glyphicon-floppy-saved"></span>
         </button>
     </div>
