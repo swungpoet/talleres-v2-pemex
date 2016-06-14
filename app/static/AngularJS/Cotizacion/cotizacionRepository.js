@@ -4,19 +4,22 @@ var ruta = global_settings.uploadPath;
 
 registrationModule.factory('cotizacionRepository', function ($http) {
     return {
-        buscarPieza: function(idTaller,nombrePieza){
+        buscarPieza: function (idTaller, nombrePieza) {
             return $http({
                 url: searchUrl + 'buscarPieza',
                 method: "GET",
-                params: {idTaller:idTaller,nombrePieza:nombrePieza},
+                params: {
+                    idTaller: idTaller,
+                    nombrePieza: nombrePieza
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
-        },   
-        insertCotizacionMaestro: function(idCita,idUsuario,observaciones,idUnidad){
+        },
+        insertCotizacionMaestro: function (idCita, idUsuario, observaciones, idUnidad) {
             var msgObj = {
-                idCita: idCita,  
+                idCita: idCita,
                 idUsuario: idUsuario,
                 observaciones: observaciones,
                 idUnidad: idUnidad
@@ -26,13 +29,13 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 method: "POST",
                 data: msgObj,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        insertCotizacionDetalle: function(idCotizacion,idTipoElemento,idElemento,precio,cantidad, idNivelAutorizacion){
+        insertCotizacionDetalle: function (idCotizacion, idTipoElemento, idElemento, precio, cantidad, idEstatus, idNivelAutorizacion) {
             var msgObj = {
-                idCotizacion: idCotizacion,  
+                idCotizacion: idCotizacion,
                 idTipoElemento: idTipoElemento,
                 idElemento: idElemento,
                 precio: precio,
@@ -44,13 +47,13 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 method: "POST",
                 data: msgObj,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        insertEvidencia: function(idTipoEvidencia,idTipoArchivo,idUsuario,idProcesoEvidencia,nombreArchivo,idCategoria,idNombreEspecial){
+        insertEvidencia: function (idTipoEvidencia, idTipoArchivo, idUsuario, idProcesoEvidencia, nombreArchivo, idCategoria, idNombreEspecial) {
             var msgObj = {
-                idTipoEvidencia: idTipoEvidencia,  
+                idTipoEvidencia: idTipoEvidencia,
                 idTipoArchivo: idTipoArchivo,
                 idUsuario: idUsuario,
                 idProcesoEvidencia: idProcesoEvidencia,
@@ -63,23 +66,26 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 method: "POST",
                 data: msgObj,
                 headers: {
-                'Content-Type': 'application/json'
-                }
-            });
-        },  
-        editarCotizacion: function(idCotizacion,idTaller){
-            return $http({
-                url: searchUrl + 'detail',
-                method: "GET",
-                params: {idCotizacion:idCotizacion,idTaller:idTaller},
-                headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        updateCotizacion: function(idCotizacion,idTipoElemento,idElemento,precio,cantidad,observaciones,idEstatus, idTipo){
+        editarCotizacion: function (idCotizacion, idTaller) {
+            return $http({
+                url: searchUrl + 'detail',
+                method: "GET",
+                params: {
+                    idCotizacion: idCotizacion,
+                    idTaller: idTaller
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        updateCotizacion: function (idCotizacion, idTipoElemento, idElemento, precio, cantidad, observaciones, idEstatus, idTipo) {
             var msgObj = {
-                idCotizacion: idCotizacion,  
+                idCotizacion: idCotizacion,
                 idTipoElemento: idTipoElemento,
                 idElemento: idElemento,
                 precio: precio,
@@ -93,23 +99,25 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 method: "POST",
                 data: msgObj,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        busquedaServicioDetalle: function(idCita){
+        busquedaServicioDetalle: function (idCita) {
             return $http({
                 url: searchUrl + 'servicioDetalle',
                 method: "GET",
-                params: {idCita:idCita},
+                params: {
+                    idCita: idCita
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
-        },        
-        datosUnidad: function(idCotizacion,idTrabajo){
+        },
+        datosUnidad: function (idCotizacion, idTrabajo) {
             var msgObj = {
-                idCotizacion: idCotizacion,  
+                idCotizacion: idCotizacion,
                 idTrabajo: idTrabajo
             }
             return $http({
@@ -117,7 +125,7 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 method: "GET",
                 params: msgObj,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         }
