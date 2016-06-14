@@ -30,13 +30,14 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 }
             });
         },
-        insertCotizacionDetalle: function(idCotizacion,idTipoElemento,idElemento,precio,cantidad){
+        insertCotizacionDetalle: function(idCotizacion,idTipoElemento,idElemento,precio,cantidad, idNivelAutorizacion){
             var msgObj = {
                 idCotizacion: idCotizacion,  
                 idTipoElemento: idTipoElemento,
                 idElemento: idElemento,
                 precio: precio,
-                cantidad: cantidad
+                cantidad: cantidad,
+                idNivelAutorizacion: idNivelAutorizacion
             }
             return $http({
                 url: searchUrl + 'cotizacionDetalle',

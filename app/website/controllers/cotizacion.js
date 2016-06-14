@@ -35,32 +35,32 @@ var storage = multer.diskStorage({
         var dirname = 'C:/Desarrollo/talleres-v2/app/static/uploads/files/';
         var idTrabajo = req.body.idTrabajo;
         var idCotizacion = req.body.idCotizacion;
-        
+
         if (idCotizacion == '') {
-            if (!fs.existsSync(dirname + idTrabajo)){
+            if (!fs.existsSync(dirname + idTrabajo)) {
                 fs.mkdirSync(dirname + idTrabajo);
                 fs.mkdirSync(dirname + idTrabajo + '/multimedia');
                 fs.mkdirSync(dirname + idTrabajo + '/documentos');
-            } 
-            
+            }
+
             if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
-                   cb(null, dirname + idTrabajo + '/multimedia')              
-            } else{
+                cb(null, dirname + idTrabajo + '/multimedia')
+            } else {
                 cb(null, dirname + idTrabajo + '/documentos')
             }
-        } else{
-            if (!fs.existsSync(dirname + idTrabajo)){
+        } else {
+            if (!fs.existsSync(dirname + idTrabajo)) {
                 fs.mkdirSync(dirname + idTrabajo);
-            } 
-            if (!fs.existsSync(dirname + idTrabajo + '/' + idCotizacion)){
+            }
+            if (!fs.existsSync(dirname + idTrabajo + '/' + idCotizacion)) {
                 fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion);
                 fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion + '/multimedia');
                 fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion + '/documentos');
-            } 
-                
+            }
+
             if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
-                   cb(null, dirname + idTrabajo + '/' + idCotizacion + '/multimedia')              
-            } else{
+                cb(null, dirname + idTrabajo + '/' + idCotizacion + '/multimedia')
+            } else {
                 cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
             }
         }
@@ -71,7 +71,7 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({
-    storage: storage//console.log("File name : "+ file.name +"\n"+ "FilePath: "+ file.path)
+    storage: storage //console.log("File name : "+ file.name +"\n"+ "FilePath: "+ file.path)
 });
 
 //Obtener el tipo de archivo
@@ -91,7 +91,7 @@ var obtenerTipoArchivo = function (ext) {
 
 //Se obtiene la extensión del archivo
 var obtenerExtArchivo = function (file) {
-    return '.'+file.split('.').pop();
+    return '.' + file.split('.').pop();
 }
 
 var obtieneConsecutivo = function (ruta) {
@@ -214,6 +214,11 @@ Cotizacion.prototype.post_cotizacionDetalle = function (req, res, next) {
         {
             name: 'cantidad',
             value: req.body.cantidad,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idNivelAutorizacion',
+            value: req.body.idNivelAutorizacion,
             type: self.model.types.DECIMAL
         }];
 
@@ -481,7 +486,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
         var nuevoNombre = '';
         var consecutivoDocs = 0;
         var consecutivoImgs = 0;
-        
+
         //obtiene el número total por tipo de archivo
         for (var i = 0; i < req.files.length; i++) {
             var ext = obtenerExtArchivo(req.files[i].originalname);
@@ -493,7 +498,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 countImgs++;
             }
         }
-        
+
         //obtiene el número de documentos para renombrar
         if ((countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/') - countDocs) === 0) {
             consecutivoDocs = 1;
@@ -502,7 +507,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             consecutivoDocs = (countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/') + 1) - countDocs;
             console.log(consecutivoDocs);
         }
-        
+
         //obtiene el número de imágenes para renombrar
         if ((countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/multimedia/') - countImgs) === 0) {
             consecutivoImgs = 1;
@@ -527,7 +532,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     nuevoNombre = 'Adenda';
                 }
             }
-            
+
             //tipo archivo documento
             if (idTipoArchivo == 1) {
                 fs.rename('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/' + req.files[i].originalname, 'C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/' + nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {

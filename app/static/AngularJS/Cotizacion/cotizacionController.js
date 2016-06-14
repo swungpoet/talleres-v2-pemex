@@ -179,7 +179,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     idTipoElemento: pieza.idTipoElemento,
                     valorIva: pieza.valorIva,
                     idEstatus: 8,
-                    idNivelAutorizacion: pieza.idNivel
+                    idNivelAutorizacion: pieza.idNivelAutorizacion
                 });
                 $scope.sub = calcularSubtotal();
                 $scope.iva = calcularIva();
@@ -198,7 +198,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 importe: pieza.precio * 1,
                 idTipoElemento: pieza.idTipoElemento,
                 valorIva: pieza.valorIva,
-                idEstatus: 8
+                idEstatus: 8,
+                idNivelAutorizacion: pieza.idNivelAutorizacion
             });
             $scope.sub = calcularSubtotal();
             $scope.iva = calcularIva();
@@ -316,7 +317,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             item.idItem,
                             item.precio,
                             item.cantidad,
-                            item.idEstatus)
+                            item.idEstatus,
+                            item.idNivelAutorizacion)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
                         }, function (error) {
@@ -516,7 +518,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             item.idItem,
                             item.precio,
                             item.cantidad,
-                            item.idEstatus)
+                            item.idEstatus,
+                            item.idNivelAutorizacion)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
                         }, function (error) {
