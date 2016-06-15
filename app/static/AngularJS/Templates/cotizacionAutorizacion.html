@@ -59,6 +59,7 @@
                                     <th>Precio Unitario</th>
                                     <th>I.V.A</th>
                                     <th>Precio Total</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,6 +73,10 @@
                                     <td>{{ articulo.precio | currency }}</td>
                                     <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
                                     <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
+                                    <td>
+                                        <button class="btn btn-primary" ng-click="Autorizar(comentario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left"><i class="fa fa-check"></i></button>
+                                        <button class="btn btn-danger" ng-click="Rechazar(comentario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left"><i class="fa fa-times"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
