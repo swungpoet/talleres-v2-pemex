@@ -74,8 +74,8 @@
                                     <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
                                     <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
                                     <td>
-                                        <button class="btn btn-primary" ng-click="AutorizarItemA(articulo.idDetalleAutorizacion, articulo.idItem)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left"><i class="fa fa-check"></i></button>
-                                        <button class="btn btn-danger" ng-click="AutorizarItemR()" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left"><i class="fa fa-times"></i></button>
+                                        <button class="btn btn-primary" ng-click="AutorizarItemA(articulo.idDetalleAutorizacion, articulo.idItem)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador"><i class="fa fa-check"></i></button>
+                                        <button class="btn btn-danger" ng-click="AutorizarItemR()" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador"><i class="fa fa-times"></i></button>
 
 <!-- <button class="btn btn-primary" type="button" id="btnEnviar" ng-click="Detalle(cotizacion.idCotizacion, cotizacion.idTaller)">
                                                 <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" data-toggle="modal"></span>
@@ -107,9 +107,9 @@
             </div>
         </div>
         <div class="text-right">
-            <textarea class="well m-t form-control" rows="2" cols="45" maxlength="300" ng-model="comentario" placeholder="Comentarios..." ng-hide="userData.idTipoUsuario == 3"></textarea>
+            <!--<textarea class="well m-t form-control" rows="2" cols="45" maxlength="300" ng-model="comentario" placeholder="Comentarios..." ng-hide="userData.idTipoUsuario == 3"></textarea>
             <button class="btn btn-primary" ng-click="Autorizar(comentario)" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-check"></i> Autorizar</button>
-            <button class="btn btn-danger" ng-click="Rechazar(comentario)" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-times"></i> Rechazar</button>
+            <button class="btn btn-danger" ng-click="Rechazar(comentario)" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-times"></i> Rechazar</button>-->
             <button class="btn btn-success" ng-click="Editar()"><i class="fa fa-edit"></i> Editar</button>
         </div>
     </div>
