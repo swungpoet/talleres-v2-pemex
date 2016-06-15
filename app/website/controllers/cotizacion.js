@@ -523,7 +523,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             var idTipoArchivo = obtenerTipoArchivo(ext);
 
             if (req.body.idNombreEspecial == 1) nuevoNombre = 'ComprobanteRecepcion';
-            if (req.body.idNombreEspecial == 2) nuevoNombre = 'HojaCalidad';
+            if (req.body.idNombreEspecial == 2) nuevoNombre = 'TranferenciaResponsabilidad';
             if (req.body.idNombreEspecial == 3) nuevoNombre = 'Factura';
             if (req.body.idNombreEspecial == 4) {
                 if (ext == '.xml') {
@@ -532,6 +532,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     nuevoNombre = 'Adenda';
                 }
             }
+            if (req.body.idNombreEspecial == 5) nuevoNombre = 'CertificadoConformidad';
 
             //tipo archivo documento
             if (idTipoArchivo == 1) {

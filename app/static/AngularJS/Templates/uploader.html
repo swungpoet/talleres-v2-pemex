@@ -57,10 +57,11 @@
                     
                     this.on("complete", function(file) {
                         successUploaded();
-                        setTimeout(function(){
+                        myDropzone.removeFile(file);
+                        /*setTimeout(function(){
                             myDropzone.removeFile(file);
                             window.top.location.href = "/cotizacionconsulta"; 
-                        },2000);
+                        },2000);*/
                     });
 		        }
 		    });

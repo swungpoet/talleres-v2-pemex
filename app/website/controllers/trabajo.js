@@ -74,10 +74,11 @@ Trabajo.prototype.post_updtrabajoterminado = function(req, res, next){
 	//Referencia a la clase para callback
 	var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT},
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT},
                   {name: 'observacion', value: req.body.observacion, type: self.model.types.STRING}];
 	
-	this.model.post('UPD_TERMINA_TRABAJO_SP', params, function (error, result) {
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
         //Callback
         self.view.expositor(res, {
             error: error,
@@ -86,14 +87,32 @@ Trabajo.prototype.post_updtrabajoterminado = function(req, res, next){
     });
 }
 
-//realiza la actualización del trabajo a hojaCalidad
-Trabajo.prototype.post_updtrabajohojacalidad = function(req, res, next){
+//realiza la actualización del trabajo a CertificadoGenerado
+Trabajo.prototype.post_updtrabajocertificadogenerado = function(req, res, next){
 	//Referencia a la clase para callback
 	var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
 	
-	this.model.post('UPD_TRABAJO_HOJACALIDAD_SP', params, function (error, result) {
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//realiza la actualización del trabajo a tranferencia de responsabilidad
+Trabajo.prototype.post_updtrabajotransfreponsabilidad = function(req, res, next){
+	//Referencia a la clase para callback
+	var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+	
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
         //Callback
         self.view.expositor(res, {
             error: error,
@@ -107,9 +126,10 @@ Trabajo.prototype.post_updtrabajocerrado = function(req, res, next){
 	//Referencia a la clase para callback
 	var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
 	
-	this.model.post('UPD_TRABAJO_APROBADO_SP', params, function (error, result) {
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
         //Callback
         self.view.expositor(res, {
             error: error,
@@ -123,9 +143,10 @@ Trabajo.prototype.post_updtrabajofacturado = function(req, res, next){
 	//Referencia a la clase para callback
 	var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
 	
-	this.model.post('UPD_TRABAJO_FACTURADO_SP', params, function (error, result) {
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
         //Callback
         self.view.expositor(res, {
             error: error,

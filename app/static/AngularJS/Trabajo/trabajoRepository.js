@@ -32,42 +32,51 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        terminaTrabajo: function(idTrabajo, observacion){
+        terminaTrabajo: function(idEstatus,idTrabajo, observacion){
             return $http({
                 url: trabajoUrl + 'updtrabajoterminado/',
                 method: "POST",
-                data: {idTrabajo:idTrabajo,observacion : observacion},
+                data: {idEstatus: idEstatus,idTrabajo:idTrabajo,observacion : observacion},
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         },
-        
-        hojaCalidadTrabajo: function(idTrabajo){
+        generaCerficadoConformidadTrabajo: function(idEstatus,idTrabajo){
             return $http({
-                url: trabajoUrl + 'updtrabajohojacalidad/',
+                url: trabajoUrl + 'updtrabajocertificadogenerado/',
                 method: "POST",
-                data: {idTrabajo: idTrabajo},
+                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        cierraTrabajo: function(idTrabajo){
+        transfResponsabilidadTrabajo: function(idEstatus,idTrabajo){
+            return $http({
+                url: trabajoUrl + 'updtrabajotransfreponsabilidad/',
+                method: "POST",
+                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        cierraTrabajo: function(idEstatus,idTrabajo){
             return $http({
                 url: trabajoUrl + 'updtrabajocerrado/',
                 method: "POST",
-                data: {idTrabajo:idTrabajo},
+                data: {idEstatus: idEstatus,idTrabajo:idTrabajo},
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         },
-        facturaTrabajo: function(idTrabajo){
+        facturaTrabajo: function(idEstatus,idTrabajo){
             return $http({
                 url: trabajoUrl + 'updtrabajofacturado/',
                 method: "POST",
-                data: {idTrabajo:idTrabajo},
+                data: {idEstatus: idEstatus,idTrabajo:idTrabajo},
                 headers: {
                 'Content-Type': 'application/json'
                 }
