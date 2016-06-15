@@ -33,11 +33,11 @@
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td>{{trabajo.descripcionLarga}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
-                                                <td>                                                    
-                                                        <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
-                                                        
-                                                        <button ng-if="trabajo.estatus == 'Iniciado'"  ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Terminar trabajo" tooltip-placement="up"><span class="glyphicon glyphicon-ok-sign"></span> Terminar
-                                                        </button>    
+                                                <td>
+                                                    <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
+
+                                                    <button ng-if="trabajo.estatus == 'Iniciado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Terminar trabajo" tooltip-placement="up"><span class="glyphicon glyphicon-ok-sign"></span> Terminar
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -72,8 +72,9 @@
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
-                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,1)" data-toggle="tooltip" tooltip="Cargar hoja de calidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;T. Responsabilidad</button>
-                                                    <button type="submit" ng-click="generaCertificadoConformidadPDF(trabajo.idTrabajo)">Reporte Conformidad</button>
+                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,2)" data-toggle="tooltip" tooltip="Cargar hoja de calidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;T. Responsabilidad</button>
+                                                    <button ng-if="trabajo.estatus == 'TransResponsabilidad' && userData.idTipoUsuario == 2" class="btn btn-success" ng-hide="isClicked == 1" type="button" ng-click="generaCertificadoConformidadPDF(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span>&nbsp;Certificado conformidad</button>
+                                                    <button ng-if="trabajo.estatus == 'CertificadoGenerado' && userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="adjuntarCertificado(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar certificado</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -108,7 +109,7 @@
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
-                                                    
+
                                                     <button ng-if="trabajo.estatus == 'Cerrado' " ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,0)" data-toggle="tooltip" tooltip="Cargar factura" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span> Factura</button>
 
                                                     <button ng-if="trabajo.estatus == 'TransResponsabilidad'" ng-hide="userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="aprobarTrabajo(trabajo, 2)" data-toggle="tooltip" tooltip="Aprobar órden de servicio" tooltip-placement="up" ng-hide="userData.idTipoUsuario == 3"><span class="glyphicon glyphicon-check"></span> Aprobar
@@ -165,11 +166,10 @@
             </div>
         </div>
     </div>
-    
-<div id="hoja" class="modal inmodal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+</div>
 
-        <!-- Modal content-->
+<!--<div id="hoja" class="modal inmodal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -185,3 +185,4 @@
             </div>
         </div>
     </div>
+</div>-->
