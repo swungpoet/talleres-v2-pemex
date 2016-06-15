@@ -46,14 +46,14 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
 						result.push({partida:3,descripcion:"Descripcion de la partida 3",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})
 		        data.data = result;
             data.total = "$520,2020.20 UDS";
-						generateConfomidadResporte(data,res)
+						generateConfomidadReporte(data,res)
 
 		    //});
     //}
 }
 module.exports = Reporte;
 
-function generateConfomidadResporte(data,res) {
+function generateConfomidadReporte(data,res) {
     var doc = new PDFDocument({size: [612.00, 792.00],margin:30} )
 		doc.pipe(res)
 		doc.fontSize(7)
@@ -210,5 +210,5 @@ function generateConfomidadResporte(data,res) {
     doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO",30,715)
 
 
-		doc.end();
+    doc.end();
 }

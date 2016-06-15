@@ -51,6 +51,24 @@ Trabajo.prototype.get_trabajoterminado = function(req, res, next){
     });
 }
 
+//obtiene los trabajos con estatus de terminado
+Trabajo.prototype.get_trabajoaprobado = function(req, res, next){
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT}];
+	
+    this.model.query('SEL_TRABAJO_APROBADO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 //realiza la actualización del trabajo a terminado
 Trabajo.prototype.post_updtrabajoterminado = function(req, res, next){
 	//Referencia a la clase para callback

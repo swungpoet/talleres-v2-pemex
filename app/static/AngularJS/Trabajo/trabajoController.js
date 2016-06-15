@@ -5,12 +5,13 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $rootScope,localStorageService, alertFactory, trabajoRepository) {
+registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository) {
     //this is the first method executed in the view
     $scope.init = function () {
         $scope.userData = localStorageService.get('userData');
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
+        getTrabajoAprobado($scope.userData.idUsuario);
         $scope.habilitaBtnAprobar = true;
     }
 
@@ -39,10 +40,27 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 waitDrawDocument("dataTableTrabajoTerminado");
                 alertFactory.success("Trabajos terminados cargados");
             } else {
-                alertFactory.info("No se encontraron trabajos");
+                alertFactory.info("No se encontraron trabajos terminados");
             }
         }, function (error) {
-            alertFactory.error("Error al cargar trabajos");
+            alertFactory.error("Error al cargar trabajos terminados");
+        });
+    }
+
+    //obtiene los trabajos aprobados
+    var getTrabajoAprobado = function (idUsuario) {
+        $('.dataTableTrabajoAprobado').DataTable().destroy();
+        trabajoRepository.getTrabajoAprobado(idUsuario).then(function (trabajoAprobado) {
+            $scope.trabajosAprobados = trabajoAprobado.data;
+
+            if (trabajoAprobado.data.length) {
+                waitDrawDocument("dataTableTrabajoAprobado");
+                alertFactory.success("Trabajos aprobados cargados");
+            } else {
+                alertFactory.info("No se encontraron trabajos aprobados");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar trabajos aprobados");
         });
     }
 
@@ -142,97 +160,96 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             });
     });
 
-//    //sube archivo de la factura
-//    $scope.archivoTrabajoModal = function (idTrabajo, hojaCalidad) {
-//        $scope.idTrabajo = idTrabajo;
-//        $scope.hojaCalidad = hojaCalidad;
-//        
-//        if(hojaCalidad == 1){
-//            $scope.modalTittle = "Hoja de calidad";   
-//            $('#cargarHojaModal').appendTo("body").modal('show');
-//        }
-//        else{
-//            $scope.modalTittle = "Factura";
-//            $('#cargarFacturaModal').appendTo("body").modal('show');
-//        }       
-//    }
-    
+    //    //sube archivo de la factura
+    //    $scope.archivoTrabajoModal = function (idTrabajo, hojaCalidad) {
+    //        $scope.idTrabajo = idTrabajo;
+    //        $scope.hojaCalidad = hojaCalidad;
+    //        
+    //        if(hojaCalidad == 1){
+    //            $scope.modalTittle = "Hoja de calidad";   
+    //            $('#cargarHojaModal').appendTo("body").modal('show');
+    //        }
+    //        else{
+    //            $scope.modalTittle = "Factura";
+    //            $('#cargarFacturaModal').appendTo("body").modal('show');
+    //        }       
+    //    }
+
     $scope.adjuntar = function (idTrabajo, hojaCalidad) {
         $scope.idTrabajo = idTrabajo;
         $scope.hojaCalidad = hojaCalidad;
         $('#factura').appendTo('body').modal('show');
     }
-    
+
     $scope.adjuntarHoja = function (idTrabajo) {
         $scope.idTrabajo = idTrabajo;
         $('#hoja').appendTo('body').modal('show');
     }
-    
-   //Se realiza la carga de archivos de factura
+
+    //Se realiza la carga de archivos de factura
     $scope.cargarArchivos = function () {
-       //Se obtienen los datos de los archivos a subir
-       $scope.userData = localStorageService.get('userData');
-       formArchivos = document.getElementById("uploader");
-       contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
-       if (contentForm.document)
-           btnSubmit = contentForm.document.getElementById("submit2");
-       elements = contentForm.document.getElementById("uploadForm").elements;
-       idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
-       idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
-       idUsuario = contentForm.document.getElementById("idUsuario");
-       vTrabajo = contentForm.document.getElementById("vTrabajo");
-       idCategoria = contentForm.document.getElementById("idCategoria");
-       idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-       idTrabajoEdit.value = $scope.idTrabajo;
-       vTrabajo.value = "1";
-       idTipoEvidencia.value = 1;
-       idCategoria.value = 2;
-       if($scope.hojaCalidad == 1)
-        {
+        //Se obtienen los datos de los archivos a subir
+        $scope.userData = localStorageService.get('userData');
+        formArchivos = document.getElementById("uploader");
+        contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
+        if (contentForm.document)
+            btnSubmit = contentForm.document.getElementById("submit2");
+        elements = contentForm.document.getElementById("uploadForm").elements;
+        idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
+        idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
+        idUsuario = contentForm.document.getElementById("idUsuario");
+        vTrabajo = contentForm.document.getElementById("vTrabajo");
+        idCategoria = contentForm.document.getElementById("idCategoria");
+        idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
+        idTrabajoEdit.value = $scope.idTrabajo;
+        vTrabajo.value = "1";
+        idTipoEvidencia.value = 1;
+        idCategoria.value = 2;
+        if ($scope.hojaCalidad == 1) {
             idNombreEspecial.value = 2;
-        } else{
+        } else {
             idNombreEspecial.value = 3;
-        }         
-       idUsuario.value = $scope.userData.idUsuario;
-       //Submit del botón del Form para subir los archivos        
-       btnSubmit.click();
-       setTimeout(function(){
+        }
+        idUsuario.value = $scope.userData.idUsuario;
+        //Submit del botón del Form para subir los archivos        
+        btnSubmit.click();
+        setTimeout(function () {
             archivoTrabajo($scope.idTrabajo, $scope.hojaCalidad);
-        },2000);
-   }
-     
-     //Carga Hoja de Calidad
+        }, 2000);
+    }
+
+    //Carga Hoja de Calidad
     $scope.cargarArchivosHoja = function () {
-       //Se obtienen los datos de los archivos a subir
-       $scope.userData = localStorageService.get('userData');
-       formArchivos = document.getElementById("uploader");
-       contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
-       if (contentForm.document)
-           btnSubmit = contentForm.document.getElementById("submit2");
-       elements = contentForm.document.getElementById("uploadForm").elements;
-       idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
-       idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
-       idUsuario = contentForm.document.getElementById("idUsuario");
-       vTrabajo = contentForm.document.getElementById("vTrabajo");
-       idCategoria = contentForm.document.getElementById("idCategoria");
-       idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-       idTrabajoEdit.value = $scope.idTrabajo;
-       idTipoEvidencia.value = 1;
-       idCategoria.value = 2;
-       idNombreEspecial.value = 2;
-       idUsuario.value = $scope.userData.idUsuario;
-       //Submit del botón del Form para subir los archivos        
-       btnSubmit.click();
-       setTimeout(function(){
+        //Se obtienen los datos de los archivos a subir
+        $scope.userData = localStorageService.get('userData');
+        formArchivos = document.getElementById("uploader");
+        contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
+        if (contentForm.document)
+            btnSubmit = contentForm.document.getElementById("submit2");
+        elements = contentForm.document.getElementById("uploadForm").elements;
+        idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
+        idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
+        idUsuario = contentForm.document.getElementById("idUsuario");
+        vTrabajo = contentForm.document.getElementById("vTrabajo");
+        idCategoria = contentForm.document.getElementById("idCategoria");
+        idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
+        idTrabajoEdit.value = $scope.idTrabajo;
+        idTipoEvidencia.value = 1;
+        idCategoria.value = 2;
+        idNombreEspecial.value = 2;
+        idUsuario.value = $scope.userData.idUsuario;
+        //Submit del botón del Form para subir los archivos        
+        btnSubmit.click();
+        setTimeout(function () {
             archivoTrabajo($scope.idTrabajo, $scope.hojaCalidad);
-        },2000);
-   }
+        }, 2000);
+    }
 
     //cambia el trabajo a estatus a facturado
     var archivoTrabajo = function (idTrabajo, hojaCalidad) {
-        if(hojaCalidad == 1){ 
+        if (hojaCalidad == 1) {
             trabajoRepository.hojaCalidadTrabajo(idTrabajo).then(function (hojaCalidad) {
-                if(hojaCalidad.data[0].idHistorialProceso){
+                if (hojaCalidad.data[0].idHistorialProceso) {
                     alertFactory.success("Hoja de calidad cargada");
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
@@ -240,10 +257,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }, function (error) {
                 alertFactory.error("Error al cargar la hoja de calidad");
             });
-        } 
-        else{
+        } else {
             trabajoRepository.facturaTrabajo(idTrabajo).then(function (trabajoFacturado) {
-                if(trabajoFacturado.data[0].idHistorialProceso){
+                if (trabajoFacturado.data[0].idHistorialProceso) {
                     alertFactory.success("Factura cargada");
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
@@ -251,6 +267,31 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }, function (error) {
                 alertFactory.error("Error al cargar la factura");
             });
-        } 
+        }
+    }
+
+    //genera el formato para el certificado de conformidad
+    $scope.generaCertificadoConformidadPDF = function () {
+        certificadoParams = {
+            noReporte: "1001",
+            solpe: "$1050.00",
+            ordenSurtimiento: "100112",
+            montoOS: "$1001.00",
+            pedidoAsociado: "100113",
+            nombreEmisor: "Vladimir",
+            nombreProveedor: "El tigre",
+            puestoProveedor: "Gerente",
+            fecha: new Date()
+        }
+        
+        window.open("http://localhost:4100/api/reporte/conformidadpdf/?noReporte="+certificadoParams.noReporte+
+        "&solpe="+certificadoParams.solpe+
+        "&ordenSurtimiento="+certificadoParams.ordenSurtimiento+
+        "&montoOS="+certificadoParams.montoOS+
+        "&pedidoAsociado="+certificadoParams.pedidoAsociado+
+        "&nombreEmisor="+certificadoParams.nombreEmisor+
+        "&nombreProveedor="+certificadoParams.nombreProveedor+
+        "&puestoProveedor="+certificadoParams.puestoProveedor+
+        "&fecha="+certificadoParams.fecha);
     }
 });
