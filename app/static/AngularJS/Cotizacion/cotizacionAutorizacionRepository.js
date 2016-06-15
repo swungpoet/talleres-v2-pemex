@@ -116,22 +116,28 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                 }
             });
         },
-        putAutorizacionRechazoItem: function (comentarios, idEstatus, idDetalleAutorizacion, idItem) {
-            var aprobacionObj = {
-                comentarios: comentarios,
-                idEstatus: idEstatus, 
-                idDetalleAutorizacion: idDetalleAutorizacion,
-                idItem: idItem
-            };
+     putAutorizacionRechazoItem: function (comentarios, idEstatus, idItem, idCotizacion, usuarioAutorizador) {
+           var aprobacionObj = {
+               comentarios: comentarios,
+               idEstatus: idEstatus, 
+               idItem: idItem,
+               idCotizacion: idCotizacion,
+               usuarioAutorizador: usuarioAutorizador
+           };
 
-            return $http({
-                url: searchUrl + 'autorizacionRechazoItem',
-                method: "POST",
-                data: aprobacionObj,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        }
+           return $http({
+               url: searchUrl + 'autorizacionRechazoItem',
+               method: "POST",
+               data: aprobacionObj,
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           });
+       }
     };
 });
+
+
+
+
+

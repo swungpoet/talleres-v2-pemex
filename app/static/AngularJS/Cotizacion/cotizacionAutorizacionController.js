@@ -15,10 +15,14 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var tipoEvidencia = 2; //Cotización
     var idCotizacionEdita = 0;
     $scope.userData = localStorageService.get('userData');
+    var itemsAutorizacionRechazo =[];
 
-    $scope.AutorizarItemA = function (idDetalleAutorizacion, idItem) {
-        $scope.idDetalleAutorizacion = idDetalleAutorizacion;
+    $scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
+        $scope.idEstatus = idEstatus;
         $scope.idItem = idItem;
+        $scope.idCotizacion = idCotizacion;
+        $scope.usuarioAutorizador = usuarioAutorizador;
+
         $('#cotizacionDetalleA').appendTo('body').modal('show');
     }
     $scope.AutorizarItemR = function () {
@@ -365,5 +369,31 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             
         });
     }
+
+ $scope.ObtieneAutorizaciones = function (comentarios) {
+    
+        var objAutorizaciones = {comentarios: comentarios, 
+            idEstatus: $scope.idEstatus, 
+            idItem: $scope.idItem, 
+            idCotizacion: $scope.idCotizacion,
+            idUsuarioAutorizador: $scope.usuarioAutorizador }
+        itemsAutorizacionRechazo.push(objAutorizaciones);
+    }
+
+$scope.ActualizaCotizacion = function (){
+for (i = 0; i < itemsAutorizacionRechazo.length; i++) { 
+
+cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios, 
+    itemsAutorizacionRechazo[i].idEstatus, 
+    itemsAutorizacionRechazo[i].idItem, 
+    itemsAutorizacionRechazo[i].idCotizacion, 
+    itemsAutorizacionRechazo[i].idUsuarioAutorizador).then(function (result) {
+            var algo = result.data;
+        },
+            function (error) {
+            
+        });
+}
+}
 
 });

@@ -76,7 +76,7 @@
                                         <td>
                                     <form action="">
                                            <div class="radio radio-info radio-inline">
-                                          <input type="radio" name="name" value="acepta" ng-click="AutorizarItemA(articulo.idDetalleAutorizacion, articulo.idItem)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador" > 
+                                          <input type="radio" name="name" value="acepta" ng-click="AutorizarItemA(9, articulo.idItem, articulo.idCotizacion, userData.idUsuario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador" > 
                                           <label for="inlineRadio"> Acepta </label>
                                           </div>
                                         <div class="radio radio-inline"> 
@@ -112,10 +112,11 @@
                 <!--<textarea class="well m-t form-control" rows="2" cols="45" maxlength="300" ng-model="comentario" placeholder="Comentarios..." ng-hide="userData.idTipoUsuario == 3"></textarea>
                 <button class="btn btn-primary" ng-click="Autorizar(comentario)" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-check"></i> Autorizar</button>
                 <button class="btn btn-danger" ng-click="Rechazar(comentario)" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-times"></i> Rechazar</button>-->
+                <button class="btn btn-primary" ng-click="ActualizaCotizacion()" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-times"></i> Actualiza Cotizacion</button>
                 <button class="btn btn-success" ng-click="Editar()"><i class="fa fa-edit"></i> Editar</button>
             </div>
         </div>
-        <br>
+        <br> 
         <br>
 
         <div class="modal fade" id="modal" role="dialog">
@@ -152,8 +153,8 @@
                         </center>
                     </div>
                     <div class="modal-footer">
-                          <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="AutorizarRechazoItem(9)">Guardar</button>
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                          <!-- <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="AutorizarRechazoItem(9)">Guardar</button> -->
+                        <button type="button" class="btn btn-info" ng-click="ObtieneAutorizaciones(comentarios)" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -175,9 +176,11 @@
                         </center>
                     </div>
                     <div class="modal-footer">
-                          <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="AutorizarRechazoItem(10)">Guardar</button>
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                         <!--  <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="AutorizarRechazoItem(10)">Guardar</button> -->
+                        <button type="button" class="btn btn-info" ng-click="Obtiene()" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
         </div>
+
+   

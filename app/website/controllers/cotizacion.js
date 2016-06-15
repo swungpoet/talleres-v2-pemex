@@ -861,14 +861,19 @@ Cotizacion.prototype.post_autorizacionRechazoItem = function (req, res, next) {
             type: self.model.types.STRING
         },
         {
-            name: 'idDetalleAutorizacion',
-            value: req.body.idDetalleAutorizacion,
+            name: 'idCotizacion',
+            value: req.body.idCotizacion,
             type: self.model.types.DECIMAL
         },
         {
             name: 'idItem',
             value: req.body.idItem,
             type: self.model.types.DECIMAL
+        },
+        {
+         name: 'usuarioAutorizador',
+            value: req.body.usuarioAutorizador,
+            type: self.model.types.DECIMAL    
         }];
 
     this.model.post('UPD_ITEM_AUTORIZACION_SP', params, function (error, result) {
