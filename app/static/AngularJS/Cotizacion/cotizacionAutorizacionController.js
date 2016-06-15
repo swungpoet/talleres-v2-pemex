@@ -16,11 +16,13 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacionEdita = 0;
     $scope.userData = localStorageService.get('userData');
 
-  $scope.AutorizarItemA = function () {
-     $('#cotizacionDetalleA').appendTo('body').modal('show');
+    $scope.AutorizarItemA = function (idDetalleAutorizacion, idItem) {
+        $scope.idDetalleAutorizacion = idDetalleAutorizacion;
+        $scope.idItem = idItem;
+        $('#cotizacionDetalleA').appendTo('body').modal('show');
     }
-  $scope.AutorizarItemR = function () {
-     $('#cotizacionDetalleR').appendTo('body').modal('show');
+    $scope.AutorizarItemR = function () {
+        $('#cotizacionDetalleR').appendTo('body').modal('show');
     }
 
 
@@ -351,6 +353,16 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             }
         }, function (error) {
             alertFactory.error('No se pudo obtener los datos del cliente, inténtelo más tarde');
+        });
+    }
+
+    $scope.AutorizarRechazoItem = function (estatus) {
+        
+        cotizacionAutorizacionRepository.putAutorizacionRechazoItem($scope.comentarios, estatus, $scope.idDetalleAutorizacion, $scope.idItem).then(function (result) {
+            var algo = result.data;
+        },
+            function (error) {
+            
         });
     }
 

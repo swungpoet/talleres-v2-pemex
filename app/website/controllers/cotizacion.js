@@ -841,4 +841,42 @@ Cotizacion.prototype.get_datosUnidad = function (req, res, next) {
     });
 }
 
+Cotizacion.prototype.post_autorizacionRechazoItem = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'idEstatus',
+            value: req.body.idEstatus,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'comentarios',
+            value: req.body.comentarios,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'idDetalleAutorizacion',
+            value: req.body.idDetalleAutorizacion,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idItem',
+            value: req.body.idItem,
+            type: self.model.types.DECIMAL
+        }];
+
+    this.model.post('UPD_ITEM_AUTORIZACION_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Cotizacion;

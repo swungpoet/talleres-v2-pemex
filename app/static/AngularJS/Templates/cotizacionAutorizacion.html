@@ -74,7 +74,7 @@
                                     <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
                                     <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
                                     <td>
-                                        <button class="btn btn-primary" ng-click="AutorizarItemA()" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left"><i class="fa fa-check"></i></button>
+                                        <button class="btn btn-primary" ng-click="AutorizarItemA(articulo.idDetalleAutorizacion, articulo.idItem)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left"><i class="fa fa-check"></i></button>
                                         <button class="btn btn-danger" ng-click="AutorizarItemR()" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left"><i class="fa fa-times"></i></button>
 
 <!-- <button class="btn btn-primary" type="button" id="btnEnviar" ng-click="Detalle(cotizacion.idCotizacion, cotizacion.idTaller)">
@@ -146,11 +146,11 @@
                 <div class="modal-body">
                     <!-- /table-responsive -->
                     <center>
-                    <textarea name="comentarios" rows="10" cols="110" placeholder="Escribe tus comentarios"></textarea>
+                    <textarea ng-model="comentarios" name="comentarios" rows="10" cols="110" placeholder="Escribe tus comentarios"></textarea>
                     </center>
                 </div>
                 <div class="modal-footer">
-                      <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
+                      <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="AutorizarRechazoItem(9)">Guardar</button>
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -173,7 +173,7 @@
                     </center>
                 </div>
                 <div class="modal-footer">
-                      <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
+                      <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="AutorizarRechazoItem(10)">Guardar</button>
                     <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>

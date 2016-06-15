@@ -115,6 +115,23 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        putAutorizacionRechazoItem: function (comentarios, idEstatus, idDetalleAutorizacion, idItem) {
+            var aprobacionObj = {
+                comentarios: comentarios,
+                idEstatus: idEstatus, 
+                idDetalleAutorizacion: idDetalleAutorizacion,
+                idItem: idItem
+            };
+
+            return $http({
+                url: searchUrl + 'autorizacionRechazoItem',
+                method: "POST",
+                data: aprobacionObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
