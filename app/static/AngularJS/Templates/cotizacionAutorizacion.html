@@ -74,8 +74,14 @@
                                     <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
                                     <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
                                     <td>
-                                        <button class="btn btn-primary" ng-click="Autorizar(comentario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left"><i class="fa fa-check"></i></button>
-                                        <button class="btn btn-danger" ng-click="Rechazar(comentario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left"><i class="fa fa-times"></i></button>
+                                        <button class="btn btn-primary" ng-click="AutorizarItemA()" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left"><i class="fa fa-check"></i></button>
+                                        <button class="btn btn-danger" ng-click="AutorizarItemR()" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left"><i class="fa fa-times"></i></button>
+
+<!-- <button class="btn btn-primary" type="button" id="btnEnviar" ng-click="Detalle(cotizacion.idCotizacion, cotizacion.idTaller)">
+                                                <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" data-toggle="modal"></span>
+                               </button>             
+ -->
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -123,6 +129,52 @@
                     <button id="btnUploadAut" type="button" class="btn btn-success" data-toggle="tooltip" tooltip="Cargar Evidencia" tooltip-placement="top" ng-click="cargarArchivos()">
                         <span class="glyphicon glyphicon-cloud-upload"></span>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div id="cotizacionDetalleA" class="modal inmodal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Comentarios Autorizacion</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- /table-responsive -->
+                    <center>
+                    <textarea name="comentarios" rows="10" cols="110" placeholder="Escribe tus comentarios"></textarea>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       <div id="cotizacionDetalleR" class="modal inmodal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Comentarios Rechazo</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- /table-responsive -->
+                    <center>
+                    <textarea name="comentarios" rows="10" cols="110" placeholder="Escribe tus comentarios"></textarea>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                      <button type="button" class="btn btn-info" data-dismiss="modal">Guardar</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

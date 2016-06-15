@@ -16,6 +16,13 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacionEdita = 0;
     $scope.userData = localStorageService.get('userData');
 
+  $scope.AutorizarItemA = function () {
+     $('#cotizacionDetalleA').appendTo('body').modal('show');
+    }
+  $scope.AutorizarItemR = function () {
+     $('#cotizacionDetalleR').appendTo('body').modal('show');
+    }
+
 
     $scope.init = function () {
         $scope.cargaFicha();
