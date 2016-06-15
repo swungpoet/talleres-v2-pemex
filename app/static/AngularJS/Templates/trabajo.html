@@ -72,8 +72,8 @@
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
-                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,1)" data-toggle="tooltip" tooltip="Cargar hoja de calidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;Hoja</button>
-                                                    <button type="submit" ng-click="generaCertificadoConformidadPDF()">Reporte Conformidad</button>
+                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,1)" data-toggle="tooltip" tooltip="Cargar hoja de calidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;T. Responsabilidad</button>
+                                                    <button type="submit" ng-click="generaCertificadoConformidadPDF(trabajo.idTrabajo)">Reporte Conformidad</button>
                                                 </td>
                                             </tr>
                                         </tbody>

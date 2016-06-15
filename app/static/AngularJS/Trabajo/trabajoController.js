@@ -271,7 +271,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //genera el formato para el certificado de conformidad
-    $scope.generaCertificadoConformidadPDF = function () {
+    $scope.generaCertificadoConformidadPDF = function (idTrabajo) {
         certificadoParams = {
             noReporte: "1001",
             solpe: "$1050.00",
@@ -281,7 +281,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             nombreEmisor: "Vladimir",
             nombreProveedor: "El tigre",
             puestoProveedor: "Gerente",
-            fecha: new Date()
+            fecha: new Date(),
+            idTrabajo: idTrabajo
         }
         
         window.open("http://localhost:4100/api/reporte/conformidadpdf/?noReporte="+certificadoParams.noReporte+
@@ -292,6 +293,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         "&nombreEmisor="+certificadoParams.nombreEmisor+
         "&nombreProveedor="+certificadoParams.nombreProveedor+
         "&puestoProveedor="+certificadoParams.puestoProveedor+
-        "&fecha="+certificadoParams.fecha);
+        "&fecha="+certificadoParams.fecha+
+        "&idTrabajo="+certificadoParams.idTrabajo);
     }
 });

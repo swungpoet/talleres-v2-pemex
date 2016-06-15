@@ -23,7 +23,8 @@ var Reporte = function(conf) {
 
 Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     var self = this;
-    var params = [];
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idTrabajo', value: 97, type: self.model.types.INT}];
     var data = {};
     // if (req.query.noReporte, ...) { Validacion de campos
 		    data = {
@@ -38,17 +39,22 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
                     fecha: new Date()
 		    }
 
-		    //this.model.query('NOMBRE DEL_SP', params, function(error, result) { Se obtinen los datos asociados
+		    this.model.query('SEL_ORDEN_DETALLE_SP', params, function(error, result) { 
+                
 						//Result de prueba sustituir por datos reales
-						result = []
-						result.push({partida:1,descripcion:"Descripcion de la partida 1",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})
-						result.push({partida:2,descripcion:"Descripcion de la partida 2",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})
-						result.push({partida:3,descripcion:"Descripcion de la partida 3",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})
+						/*resultOrden = []
+						resultOrden.push({partida:1,descripcion:"Descripcion de la partida 1",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})
+						resultOrden.push({partida:2,descripcion:"Descripcion de la partida 2",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})
+						resultOrden.push({partida:3,descripcion:"Descripcion de la partida 3",cantidad:1,unidad:"Vehiculo",noRemFac:"R216115",fecha:"06/06/2016",importe:"166,520.38 USD"})*/
 		        data.data = result;
-            data.total = "$520,2020.20 UDS";
+                var total = 0;
+                for(var i in data.data){
+                    total = total + (data.data[i].cantidad * data.data[i].precio);
+                }
+            data.total = "$ "+total+" UDS";
 						generateConfomidadReporte(data,res)
 
-		    //});
+		    });
     //}
 }
 module.exports = Reporte;
@@ -158,13 +164,13 @@ function generateConfomidadReporte(data,res) {
     doc.fontSize(7);
 
     for(var i in data.data){
-      doc.text(data.data[i].partida,50,296+i*14,{width: 30,align: 'center'})
-      doc.text(data.data[i].descripcion,80,296+i*14,{width: 150,align: 'center'})
-      doc.text(data.data[i].cantidad,228,296+i*14,{width: 30,align: 'center'})
-      doc.text(data.data[i].unidad,258,296+i*14,{width: 62,align: 'center'})
-      doc.text(data.data[i].noRemFac,320,296+i*14,{width: 62,align: 'center'})
-      doc.text(data.data[i].fecha,382,296+i*14,{width: 63,align: 'center'})
-      doc.text(data.data[i].importe,444,296+i*14,{width: 100,align: 'right'})
+      doc.text(data.data[i].numeroPartida,50,296+i*100,{width: 30,align: 'center'})
+      doc.text(data.data[i].item,80,296+i*100,{width: 150,align: 'center'})
+      doc.text(data.data[i].cantidad,228,296+i*100,{width: 30,align: 'center'})
+      doc.text(data.data[i].unidad,258,296+i*100,{width: 62,align: 'center'})
+      doc.text(data.data[i].noRemFac,320,296+i*100,{width: 62,align: 'center'})
+      doc.text(data.fecha,382,296+i*100,{width: 63,align: 'center'})
+      doc.text(data.data[i].precio,444,296+i*100,{width: 100,align: 'right'})
     }
     doc.rect(48, 539, 334, 12).stroke()
     doc.rect(382, 539, 62, 12).stroke()

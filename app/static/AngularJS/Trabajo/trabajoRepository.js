@@ -1,5 +1,4 @@
 var trabajoUrl = global_settings.urlCORS + '/api/trabajo/';
-var reporteUrl = global_settings.urlCORS + '/api/reporte/';
 
 registrationModule.factory('trabajoRepository', function ($http) {
     return {
