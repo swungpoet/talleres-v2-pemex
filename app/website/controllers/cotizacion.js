@@ -32,7 +32,8 @@ var Cotizacion = function (conf) {
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //var dirname = 'C:/Produccion/Talleres/talleres-v2/app';
-        var dirname = 'C:/Desarrollo/talleres-v2/app/static/uploads/files/';
+        var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+        //var dirname = 'C:/Desarrollo/talleres-v2/app/static/uploads/files/';
         var idTrabajo = req.body.idTrabajo;
         var idCotizacion = req.body.idCotizacion;
 
@@ -456,6 +457,9 @@ Cotizacion.prototype.get_evidenciasByCotizacion = function (req, res, next) {
 ////Método para insertar evidencia
 Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
     res.end("File is uploaded");
+    
+    //directorio de los archivos
+    var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
     //Objeto que almacena la respuesta
     var object = {};
     //Referencia a la clase para callback
@@ -500,20 +504,20 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
         }
 
         //obtiene el número de documentos para renombrar
-        if ((countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/') - countDocs) === 0) {
+        if ((countFilesDirectory(dirname + req.body.idTrabajo + '/documentos/') - countDocs) === 0) {
             consecutivoDocs = 1;
             console.log(consecutivoDocs);
         } else {
-            consecutivoDocs = (countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/') + 1) - countDocs;
+            consecutivoDocs = (countFilesDirectory(dirname + req.body.idTrabajo + '/documentos/') + 1) - countDocs;
             console.log(consecutivoDocs);
         }
 
         //obtiene el número de imágenes para renombrar
-        if ((countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/multimedia/') - countImgs) === 0) {
+        if ((countFilesDirectory(dirname + req.body.idTrabajo + '/multimedia/') - countImgs) === 0) {
             consecutivoImgs = 1;
             console.log(consecutivoImgs);
         } else {
-            consecutivoImgs = (countFilesDirectory('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/multimedia/') + 1) - countImgs;
+            consecutivoImgs = (countFilesDirectory(dirname + req.body.idTrabajo + '/multimedia/') + 1) - countImgs;
             console.log(consecutivoImgs);
         }
 
@@ -523,7 +527,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             var idTipoArchivo = obtenerTipoArchivo(ext);
 
             if (req.body.idNombreEspecial == 1) nuevoNombre = 'ComprobanteRecepcion';
-            if (req.body.idNombreEspecial == 2) nuevoNombre = 'TranferenciaResponsabilidad';
+            if (req.body.idNombreEspecial == 2) nuevoNombre = 'TranferenciaCustodia';
             if (req.body.idNombreEspecial == 3) nuevoNombre = 'Factura';
             if (req.body.idNombreEspecial == 4) {
                 if (ext == '.xml') {
@@ -536,7 +540,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
 
             //tipo archivo documento
             if (idTipoArchivo == 1) {
-                fs.rename('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/' + req.files[i].originalname, 'C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/documentos/' + nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {
+                fs.rename(dirname + req.body.idTrabajo + '/documentos/' + req.files[i].originalname, dirname + req.body.idTrabajo + '/documentos/' + nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {
                     if (err) console.log('ERROR: ' + err);
                 });
 
@@ -552,7 +556,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 consecutivoDocs++;
             } else //tipo archivo imagen
             if (idTipoArchivo == 2) {
-                fs.rename('C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/multimedia/' + req.files[i].originalname, 'C:/Desarrollo/talleres-v2/app/static/uploads/files/' + req.body.idTrabajo + '/multimedia/' + nuevoNombre + consecutivoImgs + obtenerExtArchivo(req.files[i].originalname), function (err) {
+                fs.rename(dirname + req.body.idTrabajo + '/multimedia/' + req.files[i].originalname, dirname + req.body.idTrabajo + '/multimedia/' + nuevoNombre + consecutivoImgs + obtenerExtArchivo(req.files[i].originalname), function (err) {
                     if (err) console.log('ERROR: ' + err);
                 });
 

@@ -153,27 +153,14 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             });
     });
 
-    //    //sube archivo de la factura
-    //    $scope.archivoTrabajoModal = function (idTrabajo, hojaCalidad) {
-    //        $scope.idTrabajo = idTrabajo;
-    //        $scope.hojaCalidad = hojaCalidad;
-    //        
-    //        if(hojaCalidad == 1){
-    //            $scope.modalTittle = "Hoja de calidad";   
-    //            $('#cargarHojaModal').appendTo("body").modal('show');
-    //        }
-    //        else{
-    //            $scope.modalTittle = "Factura";
-    //            $('#cargarFacturaModal').appendTo("body").modal('show');
-    //        }       
-    //    }
-
+    //muestra el modal para la carga de archivos
     $scope.adjuntar = function (idTrabajo, hojaCalidad) {
         $scope.idTrabajo = idTrabajo;
         $scope.hojaCalidad = hojaCalidad;
         $('#factura').appendTo('body').modal('show');
     }
 
+    //realiza la carga de archivos especiales de la orden
     $scope.cargaArchivosEspeciales = function(){
         cargarArchivos();
         archivoTrabajo($scope.idTrabajo, $scope.hojaCalidad);
