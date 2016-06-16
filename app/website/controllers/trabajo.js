@@ -51,6 +51,40 @@ Trabajo.prototype.get_trabajoterminado = function(req, res, next){
     });
 }
 
+//realiza la actualización del trabajo a estatus certificado conformidad cargada call center
+Trabajo.prototype.post_updtrabajocertificadocallcenter = function(req, res, next){
+	//Referencia a la clase para callback
+	var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+	
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//realiza la actualización del trabajo a estatus certificado conformidad cargada cliente
+Trabajo.prototype.post_updtrabajocertificadocliente = function(req, res, next){
+	//Referencia a la clase para callback
+	var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+	
+	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //obtiene los trabajos con estatus de terminado
 Trabajo.prototype.get_trabajoaprobado = function(req, res, next){
     //Con req.query se obtienen los parametros de la url
@@ -121,8 +155,8 @@ Trabajo.prototype.post_updtrabajotransfreponsabilidad = function(req, res, next)
     });
 }
 
-//realiza la actualización del trabajo a cerrado
-Trabajo.prototype.post_updtrabajocerrado = function(req, res, next){
+//realiza la actualización del trabajo a estatus certificado conformidad descargada cliente
+Trabajo.prototype.post_updtrabajocertificadodescargado = function(req, res, next){
 	//Referencia a la clase para callback
 	var self = this;
     //Obtención de valores de los parámetros del request

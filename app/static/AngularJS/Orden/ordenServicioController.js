@@ -1,4 +1,4 @@
-registrationModule.controller('ordenServicioController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository, trabajoRepository) {
+registrationModule.controller('ordenServicioController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository) {
 
     var cDetalles = [];
     var cPaquetes = [];
@@ -297,22 +297,6 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
             alertFactory.info('No se pudo obtener el detalle de esta cotización.');
         });
 
-    }
-
-    //cambia el estatus del trabajo a cerrado
-    $scope.cierraTrabajo = function () {
-        var idTrabajo = localStorageService.get("objTrabajo").idTrabajo;
-        trabajoRepository.cierraTrabajo(11,idTrabajo).then(function (trabajoCerrado) {
-            if (trabajoCerrado.data[0].idHistorialProceso > 0) {
-                alertFactory.success("Trabajo cerrado");
-                setTimeout(function () {
-                    localStorageService.remove('objTrabajo');
-                    location.href = '/trabajo'
-                }, 1000);
-            }
-        }, function (error) {
-            alertFactory.error("Error al cerrar el trabajo");
-        });
     }
 
     //Devuelve las órdenes por cobrar

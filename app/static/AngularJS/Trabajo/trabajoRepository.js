@@ -52,9 +52,9 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        transfResponsabilidadTrabajo: function(idEstatus,idTrabajo){
+        descargaCerficadoConformidadTrabajo: function(idEstatus,idTrabajo){
             return $http({
-                url: trabajoUrl + 'updtrabajotransfreponsabilidad/',
+                url: trabajoUrl + 'updtrabajocertificadodescargado/',
                 method: "POST",
                 data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
                 headers: {
@@ -62,13 +62,33 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        cierraTrabajo: function(idEstatus,idTrabajo){
+        uploadCertificadoCallCenterTrabajo: function(idEstatus,idTrabajo){
             return $http({
-                url: trabajoUrl + 'updtrabajocerrado/',
+                url: trabajoUrl + 'updtrabajocertificadocallcenter/',
                 method: "POST",
-                data: {idEstatus: idEstatus,idTrabajo:idTrabajo},
+                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        uploadCertificadoClienteTrabajo: function(idEstatus,idTrabajo){
+            return $http({
+                url: trabajoUrl + 'updtrabajocertificadocliente/',
+                method: "POST",
+                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        transfResponsabilidadTrabajo: function(idEstatus,idTrabajo){
+            return $http({
+                url: trabajoUrl + 'updtrabajotransfreponsabilidad/',
+                method: "POST",
+                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             });
         },
@@ -102,6 +122,6 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 'Content-Type': 'application/json'
                 }
             });
-        }
+        },
     };
 });
