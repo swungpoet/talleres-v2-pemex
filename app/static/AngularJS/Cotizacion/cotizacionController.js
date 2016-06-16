@@ -293,7 +293,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     //Envia la cotización para autorización
     var btnEnviaCotizacionLoading = $('#btnEnviaCotizacion').ladda();
     btnEnviaCotizacionLoading.click(function () {
-        btnCotizacionUpdLoading.ladda('start');
+        btnEnviaCotizacionLoading.ladda('start');
         if ($scope.arrayItem.length == 0) {
             alertFactory.info('Debe seleccionar items para la cotización');
         } else {
@@ -305,7 +305,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         }
         cotizacionRepository.insertCotizacionMaestro($scope.citaDatos.idCita,
                 $scope.userData.idUsuario,
-                observaciones,
+                $scope.observaciones,
                 idUnidad)
             .then(function (resultado) {
                 alertFactory.success('Guardando Cotización Maestro');
@@ -329,7 +329,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
                 cargarArchivos($scope.idCotizacion, $scope.idTrabajo);
                 btnEnviaCotizacionLoading.ladda('stop');
-                //location.href = '/cotizacionconsulta';
+                location.href = '/cotizacionconsulta';
             }, function (error) {
                 alertFactory.error('Error');
                 btnEnviaCotizacionLoading.ladda('stop');
@@ -432,6 +432,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
         cargarArchivos($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTrabajo);
         btnCotizacionUpdLoading.ladda('stop');
+        location.href = "/cotizacionconsulta";
     });
 
     //Se realiza la carga de archivos
@@ -500,13 +501,13 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     //realiza una nueva cotización para un trabajo existente
     var btnNuevaCotizacionLoading = $('#btnEnviaCotizacion').ladda();
     btnNuevaCotizacionLoading.click(function () {
-        btnNuevaCotizacion.ladda('start');
+        btnNuevaCotizacionLoading.ladda('start');
         if ($scope.arrayItem.length == 0) {
             alertFactory.info('Debe seleccionar items para la cotización');
         }
         cotizacionRepository.insertCotizacionMaestro($scope.orden.idCita,
                 $scope.orden.idUsuario,
-                observaciones,
+                $scope.observaciones,
                 $scope.orden.idUnidad)
             .then(function (resultado) {
                 alertFactory.success('Guardando Cotización Maestro');
@@ -530,7 +531,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
                 cargarArchivos($scope.idCotizacion, $scope.idTrabajo);
                 btnNuevaCotizacionLoading.ladda('stop');
-                //location.href = '/cotizacionconsulta';
+                location.href = '/cotizacionconsulta';
             }, function (error) {
                 alertFactory.error('Error');
                 btnNuevaCotizacionLoading.ladda('stop');
