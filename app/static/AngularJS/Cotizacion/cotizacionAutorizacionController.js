@@ -25,8 +25,14 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
         $('#cotizacionDetalleA').appendTo('body').modal('show');
     }
-    $scope.AutorizarItemR = function () {
+    $scope.AutorizarItemR = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
+         $scope.idEstatus = idEstatus;
+        $scope.idItem = idItem;
+        $scope.idCotizacion = idCotizacion;
+        $scope.usuarioAutorizador = usuarioAutorizador;
+
         $('#cotizacionDetalleR').appendTo('body').modal('show');
+
     }
 
 
