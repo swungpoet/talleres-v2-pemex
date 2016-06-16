@@ -60,6 +60,7 @@
                                     <th>I.V.A</th>
                                     <th>Precio Total</th>
                                     <th>Acciones</th>
+                                    <th>Comentarios</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,7 +75,7 @@
                                     <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
                                     <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
                                     <td>
-                                        <form action="">
+                                        <form action="" ng-show="articulo.idEstatus == 8">
                                             <div class="radio radio-info radio-inline">
                                                 <input type="radio" name="name" value="acepta" ng-click="AutorizarItemA(9, articulo.idItem, articulo.idCotizacion, userData.idUsuario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador">
                                                 <label for="inlineRadio"> Acepta </label>
@@ -84,6 +85,11 @@
                                                 <label for="inlineRadio"> Rechaza </label>
                                             </div>
                                         </form>
+                                        <div ng-show="articulo.idEstatus == 9">Autorizado</div>
+                                        <div ng-show="articulo.idEstatus == 10">Rechazado</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn"><i class="fa fa-comment"></i></button>
                                     </td>
                                 </tr>
                             </tbody>

@@ -15,7 +15,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var tipoEvidencia = 2; //Cotización
     var idCotizacionEdita = 0;
     $scope.userData = localStorageService.get('userData');
-    var itemsAutorizacionRechazo =[];
+    var itemsAutorizacionRechazo = [];
 
     $scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         $scope.idEstatus = idEstatus;
@@ -26,7 +26,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $('#cotizacionDetalleA').appendTo('body').modal('show');
     }
     $scope.AutorizarItemR = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
-         $scope.idEstatus = idEstatus;
+        $scope.idEstatus = idEstatus;
         $scope.idItem = idItem;
         $scope.idCotizacion = idCotizacion;
         $scope.usuarioAutorizador = usuarioAutorizador;
@@ -367,39 +367,41 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     $scope.AutorizarRechazoItem = function (estatus) {
-        
+
         cotizacionAutorizacionRepository.putAutorizacionRechazoItem($scope.comentarios, estatus, $scope.idDetalleAutorizacion, $scope.idItem).then(function (result) {
-            var algo = result.data;
-        },
+                var algo = result.data;
+            },
             function (error) {
-            
-        });
+
+            });
     }
 
- $scope.ObtieneAutorizaciones = function (comentarios) {
-    
-        var objAutorizaciones = {comentarios: comentarios, 
-            idEstatus: $scope.idEstatus, 
-            idItem: $scope.idItem, 
+    $scope.ObtieneAutorizaciones = function (comentarios) {
+
+        var objAutorizaciones = {
+            comentarios: comentarios,
+            idEstatus: $scope.idEstatus,
+            idItem: $scope.idItem,
             idCotizacion: $scope.idCotizacion,
-            idUsuarioAutorizador: $scope.usuarioAutorizador }
+            idUsuarioAutorizador: $scope.usuarioAutorizador
+        }
         itemsAutorizacionRechazo.push(objAutorizaciones);
     }
 
-$scope.ActualizaCotizacion = function (){
-for (i = 0; i < itemsAutorizacionRechazo.length; i++) { 
+    $scope.ActualizaCotizacion = function () {
+        for (i = 0; i < itemsAutorizacionRechazo.length; i++) {
+            cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios,
+                itemsAutorizacionRechazo[i].idEstatus,
+                itemsAutorizacionRechazo[i].idItem,
+                itemsAutorizacionRechazo[i].idCotizacion,
+                itemsAutorizacionRechazo[i].idUsuarioAutorizador).then(function (result) {
+                    var algo = result.data;
+                },
+                function (error) {
 
-cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios, 
-    itemsAutorizacionRechazo[i].idEstatus, 
-    itemsAutorizacionRechazo[i].idItem, 
-    itemsAutorizacionRechazo[i].idCotizacion, 
-    itemsAutorizacionRechazo[i].idUsuarioAutorizador).then(function (result) {
-            var algo = result.data;
-        },
-            function (error) {
-            
-        });
-}
-}
+                });
+        }
+        location.href = '/trabajo';
+    }
 
 });
