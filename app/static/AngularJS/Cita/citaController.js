@@ -25,7 +25,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //init de la pantalla  nuevaCita
     $scope.initNuevaCita = function () {
-        $("[id='tipoCitaSwitch']").bootstrapSwitch();
+        //$("[id='tipoCitaSwitch']").bootstrapSwitch();
+        getTipoCita();
         $scope.idTipoCita = 1;
         $scope.userData = localStorageService.get('userData');
         $('.clockpicker').clockpicker();
@@ -295,7 +296,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             citaTaller.trabajo = $scope.datosCita.trabajoCita;
             citaTaller.observacion = $scope.datosCita.observacionCita;
             citaTaller.idUsuario = $scope.userData.idUsuario;
-            citaTaller.idTipoCita = $scope.idTipoCita;
+            citaTaller.idTipoCita = $scope.selectedTipoCita.idTipoCita;
 
             citaRepository.addCita(citaTaller).then(function (cita) {
                 citaTaller.idCita = cita.data[0].idCita;
@@ -653,4 +654,16 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             $scope.idTipoCita = 2
         }                      
     });
+    
+    var getTipoCita = function(){
+        citaRepository.getTipoCita().then(function(citas){
+            if(citas.data.length > 0){
+                $scope.tiposCita = citas.data;
+                alertFactory.success("Tipos de citas cargados");   
+            }
+        }, function(error){
+            alertFactory.error("Error al obtener tipos de cita");
+        })
+            
+    }
 });

@@ -111,6 +111,15 @@ registrationModule.factory('citaRepository', function ($http) {
                 'Content-Type': 'application/json'
                 }
             });
+        },
+        getTipoCita: function(){
+            return $http({
+                url: citaUrl + 'tipocita/',
+                method: "GET",
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
