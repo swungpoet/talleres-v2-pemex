@@ -329,7 +329,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
                 cargarArchivos($scope.idCotizacion, $scope.idTrabajo);
                 btnEnviaCotizacionLoading.ladda('stop');
-                location.href = '/cotizacionconsulta';
+                //location.href = '/cotizacionconsulta';
             }, function (error) {
                 alertFactory.error('Error');
                 btnEnviaCotizacionLoading.ladda('stop');
@@ -357,7 +357,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     $scope.iva = calcularIva();
                     alertFactory.success('Datos Cargados');
                 } else {
-                    alertFactory.error('No hay datos para editar');
+                    alertFactory.info('No hay datos para editar');
                 }
 
             }, function (error) {
@@ -432,7 +432,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
         cargarArchivos($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTrabajo);
         btnCotizacionUpdLoading.ladda('stop');
-        location.href = "/cotizacionconsulta";
+        //location.href = "/cotizacionconsulta";
     });
 
     //Se realiza la carga de archivos
@@ -462,6 +462,9 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         obtenerFiles(nombreArchivos);
         //Submit del botón del Form para subir los archivos        
         btnSubmit.click();
+        setTimeout(function () {
+            location.href = "/cotizacionconsulta";
+        }, 4000);
     }
 
     //Se obtienen datos de la unidad a editar
@@ -499,7 +502,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     }
 
     //realiza una nueva cotización para un trabajo existente
-    var btnNuevaCotizacionLoading = $('#btnEnviaCotizacion').ladda();
+    var btnNuevaCotizacionLoading = $('#btnNuevaCotizacion').ladda();
     btnNuevaCotizacionLoading.click(function () {
         btnNuevaCotizacionLoading.ladda('start');
         if ($scope.arrayItem.length == 0) {
@@ -531,13 +534,12 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
                 cargarArchivos($scope.idCotizacion, $scope.idTrabajo);
                 btnNuevaCotizacionLoading.ladda('stop');
-                location.href = '/cotizacionconsulta';
             }, function (error) {
                 alertFactory.error('Error');
                 btnNuevaCotizacionLoading.ladda('stop');
             });
     });
-    
+
     //Se obtienen los datos de la unidad a cotizar
     var datosUnidad = function (idCotizacion, idTrabajo) {
         cotizacionRepository.datosUnidad(idCotizacion, idTrabajo)
