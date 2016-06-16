@@ -17,7 +17,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     $scope.userData = localStorageService.get('userData');
     var itemsAutorizacionRechazo = [];
 
-    $scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
+    /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         $scope.idEstatus = idEstatus;
         $scope.idItem = idItem;
         $scope.idCotizacion = idCotizacion;
@@ -32,6 +32,20 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.usuarioAutorizador = usuarioAutorizador;
 
         $('#cotizacionDetalleR').appendTo('body').modal('show');
+
+    }*/
+    $scope.AutorizarItem = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
+        if (idEstatus == 9) {
+            $scope.tipoComentario = 'Comentarios Autoriación';
+        } else {
+            $scope.tipoComentario = 'Comentarios Rechazo';
+        }
+        $scope.idEstatus = idEstatus;
+        $scope.idItem = idItem;
+        $scope.idCotizacion = idCotizacion;
+        $scope.usuarioAutorizador = usuarioAutorizador;
+
+        $('#cotizacionDetalle').appendTo('body').modal('show');
 
     }
 
@@ -376,8 +390,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             });
     }
 
+    //añade un item en la lista
     $scope.ObtieneAutorizaciones = function (comentarios) {
-
         var objAutorizaciones = {
             comentarios: comentarios,
             idEstatus: $scope.idEstatus,
@@ -385,7 +399,26 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             idCotizacion: $scope.idCotizacion,
             idUsuarioAutorizador: $scope.usuarioAutorizador
         }
-        itemsAutorizacionRechazo.push(objAutorizaciones);
+        if (itemsAutorizacionRechazo.length > 0) {
+            if (validaItemExists(itemsAutorizacionRechazo, $scope.idItem, comentarios) == false) {
+                itemsAutorizacionRechazo.push(objAutorizaciones);
+            }
+        } else {
+            itemsAutorizacionRechazo.push(objAutorizaciones);
+        }
+    }
+
+    //valida si ya existe el item
+    var validaItemExists = function (pitemsAutorizacionRechazo, idItem, comentarios) {
+        var exists = false;
+        pitemsAutorizacionRechazo.forEach(function (item, i) {
+            if (item.idItem == idItem) {
+                itemsAutorizacionRechazo[i].idEstatus = $scope.idEstatus;
+                itemsAutorizacionRechazo[i].comentarios = comentarios;
+                exists = true;
+            }
+        });
+        return exists;
     }
 
     $scope.ActualizaCotizacion = function () {

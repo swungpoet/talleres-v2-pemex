@@ -77,11 +77,11 @@
                                     <td>
                                         <form action="" ng-show="articulo.idEstatus == 8">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" name="name" value="acepta" ng-click="AutorizarItemA(9, articulo.idItem, articulo.idCotizacion, userData.idUsuario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador">
+                                                <input type="radio" name="name" value="acepta" ng-click="AutorizarItem(9, articulo.idItem, articulo.idCotizacion, userData.idUsuario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Autorizar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador">
                                                 <label for="inlineRadio"> Acepta </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" name="name" value="rechaza" ng-click="AutorizarItemR(10, articulo.idItem, articulo.idCotizacion, userData.idUsuario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador">
+                                                <input type="radio" name="name" value="rechaza" ng-click="AutorizarItem(10, articulo.idItem, articulo.idCotizacion, userData.idUsuario)" ng-hide="userData.idTipoUsuario == 3" data-toggle="tooltip" tooltip="Rechazar" tooltip-placement="left" ng-disabled="userData.idUsuario != articulo.UsuarioAutorizador">
                                                 <label for="inlineRadio"> Rechaza </label>
                                             </div>
                                         </form>
@@ -140,14 +140,14 @@
         </div>
     </div>
 
-    <div id="cotizacionDetalleA" class="modal inmodal fade" role="dialog">
+    <div id="cotizacionDetalle" class="modal inmodal fade" role="dialog">
         <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Comentarios Autorizacion</h4>
+                    <h4 class="modal-title">{{tipoComentario}}</h4>
                 </div>
                 <div class="modal-body">
                     <!-- /table-responsive -->
@@ -162,17 +162,14 @@
         </div>
     </div>
 
-    <div id="cotizacionDetalleR" class="modal inmodal fade" role="dialog">
+    <!--<div id="cotizacionDetalleR" class="modal inmodal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Comentarios Rechazo</h4>
                 </div>
                 <div class="modal-body">
-                    <!-- /table-responsive -->
                     <center>
                         <textarea ng-model="comentarios" name="comentarios" rows="10" cols="110" placeholder="Escribe tus comentarios"></textarea>
                     </center>
@@ -182,4 +179,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
