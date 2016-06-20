@@ -153,61 +153,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
 
     //Se agregan los items para el calculo de la cotización
     $scope.cotizacion = function (pieza) {
-        if ($scope.arrayItem.length != 0) {
-            if (existsItem(pieza) == true) {
-                $scope.arrayItem.forEach(function (item, i) {
-                    if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento) {
-                        $scope.arrayItem[i].cantidad = item.cantidad + 1;
-                        $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
-                            //$scope.importe = $scope.arrayItem[i].importe;
-                        $scope.sub = calcularSubtotal();
-                        $scope.iva = calcularIva();
-                        $scope.total = calculaTotal();
-                    }
-                });
-                exist = false;
-            } else {
-                //Se agrega el item seleccionado al array
-                $scope.arrayItem.push({
-                    numeroPartida: pieza.numeroPartida,
-                    idItem: pieza.idItem,
-                    numeroParte: pieza.numeroParte,
-                    item: pieza.item,
-                    precio: pieza.precio,
-                    cantidad: 1,
-                    importe: pieza.precio * 1,
-                    idTipoElemento: pieza.idTipoElemento,
-                    valorIva: pieza.valorIva,
-                    idEstatus: 8,
-                    idNivelAutorizacion: pieza.idNivelAutorizacion
-                });
-                $scope.sub = calcularSubtotal();
-                $scope.iva = calcularIva();
-                $scope.total = calculaTotal();
-                exist = false;
-            }
-        } else {
-            //Se agrega el item seleccionado al array
-            $scope.arrayItem.push({
-                numeroPartida: pieza.numeroPartida,
-                idItem: pieza.idItem,
-                numeroParte: pieza.numeroParte,
-                item: pieza.item,
-                precio: pieza.precio,
-                cantidad: 1,
-                importe: pieza.precio * 1,
-                idTipoElemento: pieza.idTipoElemento,
-                valorIva: pieza.valorIva,
-                idEstatus: 8,
-                idNivelAutorizacion: pieza.idNivelAutorizacion
-            });
-            $scope.sub = calcularSubtotal();
-            $scope.iva = calcularIva();
-            $scope.total = calculaTotal();
-            exist = false;
-        }
-        
-        $scope.precioActual = pieza.precio;
+        $scope.pieza = pieza;
+        $scope.precioActual= pieza.precio;
         $('#editaPrecio').appendTo('body').modal('show');
 
     };
@@ -595,6 +542,63 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             });
         });
         return $scope.filesName;
+    }
+
+    $scope.precioEditado = function(pieza){
+       
+       if ($scope.arrayItem.length != 0) {
+            if (existsItem(pieza) == true) {
+                $scope.arrayItem.forEach(function (item, i) {
+                    if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento) {
+                        $scope.arrayItem[i].cantidad = item.cantidad + 1;
+                        $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
+                            //$scope.importe = $scope.arrayItem[i].importe;
+                        $scope.sub = calcularSubtotal();
+                        $scope.iva = calcularIva();
+                        $scope.total = calculaTotal();
+                    }
+                });
+                exist = false;
+            } else {
+                //Se agrega el item seleccionado al array
+                $scope.arrayItem.push({
+                    numeroPartida: pieza.numeroPartida,
+                    idItem: pieza.idItem,
+                    numeroParte: pieza.numeroParte,
+                    item: pieza.item,
+                    precio: $scope.precioActual,
+                    cantidad: 1,
+                    importe: $scope.precioActual * 1,
+                    idTipoElemento: pieza.idTipoElemento,
+                    valorIva: pieza.valorIva,
+                    idEstatus: 8,
+                    idNivelAutorizacion: pieza.idNivelAutorizacion
+                });
+                $scope.sub = calcularSubtotal();
+                $scope.iva = calcularIva();
+                $scope.total = calculaTotal();
+                exist = false;
+            }
+        } else {
+            //Se agrega el item seleccionado al array
+            $scope.arrayItem.push({
+                numeroPartida: pieza.numeroPartida,
+                idItem: pieza.idItem,
+                numeroParte: pieza.numeroParte,
+                item: pieza.item,
+                precio: $scope.precioActual,
+                cantidad: 1,
+                importe: $scope.precioActual * 1,
+                idTipoElemento: pieza.idTipoElemento,
+                valorIva: pieza.valorIva,
+                idEstatus: 8,
+                idNivelAutorizacion: pieza.idNivelAutorizacion
+            });
+            $scope.sub = calcularSubtotal();
+            $scope.iva = calcularIva();
+            $scope.total = calculaTotal();
+            exist = false;
+        }  
     }
 
 });
