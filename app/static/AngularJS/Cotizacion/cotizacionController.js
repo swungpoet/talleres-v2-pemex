@@ -206,6 +206,10 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.total = calculaTotal();
             exist = false;
         }
+        
+        $scope.precioActual = pieza.precio;
+        $('#editaPrecio').appendTo('body').modal('show');
+
     };
 
     //Valida si el item ya existe en la cotización
@@ -592,4 +596,5 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         });
         return $scope.filesName;
     }
+
 });
