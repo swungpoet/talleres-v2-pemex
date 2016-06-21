@@ -12,11 +12,11 @@ registrationModule.factory('citaRepository', function ($http) {
                 }
             });
         },
-        getUnidadInformation: function(idCliente, datoUnidad){
+        getUnidadInformation: function(idCliente, datoUnidad, idUsuario){
             return $http({
                 url: citaUrl + 'unidad/',
                 method: "GET",
-                params: {idCliente: idCliente, datoUnidad: datoUnidad},
+                params: {idCliente: idCliente, datoUnidad: datoUnidad, idUsuario: idUsuario},
                 headers: {
                 'Content-Type': 'application/json'
                 }

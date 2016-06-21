@@ -24,7 +24,8 @@ Cita.prototype.get_unidad = function(req, res, next) {
     var self = this;
     //Obtención de valores de los parámetros del request
     var params = [{name: 'idCliente', value: req.query.idCliente, type: self.model.types.INT},
-                  {name: 'datoUnidad', value: req.query.datoUnidad, type: self.model.types.STRING}];
+                  {name: 'datoUnidad', value: req.query.datoUnidad, type: self.model.types.STRING},
+                  {name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT}];
 
     this.model.query('SEL_UNIDAD_SP', params, function(error, result) {
         self.view.expositor(res, {

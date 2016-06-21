@@ -172,7 +172,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     //obtiene la unidad mediante el dato buscado
     var getUnidad = function (selectedCliente, datoUnidad) {
         $('#btnBuscar').button('Buscando...');
-        $scope.promise = citaRepository.getUnidadInformation(selectedCliente, datoUnidad).then(function (unidadInfo) {
+        $scope.promise = citaRepository.getUnidadInformation(selectedCliente, datoUnidad, $scope.userData.idUsuario).then(function (unidadInfo) {
             $('.dataTableUnidad').DataTable().destroy();
             $scope.unidades = unidadInfo.data;
             if (unidadInfo.data.length > 0) {
