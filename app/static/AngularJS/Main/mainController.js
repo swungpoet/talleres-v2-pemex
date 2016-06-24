@@ -1,30 +1,51 @@
 registrationModule.controller('mainController', function ($scope, $rootScope, $location, localStorageService, mainRepository) {
     $rootScope.showChat = 0;
-    var citaMsg = localStorageService.get('citaMsg');
+     var citaMsg = localStorageService.get('citaMsg');
+
     $scope.descripcion = localStorageService.get('desc');
     $scope.comentarios = '';
+    $scope.comentario = '';
 
     $scope.init = function () {
-        $scope.cargaChat();
+        $scope.cargaChatTaller();
+         $scope.cargaChatCliente();
         $rootScope.userData = localStorageService.get('userData');
     }
 
-    $scope.cargaChat = function () {
+    $scope.cargaChatTaller = function () {
         if (citaMsg !== null) {
-            mainRepository.getChat(citaMsg).then(function (result) {
+            mainRepository.getChat(citaMsg, 1).then(function (result) {
                 if (result.data.length > 0) {
-                    $scope.chat = result.data;
+                    $scope.chattaller = result.data;
                 }
             }, function (error) {});
         }
     }
 
-    $scope.EnviarComentario = function (comentarios) {
+$scope.cargaChatCliente = function () {
+        if (citaMsg !== null) {
+            mainRepository.getChat(citaMsg, 2).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.chatcliente = result.data;
+                }
+            }, function (error) {});
+        }
+    }
+
+    $scope.EnviarComentario1 = function (comentarios) {
         mainRepository.putMessage($rootScope.userData.idUsuario, comentarios, citaMsg).then(function (result) {
                 $scope.algo = result.data;
                 $scope.clearComments();
                 $scope.cargaChat();
+            },
+            function (error) {});
+    }
 
+     $scope.EnviarComentario2 = function (comentario) {
+        mainRepository.putMessage($rootScope.userData.idUsuario, comentario, citaMsg).then(function (result) {
+                $scope.algo = result.data;
+                $scope.BorraComentario();
+                $scope.cargaChat();
             },
             function (error) {});
     }
@@ -32,4 +53,8 @@ registrationModule.controller('mainController', function ($scope, $rootScope, $l
     $scope.clearComments = function () {
         $scope.comentarios = '';
     }
+    $scope.BorraComentario = function () {
+        $scope.comentario = '';
+    }
+
 });

@@ -5495,7 +5495,7 @@ body.body-small .vote-icon {
   display: none;
   position: fixed;
   bottom: 20px;
-  right: 75px;
+  right: 107px;
   background: #fff;
   border: 1px solid #e7eaec;
   width: 230px;
@@ -5585,7 +5585,7 @@ body.body-small .vote-icon {
   height: 38px;
   width: 38px;
   display: block;
-  background: #FFA100;
+  background: #55b4f0;
   padding: 9px 8px;
   text-align: center;
   color: #fff;
@@ -5593,13 +5593,13 @@ body.body-small .vote-icon {
 }
 .open-small-chat2:hover {
   color: white;
-  background: #FFA100;
+  background: #55b4f0;
 }
 .small-chat-box2 {
   display: none;
   position: fixed;
   bottom: 20px;
-  right: 150px;
+  right: 350px;
   background: #fff;
   border: 1px solid #e7eaec;
   width: 230px;

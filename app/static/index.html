@@ -119,20 +119,22 @@
             <div class="heading" draggable="true">
                 <small class="chat-date pull-right">
                     {{descripcion}}
-                </small> Chat
+                </small> Chat Callcenter/Taller
             </div>
 
             <div class="content">
-                <div ng-repeat="msg in chat">
-                    <div ng-class="msg.idUsuario === userData.idUsuario ? 'right' : 'left'">
+                <div ng-repeat="msgtaller in chattaller">
+
+                    <div ng-class="msgtaller.idUsuario === userData.idUsuario ? 'right' : 'left'">
+                    
                         <div class="author-name">
-                            {{msg.nombreCompleto}}
+                            {{msgtaller.nombreCompleto}}
                             <small class="chat-date">
-                            {{msg.fecha | date:'dd-MM-yyyy HH:mm'}}
+                            {{msgtaller.fecha | date:'dd-MM-yyyy HH:mm'}}
                         </small>
                         </div>
-                        <div ng-class="msg.idUsuario === userData.idUsuario ? 'chat-message' : 'chat-message active'">
-                            {{msg.mensaje}}
+                        <div ng-class="msgtaller.idUsuario === userData.idUsuario ? 'chat-message' : 'chat-message active'">
+                            {{msgtaller.mensaje}}
                         </div>
                     </div>
                 </div>
@@ -142,12 +144,12 @@
             <div class="form-chat">
                 <div class="input-group input-group-sm">
                     <input type="text" ng-model="comentarios" class="form-control"> <span class="input-group-btn"> <button
-                        class="btn btn-primary" type="button" ng-click="EnviarComentario(comentarios)">Enviar
+                        class="btn btn-primary" type="button" ng-click="EnviarComentario1(comentarios)">Enviar
                 </button> </span></div>
             </div>
 
         </div>
-        <div id="small-chat">
+        <div id="small-chat" ng-hide="userData.idTipoUsuario == 4">
 
             <!-- <span class="badge badge-warning pull-right">5</span> -->
             <a class="open-small-chat">
@@ -158,50 +160,50 @@
     </div>
 
   <!--CHAT CLIENTE- CALLCENTER-->
-   <!--<div id="wrapper" ng-hide="showChat == 0">
+   <div id="wrapper" ng-hide="showChat == 0">
         <div class="small-chat-box2 fadeInRight animated">
 
             <div class="heading2" draggable="true">
                 <small class="chat-date2 pull-right">
-                    {{descripcion}}
-                </small> Chat
+
+                </small> Chat Callcenter/Cliente
             </div>
 
             <div class="content2">
-                <div ng-repeat="msg in chat">
-                    <div ng-class="msg.idUsuario === 3 ? 'right' : 'left'">
+                <div ng-repeat="msgcliente in chatcliente">
+                    <div ng-class="msgcliente.idUsuario === 3 ? 'right' : 'left'">
                         <div class="author-name">
-                            {{msg.nombreCompleto}}
+                            {{msgcliente.nombreCompleto}}
                             <small class="chat-date2">
-                            {{msg.fecha | date:'dd-MM-yyyy HH:mm'}}
+                            {{msgcliente.fecha | date:'dd-MM-yyyy HH:mm'}}
                         </small>
                         </div>
-                        <div ng-class="msg.idUsuario === 3 ? 'chat-message2' : 'chat-message2 active'">
-                            {{msg.mensaje}}
+                        <div ng-class="msgcliente.idUsuario === 3 ? 'chat-message2' : 'chat-message2 active'">
+                            {{msgcliente.mensaje}}
                         </div>
                     </div>
                 </div>
-
-
             </div>
+
             <div class="form-chat2">
                 <div class="input-group input-group-sm">
-                    <input type="text" ng-model="comentarios" class="form-control"> <span class="input-group-btn"> <button
-                        class="btn btn-primary" type="button" ng-click="EnviarComentario(comentarios)">Enviar
+                    <input type="text" ng-model="comentario" class="form-control"> <span class="input-group-btn"> <button
+                        class="btn btn-primary" type="button" ng-click="EnviarComentario2(comentario)">Enviar
                 </button> </span></div>
             </div>
 
         </div>
-        <div id="small-chat2">
+        <div id="small-chat2" ng-hide="userData.idTipoUsuario == 3">
 
-             <span class="badge badge-warning pull-right">5</span> 
             <a class="open-small-chat2">
                 <i class="fa fa-comments"></i>
 
             </a>
         </div>
-    </div>-->
-    
+    </div>
+
+
+
     <!--Librearias JQuery y Bootstrap-->
     <script src="js/libs/jQuery/jquery-2.1.4.js"></script>
     <script src="js/libs/bootstrap/bootstrap.js"></script>
