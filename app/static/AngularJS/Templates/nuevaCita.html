@@ -40,7 +40,7 @@
                                         <!--<input type="checkbox" id="tipoCitaSwitch" name="my-checkbox" checked data-on-text="Preventivo" data-off-text="Correctivo" data-off="success">-->
                                         <select class="form-control" name="tipocita" ng-model="selectedTipoCita" ng-options="tipoCita.tipoCita for tipoCita in tiposCita">
                                             <option value="">Seleccionar tipo de cita</option><!--default option -->
-                                        </select>
+                                        </select>{{selectedTipoCita}}
                                 </form>
                                 <br>
                                 <form role="form">

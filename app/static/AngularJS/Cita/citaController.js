@@ -281,9 +281,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     }
 
     //inserta una nueva cita
-    $scope.addCita = function () {
+    $scope.addCita = function () {         
 
-        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.datosCita.idTaller != undefined) {
+        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.datosCita.idTaller != undefined && $scope.labelItems > 0 && $scope.selectedTipoCita != undefined) {
             $scope.datosCita.pieza = "";
             if (localStorageService.get('stgListaPiezas', $scope.listaPiezas) != undefined) {
                 $scope.datosCita.pieza = localStorageService.get('stgListaPiezas', $scope.listaPiezas).slice(0);
@@ -336,7 +336,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             }, function (error) {
                 alertFactory.error("Error al insertar la cita");
             });
-        } else {
+        } else if($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.datosCita.idTaller != undefined && $scope.labelItems <= 0 && $scope.selectedTipoCita != undefined){
+            alertFactory.info("Llene la Pre-Orden");
+        }else {
             alertFactory.info("Llene todos los campos");
         }
     }
