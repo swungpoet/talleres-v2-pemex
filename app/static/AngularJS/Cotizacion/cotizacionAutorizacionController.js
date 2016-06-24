@@ -65,8 +65,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
     //Obtiene la conversación de la cita 
     $scope.cargaChat = function () {
-        $scope.promise =
-            cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
+        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.chat = result.data;
                 }
