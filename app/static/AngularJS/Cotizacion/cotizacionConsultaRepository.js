@@ -2,11 +2,14 @@ var searchUrl = global_settings.urlCORS + '/api/cotizacion/';
 
 registrationModule.factory('cotizacionConsultaRepository', function ($http) {
     return {
-        get: function () {
-            // return $http.post(loginUrl + '1|' + rol + '|' + nombre + '|' + email + '|' + password);
+        get: function(idUsuario){
             return $http({
-                url: searchUrl + 'see',
-                method: "GET"
+                url: searchUrl + 'see/',
+                method: "GET",
+                params: {idUsuario: idUsuario},
+                headers: {
+                'Content-Type': 'application/json'
+                }
             });
         },
         busquedaPieza: function(){

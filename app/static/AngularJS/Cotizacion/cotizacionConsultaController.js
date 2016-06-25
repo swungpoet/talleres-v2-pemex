@@ -61,7 +61,7 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
     //Obtiene las cotizaciones pendientes por autorizar
     $scope.Maestro = function () {
         $scope.promise =
-            cotizacionConsultaRepository.get().then(function (result) {
+            cotizacionConsultaRepository.get($scope.userData.idUsuario).then(function (result) {
                     if (result.data.length > 0) {
                         $scope.cotizaciones = result.data;
                         setTimeout(function () {
