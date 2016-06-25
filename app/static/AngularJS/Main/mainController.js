@@ -7,7 +7,7 @@ registrationModule.controller('mainController', function ($scope, $rootScope, $l
     $scope.comentario = '';
 
     $scope.init = function () {
-        $scope.cargaChatTaller();
+         $scope.cargaChatTaller();
          $scope.cargaChatCliente();
         $rootScope.userData = localStorageService.get('userData');
     }
@@ -32,20 +32,20 @@ $scope.cargaChatCliente = function () {
         }
     }
 
-    $scope.EnviarComentario1 = function (comentarios) {
-        mainRepository.putMessage($rootScope.userData.idUsuario, comentarios, citaMsg).then(function (result) {
+    $scope.EnviarComentario1 = function (comentarios, idTipoChat) {
+        mainRepository.putMessage($rootScope.userData.idUsuario, comentarios, citaMsg, idTipoChat).then(function (result) {
                 $scope.algo = result.data;
                 $scope.clearComments();
-                $scope.cargaChat();
+                $scope.cargaChatTaller();
             },
             function (error) {});
     }
 
      $scope.EnviarComentario2 = function (comentario) {
-        mainRepository.putMessage($rootScope.userData.idUsuario, comentario, citaMsg).then(function (result) {
+        mainRepository.putMessage($rootScope.userData.idUsuario, comentario, citaMsg, 2).then(function (result) {
                 $scope.algo = result.data;
                 $scope.BorraComentario();
-                $scope.cargaChat();
+                $scope.cargaChatCliente();
             },
             function (error) {});
     }

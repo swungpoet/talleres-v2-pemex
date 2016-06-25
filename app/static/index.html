@@ -124,9 +124,7 @@
 
             <div class="content">
                 <div ng-repeat="msgtaller in chattaller">
-
                     <div ng-class="msgtaller.idUsuario === userData.idUsuario ? 'right' : 'left'">
-                    
                         <div class="author-name">
                             {{msgtaller.nombreCompleto}}
                             <small class="chat-date">
@@ -144,7 +142,7 @@
             <div class="form-chat">
                 <div class="input-group input-group-sm">
                     <input type="text" ng-model="comentarios" class="form-control"> <span class="input-group-btn"> <button
-                        class="btn btn-primary" type="button" ng-click="EnviarComentario1(comentarios)">Enviar
+                        class="btn btn-primary" type="button" ng-click="EnviarComentario1(comentarios, 1)">Enviar
                 </button> </span></div>
             </div>
 

@@ -52,7 +52,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
     $scope.init = function () {
         $scope.cargaFicha();
-        $scope.cargaChat();
+        $scope.cargaChatTaller();
+         $scope.cargaChatCliente();
         //$scope.getCotizacionByTrabajo();
         $scope.Detalle(idCotizacion, idTaller);
         //$scope.lookUpTrabajo(idCita);
@@ -64,7 +65,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     //Obtiene la conversación de la cita 
-    $scope.cargaChat = function () {
+  /*  $scope.cargaChat = function () {
         $scope.promise = cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.chat = result.data;
@@ -72,8 +73,25 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             }, function (error) {
                 alertFactory.error('No se pudo obtener la conversación del chat');
             });
+    }*/
+ $scope.cargaChatTaller = function () {
+        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 1).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.chattaller = result.data;
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo obtener la conversación del chat');
+            });
     }
-
+    $scope.cargaChatCliente = function () {
+        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 2).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.chatcliente = result.data;
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo obtener la conversación del chat');
+            });
+    }
     //Obtiene la ficha técnica de la unidad
     $scope.cargaFicha = function () {
         cotizacionAutorizacionRepository.getFichaTecnica(idCita).then(function (result) {
@@ -88,13 +106,22 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         });
     }
 
-    $scope.EnviarComentario = function (comentarios) {
-        cotizacionAutorizacionRepository.putMessage(3, comentarios, idCita).then(function (result) {
+    $scope.EnviarComentario1 = function (comentarios) {
+        cotizacionAutorizacionRepository.putMessage(3, comentarios, idCita, 1).then(function (result) {
                 $scope.algo = result.data;
-                $scope.cargaChat();
+                $scope.cargaChatTaller();
             },
             function (error) {});
     }
+
+    $scope.EnviarComentario2 = function (comentario) {
+        cotizacionAutorizacionRepository.putMessage(3, comentario, idCita, 2).then(function (result) {
+                $scope.algo = result.data;
+                $scope.cargaChatCliente();
+            },
+            function (error) {});
+    }
+
 
     $scope.getCotizacionByTrabajo = function () {
         $scope.promise =

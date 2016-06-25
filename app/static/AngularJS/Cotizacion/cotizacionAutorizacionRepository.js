@@ -16,13 +16,13 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                 }
             });
         },
-        putMessage: function (usuario, msg, cita) {
+     putMessage: function (usuario, msg, cita, idTipoChat) {
             var msgObj = {
                 idUsuario: usuario,
                 mensaje: msg,
-                idCita: cita
+                idCita: cita,
+                idTipoChat: idTipoChat
             };
-
             return $http({
                 url: searchUrl + 'message',
                 method: "POST",
