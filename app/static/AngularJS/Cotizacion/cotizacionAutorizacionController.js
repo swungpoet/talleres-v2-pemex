@@ -16,6 +16,9 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacionEdita = 0;
     $scope.userData = localStorageService.get('userData');
     var itemsAutorizacionRechazo = [];
+    $scope.vistaPrecio = true;
+    //$scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
+    $("[id='tipoPrecioSwitch']").bootstrapSwitch();
 
     /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         $scope.idEstatus = idEstatus;
@@ -462,5 +465,14 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         }
         location.href = '/trabajo';
     }
+    
+    $('#tipoPrecioSwitch').on('switchChange.bootstrapSwitch', function (event, state){ 
+        if(state == true){
+            $scope.vistaPrecio = true;
+        }
+        else{          
+            $scope.vistaPrecio = false;
+        }                      
+    });
 
 });

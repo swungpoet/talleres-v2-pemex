@@ -48,6 +48,14 @@
                     </div>
 
                     <br>
+                    <div class="row">
+                        <div class="col-md-offset-10 col-md-2">
+                            <form role="form">
+                                <input type="checkbox" id="tipoPrecioSwitch" name="my-checkbox" checked data-on-text="Taller" data-off-text="Cliente" data-size="mini" data-toggle="tooltip" tooltip="Muestra los precios del Taller o Cliente" tooltip-placement="up" ng-model="vistaPrecio">
+                            </form>
+                            <span>{{vistaPrecio}}</span>
+                        </div>
+                    </div>
                     <div class="table-responsive m-t">
                         <table class="table invoice-table">
                             <thead>
@@ -71,7 +79,8 @@
                                         <div><strong>Número de Partida: {{ articulo.numeroPartida }}</strong></div>
                                         <small>{{articulo.item}}</small></td>
                                     <td>{{articulo.cantidad}}</td>
-                                    <td>{{ articulo.precio | currency }}</td>
+                                    <td>{{ vistaPrecio == 1 ? articulo.precio : articulo.precioCliente | currency }}</td>
+                                    <!--<td >{{ articulo.precioCliente | currency }}</td>-->
                                     <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
                                     <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
                                     <td>
