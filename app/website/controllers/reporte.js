@@ -23,7 +23,7 @@ var Reporte = function(conf) {
 
 Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     var self = this;
-    
+
     var params = [
         {
             name: 'idTrabajo',
@@ -35,18 +35,17 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     // if (req.query.noReporte, ...) { Validacion de campos
 		    data = {
 		        noReporte: req.query.noReporte,
-				solpe: req.query.solpe,
+		        solpe: req.query.solpe,
 		        ordenSurtimiento: req.query.ordenSurtimiento,
 		        montoOS: req.query.montoOS,
 		        pedidoAsociado: req.query.pedidoAsociado,
-
             nombreEmisor: req.query.nombreEmisor,
 		        nombreProveedor: req.query.nombreProveedor,
 		        puestoProveedor: req.query.puestoProveedor,
 		        fecha: new Date()
 		    }
 
-		    this.model.query('SEL_ORDEN_DETALLE_SP', params, function(error, result) { 
+        this.model.query('SEL_ORDEN_DETALLE_SP', params, function(error, result) {
                 data.data = result;
                 var total = 0;
                 for(var i in data.data){
@@ -54,7 +53,6 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
                 }
                 data.total = "$ "+total+" UDS";
                 generateConfomidadReporte(data,res)
-
             });
 }
 
@@ -158,60 +156,67 @@ function generateConfomidadReporte(data,res) {
     doc.text("IMPORTE DE LOS INSPECCIONADO O SUPERVISADO",444,278,{width: 110,align: 'center'})
 
     doc.fontSize(7);
-    var tableHeight = 0, extra =0;
-    for(var i in data.data){
-        var top = 0;
-        var salto = 0;
-        var skip = 9.8;
-        for (j=0;j<i;j++){
-          top += Math.ceil(data.data[j].descripcion.length/48)+1
+    var tableHeight = 0, extra =0,extra = 0,top = 0,preTop=0,skip = 8.2;
+    var tablaInicial = 295,alturaTabla= 0,limiteTexto=50;
+
+    for(var i = 0 ; i < data.data.length; i++){
+        if(paginas>0){
+            tablaInicial = 65;
+            alturaTabla = 230
+            limiteTexto = 77
         }
-        tableHeight = ((skip*(top+Math.ceil(data.data[i].descripcion.length/48)+1))+salto)+(extra*paginas)
-        if(tableHeight > 400){
-          extra = tableHeight-265-(tableHeight-400);
-          var secondTable = 0 ;
-          if(paginas > 0 ) secondTable = 230;
-          doc.rect(48, 289-secondTable, 30, 250+extra+secondTable).stroke()
-          doc.rect(78, 289-secondTable, 150, 250+extra+secondTable).stroke()
-          doc.rect(228, 289-secondTable, 30, 250+extra+secondTable).stroke()
-          doc.rect(258, 289-secondTable, 62, 250+extra+secondTable).stroke()
-          doc.rect(320, 289-secondTable, 62, 250+extra+secondTable).stroke()
-          doc.rect(382, 289-secondTable, 62, 250+extra+secondTable).stroke()
-          doc.rect(444, 289-secondTable, 110, 250+extra+secondTable).stroke()
-          doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO",30,745)
-          doc.addPage();
-          paginas++;
-          extra = -600+(tableHeight-400);
-          if(paginas>1)
-          extra = -550+(tableHeight-400);
+        preTop = Math.ceil(data.data[i].descripcion.length/30)
+        if(preTop+top > limiteTexto-20){
+            doc.rect(48, 289-alturaTabla, 30, 430+alturaTabla).stroke()
+            doc.rect(78, 289-alturaTabla, 150, 430+alturaTabla).stroke()
+            doc.rect(228, 289-alturaTabla, 30, 430+alturaTabla).stroke()
+            doc.rect(258, 289-alturaTabla, 62, 430+alturaTabla).stroke()
+            doc.rect(320, 289-alturaTabla, 62, 430+alturaTabla).stroke()
+            doc.rect(382, 289-alturaTabla, 62, 430+alturaTabla).stroke()
+            doc.rect(444, 289-alturaTabla, 110, 430+alturaTabla).stroke()
 
-          tableHeight = ((skip*(top+Math.ceil(data.data[i].descripcion.length/48)+1))+salto)+(extra*paginas)
-
-          doc.rect(30, 40, 555, 700).stroke()
-          doc.rect(40, 50, 535, 680).stroke()
+            if(preTop+top > limiteTexto){
+                if(top < limiteTexto-5){
+                    var nextText = data.data[i].descripcion.slice( data.data[i].descripcion.indexOf(" ", (limiteTexto - top) * 30 ))
+                    data.data[i].descripcion = (data.data[i].descripcion.slice(0, data.data[i].descripcion.indexOf(" ", (limiteTexto - top) * 30 ))  )
+                    data.data.splice(i+1,0,{descripcion:nextText,partida:"",cantidad:"",unidad:"",noRemFac:"",fecha:"",importe:""})
+                }else{
+                    top = 0;
+                    paginas++;
+                    doc.addPage();
+                    doc.rect(30, 40, 555, 700).stroke()
+                    doc.rect(40, 50, 535, 680).stroke()
+                }
+            }
         }
-        doc.text(data.data[i].partida,50,(295+(skip*top)+salto)+(extra*paginas),{width: 30,align: 'center'})
-        doc.text(data.data[i].descripcion,85,(295+(skip*top)+salto)+(extra*paginas),{width: 135,align: 'justify'})
-        doc.text(data.data[i].cantidad,228,(295+(skip*top)+salto)+(extra*paginas),{width: 30,align: 'center'})
-        doc.text(data.data[i].unidad,258,(295+(skip*top)+salto)+(extra*paginas),{width: 62,align: 'center'})
-        doc.text(data.data[i].noRemFac,320,(295+(skip*top)+salto)+(extra*paginas),{width: 62,align: 'center'})
-        doc.text(data.fecha,382,(295+(skip*top)+salto)+(extra*paginas),{width: 63,align: 'center'})
-        doc.text(data.data[i].importe,444,(295+(skip*top)+salto)+(extra*paginas),{width: 100,align:'right'})
+        doc.text(data.data[i].partida,50,tablaInicial+(top*skip),{width: 25,align: 'center'})
+        doc.text(data.data[i].descripcion.toUpperCase(),85,tablaInicial+(top*skip),{width: 135,align: 'justify'})
+        doc.text(data.data[i].cantidad,228,tablaInicial + (top*skip),{width: 30,align: 'center'})
+        doc.text(data.data[i].unidad,258,tablaInicial + (top*skip),{width: 62,align: 'center'})
+        doc.text(data.data[i].noRemFac,320,tablaInicial + (top*skip),{width: 62,align: 'center'})
+        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha, 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
+        doc.text(data.data[i].importe,444,tablaInicial + (top*skip),{width: 100,align:'right'})
+        if(preTop + top >=limiteTexto-5){
+            top = 0;
+            paginas++;
+            doc.addPage();
+            doc.rect(30, 40, 555, 700).stroke()
+            doc.rect(40, 50, 535, 680).stroke()
+        }else{
+          top += Math.ceil(data.data[i].descripcion.length/30)+2
+        }
     }
-    if(paginas>0){
-      extra = tableHeight -240;
-
-      initTabla = 230;
+    if(top>0){
+        doc.rect(48, 289-alturaTabla, 30, 250+alturaTabla).stroke()
+        doc.rect(78, 289-alturaTabla, 150, 250+alturaTabla).stroke()
+        doc.rect(228, 289-alturaTabla, 30, 250+alturaTabla).stroke()
+        doc.rect(258, 289-alturaTabla, 62, 250+alturaTabla).stroke()
+        doc.rect(320, 289-alturaTabla, 62, 250+alturaTabla).stroke()
+        doc.rect(382, 289-alturaTabla, 62, 250+alturaTabla).stroke()
+        doc.rect(444, 289-alturaTabla, 110, 250+alturaTabla).stroke()
+    }else{
+        extra = -480;
     }
-      if(tableHeight>250)
-        extra = tableHeight-250;
-    doc.rect(48, 289-initTabla, 30, 250+extra+initTabla).stroke()
-    doc.rect(78, 289-initTabla, 150, 250+extra+initTabla).stroke()
-    doc.rect(228, 289-initTabla, 30, 250+extra+initTabla).stroke()
-    doc.rect(258, 289-initTabla, 62, 250+extra+initTabla).stroke()
-    doc.rect(320, 289-initTabla, 62, 250+extra+initTabla).stroke()
-    doc.rect(382, 289-initTabla, 62, 250+extra+initTabla).stroke()
-    doc.rect(444, 289-initTabla, 110, 250+extra+initTabla).stroke()
 
     doc.rect(48, 539+extra, 334, 12).stroke()
     doc.rect(382, 539+extra, 62, 12).stroke()
