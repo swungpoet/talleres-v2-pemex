@@ -119,7 +119,7 @@
             <div class="heading" draggable="true">
                 <small class="chat-date pull-right">
                     {{descripcion}}
-                </small> Chat Callcenter/Taller
+                </small> Chat CallC./Taller
             </div>
 
             <div class="content">
@@ -163,20 +163,20 @@
 
             <div class="heading2" draggable="true">
                 <small class="chat-date2 pull-right">
-
-                </small> Chat Callcenter/Cliente
+{{descripcion}}
+                </small> Chat CallC./Cliente
             </div>
 
             <div class="content2">
                 <div ng-repeat="msgcliente in chatcliente">
-                    <div ng-class="msgcliente.idUsuario === 3 ? 'right' : 'left'">
+                    <div ng-class="msgcliente.idUsuario === userData.idUsuario ? 'right' : 'left'">
                         <div class="author-name">
                             {{msgcliente.nombreCompleto}}
                             <small class="chat-date2">
                             {{msgcliente.fecha | date:'dd-MM-yyyy HH:mm'}}
                         </small>
                         </div>
-                        <div ng-class="msgcliente.idUsuario === 3 ? 'chat-message2' : 'chat-message2 active'">
+                        <div ng-class="msgcliente.idUsuario === userData.idUsuario ? 'chat-message2' : 'chat-message2 active'">
                             {{msgcliente.mensaje}}
                         </div>
                     </div>
