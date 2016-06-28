@@ -157,13 +157,13 @@ function generateConfomidadReporte(data,res) {
 
     doc.fontSize(7);
     var tableHeight = 0, extra =0,extra = 0,top = 0,preTop=0,skip = 8.2;
-    var tablaInicial = 295,alturaTabla= 0,limiteTexto=50;
+    var tablaInicial = 295,alturaTabla= 0,limiteTexto=45;
 
     for(var i = 0 ; i < data.data.length; i++){
         if(paginas>0){
             tablaInicial = 65;
             alturaTabla = 230
-            limiteTexto = 77
+            limiteTexto = 76
         }
         preTop = Math.ceil(data.data[i].descripcion.length/30)
         if(preTop+top > limiteTexto-20){
