@@ -370,17 +370,30 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.sumaIvaTotal = 0;
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
+        $scope.sumaIvaTotalCliente = 0;
+        $scope.sumaPrecioTotalCliente = 0;
+        $scope.sumaGranTotalCliente = 0;
 
         cotizacionConsultaRepository.getDetail(idCotizacion, idTaller).then(function (result) {
             if (result.data.length > 0) {
                 $scope.total = 0;
                 $scope.articulos = result.data;
                 for (var i = 0; i < result.data.length; i++) {
+                    //Sumatoria Taller
                     $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
-
+                    
                     $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
+                    
+                    //Sumatoria Cliente
+                    $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
+                    
+                    $scope.sumaPrecioTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente);
                 }
+                //Total Taller
                 $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
+                
+                //Total Cliente
+                $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
 
                 alertFactory.success('Detalle de la cotización, cargados.');
             } else {
@@ -468,10 +481,10 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     
     $('#tipoPrecioSwitch').on('switchChange.bootstrapSwitch', function (event, state){ 
         if(state == true){
-            $scope.vistaPrecio = true;
+            $scope.vistaPrecio = 1;
         }
         else{          
-            $scope.vistaPrecio = false;
+            $scope.vistaPrecio = 2;
         }                      
     });
 
