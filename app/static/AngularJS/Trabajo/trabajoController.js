@@ -272,6 +272,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 "&fecha=" + new Date() +
                 "&idTrabajo=" + $scope.idTrabajo);
 
+            trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
                 //if(certificadoGenerado.data[0].idHistorialProceso > 0){
                 alertFactory.success("Certificado de conformidad generado");
                 getTrabajo($scope.userData.idUsuario);
@@ -288,6 +289,11 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         nombreProveedor: "",
                         puestoProveedor: ""
                 }
+                    //}
+            }, function (error) {
+                alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
+            })
+            $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
         } else {
             alertFactory.info("Debe llenar todos los campos");
         }
