@@ -13,6 +13,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         getTrabajoTerminado($scope.userData.idUsuario);
         getTrabajoAprobado($scope.userData.idUsuario);
         $scope.habilitaBtnAprobar = true;
+
+        $scope.certificadoParams = {
+            noReporte: "",
+            solpe: "",
+            ordenSurtimiento: "",
+            montoOS: "",
+            pedidoAsociado: "",
+            nombreEmisor: "", //$scope.userData.nombreCompleto,
+            nombreProveedor: "",
+            puestoProveedor: ""
+        }
     }
 
     var getTrabajo = function (idUsuario) {
@@ -112,7 +123,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //actualiza el trabajo a estatus terminado
     $scope.updTerminaTrabajo = function (observacion) {
-        trabajoRepository.terminaTrabajo(7,$scope.idTrabajo, observacion).then(function (trabajoTerminado) {
+        trabajoRepository.terminaTrabajo(7, $scope.idTrabajo, observacion).then(function (trabajoTerminado) {
             if (trabajoTerminado.data[0].idHistorialProceso != 0) {
                 getTrabajo($scope.userData.idUsuario);
                 getTrabajoTerminado($scope.userData.idUsuario);
@@ -161,7 +172,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //realiza la carga de archivos especiales de la orden
-    $scope.cargaArchivosEspeciales = function(){
+    $scope.cargaArchivosEspeciales = function () {
         cargarArchivos();
         archivoTrabajo($scope.idTrabajo, $scope.hojaCalidad);
     }
@@ -247,45 +258,43 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //genera el formato para el certificado de conformidad
-    $scope.generaCertificadoConformidadPDF = function (idTrabajo) {
-        certificadoParams = {
-            noReporte: "1001",
-            solpe: "$1050.00",
-            ordenSurtimiento: "$100112.00 $",
-            montoOS: "$1001.00",
-            pedidoAsociado: "100113",
-            nombreEmisor: $scope.userData.nombreCompleto,
-            nombreProveedor: "Edgar González Fernández",
-            puestoProveedor: "Gerente",
-            fecha: new Date(),
-            idTrabajo: idTrabajo
+    $scope.generaCertificadoConformidadPDF = function () {
+        if ($scope.certificadoParams.noReporte = !'' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
+            $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor) {
+            window.open("http://localhost:4100/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                "&solpe=" + $scope.certificadoParams.solpe +
+                "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
+                "&montoOS=" + $scope.certificadoParams.montoOS +
+                "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
+                "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
+                "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
+                "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
+                "&fecha=" + new Date() +
+                "&idTrabajo=" + $scope.idTrabajo);
+
+                //if(certificadoGenerado.data[0].idHistorialProceso > 0){
+                alertFactory.success("Certificado de conformidad generado");
+                getTrabajo($scope.userData.idUsuario);
+                getTrabajoTerminado($scope.userData.idUsuario);
+                getTrabajoAprobado($scope.userData.idUsuario);
+
+                $scope.certificadoParams = {
+                        noReporte: "",
+                        solpe: "",
+                        ordenSurtimiento: "",
+                        montoOS: "",
+                        pedidoAsociado: "",
+                        nombreEmisor: "", //$scope.userData.nombreCompleto,
+                        nombreProveedor: "",
+                        puestoProveedor: ""
+                }
+        } else {
+            alertFactory.info("Debe llenar todos los campos");
         }
-
-        window.open("http://localhost:4100/api/reporte/conformidadpdf/?noReporte=" + certificadoParams.noReporte +
-            "&solpe=" + certificadoParams.solpe +
-            "&ordenSurtimiento=" + certificadoParams.ordenSurtimiento +
-            "&montoOS=" + certificadoParams.montoOS +
-            "&pedidoAsociado=" + certificadoParams.pedidoAsociado +
-            "&nombreEmisor=" + certificadoParams.nombreEmisor +
-            "&nombreProveedor=" + certificadoParams.nombreProveedor +
-            "&puestoProveedor=" + certificadoParams.puestoProveedor +
-            "&fecha=" + certificadoParams.fecha +
-            "&idTrabajo=" + certificadoParams.idTrabajo);
-
-        trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
-            //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-            alertFactory.success("Certificado de conformidad generado");
-            getTrabajo($scope.userData.idUsuario);
-            getTrabajoTerminado($scope.userData.idUsuario);
-            getTrabajoAprobado($scope.userData.idUsuario);
-            //}
-        }, function (error) {
-            alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
-        })
     }
-    
+
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
-    $scope.descargaCertificadoConformidadPDF = function(idTrabajo){
+    $scope.descargaCertificadoConformidadPDF = function (idTrabajo) {
         trabajoRepository.descargaCerficadoConformidadTrabajo(20, idTrabajo).then(function (certificadoDescargado) {
             //if(certificadoGenerado.data[0].idHistorialProceso > 0){
             alertFactory.success("Certificado de conformidad descargado");
@@ -297,4 +306,11 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
         })
     }
+
+    //abre la modal para los datos de entrada del certificado de conformidad
+    $scope.datosEntradaCertificadoModal = function (idTrabajo) {
+        $scope.idTrabajo = idTrabajo;
+        $('#datosEntradaCertificadoModal').appendTo("body").modal('show');
+    }
+
 });

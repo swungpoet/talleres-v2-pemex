@@ -72,15 +72,15 @@
                                                 <td>{{trabajo.fechaFin | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
-                                                    
+
                                                     <button ng-if="trabajo.estatus == 'Terminado' && userData.idTipoUsuario == 3" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,2)" data-toggle="tooltip" tooltip="Cargar hoja de transferencia de custodia" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;T. Custodia</button>
-                                                    
-                                                    <button ng-if="trabajo.estatus == 'TransResponsabilidad' && userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="generaCertificadoConformidadPDF(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span>&nbsp;Certificado conformidad</button>
-                                                    
+
+                                                    <button ng-if="trabajo.estatus == 'TransResponsabilidad' && userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="datosEntradaCertificadoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span>&nbsp;Certificado conformidad</button>
+
                                                     <button ng-if="trabajo.estatus == 'CertificadoGenerado' && userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar certificado</button>
-                                                    
+
                                                     <a ng-if="trabajo.estatus == 'CertificadoCall' && userData.idTipoUsuario == 4" type="button" data-toggle="tooltip" tooltip="Descargar certificado de conformidad" tooltip-placement="up" href="http://localhost:4100/uploads/files/{{trabajo.idTrabajo}}/documentos/CertificadoConformidad2.pdf" target="_parent" download="CeretificadoConformidad" class="btn btn-success" role="button" ng-click="descargaCertificadoConformidadPDF(trabajo.idTrabajo)"><span class="glyphicon glyphicon-download"></span>&nbsp;Descargar certificado</a>
-                                                    
+
                                                     <button ng-if="trabajo.estatus == 'CertificadoDescargado' && userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar Certificado</button>
                                                 </td>
                                             </tr>
@@ -165,6 +165,50 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="cargaArchivosEspeciales()">Adjuntar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="datosEntradaCertificadoModal" class="modal inmodal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+
+        <!-- Modal content-->
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Datos de entrada del Certificado de conformidad</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive m-t">
+                    <form role="form">
+                        <div class="form-group">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Solpe" class="form-control" ng-model="certificadoParams.solpe">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Orden de surtimiento" class="form-control" ng-model="certificadoParams.ordenSurtimiento">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Monto OS" ng-model="certificadoParams.montoOS" ng-currency min="-2" fraction="2" name="montoOSInput" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Pedido asociado" class="form-control" ng-model="certificadoParams.pedidoAsociado">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Nombre del emisor" class="form-control" ng-model="certificadoParams.nombreEmisor">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Nombre del proveedor" class="form-control" ng-model="certificadoParams.nombreProveedor">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Puesto del proveedor" class="form-control" ng-model="certificadoParams.puestoProveedor">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="generaCertificadoConformidadPDF()">Generar certificado</button>
                 </div>
             </div>
         </div>
