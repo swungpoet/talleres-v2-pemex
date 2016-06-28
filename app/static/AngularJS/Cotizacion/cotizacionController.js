@@ -102,7 +102,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             alertFactory.info("Ingrese un dato para búsqueda");
         } else {
             $('.dataTableItem').DataTable().destroy();
-            $('.dataTableCotizacion').DataTable().destroy();
+           /* $('.dataTableCotizacion').DataTable().destroy();*/
             $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza).then(function (result) {
                 $scope.listaPiezas = result.data;
                 if (result.data.length > 0) {
