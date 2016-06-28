@@ -103,7 +103,11 @@ var obtieneConsecutivo = function (ruta) {
 //Obtiene las cotizaciones pendientes por autorizar
 Cotizacion.prototype.get_see = function (req, res, next) {
     var self = this;
-    var params = [];
+     var params = [{
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }];
 
     this.model.query('SEL_COTIZACIONES_SP', params, function (error, result) {
         self.view.expositor(res, {
@@ -297,6 +301,11 @@ Cotizacion.prototype.get_chat = function (req, res, next) {
             name: 'idCita',
             value: req.query.idCita,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoChat',
+            value: req.query.idTipoChat,
+            type: self.model.types.DECIMAL
         }
     ];
 
@@ -330,6 +339,11 @@ Cotizacion.prototype.post_message = function (req, res, next) {
         {
             name: 'idCita',
             value: req.body.idCita,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoChat',
+            value: req.body.idTipoChat,
             type: self.model.types.DECIMAL
         }];
 

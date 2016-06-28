@@ -2,23 +2,26 @@ var searchUrl = global_settings.urlCORS + '/api/cotizacion/';
 
 registrationModule.factory('mainRepository', function ($http) {
     return {
-        getChat: function (idCita) {
+        getChat: function (idCita, idTipoChat) {
+            var Readmsg = {
+                 idCita: idCita,
+                 idTipoChat: idTipoChat
+            };
             return $http({
                 url: searchUrl + 'chat',
                 method: "GET",
-                params: {
-                    idCita: idCita
-                },
+                params: Readmsg,
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        putMessage: function (usuario, msg, cita) {
+        putMessage: function (usuario, msg, cita, idTipoChat) {
             var msgObj = {
                 idUsuario: usuario,
                 mensaje: msg,
-                idCita: cita
+                idCita: cita,
+                idTipoChat: idTipoChat
             };
 
             return $http({
@@ -32,3 +35,5 @@ registrationModule.factory('mainRepository', function ($http) {
         }
     };
 });
+
+ 

@@ -48,6 +48,13 @@
                     </div>
 
                     <br>
+                    <div class="row" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
+                        <div class="col-md-offset-10 col-md-2">
+                            <form role="form">
+                                <input type="checkbox" id="tipoPrecioSwitch" name="my-checkbox" checked data-on-text="Taller" data-off-text="Cliente" data-size="mini" data-toggle="tooltip" tooltip="Muestra los precios del Taller o Cliente" tooltip-placement="up" ng-model="vistaPrecio">
+                            </form>
+                        </div>
+                    </div>
                     <div class="table-responsive m-t">
                         <table class="table invoice-table">
                             <thead>
@@ -71,9 +78,9 @@
                                         <div><strong>Número de Partida: {{ articulo.numeroPartida }}</strong></div>
                                         <small>{{articulo.item}}</small></td>
                                     <td>{{articulo.cantidad}}</td>
-                                    <td>{{ articulo.precio | currency }}</td>
-                                    <td>{{articulo.cantidad * (articulo.precio*(articulo.valorIva / 100)) | currency}}</td>
-                                    <td>{{ (articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) | currency }}</td>
+                                    <td>{{ vistaPrecio == 1 ? articulo.precio : articulo.precioCliente | currency }}</td>
+                                    <td>{{ vistaPrecio == 1 ? (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))) : (articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100))) | currency }}</td>
+                                    <td>{{ vistaPrecio == 1 ? ((articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100)))) : ((articulo.cantidad * articulo.precioCliente) + (articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100)))) | currency }}</td>
                                     <td>
                                         <form action="" ng-show="articulo.idEstatus == 8">
                                             <div class="radio radio-info radio-inline">
@@ -99,15 +106,15 @@
                         <tbody>
                             <tr>
                                 <td><strong>Sub Total :</strong></td>
-                                <td>{{sumaPrecioTotal | currency}}</td>
+                                <td>{{ vistaPrecio == 1 ? sumaPrecioTotal : sumaPrecioTotalCliente | currency}}</td>
                             </tr>
                             <tr>
                                 <td><strong>I.V.A :</strong></td>
-                                <td>{{sumaIvaTotal | currency}}</td>
+                                <td>{{ vistaPrecio == 1 ? sumaIvaTotal : sumaIvaTotalCliente | currency}}</td>
                             </tr>
                             <tr>
                                 <td><strong>TOTAL :</strong></td>
-                                <td>{{sumaGranTotal | currency}}</td>
+                                <td>{{ vistaPrecio == 1 ? sumaGranTotal : sumaGranTotalCliente | currency}}</td>
                             </tr>
                         </tbody>
                     </table>

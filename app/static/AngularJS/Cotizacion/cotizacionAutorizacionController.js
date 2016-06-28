@@ -16,6 +16,9 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacionEdita = 0;
     $scope.userData = localStorageService.get('userData');
     var itemsAutorizacionRechazo = [];
+    $scope.vistaPrecio = true;
+    //$scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
+    $("[id='tipoPrecioSwitch']").bootstrapSwitch();
 
     /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         $scope.idEstatus = idEstatus;
@@ -52,7 +55,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
     $scope.init = function () {
         $scope.cargaFicha();
-        $scope.cargaChat();
+        $scope.cargaChatTaller();
+         $scope.cargaChatCliente();
         //$scope.getCotizacionByTrabajo();
         $scope.Detalle(idCotizacion, idTaller);
         //$scope.lookUpTrabajo(idCita);
@@ -64,17 +68,33 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     //Obtiene la conversación de la cita 
-    $scope.cargaChat = function () {
-        $scope.promise =
-            cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
+  /*  $scope.cargaChat = function () {
+        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.chat = result.data;
                 }
             }, function (error) {
                 alertFactory.error('No se pudo obtener la conversación del chat');
             });
+    }*/
+ $scope.cargaChatTaller = function () {
+        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 1).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.chattaller = result.data;
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo obtener la conversación del chat');
+            });
     }
-
+    $scope.cargaChatCliente = function () {
+        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 2).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.chatcliente = result.data;
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo obtener la conversación del chat');
+            });
+    }
     //Obtiene la ficha técnica de la unidad
     $scope.cargaFicha = function () {
         cotizacionAutorizacionRepository.getFichaTecnica(idCita).then(function (result) {
@@ -89,13 +109,22 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         });
     }
 
-    $scope.EnviarComentario = function (comentarios) {
-        cotizacionAutorizacionRepository.putMessage(3, comentarios, idCita).then(function (result) {
+    $scope.EnviarComentario1 = function (comentarios) {
+        cotizacionAutorizacionRepository.putMessage(3, comentarios, idCita, 1).then(function (result) {
                 $scope.algo = result.data;
-                $scope.cargaChat();
+                $scope.cargaChatTaller();
             },
             function (error) {});
     }
+
+    $scope.EnviarComentario2 = function (comentario) {
+        cotizacionAutorizacionRepository.putMessage(3, comentario, idCita, 2).then(function (result) {
+                $scope.algo = result.data;
+                $scope.cargaChatCliente();
+            },
+            function (error) {});
+    }
+
 
     $scope.getCotizacionByTrabajo = function () {
         $scope.promise =
@@ -341,17 +370,30 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.sumaIvaTotal = 0;
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
+        $scope.sumaIvaTotalCliente = 0;
+        $scope.sumaPrecioTotalCliente = 0;
+        $scope.sumaGranTotalCliente = 0;
 
         cotizacionConsultaRepository.getDetail(idCotizacion, idTaller).then(function (result) {
             if (result.data.length > 0) {
                 $scope.total = 0;
                 $scope.articulos = result.data;
                 for (var i = 0; i < result.data.length; i++) {
+                    //Sumatoria Taller
                     $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
-
+                    
                     $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
+                    
+                    //Sumatoria Cliente
+                    $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
+                    
+                    $scope.sumaPrecioTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente);
                 }
+                //Total Taller
                 $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
+                
+                //Total Cliente
+                $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
 
                 alertFactory.success('Detalle de la cotización, cargados.');
             } else {
@@ -436,5 +478,14 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         }
         location.href = '/trabajo';
     }
+    
+    $('#tipoPrecioSwitch').on('switchChange.bootstrapSwitch', function (event, state){ 
+        if(state == true){
+            $scope.vistaPrecio = 1;
+        }
+        else{          
+            $scope.vistaPrecio = 2;
+        }                      
+    });
 
 });
