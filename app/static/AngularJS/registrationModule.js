@@ -104,3 +104,7 @@ registrationModule.directive('resize', function ($window) {
         changeHeight(); // when page loads          
     }
 });
+
+registrationModule.run(function($rootScope) {
+    $rootScope.vIpServer = global_settings.urlCORS;
+});

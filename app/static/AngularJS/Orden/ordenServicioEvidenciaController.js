@@ -1,4 +1,4 @@
-registrationModule.controller('ordenServicioEvidenciaController', function ($scope, localStorageService, alertFactory, ordenServicioEvidenciaRepository) {
+registrationModule.controller('ordenServicioEvidenciaController', function ($scope, localStorageService, alertFactory, ordenServicioEvidenciaRepository, $rootScope) {
     var idCotizacion = localStorageService.get('cotizacion');
     var trabajo = localStorageService.get('objTrabajo');
     if (trabajo.idTrabajo == null) {

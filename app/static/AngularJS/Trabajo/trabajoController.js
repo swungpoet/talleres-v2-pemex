@@ -261,7 +261,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     $scope.generaCertificadoConformidadPDF = function () {
         if ($scope.certificadoParams.noReporte = !'' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor) {
-            window.open("http://localhost:4100/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+            window.open($rootScope.vIpServer+"/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
                 "&solpe=" + $scope.certificadoParams.solpe +
                 "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
                 "&montoOS=" + $scope.certificadoParams.montoOS +
