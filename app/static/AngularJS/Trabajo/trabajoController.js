@@ -259,9 +259,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function () {
-        if ($scope.certificadoParams.noReporte = !'' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
-            $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor) {
-            window.open($rootScope.vIpServer+"/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
+            $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
+            window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
                 "&solpe=" + $scope.certificadoParams.solpe +
                 "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
                 "&montoOS=" + $scope.certificadoParams.montoOS +
@@ -279,23 +279,23 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 getTrabajoTerminado($scope.userData.idUsuario);
                 getTrabajoAprobado($scope.userData.idUsuario);
 
-                $scope.certificadoParams = {
-                        noReporte: "",
-                        solpe: "",
-                        ordenSurtimiento: "",
-                        montoOS: "",
-                        pedidoAsociado: "",
-                        nombreEmisor: "", //$scope.userData.nombreCompleto,
-                        nombreProveedor: "",
-                        puestoProveedor: ""
-                }
-                    //}
+                //}
             }, function (error) {
                 alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
             })
+            $scope.certificadoParams = {
+                noReporte: "",
+                solpe: "",
+                ordenSurtimiento: "",
+                montoOS: "",
+                pedidoAsociado: "",
+                nombreEmisor: "", //$scope.userData.nombreCompleto,
+                nombreProveedor: "",
+                puestoProveedor: ""
+            }
             $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
         } else {
-            alertFactory.info("Debe llenar todos los campos");
+            alertFactory.info("Llenar los campos vacíos");
         }
     }
 

@@ -78,7 +78,7 @@
                                                     <button ng-if="trabajo.estatus == 'TransResponsabilidad' && userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="datosEntradaCertificadoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span>&nbsp;Certificado conformidad</button>
 
                                                     <button ng-if="trabajo.estatus == 'CertificadoGenerado' && userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar certificado</button>
-
+                                                    
                                                     <a ng-if="trabajo.estatus == 'CertificadoCall' && userData.idTipoUsuario == 4" type="button" data-toggle="tooltip" tooltip="Descargar certificado de conformidad" tooltip-placement="up" href="{{vIpServer}}/uploads/files/{{trabajo.idTrabajo}}/documentos/CertificadoConformidad2.pdf" target="_parent" download="CeretificadoConformidad" class="btn btn-success" role="button" ng-click="descargaCertificadoConformidadPDF(trabajo.idTrabajo)"><span class="glyphicon glyphicon-download"></span>&nbsp;Descargar certificado</a>
 
                                                     <button ng-if="trabajo.estatus == 'CertificadoDescargado' && userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar Certificado</button>
@@ -183,7 +183,7 @@
                 <div class="table-responsive m-t">
                     <form role="form">
                         <div class="form-group">
-                            <input type="text" placeholder="Número de reporte" class="form-control" ng-model="certificadoParams.noReporte">{{certificadoParams.noReporte}}
+                            <input type="text" placeholder="Número de reporte" class="form-control" ng-model="certificadoParams.noReporte">
                         </div>
                         <div class="form-group">
                             <input type="text" placeholder="Solpe" class="form-control" ng-model="certificadoParams.solpe">
@@ -192,7 +192,7 @@
                             <input type="text" placeholder="Orden de surtimiento" class="form-control" ng-model="certificadoParams.ordenSurtimiento">
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Monto OS" ng-model="certificadoParams.montoOS" ng-currency min="-2" fraction="2" name="montoOSInput" class="form-control">
+                            <input type="text" placeholder="Monto OS" ng-model="certificadoParams.montoOS" class="form-control">
                         </div>
                         <div class="form-group">
                             <input type="text" placeholder="Pedido asociado" class="form-control" ng-model="certificadoParams.pedidoAsociado">
