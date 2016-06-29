@@ -18,10 +18,11 @@ registrationModule.factory('cotizacionConsultaRepository', function ($http) {
         		method: "GET"
         	});
         },
-        getDetail: function (idCotizacion, idTaller) {
+        getDetail: function (idCotizacion, idTaller, idUsuario) {
             var objCotizacion = {
                 idCotizacion: idCotizacion,
-                idTaller: idTaller
+                idTaller: idTaller,
+                idUsuario: idUsuario
             };
             
             return $http({

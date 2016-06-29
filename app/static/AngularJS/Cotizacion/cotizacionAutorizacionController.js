@@ -6,6 +6,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacion = localStorageService.get('cotizacion');
     var idTrabajo = localStorageService.get('work');
     var idTaller = localStorageService.get('taller');
+   // $rootScope.idUsuario;
+    var idUsuario = localStorageService.get('usuario');
     $scope.idTrabajoOrden = localStorageService.get('objTrabajo');
     $scope.estado = localStorageService.get('estado');
     $scope.setInterval = 5000;
@@ -58,7 +60,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.cargaChatTaller();
          $scope.cargaChatCliente();
         //$scope.getCotizacionByTrabajo();
-        $scope.Detalle(idCotizacion, idTaller);
+        $scope.Detalle(idCotizacion, idTaller, idUsuario);
         //$scope.lookUpTrabajo(idCita);
         $scope.cargaEvidencias();
         //$scope.cargaDocs(idCotizacion);
@@ -366,7 +368,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     //Obtiene el detalle de la cotización y la muestra en pantalla
-    $scope.Detalle = function (idCotizacion, idTaller) {
+    $scope.Detalle = function (idCotizacion, idTaller, idUsuario) {
         $scope.sumaIvaTotal = 0;
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
@@ -374,7 +376,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.sumaPrecioTotalCliente = 0;
         $scope.sumaGranTotalCliente = 0;
 
-        cotizacionConsultaRepository.getDetail(idCotizacion, idTaller).then(function (result) {
+        cotizacionConsultaRepository.getDetail(idCotizacion, idTaller, idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.total = 0;
                 $scope.articulos = result.data;

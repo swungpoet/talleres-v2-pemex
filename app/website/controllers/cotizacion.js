@@ -273,6 +273,11 @@ Cotizacion.prototype.get_detail = function (req, res, next) {
             name: 'idTaller',
             value: req.query.idTaller,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.DECIMAL
         }
     ];
 

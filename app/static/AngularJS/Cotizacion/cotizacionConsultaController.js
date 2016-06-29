@@ -5,7 +5,7 @@
 // -- Modificó: 
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionConsultaController', function ($scope, localStorageService, alertFactory, cotizacionConsultaRepository) {
+registrationModule.controller('cotizacionConsultaController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionConsultaRepository) {
 
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
@@ -16,15 +16,17 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
     }
 
     //Obtiene el detalle de una cotización
-    $scope.Detalle = function (idCotizacion, idTaller) {
+    $scope.Detalle = function (idCotizacion, idTaller, idUsuario) {
         $scope.sumaIvaTotal = 0;
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
         $scope.sumaIvaTotalCliente = 0;
         $scope.sumaPrecioTotalCliente = 0;
         $scope.sumaGranTotalCliente = 0;
-        
-        cotizacionConsultaRepository.getDetail(idCotizacion, idTaller).then(function (result) {
+       // $rootScope.idUsuario;
+       localStorageService.set('usuario', idUsuario);
+
+        cotizacionConsultaRepository.getDetail(idCotizacion, idTaller, idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.total = 0;
                 $scope.articulos = result.data;
@@ -123,3 +125,5 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
     }
 
 });
+
+ 
