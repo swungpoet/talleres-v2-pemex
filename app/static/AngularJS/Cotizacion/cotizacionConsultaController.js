@@ -29,19 +29,25 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
         cotizacionConsultaRepository.getDetail(idCotizacion, idTaller, idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.total = 0;
-                $scope.articulos = result.data;
-                for (var i = 0; i < result.data.length; i++) {
+                $scope.articulos = [];
+                var preArticulos = [];
+                
+                $scope.articulos = Enumerable.From(result.data).Distinct(function (x) {
+                    return x.idItem
+                }).ToArray();
+                
+                for (var i = 0; i < $scope.articulos.length; i++) {
                     
                     //Precios (Admin, Callcenter, Taller)
-                    $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
+                    $scope.sumaIvaTotal += ($scope.articulos[i].cantidad * $scope.articulos[i].precio) * ($scope.articulos[i].valorIva / 100);
                     
-                    $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
+                    $scope.sumaPrecioTotal += ($scope.articulos[i].cantidad * $scope.articulos[i].precio);
                     
                     
                     //Precios Cliente
-                    $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
+                    $scope.sumaIvaTotalCliente += ($scope.articulos[i].cantidad * $scope.articulos[i].precioCliente) * ($scope.articulos[i].valorIva / 100);
                     
-                    $scope.sumaPrecioTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente);
+                    $scope.sumaPrecioTotalCliente += ($scope.articulos[i].cantidad * $scope.articulos[i].precioCliente);
                 }
                 //Total (Admin, Callcenter, Taller)
                 $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);

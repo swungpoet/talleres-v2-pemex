@@ -6,7 +6,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacion = localStorageService.get('cotizacion');
     var idTrabajo = localStorageService.get('work');
     var idTaller = localStorageService.get('taller');
-   // $rootScope.idUsuario;
+    // $rootScope.idUsuario;
     var idUsuario = localStorageService.get('usuario');
     $scope.idTrabajoOrden = localStorageService.get('objTrabajo');
     $scope.estado = localStorageService.get('estado');
@@ -58,7 +58,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     $scope.init = function () {
         $scope.cargaFicha();
         $scope.cargaChatTaller();
-         $scope.cargaChatCliente();
+        $scope.cargaChatCliente();
         //$scope.getCotizacionByTrabajo();
         $scope.Detalle(idCotizacion, idTaller, idUsuario);
         //$scope.lookUpTrabajo(idCita);
@@ -70,34 +70,34 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     //Obtiene la conversación de la cita 
-  /*  $scope.cargaChat = function () {
-        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.chat = result.data;
-                }
-            }, function (error) {
-                alertFactory.error('No se pudo obtener la conversación del chat');
-            });
-    }*/
- $scope.cargaChatTaller = function () {
+    /*  $scope.cargaChat = function () {
+          $scope.promise = cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
+                  if (result.data.length > 0) {
+                      $scope.chat = result.data;
+                  }
+              }, function (error) {
+                  alertFactory.error('No se pudo obtener la conversación del chat');
+              });
+      }*/
+    $scope.cargaChatTaller = function () {
         $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 1).then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.chattaller = result.data;
-                }
-            }, function (error) {
-                alertFactory.error('No se pudo obtener la conversación del chat');
-            });
+            if (result.data.length > 0) {
+                $scope.chattaller = result.data;
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo obtener la conversación del chat');
+        });
     }
     $scope.cargaChatCliente = function () {
-        $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 2).then(function (result) {
+            $scope.promise = cotizacionAutorizacionRepository.getChat(idCita, 2).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.chatcliente = result.data;
                 }
             }, function (error) {
                 alertFactory.error('No se pudo obtener la conversación del chat');
             });
-    }
-    //Obtiene la ficha técnica de la unidad
+        }
+        //Obtiene la ficha técnica de la unidad
     $scope.cargaFicha = function () {
         cotizacionAutorizacionRepository.getFichaTecnica(idCita).then(function (result) {
             if (result.data.length > 0) {
@@ -378,22 +378,47 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
         cotizacionConsultaRepository.getDetail(idCotizacion, idTaller, idUsuario).then(function (result) {
             if (result.data.length > 0) {
+                var articulosUnicos = [];
+                var preArticulos = [];
+                var usuarioEncontrado = result.data.filter(function (person) {
+                    return person.UsuarioAutorizador == $scope.userData.idUsuario;
+                });
+
+                preArticulos = Enumerable.From(result.data).Distinct(function (x) {
+                    return x.idItem
+                }).ToArray();
+
+                if (usuarioEncontrado.length > 0) {
+                    for (var x = 0; x < usuarioEncontrado.length; x++) {
+                        for (var i = 0; i < preArticulos.length; i++) {
+                            if (preArticulos[i].idItem == usuarioEncontrado[x].idItem) {
+                                articulosUnicos.push(usuarioEncontrado[x]);
+                            } else {
+                                articulosUnicos.push(preArticulos[i]);
+                            }
+                        }
+                    }
+                } else {
+                    articulosUnicos = preArticulos;
+                }
+
+
                 $scope.total = 0;
-                $scope.articulos = result.data;
-                for (var i = 0; i < result.data.length; i++) {
+                $scope.articulos = articulosUnicos;
+                for (var i = 0; i < articulosUnicos.length; i++) {
                     //Sumatoria Taller
-                    $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
-                    
-                    $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
-                    
+                    $scope.sumaIvaTotal += (articulosUnicos[i].cantidad * articulosUnicos[i].precio) * (articulosUnicos[i].valorIva / 100);
+
+                    $scope.sumaPrecioTotal += (articulosUnicos[i].cantidad * articulosUnicos[i].precio);
+
                     //Sumatoria Cliente
-                    $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
-                    
-                    $scope.sumaPrecioTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente);
+                    $scope.sumaIvaTotalCliente += (articulosUnicos[i].cantidad * articulosUnicos[i].precioCliente) * (articulosUnicos[i].valorIva / 100);
+
+                    $scope.sumaPrecioTotalCliente += (articulosUnicos[i].cantidad * articulosUnicos[i].precioCliente);
                 }
                 //Total Taller
                 $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
-                
+
                 //Total Cliente
                 $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
 
@@ -480,14 +505,13 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         }
         location.href = '/trabajo';
     }
-    
-    $('#tipoPrecioSwitch').on('switchChange.bootstrapSwitch', function (event, state){ 
-        if(state == true){
+
+    $('#tipoPrecioSwitch').on('switchChange.bootstrapSwitch', function (event, state) {
+        if (state == true) {
             $scope.vistaPrecio = 1;
-        }
-        else{          
+        } else {
             $scope.vistaPrecio = 2;
-        }                      
+        }
     });
 
 });
