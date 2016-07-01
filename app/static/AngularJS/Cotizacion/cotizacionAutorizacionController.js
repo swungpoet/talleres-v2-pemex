@@ -388,7 +388,15 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                     return x.idItem
                 }).ToArray();
 
-                if (usuarioEncontrado.length > 0) {
+                for (var x = 0; x < usuarioEncontrado.length; x++) {
+                    for (var i = 0; i < preArticulos.length; i++) {
+                        if (preArticulos[i].idItem == usuarioEncontrado[x].idItem) {
+                            preArticulos[i].idUsuarioAutorizador = usuarioEncontrado[x].UsuarioAutorizador;
+                        }
+                    }
+                }
+                articulosUnicos = preArticulos;
+                /*if (usuarioEncontrado.length > 0) {
                     for (var x = 0; x < usuarioEncontrado.length; x++) {
                         for (var i = 0; i < preArticulos.length; i++) {
                             if (preArticulos[i].idItem == usuarioEncontrado[x].idItem) {
@@ -399,8 +407,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                         }
                     }
                 } else {
-                    articulosUnicos = preArticulos;
-                }
+                    
+                }*/
 
 
                 $scope.total = 0;
