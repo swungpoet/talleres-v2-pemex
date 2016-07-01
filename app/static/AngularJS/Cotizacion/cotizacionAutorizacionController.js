@@ -60,7 +60,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.cargaChatTaller();
         $scope.cargaChatCliente();
         //$scope.getCotizacionByTrabajo();
-        $scope.Detalle(idCotizacion, idTaller, idUsuario);
+        $scope.Detalle(idCotizacion, idTaller, $scope.userData.idUsuario);
         //$scope.lookUpTrabajo(idCita);
         $scope.cargaEvidencias();
         //$scope.cargaDocs(idCotizacion);
