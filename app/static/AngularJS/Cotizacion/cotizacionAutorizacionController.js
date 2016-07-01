@@ -391,7 +391,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                 for (var x = 0; x < usuarioEncontrado.length; x++) {
                     for (var i = 0; i < preArticulos.length; i++) {
                         if (preArticulos[i].idItem == usuarioEncontrado[x].idItem) {
-                            preArticulos[i].idUsuarioAutorizador = usuarioEncontrado[x].UsuarioAutorizador;
+                            preArticulos[i].UsuarioAutorizador = usuarioEncontrado[x].UsuarioAutorizador;
                         }
                     }
                 }
