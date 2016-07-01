@@ -84,7 +84,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.estado = 2;
             $scope.idTaller = $scope.editCotizacion.idTaller;
             $scope.editarCotizacion($scope.editCotizacion.idCotizacion,
-                $scope.editCotizacion.idTaller);
+                $scope.editCotizacion.idTaller, $scope.userData.idUsuario);
         }
         //Objeto de la pagina de orden servicio
         if (localStorageService.get('orden') != null) {
@@ -102,7 +102,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             alertFactory.info("Ingrese un dato para búsqueda");
         } else {
             $('.dataTableItem').DataTable().destroy();
-           /* $('.dataTableCotizacion').DataTable().destroy();*/
+            /* $('.dataTableCotizacion').DataTable().destroy();*/
             $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza).then(function (result) {
                 $scope.listaPiezas = result.data;
                 if (result.data.length > 0) {
@@ -154,7 +154,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     //Se agregan los items para el calculo de la cotización
     $scope.cotizacion = function (pieza) {
         $scope.pieza = pieza;
-        $scope.precioActual= pieza.precio;
+        $scope.precioActual = pieza.precio;
         $('#editaPrecio').appendTo('body').modal('show');
 
     };
@@ -294,12 +294,19 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     }
 
     //Carga los datos de la cotizacion a editar
-    $scope.editarCotizacion = function (idCotizacion, idTaller) {
+    $scope.editarCotizacion = function (idCotizacion, idTaller, idUsuario) {
         cotizacionRepository.editarCotizacion($scope.editCotizacion.idCotizacion,
-                $scope.editCotizacion.idTaller)
+                $scope.editCotizacion.idTaller, idUsuario)
             .then(function (result) {
-                $scope.arrayItem = result.data;
+                $scope.preArticulos = [];
+
                 if (result.data.length > 0) {
+                    preArticulos = Enumerable.From(result.data).Distinct(function (x) {
+                        return x.idItem
+                    }).ToArray();
+
+                    $scope.arrayItem = preArticulos;
+
                     $scope.arrayCambios = $scope.arrayItem.slice();
                     $scope.observaciones = result.data[0].observaciones;
                     $scope.total = calculaTotalEditar();
@@ -544,9 +551,9 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         return $scope.filesName;
     }
 
-    $scope.precioEditado = function(pieza){
-       
-       if ($scope.arrayItem.length != 0) {
+    $scope.precioEditado = function (pieza) {
+
+        if ($scope.arrayItem.length != 0) {
             if (existsItem(pieza) == true) {
                 $scope.arrayItem.forEach(function (item, i) {
                     if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento) {
@@ -599,16 +606,16 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.iva = calcularIva();
             $scope.total = calculaTotal();
             exist = false;
-        }  
+        }
     }
 
-      $scope.cotizar = function (pieza) {
-         if ($scope.arrayItem.length != 0) {
+    $scope.cotizar = function (pieza) {
+        if ($scope.arrayItem.length != 0) {
             if (existsItem(pieza) == true) {
                 $scope.arrayItem.forEach(function (item, i) {
                     if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento) {
                         $scope.arrayItem[i].cantidad = item.cantidad + 1;
-                      //  $scope.arrayItem[i].precio = $scope.precioActual;
+                        //  $scope.arrayItem[i].precio = $scope.precioActual;
                         $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
                             //$scope.importe = $scope.arrayItem[i].importe;
                         $scope.sub = calcularSubtotal();
@@ -656,7 +663,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.iva = calcularIva();
             $scope.total = calculaTotal();
             exist = false;
-        } 
+        }
     };
 
 
