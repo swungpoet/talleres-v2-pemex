@@ -41,7 +41,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }*/
     $scope.AutorizarItem = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         if (idEstatus == 9) {
-            $scope.tipoComentario = 'Comentarios Autoriación';
+            $scope.tipoComentario = 'Comentarios Autorización';
         } else {
             $scope.tipoComentario = 'Comentarios Rechazo';
         }
