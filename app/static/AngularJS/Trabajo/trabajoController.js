@@ -47,7 +47,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
             $scope.trabajosTerminados = trabajoTerminado.data;
 
-            if (trabajoTerminado.data.length) {
+            if (trabajoTerminado.data.length > 0) {
                 waitDrawDocument("dataTableTrabajoTerminado");
                 alertFactory.success("Trabajos terminados cargados");
             } else {
