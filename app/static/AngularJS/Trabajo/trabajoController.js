@@ -261,16 +261,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     $scope.generaCertificadoConformidadPDF = function () {
         if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
-            window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
-                "&solpe=" + $scope.certificadoParams.solpe +
-                "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
-                "&montoOS=" + $scope.certificadoParams.montoOS +
-                "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
-                "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
-                "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
-                "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
-                "&fecha=" + new Date() +
-                "&idTrabajo=" + $scope.idTrabajo);
 
             trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
                 //if(certificadoGenerado.data[0].idHistorialProceso > 0){
@@ -283,20 +273,31 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }, function (error) {
                 alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
             })
-            $scope.certificadoParams = {
-                noReporte: "",
-                solpe: "",
-                ordenSurtimiento: "",
-                montoOS: "",
-                pedidoAsociado: "",
-                nombreEmisor: "", //$scope.userData.nombreCompleto,
-                nombreProveedor: "",
-                puestoProveedor: ""
-            }
-            $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
+
+            window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                "&solpe=" + $scope.certificadoParams.solpe +
+                "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
+                "&montoOS=" + $scope.certificadoParams.montoOS +
+                "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
+                "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
+                "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
+                "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
+                "&fecha=" + new Date() +
+                "&idTrabajo=" + $scope.idTrabajo);
         } else {
             alertFactory.info("Llenar los campos vacíos");
         }
+        $scope.certificadoParams = {
+            noReporte: "",
+            solpe: "",
+            ordenSurtimiento: "",
+            montoOS: "",
+            pedidoAsociado: "",
+            nombreEmisor: "", //$scope.userData.nombreCompleto,
+            nombreProveedor: "",
+            puestoProveedor: ""
+        }
+        $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
     }
 
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
