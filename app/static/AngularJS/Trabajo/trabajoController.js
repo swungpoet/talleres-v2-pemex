@@ -262,41 +262,41 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
 
-            trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
+            trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {
                 //if(certificadoGenerado.data[0].idHistorialProceso > 0){
                 alertFactory.success("Certificado de conformidad generado");
                 getTrabajo($scope.userData.idUsuario);
                 getTrabajoTerminado($scope.userData.idUsuario);
                 getTrabajoAprobado($scope.userData.idUsuario);
-
-                setTimeout(function () {
-                    window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
-                        "&solpe=" + $scope.certificadoParams.solpe +
-                        "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
-                        "&montoOS=" + $scope.certificadoParams.montoOS +
-                        "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
-                        "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
-                        "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
-                        "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
-                        "&fecha=" + new Date() +
-                        "&idTrabajo=" + $scope.idTrabajo);
-
-                    $scope.certificadoParams = {
-                        noReporte: "",
-                        solpe: "",
-                        ordenSurtimiento: "",
-                        montoOS: "",
-                        pedidoAsociado: "",
-                        nombreEmisor: "", //$scope.userData.nombreCompleto,
-                        nombreProveedor: "",
-                        puestoProveedor: ""
-                    }
-                    $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
-                }, 1000);
                 //}
             }, function (error) {
                 alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
             })
+
+            setTimeout(function () {
+                window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                    "&solpe=" + $scope.certificadoParams.solpe +
+                    "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
+                    "&montoOS=" + $scope.certificadoParams.montoOS +
+                    "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
+                    "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
+                    "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
+                    "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
+                    "&fecha=" + new Date() +
+                    "&idTrabajo=" + $scope.idTrabajo);
+
+                $scope.certificadoParams = {
+                    noReporte: "",
+                    solpe: "",
+                    ordenSurtimiento: "",
+                    montoOS: "",
+                    pedidoAsociado: "",
+                    nombreEmisor: "", //$scope.userData.nombreCompleto,
+                    nombreProveedor: "",
+                    puestoProveedor: ""
+                }
+                $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
+            }, 1000);
         } else {
             alertFactory.info("Llenar los campos vacíos");
         }
