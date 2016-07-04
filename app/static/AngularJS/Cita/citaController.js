@@ -13,7 +13,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     $scope.init = function () {
         getCliente();
-        $scope.habilitaBtnBuscar = true;
+        //$scope.habilitaBtnBuscar = true;
     }
 
     //init de la pantalla citaTrabajo
@@ -398,13 +398,13 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     }
 
     //habilita el botón de buscar
-    $scope.habilitaBuscar = function (datoUnidad) {
+    /*$scope.habilitaBuscar = function (datoUnidad) {
         if (datoUnidad.length >= 4) {
             $scope.habilitaBtnBuscar = false;
         } else {
             $scope.habilitaBtnBuscar = true;
         }
-    }
+    }*/
 
     //va a la pantalla de nueva cita
     $scope.goNewCita = function () {
