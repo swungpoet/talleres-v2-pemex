@@ -31,12 +31,12 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 method: "GET"
             });
         },
-        getCotizacionByTrabajo: function (idCita) {
+        getCotizacionByTrabajo: function (idCita, idUsuario) {
             return $http({
                 url: searchUrl + 'cotizacionByTrabajo',
                 method: "GET",
                 params: {
-                    idCita: idCita
+                    idCita: idCita, idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

@@ -130,7 +130,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
     $scope.getCotizacionByTrabajo = function () {
         $scope.promise =
-            cotizacionAutorizacionRepository.getCotizacionByTrabajo(idCita).then(function (result) {
+            cotizacionAutorizacionRepository.getCotizacionByTrabajo(idCita, $scope.userData.idUsuario).then(function (result) {
                     $scope.cotizacionesByTrabajo = result.data;
                 },
                 function (error) {});

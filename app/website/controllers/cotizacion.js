@@ -397,6 +397,11 @@ Cotizacion.prototype.get_cotizacionByTrabajo = function (req, res, next) {
             name: 'idCita',
             value: req.query.idCita,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.DECIMAL
         }
     ];
 
