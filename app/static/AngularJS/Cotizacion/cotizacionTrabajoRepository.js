@@ -30,6 +30,7 @@ registrationModule.factory('cotizacionTrabajoRepository', function ($http) {
                 method: "GET"
             });
         },
+        getCotizacionByTrabajo: function(idCita, idUsuario){
             return $http({
                 url: searchUrl + 'cotizacionByTrabajo/',
                 method: "GET",
