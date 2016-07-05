@@ -170,7 +170,7 @@ Cotizacion.prototype.post_cotizacionMaestro = function (req, res, next) {
         },
         {
             name: 'idUnidad',
-            value: req.body.idUsuario,
+            value: req.body.idUnidad,
             type: self.model.types.DECIMAL
         }];
 
