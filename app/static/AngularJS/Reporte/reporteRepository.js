@@ -4,7 +4,7 @@ registrationModule.factory('reporteRepository', function ($http) {
     return {        
         reporteGral: function () {
             return $http({
-                url: searchUrl + 'reporteGral',
+                url: searchUrl + 'reportegral',
                 method: "GET"
             });
         },
