@@ -203,6 +203,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         } else if ($scope.hojaCalidad == 5) {
             idNombreEspecial.value = 5;
         }
+        else if ($scope.hojaCalidad == 6) {
+            idNombreEspecial.value = 6;
+        }
         idUsuario.value = $scope.userData.idUsuario;
         //Submit del botón del Form para subir los archivos        
         btnSubmit.click();
@@ -232,28 +235,26 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 alertFactory.error("Error al cargar la factura");
             });
         } else if (hojaCalidad == 5) {
-            if ($scope.userData.idTipoUsuario == 2) {
-                trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo) {
-                    //if (trabajoFacturado.data[0].idHistorialProceso) {
-                    alertFactory.success("Certificado de conformidad cargada");
-                    getTrabajo($scope.userData.idUsuario);
-                    getTrabajoTerminado($scope.userData.idUsuario);
-                    //}
-                }, function (error) {
-                    alertFactory.error("Error al cargar el certificado de conformidad");
-                });
-            } else if ($scope.userData.idTipoUsuario == 4) {
-                trabajoRepository.uploadCertificadoClienteTrabajo(11, idTrabajo).then(function (certificadoTrabajo) {
-                    //if (trabajoFacturado.data[0].idHistorialProceso) {
-                    alertFactory.success("Certificado de conformidad cargada");
-                    getTrabajo($scope.userData.idUsuario);
-                    getTrabajoTerminado($scope.userData.idUsuario);
-                    getTrabajoAprobado($scope.userData.idUsuario);
-                    //}
-                }, function (error) {
-                    alertFactory.error("Error al cargar el certificado de conformidad");
-                });
-            }
+            trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo) {
+                //if (trabajoFacturado.data[0].idHistorialProceso) {
+                alertFactory.success("Certificado de conformidad cargada");
+                getTrabajo($scope.userData.idUsuario);
+                getTrabajoTerminado($scope.userData.idUsuario);
+                //}
+            }, function (error) {
+                alertFactory.error("Error al cargar el certificado de conformidad");
+            });
+        } else if (hojaCalidad == 6) {
+            trabajoRepository.uploadCertificadoClienteTrabajo(11, idTrabajo).then(function (certificadoTrabajo) {
+                //if (trabajoFacturado.data[0].idHistorialProceso) {
+                alertFactory.success("Certificado de conformidad cargada");
+                getTrabajo($scope.userData.idUsuario);
+                getTrabajoTerminado($scope.userData.idUsuario);
+                getTrabajoAprobado($scope.userData.idUsuario);
+                //}
+            }, function (error) {
+                alertFactory.error("Error al cargar el certificado de conformidad");
+            });
         }
     }
 

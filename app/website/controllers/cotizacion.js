@@ -559,6 +559,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
             }
             if (req.body.idNombreEspecial == 5) nuevoNombre = 'CertificadoConformidad';
+            if (req.body.idNombreEspecial == 6) nuevoNombre = 'CertificadoConformidad';
 
             //tipo archivo documento
             if (idTipoArchivo == 1) {
