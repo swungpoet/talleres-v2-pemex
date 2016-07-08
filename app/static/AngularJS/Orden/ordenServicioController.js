@@ -60,7 +60,7 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
 
-        cotizacionAutorizacionRepository.getCotizacionByTrabajo($scope.objBotonera.idCita).then(function (result) {
+        cotizacionAutorizacionRepository.getCotizacionByTrabajo($scope.objBotonera.idCita, $scope.userData.idUsuario).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.total = 0;
                     $scope.articulos = result.data;

@@ -44,13 +44,11 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                 }
             });
         },
-        getCotizacionByTrabajo: function (idCita) {
+        getCotizacionByTrabajo: function(idCita, idUsuario){
             return $http({
-                url: searchUrl + 'cotizacionByTrabajo',
+                url: searchUrl + 'cotizacionByTrabajo/',
                 method: "GET",
-                params: {
-                    idCita: idCita
-                },
+                params: {idCita: idCita, idUsuario:idUsuario},
                 headers: {
                     'Content-Type': 'application/json'
                 }

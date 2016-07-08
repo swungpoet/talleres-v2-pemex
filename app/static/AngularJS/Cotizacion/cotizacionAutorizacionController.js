@@ -19,7 +19,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     $scope.userData = localStorageService.get('userData');
     var itemsAutorizacionRechazo = [];
     $scope.vistaPrecio = true;
-    //$scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
+    $scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
     $("[id='tipoPrecioSwitch']").bootstrapSwitch();
 
     /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
@@ -41,7 +41,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }*/
     $scope.AutorizarItem = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         if (idEstatus == 9) {
-            $scope.tipoComentario = 'Comentarios Autoriación';
+            $scope.tipoComentario = 'Comentarios Autorización';
         } else {
             $scope.tipoComentario = 'Comentarios Rechazo';
         }
@@ -130,7 +130,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
 
     $scope.getCotizacionByTrabajo = function () {
         $scope.promise =
-            cotizacionAutorizacionRepository.getCotizacionByTrabajo(idCita).then(function (result) {
+            cotizacionAutorizacionRepository.getCotizacionByTrabajo(idCita, $scope.userData.idUsuario).then(function (result) {
                     $scope.cotizacionesByTrabajo = result.data;
                 },
                 function (error) {});

@@ -12,6 +12,7 @@ registrationModule.controller('cotizacionTrabajoController', function ($scope, l
 
 
     $scope.init = function () {
+        $scope.userData = localStorageService.get('userData');
         $scope.cargaFicha();
         $scope.cargaChat();
         $scope.getCotizacionByTrabajo();
@@ -46,7 +47,7 @@ registrationModule.controller('cotizacionTrabajoController', function ($scope, l
 
     $scope.getCotizacionByTrabajo = function () {
         $scope.promise =
-            cotizacionAutorizacionRepository.getCotizacionByTrabajo($scope.idTrabajoOrden.idCita).then(function (result) {
+            cotizacionAutorizacionRepository.getCotizacionByTrabajo($scope.idTrabajoOrden.idCita, $scope.userData.idUsuario).then(function (result) {
                     $scope.cotizacionesByTrabajo = result.data;
                 },
                 function (error) {});

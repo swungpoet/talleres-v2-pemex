@@ -21,7 +21,7 @@
                                         <th>Estatus</th>
                                         <th>Observaciones</th>
                                         <th>Cotizó</th>
-                                        <th>Detalle</th>
+                                        <!--<th>Detalle</th>-->
                                         <th>Abrir</th>
                                     </tr>
                                 </thead>
@@ -35,11 +35,11 @@
                                         <td>{{ cotizacion.estatus }}</td>
                                         <td>{{cotizacion.observaciones}}</td>
                                         <td>{{ cotizacion.nombreCompleto }}</td>
-                                        <td>
+                                        <!--<td>
                                             <button class="btn btn-primary" type="button" id="btnEnviar" ng-click="Detalle(cotizacion.idCotizacion, cotizacion.idTaller, cotizacion.idUsuario)">
                                                 <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" data-toggle="modal"></span>
                                             </button>
-                                        </td>
+                                        </td>-->
                                         <td>
                                             <button class="btn btn-success" type="button" id="btnEnviar" ng-click="Autorizacion(cotizacion.idCita, cotizacion.idCotizacion, cotizacion.idUnidad, cotizacion.numeroCotizacion, cotizacion.idTrabajo, cotizacion.idTaller)">
                                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true" data-toggle="modal"></span>

@@ -170,7 +170,7 @@ Cotizacion.prototype.post_cotizacionMaestro = function (req, res, next) {
         },
         {
             name: 'idUnidad',
-            value: req.body.idUsuario,
+            value: req.body.idUnidad,
             type: self.model.types.DECIMAL
         }];
 
@@ -397,6 +397,11 @@ Cotizacion.prototype.get_cotizacionByTrabajo = function (req, res, next) {
             name: 'idCita',
             value: req.query.idCita,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.DECIMAL
         }
     ];
 
@@ -554,6 +559,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
             }
             if (req.body.idNombreEspecial == 5) nuevoNombre = 'CertificadoConformidad';
+            if (req.body.idNombreEspecial == 6) nuevoNombre = 'CertificadoConformidad';
 
             //tipo archivo documento
             if (idTipoArchivo == 1) {

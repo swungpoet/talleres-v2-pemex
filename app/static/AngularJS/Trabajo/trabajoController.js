@@ -47,7 +47,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
             $scope.trabajosTerminados = trabajoTerminado.data;
 
-            if (trabajoTerminado.data.length) {
+            if (trabajoTerminado.data.length > 0) {
                 waitDrawDocument("dataTableTrabajoTerminado");
                 alertFactory.success("Trabajos terminados cargados");
             } else {
@@ -64,7 +64,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         trabajoRepository.getTrabajoAprobado(idUsuario).then(function (trabajoAprobado) {
             $scope.trabajosAprobados = trabajoAprobado.data;
 
-            if (trabajoAprobado.data.length) {
+            if (trabajoAprobado.data.length > 0) {
                 waitDrawDocument("dataTableTrabajoAprobado");
                 alertFactory.success("Trabajos aprobados cargados");
             } else {
@@ -203,6 +203,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         } else if ($scope.hojaCalidad == 5) {
             idNombreEspecial.value = 5;
         }
+        else if ($scope.hojaCalidad == 6) {
+            idNombreEspecial.value = 6;
+        }
         idUsuario.value = $scope.userData.idUsuario;
         //Submit del botón del Form para subir los archivos        
         btnSubmit.click();
@@ -232,28 +235,26 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 alertFactory.error("Error al cargar la factura");
             });
         } else if (hojaCalidad == 5) {
-            if ($scope.userData.idTipoUsuario == 2) {
-                trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo) {
-                    //if (trabajoFacturado.data[0].idHistorialProceso) {
-                    alertFactory.success("Certificado de conformidad cargada");
-                    getTrabajo($scope.userData.idUsuario);
-                    getTrabajoTerminado($scope.userData.idUsuario);
-                    //}
-                }, function (error) {
-                    alertFactory.error("Error al cargar el certificado de conformidad");
-                });
-            } else if ($scope.userData.idTipoUsuario == 4) {
-                trabajoRepository.uploadCertificadoClienteTrabajo(11, idTrabajo).then(function (certificadoTrabajo) {
-                    //if (trabajoFacturado.data[0].idHistorialProceso) {
-                    alertFactory.success("Certificado de conformidad cargada");
-                    getTrabajo($scope.userData.idUsuario);
-                    getTrabajoTerminado($scope.userData.idUsuario);
-                    getTrabajoAprobado($scope.userData.idUsuario);
-                    //}
-                }, function (error) {
-                    alertFactory.error("Error al cargar el certificado de conformidad");
-                });
-            }
+            trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo) {
+                //if (trabajoFacturado.data[0].idHistorialProceso) {
+                alertFactory.success("Certificado de conformidad cargada");
+                getTrabajo($scope.userData.idUsuario);
+                getTrabajoTerminado($scope.userData.idUsuario);
+                //}
+            }, function (error) {
+                alertFactory.error("Error al cargar el certificado de conformidad");
+            });
+        } else if (hojaCalidad == 6) {
+            trabajoRepository.uploadCertificadoClienteTrabajo(11, idTrabajo).then(function (certificadoTrabajo) {
+                //if (trabajoFacturado.data[0].idHistorialProceso) {
+                alertFactory.success("Certificado de conformidad cargada");
+                getTrabajo($scope.userData.idUsuario);
+                getTrabajoTerminado($scope.userData.idUsuario);
+                getTrabajoAprobado($scope.userData.idUsuario);
+                //}
+            }, function (error) {
+                alertFactory.error("Error al cargar el certificado de conformidad");
+            });
         }
     }
 
@@ -261,39 +262,42 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     $scope.generaCertificadoConformidadPDF = function () {
         if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
-            window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
-                "&solpe=" + $scope.certificadoParams.solpe +
-                "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
-                "&montoOS=" + $scope.certificadoParams.montoOS +
-                "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
-                "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
-                "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
-                "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
-                "&fecha=" + new Date() +
-                "&idTrabajo=" + $scope.idTrabajo);
 
-            trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
+            trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {
                 //if(certificadoGenerado.data[0].idHistorialProceso > 0){
                 alertFactory.success("Certificado de conformidad generado");
                 getTrabajo($scope.userData.idUsuario);
                 getTrabajoTerminado($scope.userData.idUsuario);
                 getTrabajoAprobado($scope.userData.idUsuario);
-
                 //}
             }, function (error) {
                 alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
             })
-            $scope.certificadoParams = {
-                noReporte: "",
-                solpe: "",
-                ordenSurtimiento: "",
-                montoOS: "",
-                pedidoAsociado: "",
-                nombreEmisor: "", //$scope.userData.nombreCompleto,
-                nombreProveedor: "",
-                puestoProveedor: ""
-            }
-            $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
+
+            setTimeout(function () {
+                window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                    "&solpe=" + $scope.certificadoParams.solpe +
+                    "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
+                    "&montoOS=" + $scope.certificadoParams.montoOS +
+                    "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
+                    "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
+                    "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
+                    "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
+                    "&fecha=" + new Date() +
+                    "&idTrabajo=" + $scope.idTrabajo);
+
+                $scope.certificadoParams = {
+                    noReporte: "",
+                    solpe: "",
+                    ordenSurtimiento: "",
+                    montoOS: "",
+                    pedidoAsociado: "",
+                    nombreEmisor: "", //$scope.userData.nombreCompleto,
+                    nombreProveedor: "",
+                    puestoProveedor: ""
+                }
+                $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
+            }, 1000);
         } else {
             alertFactory.info("Llenar los campos vacíos");
         }
