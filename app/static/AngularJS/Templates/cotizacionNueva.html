@@ -75,10 +75,12 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="piezas in arrayItem" ng-class="{'rowVerde': piezas.idNivelAutorizacion==1, 'rowOlivo': piezas.idNivelAutorizacion == 2, 'rowAmarillo' : piezas.idNivelAutorizacion == 3, 'rowRojo': piezas.idNivelAutorizacion == 4}">
-                                    <td>{{piezas.numeroPartida }}</td>
+
+                                    <td>{{piezas.numeroPartida}}</td>
                                     <td>{{piezas.numeroParte}}</td>
                                     <td>{{piezas.item}}</td>
                                     <td>{{piezas.cantidad}}</td>
+                                   
                                     <td ng-show="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">{{piezas.precio | currency}}
                                         <button class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio">
                                             <span class="glyphicon glyphicon-edit"></span>
@@ -92,9 +94,11 @@
                                     <td>{{(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100))) | currency}}</td>
                                     <td>{{((piezas.cantidad * piezas.precio) +(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100)))) | currency}}</td>
                                     <td>
+
                                         <button class="btn btn-danger" type="button" id="btnCotizar" ng-click="quitarPieza(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Quitar">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
+
                                     </td>
                                 </tr>
                             </tbody>

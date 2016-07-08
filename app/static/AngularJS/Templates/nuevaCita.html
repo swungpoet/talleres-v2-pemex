@@ -2,6 +2,7 @@
     <div class="headTitleTallerCita">
         <span class="title"> Citas<span class="subtitle">Call Center / Taller</span></span>
     </div>
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-xs-12">
@@ -33,14 +34,24 @@
                                                     <input type="radio" name="optTaller" ng-click="getTaller(taller.idTaller)" />
                                                 </td>
                                             </tr>
+                                          <tr>
+                                                <td>{{datosCita.razonSocial}}</td>
+                                                <td>{{datosCita.direccion}}</td>
+                                                <td>
+                                            <input type="radio" name="optTaller" ng-click="getTaller(datosCita.idTaller)"/>  
+                                                </td> 
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <form role="form">
                                         <!--<input type="checkbox" id="tipoCitaSwitch" name="my-checkbox" checked data-on-text="Preventivo" data-off-text="Correctivo" data-off="success">-->
-                                        <select class="form-control" name="tipocita" ng-model="selectedTipoCita" ng-options="tipoCita.tipoCita for tipoCita in tiposCita">
+                                     <!--    <select class="form-control" name="tipocita" ng-init="selectedTipoCita = tiposCita[0]" ng-model="selectedTipoCita" ng-options="tipoCita.tipoCita for tipoCita in tiposCita">
+                                            <option value="">Seleccionar tipo de cita</option>
+                                        </select> -->
+                                     <select class="form-control" name="tipocita" ng-model="datosCita.tipoCita" ng-options="tipoCita.idTipoCita as tipoCita.tipoCita for tipoCita in tiposCita">
                                             <option value="">Seleccionar tipo de cita</option><!--default option -->
-                                        </select><!--{{selectedTipoCita}}-->
+                                        </select> <!-- {{datosCita.tipoCita}}  -->
                                 </form>
                                 <br>
                                 <form role="form">
@@ -58,15 +69,22 @@
                                             </span>
                                         </div>
                                     </div>
+                                 <!--     <tr ng-repeat="taller in citaDato"> -->
                                     <div class="form-group">
-                                        <input type="text" placeholder="Descripción del trabajo" class="form-control" ng-model="datosCita.trabajoCita">
+                                        <input type="text" placeholder="Descripción del trabajo" class="form-control" ng-model="datosCita.trabajoCita" value=""> <!--  {{citaDato[0].trabajo}} -->
                                     </div>
+<!-- </tr> -->
                                     <div class="form-group">
                                         <textarea placeholder="Observaciones" class="form-control" rows="4" ng-model="datosCita.observacionCita"></textarea>
                                     </div>
                                     <div>
                                         <button type="button" class="btn btn-primary pull-left m-t-n-xs" ng-click="showCitaServicioModal()" ng-disabled="selectedTaller"><span class="glyphicon glyphicon-usd"></span><strong> Pre-orden de servicio</strong></button>
-                                        <button type="button" class="btn btn-success pull-right m-t-n-xs" ng-click="addCita()"><span class="glyphicon glyphicon-calendar"></span><strong> Agendar cita</strong></button>
+
+
+                                        <button ng-hide="edita == 1" type="button" class="btn btn-success pull-right m-t-n-xs" ng-click="addCita()"><span class="glyphicon glyphicon-calendar"></span><strong> Agendar cita</strong></button>
+                                    
+                                        <button ng-show="edita == 1" type="button" class="btn btn-success pull-right m-t-n-xs" ng-click="updateCita(idCita)"><span class="glyphicon glyphicon-calendar"></span><strong> Actualizar cita</strong></button>
+
                                     </div>
                                     <div>
                                         <button type="button" class="btn btn-danger pull-left m-t-n-xs">{{labelItems}} Items</button>
@@ -84,6 +102,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal inmodal fade " id="citaServicioModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
@@ -144,7 +163,7 @@
                                     <button class="btn btn-danger glyphicon glyphicon-remove" type="button" id="btnCotizar" ng-click="removePieza(pieza.idItem)">
                                     </button>
                                 </td>
-                            </tr>
+                            </tr>         
                         </tbody>
                     </table>
                     <div id="paginationTaller">
@@ -152,7 +171,7 @@
                         </dir-pagination-controls>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary pull-right m-t-n-xs" ng-click="generarCitaServicio()"><span class="glyphicon glyphicon-saved"></span><strong> Generar Pre-orden</strong></button>
+                        <button type="button" class="btn btn-primary pull-right m-t-n-xs" ng-click="generarCitaServicio(pieza)"><span class="glyphicon glyphicon-saved"></span><strong> Generar Pre-orden</strong></button>
                     </div>
                 </div>
             </div>

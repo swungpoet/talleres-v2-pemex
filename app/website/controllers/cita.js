@@ -153,6 +153,8 @@ Cita.prototype.get_buscaCita = function(req,res,next){
     });
 }
 
+
+
 //insertar nueva cita para una unidad
 Cita.prototype.post_addcita = function (req, res, next) {
     //Referencia a la clase para callback
@@ -174,6 +176,8 @@ Cita.prototype.post_addcita = function (req, res, next) {
         });
     });
 }
+
+
 
 //insertar cita servicio detalle
 Cita.prototype.post_addcitaserviciodetalle = function (req, res, next) {
@@ -244,6 +248,129 @@ Cita.prototype.get_tipocita = function(req, res, next){
     var params = [];
     
     this.model.query('SEL_TIPO_CITA_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+Cita.prototype.post_updateCita = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+    var params = [{
+            name: 'idCita',
+            value: req.body.idCita,
+            type: self.model.types.DECIMAL
+                        },
+        {
+            name: 'idUnidad',
+            value: req.body.idUnidad,
+            type: self.model.types.DECIMAL
+                        },
+        {
+            name: 'idTaller',
+            value: req.body.idTaller,
+            type: self.model.types.DECIMAL
+                        },
+        {
+            name: 'fecha',
+            value: req.body.fecha,
+            type: self.model.types.STRING
+                        },
+        {
+            name: 'trabajo',
+            value: req.body.trabajo,
+            type: self.model.types.STRING
+                        },
+        {
+            name: 'observacion',
+            value: req.body.observacion,
+            type: self.model.types.STRING
+                        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoCita',
+            value: req.body.idTipoCita,
+            type: self.model.types.DECIMAL
+                        }];
+
+    this.model.post('UPD_CITA_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+Cita.prototype.get_citamodificar = function(req, res, next){
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idCita', 
+                   value: req.query.idCita, 
+                   type: self.model.types.DECIMAL}];
+    
+    this.model.query('SEL_IDCITA_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+
+Cita.prototype.post_BorraCita = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+    var params = [{
+            name: 'idCita',
+            value: req.body.idCita,
+            type: self.model.types.DECIMAL
+                        }];
+
+    this.model.post('UPD_CITA_ESTATUS_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+Cita.prototype.post_agregacitaServiciodetalle = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Asigno a params el valor de mis variables
+    var params = [{name: 'idCita', value: req.body.idCita, type:self.model.types.INT},
+                  {name: 'idTipoElemento', value: req.body.idTipoElemento, type: self.model.types.INT},
+                  {name: 'idElemento', value: req.body.idElemento, type: self.model.types.INT},
+                  {name: 'cantidad', value: req.body.cantidad, type: self.model.types.INT},
+                  {name: 'borrar', value: req.body.borrar, type: self.model.types.INT}];
+
+    this.model.post('INS_CITA_SERVICIO_DETALLE_UPD_SP', params, function (error, result) {
+        //Callback
         self.view.expositor(res, {
             error: error,
             result: result
