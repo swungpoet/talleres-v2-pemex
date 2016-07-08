@@ -120,6 +120,62 @@ registrationModule.factory('citaRepository', function ($http) {
                 'Content-Type': 'application/json'
                 }
             });
+        },
+        updateCita: function (taller) {
+            return $http({
+                url: citaUrl + 'updateCita',
+                method: "POST",
+                data: taller,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+         getidCita: function(idCita){
+            return $http({
+                url: citaUrl + 'citamodificar',
+                method: "GET",
+                params: {idCita: idCita},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+        },
+          dropCita: function (idCita) {
+            var msgObj = {
+                 idCita: idCita
+             }
+            return $http({
+                url: citaUrl + 'BorraCita',
+                method: "POST",
+                data: msgObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        busquedaServicioDetalle: function (idCita) {
+            return $http({
+                url: searchUrl + 'servicioDetalle',
+                method: "GET",
+                params: {
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+         addCitaDetalle: function(item){
+            return $http({
+                url: citaUrl + 'agregacitaServiciodetalle/',
+                method: "POST",
+                data: item,
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
         }
+
     };
 });

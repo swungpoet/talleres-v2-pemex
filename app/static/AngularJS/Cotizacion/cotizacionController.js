@@ -76,6 +76,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.idTaller = $scope.citaDatos.idTaller;
             busquedaServicioDetalle($scope.citaDatos.idCita);
         }
+        
         //Se valida si la cotización es para editar
         if (localStorageService.get('objEditCotizacion') != null) {
             $scope.editCotizacion = localStorageService.get('objEditCotizacion'); //objeto de la pagina autorizacion

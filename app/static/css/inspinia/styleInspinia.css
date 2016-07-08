@@ -38,6 +38,13 @@ h5 {
   margin-top: 5px;
   font-weight: 600;
 }
+
+.btn-cancela {
+    background-color: #ed0c43;
+    border-color: #ed0c43;
+    color: #FFFFFF;
+}
+
 .nav > li > a {
   color: #a7b1c2;
   font-weight: 600;
@@ -45,6 +52,11 @@ h5 {
 }
 .nav.navbar-right > li > a {
   color: #999c9e;
+}
+.btn-informa {
+    background-color: #27c26a;
+    border-color: #28ba36;
+    color: #FFFFFF;
 }
 .nav > li.active > a {
   color: #ffffff;
