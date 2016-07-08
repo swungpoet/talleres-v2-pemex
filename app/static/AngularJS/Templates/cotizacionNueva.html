@@ -17,7 +17,7 @@
                                     <input type="text" placeholder="Introduzca servicio, paquete o refacción" ng-model="partida" class="form-control">
                                 </div>
                                 <div class="col-xs-0">
-                                    <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="buscarPieza(partida)" data-toggle="tooltip" tooltip="Buscar" id="btnCotizar" tooltip-placement="right"><span class="glyphicon glyphicon-search dim"></span></button>
+                                    <button busy="Buscando.." type="button" class="btn btn-primary" ng-click="buscarPieza(partida)" data-toggle="tooltip" tooltip="Buscar" tooltip-placement="right"><span class="glyphicon glyphicon-search dim"></span></button>
                                 </div>
                             </div>
 
@@ -39,9 +39,10 @@
                                             <td>{{ piezas.numeroPartida }}</td>
                                             <td>{{ piezas.numeroParte }}</td>
                                             <td>{{ piezas.item }}</td>
-                                            <td>{{ piezas.precio | currency}}</td>
+                                            <td ng-show="userData.idTipoUsuario != 4">{{ piezas.precio | currency}}</td>
+                                            <td ng-show="userData.idTipoUsuario == 4">{{ piezas.precioCliente | currency}}</td>
                                             <td>
-                                                <button class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizar(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Agregar">
+                                                <button class="btn btn-success" type="button" ng-click="cotizar(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Agregar">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </button>
                                             </td>
@@ -79,20 +80,20 @@
                                     <td>{{piezas.numeroParte}}</td>
                                     <td>{{piezas.item}}</td>
                                     <td>{{piezas.cantidad}}</td>
-                                    <td ng-show="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">{{piezas.precio | currency}}
-                                        <button class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio">
+                                    <td ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3">{{piezas.precio | currency}}
+                                        <button ng-hide="userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </td>
                                     <td ng-show="userData.idTipoUsuario == 4">{{piezas.precioCliente | currency}}
-                                        <button class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio">
+                                       <!-- <button class="btn btn-success" type="button" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio">
                                             <span class="glyphicon glyphicon-edit"></span>
-                                        </button>
+                                        </button>-->
                                     </td>
                                     <td>{{(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100))) | currency}}</td>
                                     <td>{{((piezas.cantidad * piezas.precio) +(piezas.cantidad * (piezas.precio * (piezas.valorIva / 100)))) | currency}}</td>
                                     <td>
-                                        <button class="btn btn-danger" type="button" id="btnCotizar" ng-click="quitarPieza(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Quitar">
+                                        <button class="btn btn-danger" type="button" ng-click="quitarPieza(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Quitar">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </td>

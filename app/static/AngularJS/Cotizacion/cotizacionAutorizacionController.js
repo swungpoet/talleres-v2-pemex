@@ -19,7 +19,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     $scope.userData = localStorageService.get('userData');
     var itemsAutorizacionRechazo = [];
     $scope.vistaPrecio = true;
-    //$scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
+    $scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
     $("[id='tipoPrecioSwitch']").bootstrapSwitch();
 
     /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {

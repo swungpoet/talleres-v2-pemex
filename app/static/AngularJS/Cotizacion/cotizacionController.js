@@ -557,7 +557,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             if (existsItem(pieza) == true) {
                 $scope.arrayItem.forEach(function (item, i) {
                     if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento) {
-                        $scope.arrayItem[i].cantidad = item.cantidad + 1;
+                        /*$scope.arrayItem[i].cantidad = item.cantidad + 1;*/
                         $scope.arrayItem[i].precio = $scope.precioActual;
                         $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
                             //$scope.importe = $scope.arrayItem[i].importe;
@@ -616,8 +616,13 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento) {
                         $scope.arrayItem[i].cantidad = item.cantidad + 1;
                         //  $scope.arrayItem[i].precio = $scope.precioActual;
-                        $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
-                            //$scope.importe = $scope.arrayItem[i].importe;
+                        if ($scope.userData.idTipoUsuario == 4) {
+                            $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precioCliente)
+                        } else {
+                            $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
+                        }
+
+                        //$scope.importe = $scope.arrayItem[i].importe;
                         $scope.sub = calcularSubtotal();
                         $scope.iva = calcularIva();
                         $scope.total = calculaTotal();
@@ -626,6 +631,57 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 exist = false;
             } else {
                 //Se agrega el item seleccionado al array
+                if ($scope.userData.idTipoUsuario == 4) {
+                    $scope.arrayItem.push({
+                        numeroPartida: pieza.numeroPartida,
+                        idItem: pieza.idItem,
+                        numeroParte: pieza.numeroParte,
+                        item: pieza.item,
+                        precio: pieza.precioCliente,
+                        cantidad: 1,
+                        importe: pieza.precioCliente * 1,
+                        idTipoElemento: pieza.idTipoElemento,
+                        valorIva: pieza.valorIva,
+                        idEstatus: 8,
+                        idNivelAutorizacion: pieza.idNivelAutorizacion
+                    });
+                } else {
+                    $scope.arrayItem.push({
+                        numeroPartida: pieza.numeroPartida,
+                        idItem: pieza.idItem,
+                        numeroParte: pieza.numeroParte,
+                        item: pieza.item,
+                        precio: pieza.precio,
+                        cantidad: 1,
+                        importe: pieza.precio * 1,
+                        idTipoElemento: pieza.idTipoElemento,
+                        valorIva: pieza.valorIva,
+                        idEstatus: 8,
+                        idNivelAutorizacion: pieza.idNivelAutorizacion
+                    });
+                }
+                $scope.sub = calcularSubtotal();
+                $scope.iva = calcularIva();
+                $scope.total = calculaTotal();
+                exist = false;
+            }
+        } else {
+            //Se agrega el item seleccionado al array
+            if ($scope.userData.idTipoUsuario == 4) {
+                $scope.arrayItem.push({
+                    numeroPartida: pieza.numeroPartida,
+                    idItem: pieza.idItem,
+                    numeroParte: pieza.numeroParte,
+                    item: pieza.item,
+                    precio: pieza.precioCliente,
+                    cantidad: 1,
+                    importe: pieza.precioCliente * 1,
+                    idTipoElemento: pieza.idTipoElemento,
+                    valorIva: pieza.valorIva,
+                    idEstatus: 8,
+                    idNivelAutorizacion: pieza.idNivelAutorizacion
+                });
+            } else {
                 $scope.arrayItem.push({
                     numeroPartida: pieza.numeroPartida,
                     idItem: pieza.idItem,
@@ -639,26 +695,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     idEstatus: 8,
                     idNivelAutorizacion: pieza.idNivelAutorizacion
                 });
-                $scope.sub = calcularSubtotal();
-                $scope.iva = calcularIva();
-                $scope.total = calculaTotal();
-                exist = false;
             }
-        } else {
-            //Se agrega el item seleccionado al array
-            $scope.arrayItem.push({
-                numeroPartida: pieza.numeroPartida,
-                idItem: pieza.idItem,
-                numeroParte: pieza.numeroParte,
-                item: pieza.item,
-                precio: pieza.precio,
-                cantidad: 1,
-                importe: pieza.precio * 1,
-                idTipoElemento: pieza.idTipoElemento,
-                valorIva: pieza.valorIva,
-                idEstatus: 8,
-                idNivelAutorizacion: pieza.idNivelAutorizacion
-            });
             $scope.sub = calcularSubtotal();
             $scope.iva = calcularIva();
             $scope.total = calculaTotal();
