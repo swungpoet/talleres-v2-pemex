@@ -856,10 +856,10 @@ localStorageService.remove('ModoEdicion');
             function (isConfirm) {
                 if (isConfirm) {
                     $scope.dropCita($scope.idCita);
-                    swal("Trabajo terminado!", "La cita se ha concluido", "success");
+                    swal("Trabajo terminado!", "La cita se ha cancelado", "success");
                    // $scope.observacionTrabajo = null;
                 } else {
-                    swal("Cancelado", "", "error");
+                    swal("No cancelado", "", "error");
                     $('#finalizarTrabajoModal').modal('hide');
                    // $scope.observacionTrabajo = null;
                 }

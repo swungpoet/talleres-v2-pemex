@@ -1,4 +1,4 @@
-var //TrabajoView = require('../views/ejemploVista'),
+var TrabajoView = require('../views/ejemploVista'),
     TrabajoModel = require('../models/dataAccess2'),
     moment = require('moment'),
     PDFDocument = require('pdfkit'),
@@ -11,7 +11,7 @@ var //TrabajoView = require('../views/ejemploVista'),
 var Reporte = function(conf) {
     this.conf = conf || {};
 
-    //this.view = new TrabajoView();
+    this.view = new TrabajoView();
     this.model = new TrabajoModel({
         parameters: this.conf.parameters
     });
