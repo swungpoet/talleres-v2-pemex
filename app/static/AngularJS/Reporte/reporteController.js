@@ -1,7 +1,7 @@
 registrationModule.controller('reporteController', function ($scope, alertFactory, $rootScope, localStorageService, reporteRepository) {
     
     $scope.init = function () {
-        getReporte();
+        $scope.getReporte();
     }
 
     $scope.getReporte = function () {
