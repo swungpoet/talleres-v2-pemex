@@ -9,6 +9,7 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
             .then(function (result) {
                 if (result.data.length > 0) {
                     alertFactory.success("Reposte general cargado");
+                    $scope.datos = result.data;
                 } 
             }, function (error) {
                 alertFactory.error('Error');
