@@ -8,7 +8,7 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
         reporteRepository.reporteGral()
             .then(function (result) {
                 if (result.data.length > 0) {
-                    
+                    $scope.datos = result.data;
                 } 
             }, function (error) {
                 alertFactory.error('Error');
