@@ -13,7 +13,9 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
                     $scope.datos = result.data;
                     
                     setTimeout(function () {
+                        
                             $('.dataTableReporte').DataTable({
+                                dom: '<"html5buttons"B>lTfgitp',
                                 buttons: [
                                     {
                                         extend: 'copy'
