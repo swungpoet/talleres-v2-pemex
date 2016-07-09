@@ -50,7 +50,7 @@
                                         <td>{{dato.copade}}</td>
                                         <td>{{dato.costoReparacion}}</td>
                                         <td>{{dato.ventaReparacion}}</td>
-                                        <td>{{dato.porcentajeUtilidad}}</td>
+                                        <td>{{((dato.ventaReparacion - dato.costoReparacion)*100)/dato.ventaReparacion}}</td>
                                     </tr>
                                 </tbody>
                             </table>
