@@ -11,14 +11,14 @@
                             <table class="table table-striped table-bordered table-hover dataTableReporte" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <tr>
+                                        <th>ConsecutivoOrden</th>
+                                        <th>Número Órden</th>
                                         <th>idTaller</th>
                                         <th>Nombre Taller</th>
                                         <th>Dirección</th>
                                         <th>TAD Unidad</th>
                                         <th>Número Económico</th>
-                                        <th>Marca - Modelo</th>
-                                        <th>ConsecutivoOrden</th>
-                                        <th>Número Órden</th>
+                                        <th>Marca - Modelo</th>                        
                                         <th>Fecha Cita</th>
                                         <th>Fecha Entrada Unidad</th>
                                         <th>Órden Surtimiento</th>
@@ -33,14 +33,14 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="dato in datos ">
+                                        <td>{{dato.consecutivoOrden}}</td>
+                                        <td>{{dato.numeroOrden}}</td>
                                         <td>{{dato.idTaller}}</td>
                                         <td>{{dato.nombreTaller}}</td>
                                         <td>{{dato.direccion}}</td>
                                         <td>{{dato.tadUnidad}}</td>
                                         <td>{{dato.numeroEconomico}}</td>
-                                        <td>{{dato.marcaModelo}}</td>
-                                        <td>{{dato.consecutivoOrden}}</td>
-                                        <td>{{dato.numeroOrden}}</td>
+                                        <td>{{dato.marcaModelo}}</td>                        
                                         <td>{{dato.fechaCita}}</td>
                                         <td>{{dato.fechaEntradaUnidad}}</td>
                                         <td>{{dato.ordenSurtimiento}}</td>
