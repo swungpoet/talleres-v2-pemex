@@ -6,7 +6,7 @@
 // -- Fecha: 
 // -- =============================================
 var registrationModule = angular.module("registrationModule", ["ngRoute", "LocalStorageModule",
-        "ui.bootstrap", "angularUtils.directives.dirPagination", "cgBusy"])
+        "ui.bootstrap", "angularUtils.directives.dirPagination", "cgBusy", "frapontillo.bootstrap-switch"])
     .config(function ($routeProvider, $locationProvider) {
 
         /*change the routes*/
@@ -109,6 +109,8 @@ registrationModule.directive('resize', function ($window) {
         changeHeight(); // when page loads          
     }
 });
+
+angular.module('frapontillo.bootstrap-switch', []);
 
 registrationModule.run(function($rootScope) {
     $rootScope.vIpServer = global_settings.urlCORS;

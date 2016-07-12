@@ -12,9 +12,13 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
     $scope.message = "Obteniendo información ...";
     $scope.descripcion = $scope.idTrabajoOrden.numeroTrabajo;
     var tipoEvidencia = 1; //Trabajo
-    $('input[name="tipoPrecioSwitchOrden"]').bootstrapSwitch();
     $scope.vistaPrecio = 1;
     $scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
+    $scope.onText = 'Taller';
+    $scope.offText = 'Cliente';
+    $scope.size = 'mini';
+    $scope.isSelected = 'yep';
+    $scope.inverse = true;
 
     $scope.init = function () {
         $scope.cargaFicha();
@@ -325,10 +329,10 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
         });
     }
     
-     $('input[name="tipoPrecioSwitchOrden"]').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state == true) {
+     $scope.$watch('isSelected', function() {
+        if($scope.isSelected == 'yep'){
             $scope.vistaPrecio = 1;
-        } else {
+        }else{
             $scope.vistaPrecio = 2;
         }
     });
