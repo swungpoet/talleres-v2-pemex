@@ -20,7 +20,11 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var itemsAutorizacionRechazo = [];
     $scope.vistaPrecio = true;
     $scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
-    $("[id='tipoPrecioSwitch']").bootstrapSwitch();
+    $scope.onText = 'Taller';
+    $scope.offText = 'Cliente';
+    $scope.size = 'mini';
+    $scope.isSelected = 'yep';
+    $scope.inverse = true;
 
     /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         $scope.idEstatus = idEstatus;
@@ -513,11 +517,11 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         }
         location.href = '/trabajo';
     }
-
-    $('#tipoPrecioSwitch').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state == true) {
+    
+    $scope.$watch('isSelected', function() {
+        if($scope.isSelected == 'yep'){
             $scope.vistaPrecio = 1;
-        } else {
+        }else{
             $scope.vistaPrecio = 2;
         }
     });
