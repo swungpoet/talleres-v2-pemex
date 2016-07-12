@@ -43,8 +43,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 })
 
                 //window.open($rootScope.vIpServer+'/uploads/files/'+idTrabajo+'/certificadoConformidad/'+$scope.certificadoConformidad, '_blank');   
-                //location.href = $rootScope.vIpServer+'/uploads/files/'+idTrabajo+'/certificadoConformidad/'+$scope.certificadoConformidad;
-            }
+           }
         }, function (error) {
             alertFactory.error("Error al encontrar nombre de archivo");
        });
@@ -332,13 +331,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
     $scope.descargaCertificadoConformidadPDF = function (idTrabajo) {
         obtieneNombreArchivo(idTrabajo);
-        //var link = document.createElement("a");
-        //link.download = 'CeretificadoConformidad';
-        //link.click();
-         // if($rootScope.certificadoConformidad == undefined){
-         //   $rootScope.certificadoConformidad == localStorageService.get('TipoCertificado');
-         //    alertFactory.info("El archivo se ha descargado");
-         // }
     }
 
     //abre la modal para los datos de entrada del certificado de conformidad

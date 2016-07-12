@@ -571,13 +571,6 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             if (req.body.idNombreEspecial == 6) nuevoNombre = 'CertificadoConformidad';
 
             //tipo archivo documento
-              if(req.body.idCategoria == 2 && req.body.idNombreEspecial == 6){
-            if(req.files[0].originalname != undefined){
-                fs.rename(dirname + req.body.idTrabajo + '/certificadoConformidad/' + req.files[0].originalname, dirname + req.body.idTrabajo + '/certificadoConformidad/'+ nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {
-                    if (err) console.log('ERROR: ' + err);
-                });
-            }
-        }
 
             if (idTipoArchivo == 1) {
                 fs.rename(dirname + req.body.idTrabajo + '/documentos/' + req.files[i].originalname, dirname + req.body.idTrabajo + '/documentos/' + nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {
