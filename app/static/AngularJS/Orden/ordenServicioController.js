@@ -12,7 +12,9 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
     $scope.message = "Obteniendo información ...";
     $scope.descripcion = $scope.idTrabajoOrden.numeroTrabajo;
     var tipoEvidencia = 1; //Trabajo
-
+    $('input[name="tipoPrecioSwitchOrden"]').bootstrapSwitch();
+    $scope.vistaPrecio = 1;
+    $scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
 
     $scope.init = function () {
         $scope.cargaFicha();
@@ -59,17 +61,31 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
         $scope.sumaIvaTotal = 0;
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
+        $scope.sumaIvaTotalCliente = 0;
+        $scope.sumaPrecioTotalCliente = 0;
+        $scope.sumaGranTotalCliente = 0;
 
         cotizacionAutorizacionRepository.getCotizacionByTrabajo($scope.objBotonera.idCita, $scope.userData.idUsuario).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.total = 0;
                     $scope.articulos = result.data;
                     for (var i = 0; i < result.data.length; i++) {
+                        //Sumatoria Taller
                         $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
 
                         $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
+                        
+                        
+                        //Sumatoria Cliente
+                        $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
+
+                        $scope.sumaPrecioTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente);
                     }
+                    //Total Taller
                     $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
+                    
+                    //Total Cliente
+                    $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
                 }
             },
             function (error) {});
@@ -271,9 +287,8 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
         cotizacionAutorizacionRepository.getDatosCliente(idCita).then(function (result) {
             if (result.data.length > 0) {
                 $scope.ClienteData = result.data[0];
-            }
-            else{
-                 alertFactory.info('No se pudo obtener los datos del cliente');
+            } else {
+                alertFactory.info('No se pudo obtener los datos del cliente');
             }
         }, function (error) {
             alertFactory.error('No se pudo obtener los datos del cliente, inténtelo más tarde');
@@ -309,4 +324,12 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
             alertFactory.error("No se pudieron obtener las órdenes por cobrar");
         });
     }
+    
+     $('input[name="tipoPrecioSwitchOrden"]').on('switchChange.bootstrapSwitch', function (event, state) {
+        if (state == true) {
+            $scope.vistaPrecio = 1;
+        } else {
+            $scope.vistaPrecio = 2;
+        }
+    });
 });
