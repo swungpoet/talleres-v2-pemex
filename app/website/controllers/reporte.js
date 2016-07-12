@@ -209,12 +209,13 @@ function generateConfomidadReporte(data,res) {
                 }
             }
         }
+      //  data.fecha.toDateString()
         doc.text(data.data[i].partida,50,tablaInicial+(top*skip),{width: 25,align: 'center'})
         doc.text(data.data[i].descripcion.toUpperCase(),85,tablaInicial+(top*skip),{width: 135,align: 'justify'})
         doc.text(data.data[i].cantidad,228,tablaInicial + (top*skip),{width: 30,align: 'center'})
         doc.text(data.data[i].unidad,258,tablaInicial + (top*skip),{width: 62,align: 'center'})
         doc.text(data.data[i].noRemFac,320,tablaInicial + (top*skip),{width: 62,align: 'center'})
-        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha, 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
+        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha.getDate()+'/'+(data.fecha.getMonth()+1)+'/'+data.fecha.getFullYear(), 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
         doc.text(data.data[i].importe,444,tablaInicial + (top*skip),{width: 100,align:'right'})
         if(preTop + top >=limiteTexto-5){
             top = 0;
