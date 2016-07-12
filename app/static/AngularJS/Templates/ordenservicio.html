@@ -50,7 +50,7 @@
                     <div class="row" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
                         <div class="col-md-offset-10 col-md-2">
                             <form role="form">
-                                <input type="checkbox" id="tipoPrecioSwitchOrden" name="tipoPrecioSwitchOrden" checked data-on-text="Taller" data-off-text="Cliente" data-size="mini" data-toggle="tooltip" tooltip="Muestra los precios del Taller o Cliente" tooltip-placement="up" ng-model="vistaPrecio">
+                                <input bs-switch ng-model="isSelected" type="checkbox" switch-active="{{ isActive }}" switch-on-text="{{ onText }}" switch-off-text="{{ offText }}" switch-on-color="{{ onColor }}" switch-off-color="{{ offColor }}" switch-animate="{{ animate }}" switch-size="{{ size }}" switch-label="{{ label }}" switch-icon="{{ icon }}" switch-radio-off="{{ radioOff }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}" switch-wrapper="{{ wrapper }}" ng-true-value="'yep'" ng-false-value="'nope'" switch-inverse="{{ !inverse }}">
                             </form>
                         </div>
                     </div>
