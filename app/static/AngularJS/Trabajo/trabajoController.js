@@ -5,9 +5,10 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository) {
+registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository, cotizacionRepository) {
     //this is the first method executed in the view
     $scope.init = function () {
+       // obtieneNombreArchivo(idTrabajo);
         $scope.userData = localStorageService.get('userData');
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
@@ -24,6 +25,30 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             nombreProveedor: "",
             puestoProveedor: ""
         }
+    }
+
+    var obtieneNombreArchivo = function(idTrabajo){
+       cotizacionRepository.obtieneNombreArchivo(idTrabajo).then(function(nombreArchivo){
+            if(nombreArchivo.data != null){
+                $scope.certificadoConformidad = nombreArchivo.data[0];  
+                trabajoRepository.descargaCerficadoConformidadTrabajo(20, idTrabajo).then(function (certificadoDescargado) {
+                    //if(certificadoGenerado.data[0].idHistorialProceso > 0){
+                    alertFactory.success("Certificado de conformidad descargado");
+                    getTrabajo($scope.userData.idUsuario);
+                    getTrabajoTerminado($scope.userData.idUsuario);
+                    getTrabajoAprobado($scope.userData.idUsuario);
+                    //}
+                }, function (error) {
+                    alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
+                })
+
+                //window.open($rootScope.vIpServer+'/uploads/files/'+idTrabajo+'/certificadoConformidad/'+$scope.certificadoConformidad, '_blank');   
+                //location.href = $rootScope.vIpServer+'/uploads/files/'+idTrabajo+'/certificadoConformidad/'+$scope.certificadoConformidad;
+            }
+        }, function (error) {
+            alertFactory.error("Error al encontrar nombre de archivo");
+       });
+
     }
 
     var getTrabajo = function (idUsuario) {
@@ -275,7 +300,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             })
 
             setTimeout(function () {
-                window.open($rootScope.vIpServer + "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                window.open($rootScope.vIpServer + 
+                    "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
                     "&solpe=" + $scope.certificadoParams.solpe +
                     "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
                     "&montoOS=" + $scope.certificadoParams.montoOS +
@@ -305,16 +331,14 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
     $scope.descargaCertificadoConformidadPDF = function (idTrabajo) {
-        trabajoRepository.descargaCerficadoConformidadTrabajo(20, idTrabajo).then(function (certificadoDescargado) {
-            //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-            alertFactory.success("Certificado de conformidad descargado");
-            getTrabajo($scope.userData.idUsuario);
-            getTrabajoTerminado($scope.userData.idUsuario);
-            getTrabajoAprobado($scope.userData.idUsuario);
-            //}
-        }, function (error) {
-            alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
-        })
+        obtieneNombreArchivo(idTrabajo);
+        //var link = document.createElement("a");
+        //link.download = 'CeretificadoConformidad';
+        //link.click();
+         // if($rootScope.certificadoConformidad == undefined){
+         //   $rootScope.certificadoConformidad == localStorageService.get('TipoCertificado');
+         //    alertFactory.info("El archivo se ha descargado");
+         // }
     }
 
     //abre la modal para los datos de entrada del certificado de conformidad
