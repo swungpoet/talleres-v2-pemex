@@ -22,10 +22,6 @@ var Cotizacion = function (conf) {
 
     this.middlewares = [
     	upload.array('file[]', 20)
-       /*function(req, res, next){
-           req.consecutivo = obtieneConsecutivo('C:/Desarrollo/talleres-v2/app/static/uploads/files/48/documentos');
-           next();
-       }, upload.array('file[]', 20)*/
    ]
 }
 
@@ -40,13 +36,17 @@ var storage = multer.diskStorage({
                 fs.mkdirSync(dirname + idTrabajo);
                 fs.mkdirSync(dirname + idTrabajo + '/multimedia');
                 fs.mkdirSync(dirname + idTrabajo + '/documentos');
+                fs.mkdirSync(dirname + idTrabajo + '/certificadoConformidad');
             }
 
-            if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
+        if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
                 cb(null, dirname + idTrabajo + '/multimedia')
             } else {
                 cb(null, dirname + idTrabajo + '/documentos')
             }
+        if(req.body.idCategoria == 2 && req.body.idNombreEspecial == 5){
+               cb(null, dirname + idTrabajo + '/certificadoConformidad');
+           }
         } else {
             if (!fs.existsSync(dirname + idTrabajo)) {
                 fs.mkdirSync(dirname + idTrabajo);
@@ -524,7 +524,16 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 countImgs++;
             }
         }
+        //crea la carpeta de certificado de conformidad 
 
+        if(req.body.idCategoria == 2 && req.body.idNombreEspecial == 5){
+             //$rootScope.nameFile = getNameFile(dirname + req.body.idTrabajo + '/certificadoConformidad/');
+            if(req.files[0].originalname != undefined){
+                fs.rename(dirname + req.body.idTrabajo + '/certificadoConformidad/' + req.files[0].originalname, dirname + req.body.idTrabajo + '/certificadoConformidad/' + 'CertificadoConformidad.pdf', function (err) {
+                    if (err) console.log('ERROR: ' + err);
+                });
+            }
+        }
         //obtiene el número de documentos para renombrar
         if ((countFilesDirectory(dirname + req.body.idTrabajo + '/documentos/') - countDocs) === 0) {
             consecutivoDocs = 1;
@@ -562,6 +571,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             if (req.body.idNombreEspecial == 6) nuevoNombre = 'CertificadoConformidad';
 
             //tipo archivo documento
+
             if (idTipoArchivo == 1) {
                 fs.rename(dirname + req.body.idTrabajo + '/documentos/' + req.files[i].originalname, dirname + req.body.idTrabajo + '/documentos/' + nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {
                     if (err) console.log('ERROR: ' + err);
@@ -610,6 +620,27 @@ var countFilesDirectory = function (dir) {
     console.log(files.length);
     return files.length;
 };
+//obtenemos el nombre del archivo
+var getNameFile = function (dir) {
+    var files = fs.readdirSync(dir);
+    console.log(files);
+    return files;
+};
+
+//recuoera la direccion 
+Cotizacion.prototype.get_namefileserver = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/'; 
+        //Callback
+        object.error = null;
+        object.result = getNameFile(dirname + req.query.idTrabajo + '/certificadoConformidad/');
+
+        self.view.expositor(res, object);
+
+}
 
 //Rechaza una cotización
 Cotizacion.prototype.post_cotizacionRechazo = function (req, res, next) {

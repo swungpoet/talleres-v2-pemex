@@ -129,6 +129,19 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        obtieneNombreArchivo: function (idTrabajo) {
+            return $http({
+                url: searchUrl + 'namefileserver',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
+
     };
 });
