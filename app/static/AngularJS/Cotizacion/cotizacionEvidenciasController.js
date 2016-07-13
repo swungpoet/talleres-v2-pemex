@@ -1,13 +1,14 @@
 registrationModule.controller('cotizacionEvidenciasController', function ($scope, localStorageService, alertFactory, cotizacionEvidenciasRepository, $rootScope) {
     var idCotizacion = localStorageService.get('cotizacion');
     var idTrabajo = localStorageService.get('work');
+    $scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
         $scope.cargaEvidencias();
     }
 
     $scope.cargaEvidencias = function () {
-        cotizacionEvidenciasRepository.getEvidenciasByCotizacion(idCotizacion).then(function (result) {
+        cotizacionEvidenciasRepository.getEvidenciasByCotizacion(idCotizacion, $scope.userData.idTipoUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.slides = result.data;
                 setTimeout(function () {
