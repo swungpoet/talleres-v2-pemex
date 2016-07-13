@@ -27,7 +27,7 @@ var Cotizacion = function (conf) {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+        var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
         var idTrabajo = req.body.idTrabajo;
         var idCotizacion = req.body.idCotizacion;
 
@@ -464,6 +464,11 @@ Cotizacion.prototype.get_evidenciasByCotizacion = function (req, res, next) {
             name: 'idCotizacion',
             value: req.query.idCotizacion,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoUsuario',
+            value: req.query.idTipoUsuario,
+            type: self.model.types.DECIMAL
         }
     ];
 
@@ -481,7 +486,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
     res.end("File is uploaded");
     
     //directorio de los archivos
-    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+    var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
     //Objeto que almacena la respuesta
     var object = {};
     //Referencia a la clase para callback
@@ -633,7 +638,7 @@ Cotizacion.prototype.get_namefileserver = function (req, res, next) {
     var object = {};
     //Referencia a la clase para callback
     var self = this;
-    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/'; 
+    var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/'; 
         //Callback
         object.error = null;
         object.result = getNameFile(dirname + req.query.idTrabajo + '/certificadoConformidad/');
@@ -859,6 +864,11 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
         {
             name: 'idTrabajo',
             value: req.query.idTrabajo,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoUsuario',
+            value: req.query.idTipoUsuario,
             type: self.model.types.DECIMAL
         }
     ];
