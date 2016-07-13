@@ -1,6 +1,9 @@
 registrationModule.controller('ordenServicioEvidenciaController', function ($scope, localStorageService, alertFactory, ordenServicioEvidenciaRepository, $rootScope) {
     var idCotizacion = localStorageService.get('cotizacion');
     var trabajo = localStorageService.get('objTrabajo');
+    $scope.userData = localStorageService.get('userData');
+
+
     if (trabajo.idTrabajo == null) {
         $scope.idTrabajo = trabajo[0].idTrabajo;
     } else {
@@ -12,7 +15,7 @@ registrationModule.controller('ordenServicioEvidenciaController', function ($sco
     }
 
     $scope.cargaEvidencias = function () {
-        ordenServicioEvidenciaRepository.getEvidenciasByOrden($scope.idTrabajo).then(function (result) {
+        ordenServicioEvidenciaRepository.getEvidenciasByOrden($scope.idTrabajo, $scope.userData.idTipoUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.slides = result.data;
                 setTimeout(function () {
