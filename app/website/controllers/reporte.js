@@ -51,7 +51,7 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
                 for(var i in data.data){
                     total = total +(data.data[i].cantidad * data.data[i].importe);
                 }
-                data.total = "$ "+parseFloat(total).toFixed(2)+" M.N.";
+                data.total = "$ "+ parseFloat(total).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); +" M.N.";
                 generateConfomidadReporte(data,res)
             });
 }
@@ -195,7 +195,7 @@ function generateConfomidadReporte(data,res) {
         doc.text(data.data[i].unidad,258,tablaInicial + (top*skip),{width: 62,align: 'center'})
         doc.text(data.data[i].noRemFac,320,tablaInicial + (top*skip),{width: 62,align: 'center'})
         doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha.getDate()+'/'+(data.fecha.getMonth()+1)+'/'+data.fecha.getFullYear(), 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
-        doc.text(parseFloat(data.data[i].cantidad*data.data[i].importe).toFixed(2),444,tablaInicial + (top*skip),{width: 100,align:'right'})
+        doc.text("$ "+parseFloat(data.data[i].cantidad*data.data[i].importe).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","),444,tablaInicial + (top*skip),{width: 100,align:'right'})
         if(preTop + top >=limiteTexto-5){
             top = 0;
             paginas++;
