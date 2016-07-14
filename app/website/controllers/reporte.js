@@ -1,4 +1,4 @@
-var TrabajoView = require('../views/ejemploVista'),
+var //TrabajoView = require('../views/ejemploVista'),
     TrabajoModel = require('../models/dataAccess2'),
     moment = require('moment'),
     PDFDocument = require('pdfkit'),
@@ -11,7 +11,7 @@ var TrabajoView = require('../views/ejemploVista'),
 var Reporte = function(conf) {
     this.conf = conf || {};
 
-    this.view = new TrabajoView();
+    //this.view = new TrabajoView();
     this.model = new TrabajoModel({
         parameters: this.conf.parameters
     });
@@ -20,26 +20,6 @@ var Reporte = function(conf) {
         this[this.conf.funcionalidad](this.conf.req, this.conf.res, this.conf.next);
     }
 }
-
-//obtiene los tipos de citas
-Reporte.prototype.get_reportegral = function(req, res, next){
-    //Con req.query se obtienen los parametros de la url
-    //Ejemplo: ?p1=a&p2=b
-    //Retorna {p1:'a',p2:'b'}
-    //Objeto que envía los parámetros
-    //Referencia a la clase para callback
-    var self = this;
-    //Obtención de valores de los parámetros del request
-    var params = [];
-    
-    this.model.query('SEL_REPORTE_GRAL_SP', params, function(error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
-        });
-    });
-}
-
 
 Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     var self = this;
@@ -177,13 +157,13 @@ function generateConfomidadReporte(data,res) {
 
     doc.fontSize(7);
     var tableHeight = 0, extra =0,extra = 0,top = 0,preTop=0,skip = 8.2;
-    var tablaInicial = 295,alturaTabla= 0,limiteTexto=45;
+    var tablaInicial = 295,alturaTabla= 0,limiteTexto=55;
 
     for(var i = 0 ; i < data.data.length; i++){
         if(paginas>0){
             tablaInicial = 65;
-            alturaTabla = 230
-            limiteTexto = 76
+            alturaTabla = 230;
+            limiteTexto = 80;
         }
         preTop = Math.ceil(data.data[i].descripcion.length/30)
         if(preTop+top > limiteTexto-20){
@@ -209,13 +189,12 @@ function generateConfomidadReporte(data,res) {
                 }
             }
         }
-      //  data.fecha.toDateString()
         doc.text(data.data[i].partida,50,tablaInicial+(top*skip),{width: 25,align: 'center'})
         doc.text(data.data[i].descripcion.toUpperCase(),85,tablaInicial+(top*skip),{width: 135,align: 'justify'})
         doc.text(data.data[i].cantidad,228,tablaInicial + (top*skip),{width: 30,align: 'center'})
         doc.text(data.data[i].unidad,258,tablaInicial + (top*skip),{width: 62,align: 'center'})
         doc.text(data.data[i].noRemFac,320,tablaInicial + (top*skip),{width: 62,align: 'center'})
-        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha.getDate()+'/'+(data.fecha.getMonth()+1)+'/'+data.fecha.getFullYear(), 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
+        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha, 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
         doc.text(data.data[i].importe,444,tablaInicial + (top*skip),{width: 100,align:'right'})
         if(preTop + top >=limiteTexto-5){
             top = 0;
@@ -227,18 +206,29 @@ function generateConfomidadReporte(data,res) {
           top += Math.ceil(data.data[i].descripcion.length/30)+2
         }
     }
+    var ajuste = 0;
     if(top>0){
-        doc.rect(48, 289-alturaTabla, 30, 250+alturaTabla).stroke()
-        doc.rect(78, 289-alturaTabla, 150, 250+alturaTabla).stroke()
-        doc.rect(228, 289-alturaTabla, 30, 250+alturaTabla).stroke()
-        doc.rect(258, 289-alturaTabla, 62, 250+alturaTabla).stroke()
-        doc.rect(320, 289-alturaTabla, 62, 250+alturaTabla).stroke()
-        doc.rect(382, 289-alturaTabla, 62, 250+alturaTabla).stroke()
-        doc.rect(444, 289-alturaTabla, 110, 250+alturaTabla).stroke()
+        if(top>55){
+            ajuste = 180;
+        }
+        doc.rect(48, 289-alturaTabla, 30, 250+alturaTabla+ajuste).stroke()
+        doc.rect(78, 289-alturaTabla, 150, 250+alturaTabla+ajuste).stroke()
+        doc.rect(228, 289-alturaTabla, 30, 250+alturaTabla+ajuste).stroke()
+        doc.rect(258, 289-alturaTabla, 62, 250+alturaTabla+ajuste).stroke()
+        doc.rect(320, 289-alturaTabla, 62, 250+alturaTabla+ajuste).stroke()
+        doc.rect(382, 289-alturaTabla, 62, 250+alturaTabla+ajuste).stroke()
+        doc.rect(444, 289-alturaTabla, 110, 250+alturaTabla+ajuste).stroke()
+        if(top>55){
+          paginas++;
+          doc.addPage();
+          doc.rect(30, 40, 555, 700).stroke()
+          doc.rect(40, 50, 535, 680).stroke()
+          extra = -480;
+        }
     }else{
         extra = -480;
-    }
 
+    }
     doc.rect(48, 539+extra, 334, 12).stroke()
     doc.rect(382, 539+extra, 62, 12).stroke()
     doc.rect(444, 539+extra, 110, 12).stroke()
