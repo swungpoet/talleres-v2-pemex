@@ -155,7 +155,7 @@ function generateConfomidadReporte(data,res) {
     doc.text("CLAVE PROVEEDOR" ,332,222)
 
     doc.text("108074" ,345,234)
-    doc.text("ASE050805IB6" , 470,234)
+    doc.text("ASE0508051B6" , 470,234)
 
     doc.rect(48, 275, 30, 14).stroke()
     doc.rect(78, 275, 150, 14).stroke()
