@@ -1,4 +1,4 @@
-var //TrabajoView = require('../views/ejemploVista'),
+var TrabajoView = require('../views/ejemploVista'),
     TrabajoModel = require('../models/dataAccess2'),
     moment = require('moment'),
     PDFDocument = require('pdfkit'),
@@ -11,7 +11,7 @@ var //TrabajoView = require('../views/ejemploVista'),
 var Reporte = function(conf) {
     this.conf = conf || {};
 
-    //this.view = new TrabajoView();
+    this.view = new TrabajoView();
     this.model = new TrabajoModel({
         parameters: this.conf.parameters
     });
@@ -19,6 +19,25 @@ var Reporte = function(conf) {
     this.response = function() {
         this[this.conf.funcionalidad](this.conf.req, this.conf.res, this.conf.next);
     }
+}
+
+//obtiene los tipos de citas
+Reporte.prototype.get_reportegral = function(req, res, next){
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [];
+    
+    this.model.query('SEL_REPORTE_GRAL_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
 }
 
 Reporte.prototype.get_conformidadpdf = function(req, res, next) {
