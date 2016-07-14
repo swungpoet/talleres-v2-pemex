@@ -284,7 +284,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function () {
-        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
+        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
 
             trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {

@@ -49,9 +49,9 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
                 data.data = result;
                 var total = 0;
                 for(var i in data.data){
-                    total = total + (data.data[i].cantidad * data.data[i].importe);
+                    total = total +(data.data[i].cantidad * data.data[i].importe);
                 }
-                data.total = "$ "+total+" UDS";
+                data.total = "$ "+parseFloat(total).toFixed(2)+" M.N.";
                 generateConfomidadReporte(data,res)
             });
 }
@@ -85,10 +85,10 @@ function generateConfomidadReporte(data,res) {
 		doc.rect(48, 141, 210, 22).stroke()
 		doc.rect(48, 163, 210, 22).stroke()
 
-		doc.text("CONTRATO: 5100305278 ",50,198)
+		doc.text("CONTRATO: 5400027380 ",50,198)
 		doc.text("SOLPE: " + data.solpe ,50,210)
 		doc.text("ORDEN DE SURTIMEINTO: " + data.ordenSurtimiento ,50,222)
-		doc.text("MONTO DEL CONTRATO: $6,523,479,00 USD " ,50,234)
+		doc.text("MONTO DEL CONTRATO: $382,427,879.00 M.N. " ,50,234)
 		doc.text("MONTO OS: " +  data.montoOS ,50,246)
 		doc.text("PEDIDO ASOCIADO: " +  data.pedidoAsociado ,50,258)
 
@@ -100,12 +100,12 @@ function generateConfomidadReporte(data,res) {
 		doc.rect(48, 255, 180, 12).stroke()
 
     doc.text("REPORTE No.  ___________________________",400,88)
-    doc.text(data.noReporte,490,88)
+    doc.text(data.noReporte,470,88)
 		doc.text("LUGAR:  ________________________________________________________",310,110)
 		doc.fontSize(4);
 		doc.text("DIA                      MES                  AÑO",485,123)
 		doc.fontSize(7);
-		doc.text("Mexico D.F.",400,110)
+		doc.text("CDMX",400,110)
     doc.text(fecha.format(data.fecha, 'DD           MMMM      YYYY'),410,110,{width: 220,align: 'center'})
 		doc.text("FECHA RECIBO DE SOLICITUD DE INSPECCIÓN:  _____________________",310,132)
 		doc.fontSize(4);
@@ -117,10 +117,10 @@ function generateConfomidadReporte(data,res) {
 		doc.fontSize(4);
 		doc.text("DIA                      MES                  AÑO",485,168)
     doc.fontSize(7);
-    doc.text("09    Noviembre   2015",485,155)
+    doc.text("19        Mayo       2016",485,155)
 
 		doc.text("FECHA DE RECEPCIÓN DE CONTRATO/S:             _____________________",310,177)
-    doc.text("09    Noviembre   2015",485,177)
+    doc.text("19        Mayo       2016",485,177)
 
 
 		doc.rect(320, 195, 234, 12).stroke()
@@ -131,12 +131,12 @@ function generateConfomidadReporte(data,res) {
 		doc.rect(410, 231, 144, 12).stroke()
 
     doc.text("RAZON SOCIAL",415,198)
-    doc.text("Autoexpress Servicio de Excelencia Pedregal S.A de C.V.",375,210)
+    doc.text("Autoexpress Servicio de Excelencia Pedregal S.A de C.V.",355,210)
     doc.text("RFC" , 485,222)
     doc.text("CLAVE PROVEEDOR" ,332,222)
 
-    doc.text("S/N" ,345,234)
-    doc.text("SSI070607P46" , 470,234)
+    doc.text("108074" ,345,234)
+    doc.text("ASE050805IB6" , 470,234)
 
     doc.rect(48, 275, 30, 14).stroke()
     doc.rect(78, 275, 150, 14).stroke()
@@ -194,8 +194,8 @@ function generateConfomidadReporte(data,res) {
         doc.text(data.data[i].cantidad,228,tablaInicial + (top*skip),{width: 30,align: 'center'})
         doc.text(data.data[i].unidad,258,tablaInicial + (top*skip),{width: 62,align: 'center'})
         doc.text(data.data[i].noRemFac,320,tablaInicial + (top*skip),{width: 62,align: 'center'})
-        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha, 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
-        doc.text(data.data[i].importe,444,tablaInicial + (top*skip),{width: 100,align:'right'})
+        doc.text(data.data[i].fecha == "" ? data.data[i].fecha: data.fecha.getDate()+'/'+(data.fecha.getMonth()+1)+'/'+data.fecha.getFullYear(), 382,tablaInicial + (top*skip),{width: 63,align: 'center'})
+        doc.text(parseFloat(data.data[i].cantidad*data.data[i].importe).toFixed(2),444,tablaInicial + (top*skip),{width: 100,align:'right'})
         if(preTop + top >=limiteTexto-5){
             top = 0;
             paginas++;
