@@ -27,6 +27,7 @@ var Cotizacion = function (conf) {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
         var idTrabajo = req.body.idTrabajo;
         var idCotizacion = req.body.idCotizacion;
 
@@ -485,6 +486,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
     res.end("File is uploaded");
     
     //directorio de los archivos
+    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
     //Objeto que almacena la respuesta
     var object = {};
     //Referencia a la clase para callback
@@ -636,6 +638,7 @@ Cotizacion.prototype.get_namefileserver = function (req, res, next) {
     var object = {};
     //Referencia a la clase para callback
     var self = this;
+    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/'; 
         //Callback
         object.error = null;
         object.result = getNameFile(dirname + req.query.idTrabajo + '/certificadoConformidad/');
