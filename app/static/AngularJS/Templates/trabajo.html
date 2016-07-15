@@ -31,12 +31,12 @@
                                                 <td>{{trabajo.marca}}</td>
                                                 <td>{{trabajo.modeloMarca}}</td>
                                                 <td>{{trabajo.trabajo}}</td>
-                                                <td>{{trabajo.descripcionLarga}}</td>
+                                                <td ng-class="{'rowAzul': trabajo.estatus=='OrdenGarantia'}">{{trabajo.descripcionLarga}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
 
-                                                    <button ng-if="trabajo.estatus == 'Iniciado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Terminar trabajo" tooltip-placement="up"><span class="glyphicon glyphicon-ok-sign"></span> Terminar
+                                                    <button ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Terminar trabajo" tooltip-placement="up"><span class="glyphicon glyphicon-ok-sign"></span> Terminar
                                                     </button>
                                                 </td>
                                             </tr>
@@ -80,6 +80,8 @@
                                                     <button ng-if="trabajo.estatus == 'CertificadoGenerado'" ng-hide="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar certificado</button>
                                                     
                                                     <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Descargar certificado de conformidad" tooltip-placement="up" href="{{vIpServer}}/uploads/files/{{trabajo.idTrabajo}}/certificadoConformidad/CertificadoConformidad.pdf" target="_parent" download="CeretificadoConformidad" class="btn btn-success" role="button" ng-click="descargaCertificadoConformidadPDF(trabajo.idTrabajo)"><span class="glyphicon glyphicon-download"></span>&nbsp;Descargar certificado</a>
+
+                                                    <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Rechazar Trabajo" tooltip-placement="up" class="btn btn-cancela btn-danger btnTerminarTrabajo2" role="button" ng-click="openOrdenTrabajoModal(23, trabajo.idTrabajo)"><i class="fa fa-times"></i>&nbsp;Rechazar Trabajo</a>  
 
                                                     <button ng-if="trabajo.estatus == 'CertificadoDescargado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,6)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;Cargar Certificado</button>
                                                 </td>

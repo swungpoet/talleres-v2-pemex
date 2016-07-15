@@ -339,4 +339,42 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $('#datosEntradaCertificadoModal').appendTo("body").modal('show');
     }
 
+        $scope.ordenGarantia = function (idEstatus, idTrabajo) {
+          trabajoRepository.ordenServicioGarantia(idEstatus, idTrabajo).then(function (orden) {
+          $scope.ordens = orden.data;
+              alertFactory.success("Se rachazo el trabajo");
+             location.href = '/trabajo';
+            }, function (error) {
+                alertFactory.error("Error al rechzar el trabajo");
+            });
+    }
+
+$scope.openOrdenTrabajoModal = function (idEstatus, idTrabajo) {  
+  $scope.idEstatus = idEstatus;  
+  $scope.idTrabajo = idTrabajo;    
+
+ $('.btnTerminarTrabajo2').ready(function () {
+        swal({
+                title: "¿Esta seguro que desea rechazar el trabajo?",
+                text: "Se cambiará el estatus a 'Orden de Servicio en Garantia'",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#65BD10",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $scope.ordenGarantia($scope.idEstatus, $scope.idTrabajo);
+                    swal("Trabajo Rechazado!", "El trabajo se ha rechzado", "success");
+                } else {
+                    swal("Rechazo Cancelado", "", "error");
+                }
+            });
+        });        
+     }
+
 });
+

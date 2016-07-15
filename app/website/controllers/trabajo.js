@@ -233,6 +233,22 @@ Trabajo.prototype.post_insertTrabajo = function(req, res, next){
 
         self.view.expositor(res, object);
     });
-}    
+}  
+
+Trabajo.prototype.post_updtrabajoordengarantia = function(req, res, next){
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT},
+                  {name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT}];
+    
+    this.model.post('UPD_TRABAJO_GARANTIA_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}  
 
 module.exports = Trabajo;
