@@ -841,7 +841,7 @@ localStorageService.remove('ModoEdicion');
   //   $('#finalizarTrabajoModal').appendTo("body").modal('show');
   $scope.idCita = idCita;   
 
- $('.btnTerminarTrabajo').click(function () {
+ $('.btnTerminarTrabajo').ready(function () {
         swal({
                 title: "¿Esta seguro que desea cancelar la cita?",
                 text: "Se cambiará el estatus a 'Cita Cancelada'",
@@ -857,11 +857,9 @@ localStorageService.remove('ModoEdicion');
                 if (isConfirm) {
                     $scope.dropCita($scope.idCita);
                     swal("Trabajo terminado!", "La cita se ha cancelado", "success");
-                   // $scope.observacionTrabajo = null;
                 } else {
                     swal("No cancelado", "", "error");
                     $('#finalizarTrabajoModal').modal('hide');
-                   // $scope.observacionTrabajo = null;
                 }
             });
         });        

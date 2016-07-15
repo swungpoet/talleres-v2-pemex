@@ -123,5 +123,15 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
+        ordenServicioGarantia: function(idEstatus,idTrabajo,observacion){
+            return $http({
+                url: trabajoUrl + 'updtrabajoordengarantia',
+                method: "POST",
+                data: {idEstatus:idEstatus, idTrabajo:idTrabajo, observacion:observacion},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }); 
+        }
     };
 });

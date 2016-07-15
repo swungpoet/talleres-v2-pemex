@@ -284,7 +284,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function () {
-        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' && $scope.certificadoParams.nombreEmisor != '' &&
+        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
 
             trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {
@@ -339,4 +339,47 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $('#datosEntradaCertificadoModal').appendTo("body").modal('show');
     }
 
+        $scope.ordenGarantia = function (idEstatus, idTrabajo, observacion) {
+          trabajoRepository.ordenServicioGarantia(idEstatus, idTrabajo, observacion).then(function (orden) {
+          $scope.ordens = orden.data;
+              alertFactory.success("Se rachazo el trabajo");
+             location.href = '/trabajo';
+            }, function (error) {
+                alertFactory.error("Error al rechzar el trabajo");
+            });
+    }
+
+$scope.openOrdenTrabajoModal = function (idEstatus, idTrabajo) {  
+   $('#finalizarTrabajoModal2').appendTo("body").modal('show');  
+  $scope.idEstatus = idEstatus;  
+  $scope.idTrabajo = idTrabajo;    
+}
+
+ $('.btnTerminarTrabajo2').click(function () {
+        swal({
+                title: "¿Esta seguro que desea rechazar el trabajo?",
+                text: "Se cambiará el estatus a 'Orden de Servicio en Garantia'",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#65BD10",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $scope.ordenGarantia($scope.idEstatus, $scope.idTrabajo, $scope.observacionRechazo);
+                    swal("Trabajo Rechazado!", "El trabajo se ha rechzado", "success");
+                    $scope.observacionRechazo = null;  
+                } else {
+                    swal("Rechazo Cancelado", "", "error");
+                    $('#finalizarTrabajoModal').modal('hide');
+                    $scope.observacionRechazo = null;  
+                }
+            });
+        });        
+     
+
 });
+
