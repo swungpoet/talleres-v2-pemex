@@ -240,7 +240,8 @@ Trabajo.prototype.post_updtrabajoordengarantia = function(req, res, next){
     var self = this;
     //Obtención de valores de los parámetros del request
     var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT},
-                  {name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT}];
+                  {name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'observacion', value: req.body.observacion, type: self.model.types.STRING}];
     
     this.model.post('UPD_TRABAJO_GARANTIA_SP', params, function (error, result) {
         //Callback

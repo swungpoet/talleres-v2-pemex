@@ -339,8 +339,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $('#datosEntradaCertificadoModal').appendTo("body").modal('show');
     }
 
-        $scope.ordenGarantia = function (idEstatus, idTrabajo) {
-          trabajoRepository.ordenServicioGarantia(idEstatus, idTrabajo).then(function (orden) {
+        $scope.ordenGarantia = function (idEstatus, idTrabajo, observacion) {
+          trabajoRepository.ordenServicioGarantia(idEstatus, idTrabajo, observacion).then(function (orden) {
           $scope.ordens = orden.data;
               alertFactory.success("Se rachazo el trabajo");
              location.href = '/trabajo';
@@ -350,10 +350,12 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
 $scope.openOrdenTrabajoModal = function (idEstatus, idTrabajo) {  
+   $('#finalizarTrabajoModal2').appendTo("body").modal('show');  
   $scope.idEstatus = idEstatus;  
   $scope.idTrabajo = idTrabajo;    
+}
 
- $('.btnTerminarTrabajo2').ready(function () {
+ $('.btnTerminarTrabajo2').click(function () {
         swal({
                 title: "¿Esta seguro que desea rechazar el trabajo?",
                 text: "Se cambiará el estatus a 'Orden de Servicio en Garantia'",
@@ -367,14 +369,17 @@ $scope.openOrdenTrabajoModal = function (idEstatus, idTrabajo) {
             },
             function (isConfirm) {
                 if (isConfirm) {
-                    $scope.ordenGarantia($scope.idEstatus, $scope.idTrabajo);
+                    $scope.ordenGarantia($scope.idEstatus, $scope.idTrabajo, $scope.observacionRechazo);
                     swal("Trabajo Rechazado!", "El trabajo se ha rechzado", "success");
+                    $scope.observacionRechazo = null;  
                 } else {
                     swal("Rechazo Cancelado", "", "error");
+                    $('#finalizarTrabajoModal').modal('hide');
+                    $scope.observacionRechazo = null;  
                 }
             });
         });        
-     }
+     
 
 });
 
