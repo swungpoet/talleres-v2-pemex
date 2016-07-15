@@ -176,7 +176,7 @@ function generateConfomidadReporte(data,res) {
 
     doc.fontSize(7);
     var tableHeight = 0, extra =0,extra = 0,top = 0,preTop=0,skip = 8.2;
-    var tablaInicial = 295,alturaTabla= 0,limiteTexto=55;
+    var tablaInicial = 295,alturaTabla= 0,limiteTexto=50;
 
     for(var i = 0 ; i < data.data.length; i++){
         if(paginas>0){
@@ -226,8 +226,9 @@ function generateConfomidadReporte(data,res) {
         }
     }
     var ajuste = 0;
-    if(top>0){
-        if(top>55){
+    if(top>0 || data.data.length==0){
+      console.log(paginas)
+        if(top>55 || (top > 30 && paginas == 0) ){
             ajuste = 180;
         }
         doc.rect(48, 289-alturaTabla, 30, 250+alturaTabla+ajuste).stroke()
@@ -237,7 +238,7 @@ function generateConfomidadReporte(data,res) {
         doc.rect(320, 289-alturaTabla, 62, 250+alturaTabla+ajuste).stroke()
         doc.rect(382, 289-alturaTabla, 62, 250+alturaTabla+ajuste).stroke()
         doc.rect(444, 289-alturaTabla, 110, 250+alturaTabla+ajuste).stroke()
-        if(top>55){
+        if(top>55 ||  (top > 30 && paginas == 0)){
           paginas++;
           doc.addPage();
           doc.rect(30, 40, 555, 700).stroke()
@@ -245,8 +246,8 @@ function generateConfomidadReporte(data,res) {
           extra = -480;
         }
     }else{
-        extra = -480;
-
+          extra = -480;
+      
     }
     doc.rect(48, 539+extra, 334, 12).stroke()
     doc.rect(382, 539+extra, 62, 12).stroke()
