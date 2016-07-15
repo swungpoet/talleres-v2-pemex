@@ -78,8 +78,8 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
                         $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
 
                         $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
-                        
-                        
+
+
                         //Sumatoria Cliente
                         $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
 
@@ -87,7 +87,7 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
                     }
                     //Total Taller
                     $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
-                    
+
                     //Total Cliente
                     $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
                 }
@@ -328,12 +328,14 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
             alertFactory.error("No se pudieron obtener las órdenes por cobrar");
         });
     }
-    
-     $scope.$watch('isSelected', function() {
-        if($scope.isSelected == 'yep'){
-            $scope.vistaPrecio = 1;
-        }else{
-            $scope.vistaPrecio = 2;
+
+    $scope.$watch('isSelected', function () {
+        if ($scope.userData.idTipoUsuario != 4) {
+            if ($scope.isSelected == 'yep') {
+                $scope.vistaPrecio = 1;
+            } else {
+                $scope.vistaPrecio = 2;
+            }
         }
     });
 });
