@@ -6,6 +6,7 @@ var idTipoArchivo;
 var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 
 var Cotizacion = function (conf) {
     this.conf = conf || {};
@@ -27,7 +28,6 @@ var Cotizacion = function (conf) {
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
         var idTrabajo = req.body.idTrabajo;
         var idCotizacion = req.body.idCotizacion;
 
@@ -484,9 +484,6 @@ Cotizacion.prototype.get_evidenciasByCotizacion = function (req, res, next) {
 ////Método para insertar evidencia
 Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
     res.end("File is uploaded");
-    
-    //directorio de los archivos
-    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
     //Objeto que almacena la respuesta
     var object = {};
     //Referencia a la clase para callback
@@ -504,7 +501,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 idTipoEvidencia: req.body.idTipoEvidencia,
                 idTipoArchivo: idTipoArchivo,
                 idUsuario: req.body.idUsuario,
-                idProcesoEvidencia: req.body.idCotizacion,
+                idProcesoEvidencia: req.body.idCotizacion == '' ? req.body.idTrabajo : req.body.idCotizacion,
                 idCategoria: req.body.idCategoria,
                 nombreArchivo: req.files[i].originalname,
                 idNombreEspecial: req.body.idNombreEspecial
@@ -532,7 +529,6 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
         //crea la carpeta de certificado de conformidad 
 
         if(req.body.idCategoria == 2 && req.body.idNombreEspecial == 5){
-             //$rootScope.nameFile = getNameFile(dirname + req.body.idTrabajo + '/certificadoConformidad/');
             if(req.files[0].originalname != undefined){
                 fs.rename(dirname + req.body.idTrabajo + '/certificadoConformidad/' + req.files[0].originalname, dirname + req.body.idTrabajo + '/certificadoConformidad/' + 'CertificadoConformidad.pdf', function (err) {
                     if (err) console.log('ERROR: ' + err);
@@ -638,7 +634,6 @@ Cotizacion.prototype.get_namefileserver = function (req, res, next) {
     var object = {};
     //Referencia a la clase para callback
     var self = this;
-    var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/'; 
         //Callback
         object.error = null;
         object.result = getNameFile(dirname + req.query.idTrabajo + '/certificadoConformidad/');
