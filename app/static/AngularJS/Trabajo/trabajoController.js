@@ -343,10 +343,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
           trabajoRepository.ordenServicioGarantia(idEstatus, idTrabajo, observacion).then(function (orden) {
           $scope.ordens = orden.data;
               alertFactory.success("Se rachazo el trabajo");
+            }, function (error) {
+                alertFactory.error("Error al rechazar el trabajo");
+            });
+        trabajoRepository.getOrdenEmail(idTrabajo).then(function (email) {
+          $scope.emails = email.data;
+              alertFactory.success("Se envio email satisfactoriamente");
              location.href = '/trabajo';
             }, function (error) {
-                alertFactory.error("Error al rechzar el trabajo");
+                alertFactory.error("Error al enviar el email");
             });
+
     }
 
 $scope.openOrdenTrabajoModal = function (idEstatus, idTrabajo) {  
@@ -378,8 +385,8 @@ $scope.openOrdenTrabajoModal = function (idEstatus, idTrabajo) {
                     $scope.observacionRechazo = null;  
                 }
             });
-        });        
-     
+        });    
+
 
 });
 
