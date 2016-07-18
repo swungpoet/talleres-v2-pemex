@@ -132,6 +132,16 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 'Content-Type': 'application/json'
                 }
             }); 
+        },
+          getOrdenEmail: function(idTrabajo){
+            return $http({
+                url: trabajoUrl + 'trabajorechazado/',
+                method: "GET",
+                params: {idTrabajo: idTrabajo},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
