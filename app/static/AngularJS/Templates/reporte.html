@@ -20,14 +20,22 @@
                                         <th>Número Económico</th>
                                         <th>Marca - Modelo</th>                        
                                         <th>Fecha Cita</th>
-                                        <th>Estatus cancelación cita</th>
-                                        <th>Fecha cancelación cita</th>
+                                        <th>Fecha Confirmación Cita</th>                             
+                                        <th>Fecha Cancelación cita</th>
                                         <th>Fecha Entrada Unidad</th>
-                                        <th>Órden Surtimiento</th>
-                                        <th>Facturación refacción</th>
+                                        <th>Fecha Cotización</th>
+                                        <th>Fecha Autorización Cotización</th>
+                                        <th>Fecha Terminación Trabajo</th>
                                         <th>Fecha Salida Unidad</th>
-                                        <th>Factura Taller</th>
-                                        <th>COPADE</th>
+                                        <th>Fecha Generación Certificado CallCenter</th>
+                                        <th>Fecha Carga Certificado CallCenter</th>
+                                        <th>Fecha Descarga Certificado PEMEX</th>
+                                        <th>Fecha aprobación Trabajo(PEMEX)</th>
+                                        <th>Fecha Trabajo en Garantía</th>
+                                        <th>Fecha Factura Taller</th>
+                                        <th>Fecha COPADE</th>
+                                        <th>Orden de Surtimiento</th>
+                                        <th>Facturación refacción</th>
                                         <th>Costo Reparación</th>
                                         <th>Venta Reparación</th>
                                         <th>Porcentaje Utilidad</th>
@@ -44,14 +52,22 @@
                                         <td>{{dato.numeroEconomico}}</td>
                                         <td>{{dato.marcaModelo}}</td>                        
                                         <td>{{dato.fechaCita}}</td>
-                                        <td>{{dato.estatusCancelacionCita}}</td>
+                                        <td>{{dato.fechaConfirmacionCita}}</td>
                                         <td>{{dato.fechaCancelacionCita}}</td>
                                         <td>{{dato.fechaEntradaUnidad}}</td>
-                                        <td>{{dato.ordenSurtimiento}}</td>
-                                        <td>{{dato.facturacionRefaccion}}</td>
+                                        <td>{{dato.fechaCotizacion}}</td>
+                                        <td>{{dato.fechaAutorizacionCotizacion}}</td>
+                                        <td>{{dato.fechaTerminacionTrabajo}}</td>
                                         <td>{{dato.fechaSalidaUnidad}}</td>
-                                        <td>{{dato.facturaTaller}}</td>
-                                        <td>{{dato.copade}}</td>
+                                        <td>{{dato.fechaGeneracionASECertificadoConformidad}}</td>
+                                        <td>{{dato.fechaCargaASECertificadoConformidad}}</td>
+                                        <td>{{dato.fechaDescargaPemexCertificadoConformidad}}</td>
+                                        <td>{{dato.fechaAceptacionTrabajo}}</td>
+                                        <td>{{dato.fechaTrabajoGarantia}}</td>
+                                        <td>{{dato.fechaFacturaTaller}}</td>
+                                        <td>{{dato.fechaCOPADE}}</td>
+                                        <td>{{dato.ordenSurtimiento}}</td>
+                                        <td>{{dato.facturacionRefaccion}}</td>                                    
                                         <td>{{dato.costoReparacion}}</td>
                                         <td>{{dato.ventaReparacion}}</td>
                                         <td ng-if="dato.ventaReparacion == 0">{{0}}</td>

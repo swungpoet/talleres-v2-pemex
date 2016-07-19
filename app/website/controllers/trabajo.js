@@ -234,14 +234,24 @@ Trabajo.prototype.post_insertTrabajo = function(req, res, next){
         self.view.expositor(res, object);
     });
 }  
-
+//Actualiza el trabajo a orden de servicio en garantia
 Trabajo.prototype.post_updtrabajoordengarantia = function(req, res, next){
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT},
-                  {name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
-                  {name: 'observacion', value: req.body.observacion, type: self.model.types.STRING}];
+    var params = [{name: 'idTrabajo', 
+                  value: req.body.idTrabajo,
+                   type: self.model.types.INT},
+                  {
+                    name: 'idEstatus', 
+                  value: req.body.idEstatus, 
+                   type: self.model.types.INT
+                  },
+                  {
+                    name: 'observacion', 
+                  value: req.body.observacion, 
+                  type: self.model.types.STRING
+                 }];
     
     this.model.post('UPD_TRABAJO_GARANTIA_SP', params, function (error, result) {
         //Callback
@@ -251,5 +261,23 @@ Trabajo.prototype.post_updtrabajoordengarantia = function(req, res, next){
         });
     });
 }  
+//Se envia correo para informar que se ha rechazado el trabajo
+Trabajo.prototype.get_trabajorechazado = function(req, res, next){
+
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{
+                   name: 'idTrabajo', 
+                   value: req.query.idTrabajo, 
+                   type: self.model.types.INT
+                 }];
+    
+    this.model.query('SEL_NOTIFICACION_TRABAJORECHAZADO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 
 module.exports = Trabajo;
