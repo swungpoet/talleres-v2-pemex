@@ -49,4 +49,41 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
     });
 }
 
+//Devuelve los trabajos cobrados y listos para facturar
+Orden.prototype.get_prefacturas = function (req, res, next) {
+    var self = this;
+    var params = [];
+    
+    this.model.query('SEL_TRABAJOS_COBRADOS_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Genera el TXT de un trabajo cobrado
+Orden.prototype.post_generaTxtFactura = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        }];
+
+    this.model.post('SEL_FACTURA_TXT_SP',params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Orden;
