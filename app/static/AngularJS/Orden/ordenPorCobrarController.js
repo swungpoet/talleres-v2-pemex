@@ -5,6 +5,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     $scope.init = function () {
         $scope.getOrdenesPorCobrar();
+        if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
+            $scope.preFacturas();
+        }
     }
 
     //Devuelve las órdenes por cobrar
@@ -101,7 +104,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             $scope.getOrdenesPorCobrar();
         }, 2000);
     }
-    
+
     //Visualiza la órden de servicio
     $scope.aprobarTrabajo = function (orden, valBotonera) {
         var objBotonera = {};
@@ -110,5 +113,60 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         localStorageService.set('objTrabajo', orden);
         localStorageService.set("botonera", objBotonera);
         location.href = '/ordenservicio';
+    }
+
+    $scope.preFacturas = function () {
+        $('.dataTablePreFacturas').DataTable().destroy();
+        ordenPorCobrarRepository.getPreFacturas().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.facturas = result.data;
+                setTimeout(function () {
+                    $('.dataTablePreFacturas').DataTable({
+                        buttons: [
+                            {
+                                extend: 'copy'
+                                    },
+                            {
+                                extend: 'csv'
+                                    },
+                            {
+                                extend: 'excel',
+                                title: 'ExampleFile'
+                                    },
+                            {
+                                extend: 'pdf',
+                                title: 'ExampleFile'
+                                    },
+
+                            {
+                                extend: 'print',
+                                customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
+            } else {
+                alertFactory.info('No se encontraron trabajos por cobrar');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener trabajos por cobrar");
+        });
+    }
+    
+    $scope.generaTXT = function (idTrabajo) {
+        ordenPorCobrarRepository.postGeneraTXT(idTrabajo).then(function(result){
+            if(result.data.length > 0){
+                alertFactory.success("PreFactura generada correctamente!");
+            }
+        }, function(error){
+            alertFactory.error("Error al generar la prefactura");
+        });
     }
 });

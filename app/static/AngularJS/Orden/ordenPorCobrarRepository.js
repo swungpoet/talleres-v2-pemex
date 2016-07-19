@@ -21,6 +21,26 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getPreFacturas: function () {
+            return $http({
+                url: ordenUrl + 'prefacturas',
+                method: "GET"
+            });
+        },
+        postGeneraTXT: function (idTrabajo) {
+            var objTrabajo = {
+                idTrabajo: idTrabajo
+            };
+
+            return $http({
+                url: ordenUrl + 'generaTxtFactura',
+                method: "POST",
+                data: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
