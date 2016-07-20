@@ -95,8 +95,8 @@ function generateConfomidadReporte(data,res) {
 		doc.text("FI-001",290,70)
 		doc.text("\"REPORTE DE CONFORMIDAD \"",255,80)
 
-		doc.text("ORGANISMO: PEMEX LOGISTICA "+data.gerencia,50,110)
-		doc.text("GERENCIA: LOGISTICA REGIONAL",50,124)
+		doc.text("ORGANISMO: PEMEX LOGISTICA",50,110)
+		doc.text("GERENCIA: LOGISTICA REGIONAL "+data.gerencia,50,124)
 		doc.text("SUBGERENCIA: OPERACION Y MANTTO DE TERMINALES",50,146)
 		doc.text("SUPTCIA/DEPTO: Terminales de Almacenamieto y Despacho ",50,167)
 		doc.text(data.tad,50,176)
