@@ -1,22 +1,29 @@
 var OrdenView = require('../views/ejemploVista'),
     OrdenModel = require('../models/dataAccess2');
 
-var Orden = function(conf){
-	this.conf = conf || {};
+var fs = require('fs'),
+    xml2js = require('xml2js');
 
-	this.view = new OrdenView();
-	this.model = new OrdenModel({ parameters : this.conf.parameters});
+var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 
-	this.response = function(){
-		this[this.conf.funcionalidad](this.conf.req,this.conf.res,this.conf.next);
-	}
+var Orden = function (conf) {
+    this.conf = conf || {};
+
+    this.view = new OrdenView();
+    this.model = new OrdenModel({
+        parameters: this.conf.parameters
+    });
+
+    this.response = function () {
+        this[this.conf.funcionalidad](this.conf.req, this.conf.res, this.conf.next);
+    }
 }
 
 //Obtiene las ordenes pendientes por cobrar
 Orden.prototype.get_ordenesporcobrar = function (req, res, next) {
     var self = this;
     var params = [];
-    
+
     this.model.query('SEL_ORDENES_POR_COBRAR_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
@@ -35,12 +42,12 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
     var self = this;
 
     var params = [{
-            name: 'idTrabajo',
-            value: req.body.idTrabajo,
-            type: self.model.types.INT
+        name: 'idTrabajo',
+        value: req.body.idTrabajo,
+        type: self.model.types.INT
         }];
 
-    this.model.post('INS_TRABAJO_CONCLUIDO_SP',params, function (error, result) {
+    this.model.post('INS_TRABAJO_CONCLUIDO_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;
@@ -53,7 +60,7 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
 Orden.prototype.get_prefacturas = function (req, res, next) {
     var self = this;
     var params = [];
-    
+
     this.model.query('SEL_TRABAJOS_COBRADOS_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
@@ -71,19 +78,55 @@ Orden.prototype.post_generaTxtFactura = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
 
+    var directorioFactura = dirname + req.body.idTrabajo + '/documentos';
+    var files = fs.readdirSync(directorioFactura);
+
+    files.forEach(function (file) {
+        var extension = obtenerExtArchivo(file);
+
+        if (extension == '.xml' || extension == '.XML') {
+            var parser = new xml2js.Parser();
+            fs.readFile(directorioFactura + '/' + file, function (err, data) {
+                parser.parseString(data, function (err, result) {
+                    var fecha = result['cfdi:Comprobante'].$['fecha'];
+                    if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
+                        var numFactura = result['cfdi:Comprobante'].$['folio'];
+                    } else {
+                        var numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                    }
+                    var uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                    var nombreXml = file;
+
+                    console.log('Fecha: ' + fecha);
+                    console.log('Factura: ' + numFactura);
+                    console.log('UUID: ' + uuid);
+                    console.log('Nombre Xml: ' + nombreXml);
+                    console.log('=========================')
+                });
+            });
+        }
+    });
+
+
+
     var params = [{
-            name: 'idTrabajo',
-            value: req.body.idTrabajo,
-            type: self.model.types.INT
+        name: 'idTrabajo',
+        value: req.body.idTrabajo,
+        type: self.model.types.INT
         }];
 
-    this.model.post('SEL_FACTURA_TXT_SP',params, function (error, result) {
+    this.model.post('SEL_FACTURA_TXT_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;
 
         self.view.expositor(res, object);
     });
+}
+
+//Se obtiene la extensión del archivo
+var obtenerExtArchivo = function (file) {
+    return '.' + file.split('.').pop();
 }
 
 module.exports = Orden;
