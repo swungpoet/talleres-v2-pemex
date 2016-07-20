@@ -17,6 +17,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
         $scope.certificadoParams = {
             noReporte: "",
+            tad:"",
+            gerencia:"",
             solpe: "",
             ordenSurtimiento: "",
             montoOS: "",
