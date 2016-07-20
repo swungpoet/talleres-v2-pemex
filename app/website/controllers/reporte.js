@@ -54,6 +54,8 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     // if (req.query.noReporte, ...) { Validacion de campos
 		    data = {
 		        noReporte: req.query.noReporte,
+                gerencia: req.query.gerencia,
+                tad: req.query.tad,
 		        solpe: req.query.solpe,
 		        ordenSurtimiento: req.query.ordenSurtimiento,
 		        montoOS: req.query.montoOS,
@@ -93,11 +95,11 @@ function generateConfomidadReporte(data,res) {
 		doc.text("FI-001",290,70)
 		doc.text("\"REPORTE DE CONFORMIDAD \"",255,80)
 
-		doc.text("ORGANISMO: PEMEX REFINACIÓN",50,110)
-		doc.text("GERENCIA: PEMEX LOGISTICA",50,124)
-		doc.text("SUBGERENCIA:",50,146)
-		doc.text("SUPTCIA/DEPTO: Terminales de Almacenamieto y Reparto ",50,167)
-		doc.text("de la SAR de Pemex Refinación ",50,176)
+		doc.text("ORGANISMO: PEMEX LOGISTICA "+data.gerencia,50,110)
+		doc.text("GERENCIA: LOGISTICA REGIONAL",50,124)
+		doc.text("SUBGERENCIA: OPERACION Y MANTTO DE TERMINALES",50,146)
+		doc.text("SUPTCIA/DEPTO: Terminales de Almacenamieto y Despacho ",50,167)
+		doc.text(data.tad,50,176)
 
 		doc.rect(48, 107, 210, 12).stroke()
 		doc.rect(48, 119, 210, 22).stroke()
