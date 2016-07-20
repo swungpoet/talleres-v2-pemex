@@ -17,6 +17,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
         $scope.certificadoParams = {
             noReporte: "",
+            tad:"",
+            gerencia:"",
             solpe: "",
             ordenSurtimiento: "",
             montoOS: "",
@@ -284,7 +286,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function () {
-        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' &&
+        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' &&
             $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
 
             trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {
@@ -301,6 +303,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             setTimeout(function () {
                 window.open($rootScope.vIpServer + 
                     "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                    "&gerencia="+ $scope.certificadoParams.gerencia +
+                    "&tad="+ $scope.certificadoParams.tad +
                     "&solpe=" + $scope.certificadoParams.solpe +
                     "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
                     "&montoOS=" + $scope.certificadoParams.montoOS +
@@ -313,6 +317,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
                 $scope.certificadoParams = {
                     noReporte: "",
+                    gerencia:"",
+                    tad:"",
                     solpe: "",
                     ordenSurtimiento: "",
                     montoOS: "",

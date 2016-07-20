@@ -36,7 +36,7 @@
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
 
-                                                    <button ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Terminar trabajo" tooltip-placement="up"><span class="glyphicon glyphicon-ok-sign"></span> Terminar
+                                                    <button ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Terminar trabajo" tooltip-placement="up"><span class="glyphicon glyphicon-ok-sign"></span> Terminar
                                                     </button>
                                                 </td>
                                             </tr>
@@ -73,7 +73,7 @@
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
 
-                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 2" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,2)" data-toggle="tooltip" tooltip="Cargar hoja de transferencia de custodia" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;T. Custodia</button>
+                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,2)" data-toggle="tooltip" tooltip="Cargar hoja de transferencia de custodia" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span>&nbsp;T. Custodia</button>
 
                                                     <button ng-if="trabajo.estatus == 'TransResponsabilidad'" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="datosEntradaCertificadoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span>&nbsp;Certificado conformidad</button>
 
@@ -187,6 +187,12 @@
                     <form role="form">
                         <div class="form-group">
                             <input type="text" placeholder="Número de reporte" class="form-control" ng-model="certificadoParams.noReporte">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Region" class="form-control" ng-model="certificadoParams.gerencia">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="TAD" class="form-control" ng-model="certificadoParams.tad">
                         </div>
                         <div class="form-group">
                             <input type="text" placeholder="Solpe" class="form-control" ng-model="certificadoParams.solpe">
