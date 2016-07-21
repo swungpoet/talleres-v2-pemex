@@ -37,10 +37,10 @@
                                                 <td>{{orden.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>
-                                                    <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Ver&nbsp;&nbsp;</button>
+                                                    <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
                                                     <button ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar Adenda, COPADE" tooltip-placement="left" ng-click="subir(orden.idTrabajo)">
-                                                        <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal"></span> Cargar
+                                                        <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal"></span> 
                                                     </button>
                                                 </td>
                                             </tr>
