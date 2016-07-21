@@ -17,8 +17,9 @@
                                             <tr>
                                                 <th>Taller</th>
                                                 <th>No. Trabajo</th>
-                                                <th>Trabajo</th>
+                                                <th>Número Económico</th>
                                                 <th>TAR</th>
+                                                <th>Trabajo</th>
                                                 <th>Estatus</th>
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
@@ -30,8 +31,9 @@
                                             <tr ng-repeat="orden in ordenes | filter: cotizacion">
                                                 <td>{{orden.razonSocial}}</td>
                                                 <td>{{ orden.numeroTrabajo }}</td>
-                                                <td>{{orden.trabajo}}</td>
+                                                <td>{{orden.numEconomico}}</td>
                                                 <td>{{orden.TAR}}</td>
+                                                <td>{{orden.trabajo}}</td>
                                                 <td>{{ orden.descripcionLarga }}</td>
                                                 <td>{{ orden.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
@@ -56,10 +58,12 @@
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>Taller</th>
-                                                <th>Dirección</th>
-                                                <th>Trabajo</th>
+                                                <th>No. Trabajo</th>
+                                                <th>Número Económico</th>
                                                 <th>TAR</th>
+                                                <th>Trabajo</th>
                                                 <th>Estatus</th>
+                                                <th>Dirección</th>
                                                 <th>Agendó</th>
                                                 <th></th>
                                             </tr>
@@ -68,10 +72,12 @@
                                             <tr ng-repeat="cita in facturas">
                                                 <td>{{cita.fecha | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cita.razonSocial}}</td>
-                                                <td>{{cita.direccion}}</td>
-                                                <td>{{cita.trabajo}}</td>
+                                                <td>{{cita.numeroTrabajo}}</td>
+                                                <td>{{cita.numEconomico}}</td>
                                                 <td>{{cita.TAR}}</td>
+                                                <td>{{cita.trabajo}}</td>
                                                 <td>{{cita.estatus}}</td>
+                                                <td>{{cita.direccion}}</td>
                                                 <td>{{cita.nombreCompleto}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" ng-click="generaTXT(cita.idTrabajo)" data-toggle="tooltip" tooltip="Generar TXT" tooltip-placement="left"><span class="fa fa-file-text-o"></span></button>
