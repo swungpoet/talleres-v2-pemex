@@ -161,7 +161,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
     
     $scope.generaTXT = function (idTrabajo) {
-        ordenPorCobrarRepository.postGeneraTXT(idTrabajo).then(function(result){
+        ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function(result){
             if(result.data.length > 0){
                 alertFactory.success("PreFactura generada correctamente!");
             }

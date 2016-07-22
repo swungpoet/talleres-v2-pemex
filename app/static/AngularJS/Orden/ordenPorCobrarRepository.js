@@ -28,15 +28,14 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 method: "GET"
             });
         },
-        postGeneraTXT: function (idTrabajo) {
+        getGeneraTXT: function (idTrabajo) {
             var objTrabajo = {
                 idTrabajo: idTrabajo
             };
-
             return $http({
                 url: ordenUrl + 'generaTxtFactura',
-                method: "POST",
-                data: objTrabajo,
+                method: "GET",
+                params: objTrabajo,
                 headers: {
                     'Content-Type': 'application/json'
                 }
