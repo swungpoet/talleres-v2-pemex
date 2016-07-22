@@ -32,7 +32,7 @@
                                             <th>Fecha</th>
                                             <th>Taller</th>
                                             <th>Dirección Taller</th>
-                                            <th># Eco</th>
+                                            <th>Número Económico</th>
                                             <th>TAR</th>
                                             <th>Marca - Modelo</th>
                                             <th>Trabajo</th>
@@ -63,7 +63,7 @@
                                                 </button>
                                                 <button ng-show="cita.idEstatus == 1 || cita.idEstatus == 2" ng-hide="cita.idEstatus == 22 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar" id="btnCotizar" tooltip-placement="top" ng-click="editaCita(cita.idCita, cita.idUnidad, 1, cita)"><i class="fa fa-paste"></i>  
                                                 </button>
-                                                 <button ng-show="cita.idEstatus == 1 || cita.idEstatus == 2" ng-hide="cita.idEstatus == 22 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-cancela btn-danger btnTerminarTrabajo" type="button" data-toggle="tooltip" tooltip="Cancelar" id="btnCotizar" tooltip-placement="top" ng-click="openFinishingTrabajoModal(cita.idCita)"><i class="fa fa-times"></i>  
+                                                 <button ng-show="cita.idEstatus == 1 || cita.idEstatus == 2" ng-hide="cita.idEstatus == 22 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-cancela btn-danger btnTerminarTrabajo" type="button" data-toggle="tooltip" tooltip="Cancelar" id="btnCotizar" tooltip-placement="top" ng-click="openFinishingTrabajoModal(cita.idCita)"><i class="glyphicon glyphicon-remove-circle"></i>  
                                                 </button>
 
                                             </td>

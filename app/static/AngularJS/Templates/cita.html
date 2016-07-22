@@ -27,16 +27,15 @@
                                 <thead>
                                     <tr>
                                         <th>Cliente</th>
-                                        <th>Número económico</th>
-                                        <th>Número económico cliente</th>
-                                        <th>Número de inventario</th>
+                                        <th>Número Económico</th>
+                                        <th>Número Económico Cliente</th>
+                                        <th>Número de Inventario</th>
                                         <th>Número de TAR</th>
                                         <th>TAR</th>
                                         <th>GAR</th>
                                         <th>Ubicación</th>
                                         <th>Marca</th>
                                         <th>Modelo</th>
-                                        <th>Motor</th>
                                         <th>Seleccionar</th>
                                     </tr>
                                 </thead>
@@ -52,9 +51,8 @@
                                         <td>{{unidad.ubicacion}}</td>
                                         <td>{{unidad.marca}}</td>
                                         <td>{{unidad.modelo}}</td>
-                                        <td>{{unidad.motor}}</td>
                                         <td>
-                                            <button class="btn btn-primary" type="button" ng-click="lookUpCita(unidad)"><span class="glyphicon glyphicon-check"></span></button>
+                                            <button class="btn btn-primary" tooltip="Seleccionar Unidad" type="button" ng-click="lookUpCita(unidad)"><span class="glyphicon glyphicon-check"></span></button>
                                         </td>
                                     </tr>
                                 </tbody>
