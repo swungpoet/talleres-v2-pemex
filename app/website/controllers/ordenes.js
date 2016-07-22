@@ -70,31 +70,29 @@ Orden.prototype.get_prefacturas = function (req, res, next) {
 }
 
 //Genera el TXT de un trabajo cobrado
-Orden.prototype.post_generaTxtFactura = function (req, res, next) {
+Orden.prototype.get_generaTxtFactura = function (req, res, next) {
     //Objeto que almacena la respuesta
     var object = {};
     //Objeto que envía los parámetros
     var params = {};
     //Referencia a la clase para callback
     var self = this;
-
-    var directorioFactura = dirname + req.body.idTrabajo + '/documentos';
+    var directorioFactura = dirname + req.query.idTrabajo + '/documentos';
     var files = fs.readdirSync(directorioFactura);
-
+    var fecha, numFactura, uuid, nombreXml;
     files.forEach(function (file) {
         var extension = obtenerExtArchivo(file);
-
         if (extension == '.xml' || extension == '.XML') {
             var parser = new xml2js.Parser();
             fs.readFile(directorioFactura + '/' + file, function (err, data) {
                 parser.parseString(data, function (err, result) {
-                    var fecha = result['cfdi:Comprobante'].$['fecha'];
+                    fecha = result['cfdi:Comprobante'].$['fecha'];
                     if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
-                        var numFactura = result['cfdi:Comprobante'].$['folio'];
+                        numFactura = result['cfdi:Comprobante'].$['folio'];
                     } else {
-                        var numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                        numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
                     }
-                    var uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                    uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
                     var nombreXml = file;
 
                     console.log('Fecha: ' + fecha);
@@ -102,25 +100,56 @@ Orden.prototype.post_generaTxtFactura = function (req, res, next) {
                     console.log('UUID: ' + uuid);
                     console.log('Nombre Xml: ' + nombreXml);
                     console.log('=========================')
+
+                    var params = [{
+                            name: 'idTrabajo',
+                            value: req.query.idTrabajo,
+                            type: self.model.types.INT
+                        },
+                        {
+                            name: 'fecha',
+                            value: fecha,
+                            type: self.model.types.STRING
+                        },
+                        {
+                            name: 'numFactura',
+                            value: numFactura,
+                            type: self.model.types.STRING
+                        },
+                        {
+                            name: 'UUID',
+                            value: uuid,
+                            type: self.model.types.STRING
+                        },
+                        {
+                            name: 'XML',
+                            value: nombreXml,
+                            type: self.model.types.STRING
+                        }];
+                    self.model.query('SEL_FACTURA_TXT_SP', params, function (error, result) {
+                        //Callback
+                        object.error = error;
+                        object.result = result;
+
+                        var wstream = fs.createWriteStream('C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/Factura' + result[0].numeroTrabajo + '.txt', 'utf8');
+                        if (wstream) {
+                            var carrito = '';
+                            var lineToInsert = '';
+                            for (var i = 0; i < result.length; i++) {
+                                console.log(result[i].dato);
+                                lineToInsert = result[i].dato.replace(/[^a-zA-Z0-9| ./-]/g, ' ');
+                                carrito = (result.length - i) == 1 ? '' : '\r\n';
+                                wstream.write(lineToInsert + carrito);
+                            }
+                            wstream.end(function () {
+                                console.log('done');
+                            });
+                        }
+                        self.view.expositor(res, object);
+                    });
                 });
             });
         }
-    });
-
-
-
-    var params = [{
-        name: 'idTrabajo',
-        value: req.body.idTrabajo,
-        type: self.model.types.INT
-        }];
-
-    this.model.post('SEL_FACTURA_TXT_SP', params, function (error, result) {
-        //Callback
-        object.error = error;
-        object.result = result;
-
-        self.view.expositor(res, object);
     });
 }
 
