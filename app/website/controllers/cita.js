@@ -413,7 +413,12 @@ Cita.prototype.post_updateCita = function (req, res, next) {
             name: 'idTipoCita',
             value: req.body.idTipoCita,
             type: self.model.types.DECIMAL
-                        }];
+                        },
+        {
+            name: 'idEstadoAutotanque',
+            value: req.body.idEstadoAutotanque,
+            type: self.model.types.INT
+        }];
 
     this.model.post('UPD_CITA_SP', params, function (error, result) {
         //Callback

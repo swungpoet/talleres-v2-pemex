@@ -377,7 +377,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                     alertFactory.error("Error al insertar la cita");
                 });
             }
-        } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined, $scope.datosCita.idEstadoAutotanque != undefined) {
+        } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             alertFactory.info("Llene la Pre-Orden");
         } else {
             alertFactory.info("Llene todos los campos");
@@ -742,65 +742,69 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     $scope.updateCita = function () {
 
-        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.datosCita.idTaller != undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined) {
-            $scope.datosCita.pieza = "";
-            if (localStorageService.get('stgListaPiezas', $scope.listaPiezas) != undefined) {
-                $scope.datosCita.pieza = localStorageService.get('stgListaPiezas', $scope.listaPiezas).slice(0);
-            }
-            var citaTaller = {};
-            citaTaller.idCita = localStorageService.get('idCitaActualizar');
-            citaTaller.idUnidad = localStorageService.get('IDUNIDAD');
-            citaTaller.idTaller = $scope.datosCita.idTaller;
-            citaTaller.fecha = $scope.datosCita.fechaCita + ' ' + $scope.datosCita.horaCita;
-            citaTaller.trabajo = $scope.datosCita.trabajoCita;
-            citaTaller.observacion = $scope.datosCita.observacionCita;
-            citaTaller.idUsuario = $scope.userData.idUsuario;
-            citaTaller.idTipoCita = $scope.datosCita.tipoCita;
-
-            citaRepository.updateCita(citaTaller).then(function (result) {
-                $scope.algo = result.data;
-                citaTaller.idCita = localStorageService.get('idCitaActualizar');
-
-                if ($scope.datosCita.pieza != "") {
-                    var borrar = 0;
-                    $scope.datosCita.pieza.forEach(function (pieza, i) {
-                        var item = {};
-                        item.idCita = citaTaller.idCita;
-                        item.idTipoElemento = pieza.idTipoElemento;
-                        item.idElemento = pieza.idItem;
-                        item.cantidad = pieza.cantidad;
-                        item.borrar = borrar;
-                        citaRepository.addCitaDetalle(item).then(function (piezaInserted) {
-                            if (piezaInserted.data.length > 0) {
-                                alertFactory.success("Se insertó correctamente");
-                            }
-                        }, function (error) {
-                            alertFactory.error("Error al insertar servicios");
-                        });
-                        borrar = borrar + 1;
-                    });
+        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
+            if ($scope.userData.idTipoUsuario != 4 && $scope.datosCita.idTaller == undefined) {
+                alertFactory.info("Seleccione un Taller");
+            } else {
+                $scope.datosCita.pieza = "";
+                if (localStorageService.get('stgListaPiezas', $scope.listaPiezas) != undefined) {
+                    $scope.datosCita.pieza = localStorageService.get('stgListaPiezas', $scope.listaPiezas).slice(0);
                 }
+                var citaTaller = {};
+                citaTaller.idCita = localStorageService.get('idCitaActualizar');
+                citaTaller.idUnidad = localStorageService.get('IDUNIDAD');
+                citaTaller.idTaller = $scope.datosCita.idTaller;
+                citaTaller.fecha = $scope.datosCita.fechaCita + ' ' + $scope.datosCita.horaCita;
+                citaTaller.trabajo = $scope.datosCita.trabajoCita;
+                citaTaller.observacion = $scope.datosCita.observacionCita;
+                citaTaller.idUsuario = $scope.userData.idUsuario;
+                citaTaller.idTipoCita = $scope.datosCita.tipoCita;
 
-                alertFactory.success("Se agendó correctamente");
-                $scope.clearInputs();
-                //envío de correo electrónico
-                citaRepository.enviarMailConfirmacion(citaTaller.idCita).then(function (enviado) {
-                    if (enviado.data.length > 0) {
-                        alertFactory.success("e-mail enviado");
-                    } else {
-                        alertFactory.info("No se envío el e-mail");
+                citaRepository.updateCita(citaTaller).then(function (result) {
+                    $scope.algo = result.data;
+                    citaTaller.idCita = localStorageService.get('idCitaActualizar');
+
+                    if ($scope.datosCita.pieza != "") {
+                        var borrar = 0;
+                        $scope.datosCita.pieza.forEach(function (pieza, i) {
+                            var item = {};
+                            item.idCita = citaTaller.idCita;
+                            item.idTipoElemento = pieza.idTipoElemento;
+                            item.idElemento = pieza.idItem;
+                            item.cantidad = pieza.cantidad;
+                            item.borrar = borrar;
+                            citaRepository.addCitaDetalle(item).then(function (piezaInserted) {
+                                if (piezaInserted.data.length > 0) {
+                                    alertFactory.success("Se insertó correctamente");
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al insertar servicios");
+                            });
+                            borrar = borrar + 1;
+                        });
                     }
+
+                    alertFactory.success("Se agendó correctamente");
+                    $scope.clearInputs();
+                    //envío de correo electrónico
+                    citaRepository.enviarMailConfirmacion(citaTaller.idCita, $scope.userData.idTipoUsuario).then(function (enviado) {
+                        if (enviado.data.length > 0) {
+                            alertFactory.success("e-mail enviado");
+                        } else {
+                            alertFactory.info("No se envío el e-mail");
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al enviar el e-mail")
+                    });
+                    localStorageService.remove('IDUNIDAD');
+                    location.href = '/tallercita';
+                    localStorageService.set('objCita', citaTaller);
+                    // localStorageService.remove('stgListaPiezas');
                 }, function (error) {
-                    alertFactory.error("Error al enviar el e-mail")
+                    alertFactory.error("Error al insertar la cita");
                 });
-                localStorageService.remove('IDUNIDAD');
-                location.href = '/tallercita';
-                localStorageService.set('objCita', citaTaller);
-                // localStorageService.remove('stgListaPiezas');
-            }, function (error) {
-                alertFactory.error("Error al insertar la cita");
-            });
-        } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.datosCita.idTaller != undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined) {
+            }
+        } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             alertFactory.info("Llene la Pre-Orden");
         } else {
             alertFactory.info("Llene todos los campos");
