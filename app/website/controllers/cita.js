@@ -379,4 +379,19 @@ Cita.prototype.post_agregacitaServiciodetalle = function (req, res, next) {
     });
 }
 
+//Obtiene los estados del autotanque
+Cita.prototype.get_estadoAutotanque = function(req, res, next){
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [];
+    
+    this.model.query('SEL_ESTADO_AUTOTANQUE_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Cita;
