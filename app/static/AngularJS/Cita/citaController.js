@@ -316,7 +316,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     //inserta una nueva cita
     $scope.addCita = function () {
 
-        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined, $scope.datosCita.idEstadoAutotanque != undefined) {
+        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
 
             if ($scope.userData.idTipoUsuario != 4 && $scope.datosCita.idTaller == undefined) {
                 alertFactory.info("Seleccione un Taller");

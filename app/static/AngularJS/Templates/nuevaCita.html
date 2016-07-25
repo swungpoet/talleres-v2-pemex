@@ -45,7 +45,7 @@
                                     </table>
                                 </div>
                                 <form role="form">
-                                    <select class="form-control m-b" name="estadoAutotanque" ng-model="selectedEstadoAutotanque" ng-options="autotanque.descripcionEstadoAutotanque for autotanque in estadosAutotanque" ng-change="SetEstadoAutotanque()">
+                                    <select class="form-control m-b" name="estadoAutotanque" ng-model="datosCita.idEstadoAutotanque" ng-options="autotanque.idEstadoAutotanque as autotanque.descripcionEstadoAutotanque for autotanque in estadosAutotanque">
                                         <option value="">Seleccione el estado del autotanque</option>
                                         <!--default option -->
                                     </select>
