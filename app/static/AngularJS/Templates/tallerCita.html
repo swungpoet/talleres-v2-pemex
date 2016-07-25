@@ -45,8 +45,8 @@
                                     <tbody>
                                         <tr ng-repeat="cita in listaCitas">
                                             <td>{{ cita.Fecha | date:'dd-MM-yyyy HH:mm'}} </td>
-                                            <td>{{ cita.razonSocial }}</td>
-                                            <td>{{ cita.direccion }}</td>
+                                            <td ng-class="{'rowRojo': cita.razonSocial=='SIN TALLER'}">{{ cita.razonSocial }}</td>
+                                            <td ng-class="{'rowRojo': cita.direccion=='SIN TALLER'}">{{ cita.direccion }}</td>
                                             <td>{{ cita.numEconomico }}</td>
                                             <td>{{ cita.TAR }}</td>
                                             <td>{{ cita.modeloMarca }}</td>
