@@ -2,122 +2,145 @@ var citaUrl = global_settings.urlCORS + '/api/cita/';
 
 registrationModule.factory('citaRepository', function ($http) {
     return {
-        getCliente: function(idUsuario){
+        getCliente: function (idUsuario) {
             return $http({
                 url: citaUrl + 'cliente/',
                 method: "GET",
-                params: {idUsuario:idUsuario},
+                params: {
+                    idUsuario: idUsuario
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        getUnidadInformation: function(idCliente, datoUnidad, idUsuario){
+        getUnidadInformation: function (idCliente, datoUnidad, idUsuario) {
             return $http({
                 url: citaUrl + 'unidad/',
                 method: "GET",
-                params: {idCliente: idCliente, datoUnidad: datoUnidad, idUsuario: idUsuario},
+                params: {
+                    idCliente: idCliente,
+                    datoUnidad: datoUnidad,
+                    idUsuario: idUsuario
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        getCita: function(idUnidad, idUsuario){
+        getCita: function (idUnidad, idUsuario) {
             return $http({
                 url: citaUrl + 'cita/',
                 method: "GET",
-                params: {idUnidad: idUnidad, idUsuario: idUsuario},
+                params: {
+                    idUnidad: idUnidad,
+                    idUsuario: idUsuario
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        getTaller: function(datoTaller){
+        getTaller: function (datoTaller) {
             return $http({
                 url: citaUrl + 'taller/',
                 method: "GET",
-                params: {datoTaller: datoTaller},
+                params: {
+                    datoTaller: datoTaller
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        getPaquete: function(idTrabajo){
+        getPaquete: function (idTrabajo) {
             return $http({
                 url: citaUrl + 'paquete/',
                 method: "GET",
-                params: {datoTaller: idTrabajo},
+                params: {
+                    datoTaller: idTrabajo
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        enviarMailConfirmacion: function(idCita){
+        enviarMailConfirmacion: function (idCita) {
             return $http({
                 url: citaUrl + 'enviaremailcita/',
                 method: "GET",
-                params: {idCita: idCita},
+                params: {
+                    idCita: idCita
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        getCitaTaller: function(fecha, idCita,idUsuario){
+        getCitaTaller: function (fecha, idCita, idUsuario) {
             return $http({
                 url: citaUrl + 'buscaCita/',
                 method: "GET",
-                params: {fecha:fecha,idCita:idCita,idUsuario:idUsuario},
+                params: {
+                    fecha: fecha,
+                    idCita: idCita,
+                    idUsuario: idUsuario
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        addCita: function(taller){
+        addCita: function (taller) {
             return $http({
                 url: citaUrl + 'addcita/',
                 method: "POST",
                 data: taller,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        addCitaServicioDetalle: function(item){
+        addCitaServicioDetalle: function (item) {
             return $http({
                 url: citaUrl + 'addcitaserviciodetalle/',
                 method: "POST",
                 data: item,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        validaConfirmacionCita: function(idCita){
+        validaConfirmacionCita: function (idCita) {
             return $http({
                 url: citaUrl + 'validaconfirmacioncita/',
                 method: "GET",
-                params: {idCita: idCita},
+                params: {
+                    idCita: idCita
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        getTrabajo: function(idCita){
+        getTrabajo: function (idCita) {
             return $http({
                 url: citaUrl + 'trabajo/',
                 method: "GET",
-                params: {idCita: idCita},
+                params: {
+                    idCita: idCita
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-        getTipoCita: function(){
+        getTipoCita: function () {
             return $http({
                 url: citaUrl + 'tipocita/',
                 method: "GET",
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
@@ -131,20 +154,22 @@ registrationModule.factory('citaRepository', function ($http) {
                 }
             });
         },
-         getidCita: function(idCita){
+        getidCita: function (idCita) {
             return $http({
                 url: citaUrl + 'citamodificar',
                 method: "GET",
-                params: {idCita: idCita},
+                params: {
+                    idCita: idCita
+                },
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 }
             });
         },
-          dropCita: function (idCita) {
+        dropCita: function (idCita) {
             var msgObj = {
-                 idCita: idCita
-             }
+                idCita: idCita
+            }
             return $http({
                 url: citaUrl + 'BorraCita',
                 method: "POST",
@@ -166,16 +191,24 @@ registrationModule.factory('citaRepository', function ($http) {
                 }
             });
         },
-         addCitaDetalle: function(item){
+        addCitaDetalle: function (item) {
             return $http({
                 url: citaUrl + 'agregacitaServiciodetalle/',
                 method: "POST",
                 data: item,
                 headers: {
-                'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getEstadoAutotanque: function () {
+            return $http({
+                url: citaUrl + 'estadoAutotanque',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             });
         }
-
     };
 });
