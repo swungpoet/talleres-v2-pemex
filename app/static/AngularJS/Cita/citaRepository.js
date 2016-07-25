@@ -65,12 +65,13 @@ registrationModule.factory('citaRepository', function ($http) {
                 }
             });
         },
-        enviarMailConfirmacion: function (idCita) {
+        enviarMailConfirmacion: function (idCita, tipoCorreo) {
             return $http({
                 url: citaUrl + 'enviaremailcita/',
                 method: "GET",
                 params: {
-                    idCita: idCita
+                    idCita: idCita,
+                    tipoCorreo: tipoCorreo
                 },
                 headers: {
                     'Content-Type': 'application/json'

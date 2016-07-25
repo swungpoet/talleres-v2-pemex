@@ -361,7 +361,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                     alertFactory.success("Se agendó correctamente");
                     $scope.clearInputs();
                     //envío de correo electrónico
-                    citaRepository.enviarMailConfirmacion(citaTaller.idCita).then(function (enviado) {
+                    citaRepository.enviarMailConfirmacion(citaTaller.idCita, $scope.userData.idTipoUsuario).then(function (enviado) {
                         if (enviado.data.length > 0) {
                             alertFactory.success("e-mail enviado");
                         } else {
