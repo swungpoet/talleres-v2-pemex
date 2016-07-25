@@ -10,7 +10,7 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-xs-5 b-r">
-                                <div class="row">
+                                <div class="row" ng-hide="userData.idTipoUsuario == 4">
                                     <div class="col-xs-8">
                                         <input class="form-control" type="text" ng-model="datoTaller" placeholder=" Buscar taller">
                                     </div>
@@ -19,7 +19,7 @@
                                     </div>
                                 </div>
                                 <br/>
-                                <div class="table-responsive">
+                                <div class="table-responsive" ng-hide="userData.idTipoUsuario == 4">
                                     <table class="table table-striped table-bordered table-hover dataTableTaller" cg-busy="{promise:promise,message:message}">
                                         <thead>
                                             <th>Taller</th>
@@ -45,8 +45,14 @@
                                     </table>
                                 </div>
                                 <form role="form">
-                                        <!--<input type="checkbox" id="tipoCitaSwitch" name="my-checkbox" checked data-on-text="Preventivo" data-off-text="Correctivo" data-off="success">-->
-                                     <!--    <select class="form-control" name="tipocita" ng-init="selectedTipoCita = tiposCita[0]" ng-model="selectedTipoCita" ng-options="tipoCita.tipoCita for tipoCita in tiposCita">
+                                    <select class="form-control m-b" name="estadoAutotanque" ng-model="selectedEstadoAutotanque" ng-options="autotanque.descripcionEstadoAutotanque for autotanque in estadosAutotanque" ng-change="SetEstadoAutotanque()">
+                                        <option value="">Seleccione el estado del autotanque</option>
+                                        <!--default option -->
+                                    </select>
+                                </form>
+                                <form role="form">
+                                    <!--<input type="checkbox" id="tipoCitaSwitch" name="my-checkbox" checked data-on-text="Preventivo" data-off-text="Correctivo" data-off="success">-->
+                                    <!--    <select class="form-control" name="tipocita" ng-init="selectedTipoCita = tiposCita[0]" ng-model="selectedTipoCita" ng-options="tipoCita.tipoCita for tipoCita in tiposCita">
                                             <option value="">Seleccionar tipo de cita</option>
                                         </select> -->
                                      <select class="form-control" name="tipocita" ng-model="datosCita.tipoCita" ng-options="tipoCita.idTipoCita as tipoCita.tipoCita for tipoCita in tiposCita">
