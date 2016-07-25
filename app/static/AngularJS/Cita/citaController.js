@@ -163,7 +163,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             // Create the Google Map using elements
             var map1 = new google.maps.Map(mapElement1, mapOptions1);
         }
-        $scope.selectedTaller = true;
+        $scope.userData.idTipoUsuario == 4 ? $scope.selectedTaller = false : $scope.selectedTaller = true;
         $scope.datosCita = {};
         $scope.unidadInfo = localStorageService.get('unidad');
         $scope.labelItems = 0;
