@@ -501,8 +501,8 @@ Cita.prototype.post_agregacitaServiciodetalle = function (req, res, next) {
             type: self.model.types.INT
         },
         {
-            name: 'borrar',
-            value: req.body.borrar,
+            name: 'accion',
+            value: req.body.accion,
             type: self.model.types.INT
         }];
 

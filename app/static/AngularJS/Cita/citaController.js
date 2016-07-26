@@ -19,7 +19,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     $scope.init = function () {
         getCliente();
-        //$scope.habilitaBtnBuscar = true;
     }
 
     //init de la pantalla citaTrabajo
@@ -49,12 +48,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             var idCita = localStorageService.get('citaEdicion')
             getidCita(idCita);
             localStorageService.remove('citaEdicion');
+            busquedaServicioDetalle(idCita);
         }
-        //$("[id='tipoCitaSwitch']").bootstrapSwitch();
-        // if(idCitaActualizar!== undefined){
-        //      console.log(idCitaActualizar);
-        //      localStorageService.remove('idCitaActualizar');
-        // }
         getTipoCita();
         getEstadoAutotanque();
         $scope.idTipoCita = 1;
@@ -411,12 +406,12 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //obtiene el taller seleccionado
     $scope.getTaller = function (idTaller) {
-        $scope.listaPiezas = [];
-        $scope.piezas = [];
-        $scope.datosCita.pieza = "";
+        //$scope.listaPiezas = [];
+        //$scope.piezas = [];
+        //$scope.datosCita.pieza = "";
         $scope.selectedTaller = false;
         $scope.datosCita.idTaller = idTaller;
-        $scope.labelItems = 0;
+        //$scope.labelItems = 0;
     }
 
     //Redirige a pagina para nueva cotización
@@ -441,15 +436,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         $("#borderTop").slideUp(3000);
     }
 
-    //habilita el botón de buscar
-    /*$scope.habilitaBuscar = function (datoUnidad) {
-        if (datoUnidad.length >= 4) {
-            $scope.habilitaBtnBuscar = false;
-        } else {
-            $scope.habilitaBtnBuscar = true;
-        }
-    }*/
-
     //va a la pantalla de nueva cita
     $scope.goNewCita = function () {
         localStorageService.remove('cita');
@@ -465,7 +451,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             $scope.editar = 0;
             datosCitaBien();
             $scope.idTaller = $scope.citaDatos.idTaller;
-            busquedaServicioDetalle($scope.citaDatos.idCita);
+            //busquedaServicioDetalle($scope.citaDatos.idCita);
         }
         $scope.piezas = [];
         $scope.pieza = "";
@@ -507,11 +493,17 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     $scope.addPieza = function (pieza) {
         if ($scope.listaPiezas.length > 0) { //idItem
             if (validaItemExists($scope.listaPiezas, pieza.idItem) == false) {
+                if($scope.edita == 1){
+                    pieza.accion = 1;
+                }
                 pieza.cantidad = 1;
                 $scope.listaPiezas.push(pieza);
                 $scope.labelItems = $scope.listaPiezas.length;
             }
         } else {
+            if($scope.edita == 1){
+                pieza.accion = 1;
+            }
             pieza.cantidad = 1;
             $scope.listaPiezas.push(pieza);
             $scope.labelItems = $scope.listaPiezas.length;
@@ -549,7 +541,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         if ($scope.listaPiezas.length > 0) { //idItem
             if (validaItemExists($scope.listaPiezas, pieza.idItem) == false) {
                 pieza.cantidad = 1;
-                //  $scope.listaPiezas.push(pieza);
                 $scope.labelItems = $scope.listaPiezas.length;
             }
         } else {
@@ -712,16 +703,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             });
     }
 
-    $('#tipoCitaSwitch').on('switchChange.bootstrapSwitch', function (event, state) {
-        if (state == true) {
-            //tipo de cita preventiva
-            $scope.idTipoCita = 1
-        } else {
-            //tipo de cita correctiva
-            $scope.idTipoCita = 2
-        }
-    });
-
+    //obtiene el tipo de cita
     var getTipoCita = function () {
         citaRepository.getTipoCita().then(function (citas) {
             if (citas.data.length > 0) {
@@ -733,8 +715,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         });
     }
 
+    //realiza la obtención de idCita para su edición
     $scope.editaCita = function (idCita, idUnidad, edita, cita) {
-        // $('#cotizacionDetalle').appendTo('body').modal('show');
         localStorageService.set('IDUNIDAD', idUnidad);
         localStorageService.set('idCitaActualizar', idCita);
         localStorageService.set('ModoEdicion', edita);
@@ -743,16 +725,16 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         location.href = "nuevacita"
     }
 
+    //realiza la actualización de partidas de la cita
     $scope.updateCita = function () {
-
         if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             if ($scope.userData.idTipoUsuario != 4 && $scope.datosCita.idTaller == undefined) {
                 alertFactory.info("Seleccione un Taller");
             } else {
                 $scope.datosCita.pieza = "";
-                if (localStorageService.get('stgListaPiezas', $scope.listaPiezas) != undefined) {
-                    $scope.datosCita.pieza = localStorageService.get('stgListaPiezas', $scope.listaPiezas).slice(0);
-                }
+                compareList($scope.arrayOriginal, $scope.listaPiezas);
+                joinListsItems();
+                $scope.datosCita.pieza = JSON.parse(JSON.stringify($scope.listaPiezas));
                 var citaTaller = {};
                 citaTaller.idCita = localStorageService.get('idCitaActualizar');
                 citaTaller.idUnidad = localStorageService.get('IDUNIDAD');
@@ -765,20 +747,19 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
 
                     citaRepository.updateCita(citaTaller).then(function (cita) {
-                    citaTaller.idCita = cita.data[0].idCita;
-                        citaTaller.idCita=localStorageService.get('idCitaActualizar');
+                        citaTaller.idCita = $scope.idCitaToUpdate;
+                        //citaTaller.idCita=localStorageService.get('idCitaActualizar');
                     if (citaTaller.idCita > 0) {
                         alertFactory.success("Se agendó correctamente");
                         $scope.clearInputs();
                         if ($scope.datosCita.pieza != "") {
-                            var borrar=0;
                             $scope.datosCita.pieza.forEach(function (pieza, i) {
                                 var item = {};
                                 item.idCita = citaTaller.idCita;
                                 item.idTipoElemento = pieza.idTipoElemento;
                                 item.idElemento = pieza.idItem;
                                 item.cantidad = pieza.cantidad;
-                                item.borrar=borrar;
+                                item.accion= pieza.accion;
                                 citaRepository.addCitaDetalle(item).then(function (piezaInserted) {
                                     if (piezaInserted.data.length > 0) {
                                         alertFactory.success("Se insertó correctamente");
@@ -788,10 +769,11 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                                             if (enviado.data.length > 0) {
                                                 alertFactory.success("e-mail enviado");
                                                 localStorageService.set('objCita', citaTaller);
+                                                localStorageService.remove('stgListaPiezas');
+                                                alertFactory.success("Cita actualizada correctamente");
                                                 setTimeout(function(){
                                                     location.href = '/tallercita';
-                                                },1000);                                                
-                                                //localStorageService.remove('stgListaPiezas');
+                                                },1000);                                                       
                                             } else {
                                                 alertFactory.info("No se envío el e-mail");
                                             }
@@ -802,7 +784,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                                 }, function (error) {
                                     alertFactory.error("Error al insertar servicios");
                                 });
-                                borrar=borrar+1;
                             });
                         }
                     }
@@ -821,6 +802,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         citaRepository.getidCita(idCita).then(function (result) {
             if (result.data.length > 0) {
                 var citaDato = result.data;
+                $scope.idCitaToUpdate = citaDato[0].idCita;
                 $scope.datosCita.razonSocial = citaDato[0].razonSocial;
                 $scope.datosCita.direccion = citaDato[0].direccion;
                 $scope.datosCita.idTaller = citaDato[0].tallerid;
@@ -837,7 +819,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 $scope.datosCita.idTaller = localStorageService.get('idtallerselected');
                 localStorageService.remove('idtallerselected');
 
-                var citaDato = result.data;
                 alertFactory.success("Datos encontado");
             } else {
                 alertFactory.info("No se encontraron datos");
@@ -847,7 +828,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         });
     }
 
-
+    //cambia el estatus de la cita a cancelada
     $scope.dropCita = function (idCita) {
         citaRepository.dropCita(idCita).then(function (result) {
                 $scope.algo = result.data;
@@ -857,6 +838,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         location.href = '/tallercita';
     }
 
+    //Abre la modal para la cancelación de la cita
     $scope.openFinishingTrabajoModal = function (idCita) {
         //   $('#finalizarTrabajoModal').appendTo("body").modal('show');
         $scope.idCita = idCita;
@@ -885,6 +867,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         });
     }
 
+    //
     var datosCitaBien = function () {
         if (localStorageService.get('cita') != null) {
             $scope.numEconomico = $scope.citaDatos.numEconomico;
@@ -892,18 +875,55 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             $scope.trabajo = $scope.citaDatos.trabajo;
         }
     }
-
+    
+    //obtiene la preorden
     var busquedaServicioDetalle = function (idCita) {
         citaRepository.busquedaServicioDetalle(idCita)
             .then(function (result) {
                 $scope.listaPiezas = result.data;
-                $scope.arrayCambios = $scope.listaPiezas.slice();
-
+                $scope.arrayOriginal = JSON.parse(JSON.stringify($scope.listaPiezas));
+                $scope.labelItems = $scope.arrayOriginal.length;
             }, function (error) {
                 alertFactory.error('Error');
             });
     }
-
+    
+    //lista de items eliminados
+    $scope.arrayDeletes = [];
+    var compareList = function(arrayOriginal, arrayChanged){
+        //items existentes en ambos arrays
+        arrayOriginal.forEach(function(itemOriginal, i){
+            
+            if(!(existsItem(arrayChanged, itemOriginal))){
+                $scope.arrayOriginal[i].accion = 3;
+                $scope.arrayDeletes.push(itemOriginal);
+            }
+        });
+    }
+    
+    //realiza la unión de items en un solo array
+    var joinListsItems = function(){
+        if($scope.arrayDeletes.length > 0){
+            $scope.arrayDeletes.forEach(function(item){
+                $scope.listaPiezas.push(item);
+            });
+        }
+    }
+    
+    //valida si ya existe el item en lalista
+    var existsItem = function (piezas, item) {
+       var exists = false;
+       piezas.forEach(function (p, i) {
+           if (p.idItem === item.idItem) {
+               if (p.cantidad !== item.cantidad) {
+                   $scope.listaPiezas[i].accion = 2;
+               }
+               exists = true;
+           }
+       });
+       return exists;
+   }
+    
     //Devuelve los estados de un autotanque
     var getEstadoAutotanque = function () {
         citaRepository.getEstadoAutotanque().then(function (result) {
