@@ -57,7 +57,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
 
-    $scope.init = function () {
+    $scope.init = function () {   
         $scope.cargaFicha();
         $scope.cargaChatTaller();
         $scope.cargaChatCliente();
@@ -69,6 +69,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         $scope.cargaDatosCliente(idCita);
 
         $rootScope.showChat = 1;
+        $scope.cargaDatosOsur(idCita);
     }
 
     //Obtiene la conversación de la cita 
@@ -502,12 +503,18 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     $scope.ActualizaCotizacion = function () {
-        for (i = 0; i < itemsAutorizacionRechazo.length; i++) {
+        if($scope.datosOsur == undefined || $scope.datosOsur == null){
+            alertFactory.error('No hay Osur vigente');
+        }
+        else
+        {
+            for (i = 0; i < itemsAutorizacionRechazo.length; i++) {
             cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios,
-                itemsAutorizacionRechazo[i].idEstatus,
-                itemsAutorizacionRechazo[i].idItem,
-                itemsAutorizacionRechazo[i].idCotizacion,
-                itemsAutorizacionRechazo[i].idUsuarioAutorizador).then(function (result) {
+                 itemsAutorizacionRechazo[i].idEstatus,
+                 itemsAutorizacionRechazo[i].idItem,
+                 itemsAutorizacionRechazo[i].idCotizacion,
+                 itemsAutorizacionRechazo[i].idUsuarioAutorizador,
+                 $scope.datosOsur.idOsur).then(function (result) {
                     var algo = result.data;
                 },
                 function (error) {
@@ -515,6 +522,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                 });
         }
         location.href = '/trabajo';
+        }
     }
 
     $scope.$watch('isSelected', function () {
@@ -526,5 +534,18 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             }
         }
     });
+
+    $scope.cargaDatosOsur = function (idCita) {
+        cotizacionAutorizacionRepository.getDatosOsur(idCita).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.datosOsur = result.data[0];
+            
+            } else {
+                alertFactory.info('No se pudo cargar los datos osur');
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo cargar los datos osur, inténtelo más tarde');
+        });
+    }
 
 });
