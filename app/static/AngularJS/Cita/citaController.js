@@ -537,16 +537,19 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //regresar a nueva cita
     $scope.generarCitaServicio = function (pieza) {
-        if ($scope.listaPiezas.length > 0) { //idItem
-            if (validaItemExists($scope.listaPiezas, pieza.idItem) == false) {
+        if(pieza != undefined){
+            if ($scope.listaPiezas.length > 0) { //idItem
+                if (validaItemExists($scope.listaPiezas, pieza.idItem) == false) {
+                    pieza.cantidad = 1;
+                    $scope.labelItems = $scope.listaPiezas.length;
+                }
+            } else {
                 pieza.cantidad = 1;
+                $scope.listaPiezas.push(pieza);
                 $scope.labelItems = $scope.listaPiezas.length;
             }
-        } else {
-            pieza.cantidad = 1;
-            $scope.listaPiezas.push(pieza);
-            $scope.labelItems = $scope.listaPiezas.length;
         }
+        
         localStorageService.set('stgListaPiezas', $scope.listaPiezas);
         localStorageService.remove('cita');
         $('#citaServicioModal').modal('hide');
