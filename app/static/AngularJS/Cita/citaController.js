@@ -450,11 +450,10 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             $scope.estado = 1;
             $scope.editar = 0;
             datosCitaBien();
-            $scope.idTaller = $scope.citaDatos.idTaller;
+            $scope.idTaller = $scope.citaDatos.idTaller == 0 ? $scope.datosCita.idTaller : $scope.citaDatos.idTaller;
             //busquedaServicioDetalle($scope.citaDatos.idCita);
         }
         $scope.piezas = [];
-        $scope.pieza = "";
         $('.dataTablePiezaTaller').DataTable().destroy();
         $('#citaServicioModal').appendTo("body").modal('show');
     }
@@ -556,7 +555,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     //inicializa valores
     var inicializaListas = function () {
         $scope.talleres = [];
-        $scope.listaPiezas = [];
+        //$scope.listaPiezas = [];
         $scope.piezas = [];
         $scope.datosCita.idTaller = undefined;
     }
