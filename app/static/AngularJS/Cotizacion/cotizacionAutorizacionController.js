@@ -57,7 +57,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
 
-    $scope.init = function () {   
+    $scope.init = function () {
         $scope.cargaFicha();
         $scope.cargaChatTaller();
         $scope.cargaChatCliente();
@@ -503,25 +503,33 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     }
 
     $scope.ActualizaCotizacion = function () {
-        if($scope.datosOsur == undefined || $scope.datosOsur == null){
+        if ($scope.datosOsur == undefined || $scope.datosOsur == null) {
             alertFactory.error('No hay Osur vigente');
-        }
-        else
-        {
-            for (i = 0; i < itemsAutorizacionRechazo.length; i++) {
-            cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios,
-                 itemsAutorizacionRechazo[i].idEstatus,
-                 itemsAutorizacionRechazo[i].idItem,
-                 itemsAutorizacionRechazo[i].idCotizacion,
-                 itemsAutorizacionRechazo[i].idUsuarioAutorizador,
-                 $scope.datosOsur.idOsur).then(function (result) {
-                    var algo = result.data;
-                },
-                function (error) {
+        } else {
+            var now = new Date();
+            var fechaActual = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var fechaInicial = Date.parse($scope.datosOsur.fechaInicial);
+            var fechaFinal = Date.parse($scope.datosOsur.fechaFinal);
+            
+            if (fechaInicial >= fechaActual && fechaActual <= fechaFinal) {
+                
+                for (i = 0; i < itemsAutorizacionRechazo.length; i++) {                    cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios,
+                        itemsAutorizacionRechazo[i].idEstatus,
+                        itemsAutorizacionRechazo[i].idItem,
+                        itemsAutorizacionRechazo[i].idCotizacion,
+                        itemsAutorizacionRechazo[i].idUsuarioAutorizador,
+                        $scope.datosOsur.idOsur).then(function (result) {
+                            var algo = result.data;
+                        },
+                        function (error) {
 
-                });
-        }
-        location.href = '/trabajo';
+                        });
+                }
+                location.href = '/trabajo';
+            } else {
+                alertFactory.error('La Osur ya no esta vigente, comuníquese con el administrador');
+            }
+
         }
     }
 
@@ -539,7 +547,6 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         cotizacionAutorizacionRepository.getDatosOsur(idCita).then(function (result) {
             if (result.data.length > 0) {
                 $scope.datosOsur = result.data[0];
-            
             } else {
                 alertFactory.info('No se pudo cargar los datos osur');
             }
