@@ -23,24 +23,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     $scope.size = 'mini';
     $scope.isSelected = 'yep';
     $scope.inverse = true;
+    var valorsumaIndividual = [];
 
-    /*$scope.AutorizarItemA = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
-        $scope.idEstatus = idEstatus;
-        $scope.idItem = idItem;
-        $scope.idCotizacion = idCotizacion;
-        $scope.usuarioAutorizador = usuarioAutorizador;
-
-        $('#cotizacionDetalleA').appendTo('body').modal('show');
-    }
-    $scope.AutorizarItemR = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
-        $scope.idEstatus = idEstatus;
-        $scope.idItem = idItem;
-        $scope.idCotizacion = idCotizacion;
-        $scope.usuarioAutorizador = usuarioAutorizador;
-
-        $('#cotizacionDetalleR').appendTo('body').modal('show');
-
-    }*/
     $scope.AutorizarItem = function (idEstatus, idItem, idCotizacion, usuarioAutorizador) {
         if (idEstatus == 9) {
             $scope.tipoComentario = 'Comentarios Autorización';
@@ -288,7 +272,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         };
 
         if (localStorageService.get('cita') != null) {
-            localStorageService.remove('cita');
+          //  localStorageService.remove('cita');
         }
         if (localStorageService.get('orden') != null) {
             localStorageService.remove('orden');
@@ -413,8 +397,6 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                 } else {
                     
                 }*/
-
-
                 $scope.total = 0;
                 $scope.articulos = articulosUnicos;
                 for (var i = 0; i < articulosUnicos.length; i++) {
@@ -502,36 +484,61 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         return exists;
     }
 
-    $scope.ActualizaCotizacion = function () {
-        if ($scope.datosOsur == undefined || $scope.datosOsur == null) {
-            alertFactory.error('No hay Osur vigente');
-        } else {
+//Actualiza cotizacion Partidas aceptadas y rechzadas
+//Valida fechas validas de fecha inicio y fin a la de hoy
+//Valida saldo existente y partidas aceptadas VS saldo actual
+$scope.ActualizaCotizacion = function () {
+        $scope.sumaIndividual=0;
+     if ($scope.datosOsur == undefined || $scope.datosOsur == null) {
+         alertFactory.error('No hay Osur vigente');  
+    } else {
             var now = new Date();
             var fechaActual = now.getTime();
             var fechaInicial = Date.parse($scope.datosOsur.fechaInicial);
             var fechaFinal = Date.parse($scope.datosOsur.fechaFinal);
-            
-            if (fechaActual >= fechaInicial && fechaActual <= fechaFinal) {
-                
-                for (i = 0; i < itemsAutorizacionRechazo.length; i++) {                    cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios,
-                        itemsAutorizacionRechazo[i].idEstatus,
-                        itemsAutorizacionRechazo[i].idItem,
-                        itemsAutorizacionRechazo[i].idCotizacion,
-                        itemsAutorizacionRechazo[i].idUsuarioAutorizador,
-                        $scope.datosOsur.idOsur).then(function (result) {
-                            var algo = result.data;
-                        },
-                        function (error) {
+        if (fechaActual >= fechaInicial && fechaActual <= fechaFinal) {    
+                var presupuesto=$scope.datosOsur.presupuesto;
+                var gasto=$scope.datosOsur.gasto;
+                var saldo=$scope.datosOsur.saldo;
+            if (saldo>0) { 
 
-                        });
-                }
-                location.href = '/trabajo';
+                for (var i = 0; i < itemsAutorizacionRechazo.length; i++) {
+                    if(itemsAutorizacionRechazo[i].idEstatus == 9){
+                        for (var x = 0; x < $scope.articulos.length; x++) {
+                            if (itemsAutorizacionRechazo[i].idItem == $scope.articulos[x].idItem) {
+                                $scope.sumaIndividual += (($scope.articulos[x].precio*.16)+$scope.articulos[x].precio)*$scope.articulos[x].cantidad;
+                            }
+                        }
+                    }
+                 }
+                    if($scope.sumaIndividual<saldo){
+
+                             for (i = 0; i < itemsAutorizacionRechazo.length; i++) {                            
+                                cotizacionAutorizacionRepository.putAutorizacionRechazoItem(
+                                        itemsAutorizacionRechazo[i].comentarios,
+                                        itemsAutorizacionRechazo[i].idEstatus,
+                                        itemsAutorizacionRechazo[i].idItem,
+                                        itemsAutorizacionRechazo[i].idCotizacion,
+                                        itemsAutorizacionRechazo[i].idUsuarioAutorizador,
+                                        $scope.datosOsur.idOsur).then(function (result) {
+                                            var algo = result.data;
+                                        },
+                                        function (error) {
+
+                                        });
+                                }
+                                location.href = '/trabajo'; 
+                    }else{
+                      alertFactory.error('La osur no cuenta con saldo suficiente para esta autorizacion');
+                    }
             } else {
-                alertFactory.error('La Osur ya no esta vigente, comuníquese con el administrador');
-            }
-
+               alertFactory.error('Saldo insuficiente en la Osur, comuníquese con el administrador');
+            }   
+        } else {
+            alertFactory.error('La Osur ya no esta vigente, comuníquese con el administrador');
         }
-    }
+     }
+}
 
     $scope.$watch('isSelected', function () {
         if ($scope.userData.idTipoUsuario != 4) {
@@ -542,7 +549,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             }
         }
     });
-
+//Recuperamos los datos de la Osur 
     $scope.cargaDatosOsur = function (idCita) {
         cotizacionAutorizacionRepository.getDatosOsur(idCita).then(function (result) {
             if (result.data.length > 0) {
