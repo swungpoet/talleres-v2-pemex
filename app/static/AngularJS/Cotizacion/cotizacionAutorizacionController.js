@@ -507,11 +507,11 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             alertFactory.error('No hay Osur vigente');
         } else {
             var now = new Date();
-            var fechaActual = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var fechaActual = now.getTime();
             var fechaInicial = Date.parse($scope.datosOsur.fechaInicial);
             var fechaFinal = Date.parse($scope.datosOsur.fechaFinal);
             
-            if (fechaInicial >= fechaActual && fechaActual <= fechaFinal) {
+            if (fechaActual >= fechaInicial && fechaActual <= fechaFinal) {
                 
                 for (i = 0; i < itemsAutorizacionRechazo.length; i++) {                    cotizacionAutorizacionRepository.putAutorizacionRechazoItem(itemsAutorizacionRechazo[i].comentarios,
                         itemsAutorizacionRechazo[i].idEstatus,
