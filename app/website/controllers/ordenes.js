@@ -4,7 +4,7 @@ var OrdenView = require('../views/ejemploVista'),
 var fs = require('fs'),
     xml2js = require('xml2js');
 
-var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 
 var Orden = function (conf) {
     this.conf = conf || {};
@@ -98,52 +98,54 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
                     files.forEach(function (file) {
                         var extension = obtenerExtArchivo(file);
                         if (extension == '.xml' || extension == '.XML') {
-                            var parser = new xml2js.Parser();
-                            fs.readFile(directorioFactura + '/' + file, function (err, data) {
-                                parser.parseString(data, function (err, result) {
-                                    fecha = result['cfdi:Comprobante'].$['fecha'];
-                                    if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
-                                        numFactura = result['cfdi:Comprobante'].$['folio'];
-                                    } else {
-                                        numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
-                                    }
-                                    uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                    var nombreXml = file;
+                            if (file.includes('Factura')) {
+                                var parser = new xml2js.Parser();
+                                fs.readFile(directorioFactura + '/' + file, function (err, data) {
+                                    parser.parseString(data, function (err, result) {
+                                        fecha = result['cfdi:Comprobante'].$['fecha'];
+                                        if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
+                                            numFactura = result['cfdi:Comprobante'].$['folio'];
+                                        } else {
+                                            numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                                        }
+                                        uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                        var nombreXml = file;
 
-                                    console.log('Fecha: ' + fecha);
-                                    console.log('Factura: ' + numFactura);
-                                    console.log('UUID: ' + uuid);
-                                    console.log('Nombre Xml: ' + nombreXml);
-                                    console.log('=========================')
+                                        console.log('Fecha: ' + fecha);
+                                        console.log('Factura: ' + numFactura);
+                                        console.log('UUID: ' + uuid);
+                                        console.log('Nombre Xml: ' + nombreXml);
+                                        console.log('=========================')
 
-                                    var paramsSER = [{
-                                            name: 'idTrabajo',
-                                            value: req.query.idTrabajo,
-                                            type: self.model.types.INT
+                                        var paramsSER = [{
+                                                name: 'idTrabajo',
+                                                value: req.query.idTrabajo,
+                                                type: self.model.types.INT
                                                 },
-                                        {
-                                            name: 'fecha',
-                                            value: fecha,
-                                            type: self.model.types.STRING
+                                            {
+                                                name: 'fecha',
+                                                value: fecha,
+                                                type: self.model.types.STRING
                                                 },
-                                        {
-                                            name: 'numFactura',
-                                            value: numFactura,
-                                            type: self.model.types.STRING
+                                            {
+                                                name: 'numFactura',
+                                                value: numFactura,
+                                                type: self.model.types.STRING
                                                 },
-                                        {
-                                            name: 'UUID',
-                                            value: uuid,
-                                            type: self.model.types.STRING
+                                            {
+                                                name: 'UUID',
+                                                value: uuid,
+                                                type: self.model.types.STRING
                                                 },
-                                        {
-                                            name: 'XML',
-                                            value: nombreXml,
-                                            type: self.model.types.STRING
+                                            {
+                                                name: 'XML',
+                                                value: nombreXml,
+                                                type: self.model.types.STRING
                                     }];
-                                    getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsSER);
+                                        getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsSER);
+                                    });
                                 });
-                            });
+                            }
                         }
                     });
                 } else {
@@ -171,11 +173,11 @@ function getDatosFactura(res, self, stored, params) {
                 object.error = error;
                 object.result = result;
 
-                var wstream = fs.createWriteStream('C:/Produccion/Talleres/talleres-v2-pemex/app/static/facturas/factura-'+ result[0].numeroTrabajo + '.txt', 'utf8');
+                var wstream = fs.createWriteStream('C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
                 if (wstream) {
                     var carrito = '';
                     var lineToInsert = '';
-                    for (var i = 0; i < result.length; i++) {                
+                    for (var i = 0; i < result.length; i++) {
                         lineToInsert = result[i].dato.replace(/[^a-zA-Z0-9| ./-]/g, ' ');
                         carrito = (result.length - i) == 1 ? '' : '\r\n';
                         wstream.write(lineToInsert + carrito);
@@ -196,7 +198,7 @@ var obtenerExtArchivo = function (file) {
 }
 
 //valida si existe al menos un archivo xml
-function checkExistsXML(file){
+function checkExistsXML(file) {
     return file.split('.').pop() === 'xml';
 }
 
