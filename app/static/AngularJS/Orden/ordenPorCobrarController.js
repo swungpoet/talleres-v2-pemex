@@ -99,9 +99,10 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         //Submit del botón del Form para subir los archivos        
         btnSubmit.click();
 
-        setTimeout(function () {
-            $scope.trabajoCobrado();
+        setTimeout(function () {            
             $scope.getOrdenesPorCobrar();
+            $scope.trabajoCobrado();
+            $scope.preFacturas();
         }, 2000);
     }
 
