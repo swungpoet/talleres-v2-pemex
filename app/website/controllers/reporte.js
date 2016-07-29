@@ -51,7 +51,6 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
         }
     ];
     var data = {};
-    // if (req.query.noReporte, ...) { Validacion de campos
 		    data = {
 		        noReporte: req.query.noReporte,
                 gerencia: req.query.gerencia,
@@ -59,8 +58,7 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
 		        solpe: req.query.solpe,
 		        ordenSurtimiento: req.query.ordenSurtimiento,
 		        montoOS: req.query.montoOS,
-		        pedidoAsociado: req.query.pedidoAsociado,
-            nombreEmisor: req.query.nombreEmisor,
+                nombreEmisor: req.query.nombreEmisor,
 		        nombreProveedor: req.query.nombreProveedor,
 		        puestoProveedor: req.query.puestoProveedor,
 		        fecha: new Date()
@@ -111,7 +109,7 @@ function generateConfomidadReporte(data,res) {
 		doc.text("ORDEN DE SURTIMEINTO: " + data.ordenSurtimiento ,50,222)
 		doc.text("MONTO DEL CONTRATO: $382,427,879.00 M.N. " ,50,234)
 		doc.text("MONTO OS: " +  data.montoOS ,50,246)
-		doc.text("PEDIDO ASOCIADO: " +  data.pedidoAsociado ,50,258)
+		doc.text("PEDIDO ASOCIADO: " +  data.data[0].noRemFac ,50,258)
 
 		doc.rect(48, 195, 180, 12).stroke()
 		doc.rect(48, 207, 180, 12).stroke()
