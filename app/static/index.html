@@ -87,7 +87,7 @@
                 <li>
                     <a href="reporte" ng-click="showChat = 0" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4"><i class="fa fa-line-chart"></i> <span class="nav-label">Reporte</span><span class="label label-warning pull-right"></span></a>
                 </li>
-                <li>
+                <li ng-show="userData.idTipoUsuario == 1">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administración</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="/osur">Osur</a></li>
