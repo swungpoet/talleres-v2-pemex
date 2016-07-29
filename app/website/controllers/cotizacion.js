@@ -937,12 +937,14 @@ Cotizacion.prototype.post_autorizacionRechazoItem = function (req, res, next) {
          name: 'usuarioAutorizador',
             value: req.body.usuarioAutorizador,
             type: self.model.types.DECIMAL    
-        },
+        }
+/*        ,
         {
          name: 'idOsur',
             value: req.body.idOsur,
             type: self.model.types.DECIMAL    
-        }];
+        }*/
+        ];
 
     this.model.post('UPD_ITEM_AUTORIZACION_SP', params, function (error, result) {
         //Callback

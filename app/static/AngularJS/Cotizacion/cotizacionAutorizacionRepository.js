@@ -116,14 +116,15 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                 }
             });
         },
-     putAutorizacionRechazoItem: function (comentarios, idEstatus, idItem, idCotizacion, usuarioAutorizador,idOsur) {
+     putAutorizacionRechazoItem: function (comentarios, idEstatus, idItem, idCotizacion, usuarioAutorizador//,idOsur
+        ) {
            var aprobacionObj = {
                comentarios: comentarios,
                idEstatus: idEstatus, 
                idItem: idItem,
                idCotizacion: idCotizacion,
-               usuarioAutorizador: usuarioAutorizador,
-               idOsur:idOsur
+               usuarioAutorizador: usuarioAutorizador
+              // idOsur:idOsur
            };
 
            return $http({
