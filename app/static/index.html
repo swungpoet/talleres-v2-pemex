@@ -53,8 +53,8 @@
                              </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ userData.nombreCompleto}}</strong>
-                             </span> 
-<!--
+                             </span>
+                            <!--
                                 <span class="text-muted text-xs block">
                                 {{ userData.tipoUsuario}} <b class="caret"></b></span> 
 -->
@@ -87,6 +87,12 @@
                 <li>
                     <a href="reporte" ng-click="showChat = 0" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4"><i class="fa fa-line-chart"></i> <span class="nav-label">Reporte</span><span class="label label-warning pull-right"></span></a>
                 </li>
+                <li>
+                    <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administración</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/osur">Osur</a></li>
+                    </ul>
+                </li>
             </ul>
 
         </div>
@@ -99,12 +105,12 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                       <div class="rol" ng-class="{ 'roladmin' : userData.idTipoUsuario == 1, 'rolcall' : userData.idTipoUsuario == 2, 'roltaller' : userData.idTipoUsuario == 3, 'rolcliente' : userData.idTipoUsuario == 4  }"> Rol -  {{ userData.tipoUsuario}} </div> 
+                        <div class="rol" ng-class="{ 'roladmin' : userData.idTipoUsuario == 1, 'rolcall' : userData.idTipoUsuario == 2, 'roltaller' : userData.idTipoUsuario == 3, 'rolcliente' : userData.idTipoUsuario == 4  }"> Rol - {{ userData.tipoUsuario}} </div>
                     </li>
                     <li>
                         <span class="m-r-sm text-muted welcome-message">Talleres Externos</span>
                     </li>
-                   
+
                     <li>
                         <a href="/">
                             <i class="fa fa-sign-out"></i> Cerrar Sesión
@@ -160,8 +166,8 @@
         </div>
     </div>
 
-  <!--CHAT CLIENTE- CALLCENTER-->
-   <div id="wrapper" ng-hide="showChat == 0">
+    <!--CHAT CLIENTE- CALLCENTER-->
+    <div id="wrapper" ng-hide="showChat == 0">
         <div class="small-chat-box2 fadeInRight animated">
 
             <div class="heading2" draggable="true">
@@ -233,7 +239,7 @@
 
     <!--librerias de componenetes-->
     <script src="AngularJS/alertFactory.js"></script>
-    
+
     <!--Librería de Switch -->
     <script src="AngularJS/bsSwitch.js"></script>
 
@@ -266,6 +272,8 @@
     <script src="AngularJS/Orden/ordenPorCobrarController.js"></script>
     <script src="AngularJS/Reporte/reporteRepository.js"></script>
     <script src="AngularJS/Reporte/reporteController.js"></script>
+    <script src="AngularJS/Osur/osurRepository.js"></script>
+    <script src="AngularJS/Osur/osurController.js"></script>
 
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>

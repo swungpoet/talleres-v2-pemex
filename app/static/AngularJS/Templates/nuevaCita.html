@@ -34,7 +34,7 @@
                                                     <input type="radio" name="optTaller" ng-click="getTaller(taller.idTaller)" />
                                                 </td>
                                             </tr>
-                                          <tr ng-show="edita == 1">
+                                          <tr ng-show="edita == 1 && datosCita.direccion != null">
                                                 <td>{{datosCita.razonSocial}}</td>
                                                 <td>{{datosCita.direccion}}</td>
                                                 <td>

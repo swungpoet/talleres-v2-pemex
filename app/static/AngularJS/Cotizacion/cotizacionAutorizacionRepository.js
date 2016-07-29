@@ -116,13 +116,14 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                 }
             });
         },
-     putAutorizacionRechazoItem: function (comentarios, idEstatus, idItem, idCotizacion, usuarioAutorizador) {
+     putAutorizacionRechazoItem: function (comentarios, idEstatus, idItem, idCotizacion, usuarioAutorizador,idOsur) {
            var aprobacionObj = {
                comentarios: comentarios,
                idEstatus: idEstatus, 
                idItem: idItem,
                idCotizacion: idCotizacion,
-               usuarioAutorizador: usuarioAutorizador
+               usuarioAutorizador: usuarioAutorizador,
+               idOsur:idOsur
            };
 
            return $http({
@@ -133,7 +134,20 @@ registrationModule.factory('cotizacionAutorizacionRepository', function ($http) 
                    'Content-Type': 'application/json'
                }
            });
-       }
+       },
+       getDatosOsur: function (idCita) {
+            return $http({
+                url: searchUrl + 'datosOsur',
+                method: "GET",
+                params: {
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
+
     };
 });
 
