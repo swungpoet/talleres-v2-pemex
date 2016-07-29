@@ -272,7 +272,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         };
 
         if (localStorageService.get('cita') != null) {
-            //  localStorageService.remove('cita');
+            localStorageService.remove('cita');
         }
         if (localStorageService.get('orden') != null) {
             localStorageService.remove('orden');
@@ -494,8 +494,9 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                 itemsAutorizacionRechazo[i].idEstatus,
                 itemsAutorizacionRechazo[i].idItem,
                 itemsAutorizacionRechazo[i].idCotizacion,
-                itemsAutorizacionRechazo[i].idUsuarioAutorizador,
-                $scope.datosOsur.idOsur).then(function (result) {
+                itemsAutorizacionRechazo[i].idUsuarioAutorizador
+               // $scope.datosOsur.idOsur
+                ).then(function (result) {
                     var algo = result.data;
                 },
                 function (error) {
