@@ -22,8 +22,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             solpe: "",
             ordenSurtimiento: "",
             montoOS: "",
-            pedidoAsociado: "",
-            nombreEmisor: "", //$scope.userData.nombreCompleto,
+            nombreEmisor: "",
             nombreProveedor: "",
             puestoProveedor: ""
         }
@@ -286,8 +285,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function () {
-        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.pedidoAsociado != '' &&
-            $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
+        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' &&   $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
 
             trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {
                 //if(certificadoGenerado.data[0].idHistorialProceso > 0){
@@ -308,7 +306,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     "&solpe=" + $scope.certificadoParams.solpe +
                     "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
                     "&montoOS=" + $scope.certificadoParams.montoOS +
-                    "&pedidoAsociado=" + $scope.certificadoParams.pedidoAsociado +
                     "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
                     "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
                     "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
@@ -322,8 +319,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     solpe: "",
                     ordenSurtimiento: "",
                     montoOS: "",
-                    pedidoAsociado: "",
-                    nombreEmisor: "", //$scope.userData.nombreCompleto,
+                    nombreEmisor: "",
                     nombreProveedor: "",
                     puestoProveedor: ""
                 }
