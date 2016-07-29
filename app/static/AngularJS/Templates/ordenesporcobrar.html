@@ -19,6 +19,8 @@ delay:delay}">
                                             <th>No. Trabajo</th>
                                             <th>Número Económico</th>
                                             <th>TAR</th>
+                                            <th>Orden de Surtimiento</th>
+                                            <th>Monto de la Orden</th>
                                             <th>Trabajo</th>
                                             <th>Estatus</th>
                                             <th>Fecha Ingreso Unidad</th>
@@ -33,6 +35,8 @@ delay:delay}">
                                             <td>{{ orden.numeroTrabajo }}</td>
                                             <td>{{orden.numEconomico}}</td>
                                             <td>{{orden.TAR}}</td>
+                                            <td>{{orden.folio}}</td>
+                                            <td>{{orden.montoOrden | currency}}</td>
                                             <td>{{orden.trabajo}}</td>
                                             <td>{{ orden.descripcionLarga }}</td>
                                             <td>{{ orden.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
