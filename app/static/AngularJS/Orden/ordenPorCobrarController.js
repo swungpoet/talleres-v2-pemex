@@ -1,4 +1,4 @@
-registrationModule.controller('ordenPorCobrarController', function ($scope, localStorageService, alertFactory, ordenPorCobrarRepository) {
+registrationModule.controller('ordenPorCobrarController', function ($scope, localStorageService, alertFactory, ordenPorCobrarRepository, $rootScope) {
 
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
@@ -159,14 +159,21 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             alertFactory.error("Error al obtener trabajos por cobrar");
         });
     }
-    
-    $scope.generaTXT = function (idTrabajo) {
-        ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function(result){
-            if(result.data.length > 0){
+
+    $scope.generaTXT = function (idTrabajo, numeroTrabajo) {
+        ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
+            if (result.data.length > 0) {
                 alertFactory.success("PreFactura generada correctamente!");
+                $scope.downloadFile($rootScope.vIpServer + '/facturas/factura-' + numeroTrabajo + '.txt')
+            } else {
+                alertFactory.info('No existe la factura.xml');
             }
-        }, function(error){
+        }, function (error) {
             alertFactory.error("Error al generar la prefactura");
         });
+    }
+
+    $scope.downloadFile = function (downloadPath) {
+        window.open(downloadPath, '_blank', 'Factura');  
     }
 });

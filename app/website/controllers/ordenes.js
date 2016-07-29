@@ -87,87 +87,78 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
         //Callback
         object.error = error;
         object.result = result;
-        if(result.length > 0) {
-        if (result[0].tipoOrdenServicio == 'SER') {
-            fs = require('fs');
-            var path = 'sth';
-            fs.stat(path, function (err, stat) {
-                if (err) {
-                    if ('ENOENT' == err.code) {
-                        //file did'nt exist so for example send 404 to client
-                    } else {
-                        //it is a server error so for example send 500 to client
-                    }
-                } else {
-                    //every thing was ok so for example you can read it and send it to client
-                }
-            });
+        if (result.length > 0) {
+            if (result[0].tipoOrdenServicio == 'SER') {
                 var directorioFactura = dirname + req.query.idTrabajo + '/documentos';
                 var files = fs.readdirSync(directorioFactura);
                 var fecha, numFactura, uuid, nombreXml;
 
-                files.forEach(function (file) {
-                    var extension = obtenerExtArchivo(file);
-                    if (extension == '.xml' || extension == '.XML') {
-                        var parser = new xml2js.Parser();
-                        fs.readFile(directorioFactura + '/' + file, function (err, data) {
-                            parser.parseString(data, function (err, result) {
-                                fecha = result['cfdi:Comprobante'].$['fecha'];
-                                if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
-                                    numFactura = result['cfdi:Comprobante'].$['folio'];
-                                } else {
-                                    numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
-                                }
-                                uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                var nombreXml = file;
+                var existeFacturaXML = files.some(checkExistsXML);
+                if (existeFacturaXML) {
+                    files.forEach(function (file) {
+                        var extension = obtenerExtArchivo(file);
+                        if (extension == '.xml' || extension == '.XML') {
+                            var parser = new xml2js.Parser();
+                            fs.readFile(directorioFactura + '/' + file, function (err, data) {
+                                parser.parseString(data, function (err, result) {
+                                    fecha = result['cfdi:Comprobante'].$['fecha'];
+                                    if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
+                                        numFactura = result['cfdi:Comprobante'].$['folio'];
+                                    } else {
+                                        numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                                    }
+                                    uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                    var nombreXml = file;
 
-                                console.log('Fecha: ' + fecha);
-                                console.log('Factura: ' + numFactura);
-                                console.log('UUID: ' + uuid);
-                                console.log('Nombre Xml: ' + nombreXml);
-                                console.log('=========================')
+                                    console.log('Fecha: ' + fecha);
+                                    console.log('Factura: ' + numFactura);
+                                    console.log('UUID: ' + uuid);
+                                    console.log('Nombre Xml: ' + nombreXml);
+                                    console.log('=========================')
 
-                                var paramsSER = [{
-                                        name: 'idTrabajo',
-                                        value: req.query.idTrabajo,
-                                        type: self.model.types.INT
+                                    var paramsSER = [{
+                                            name: 'idTrabajo',
+                                            value: req.query.idTrabajo,
+                                            type: self.model.types.INT
                                                 },
-                                    {
-                                        name: 'fecha',
-                                        value: fecha,
-                                        type: self.model.types.STRING
+                                        {
+                                            name: 'fecha',
+                                            value: fecha,
+                                            type: self.model.types.STRING
                                                 },
-                                    {
-                                        name: 'numFactura',
-                                        value: numFactura,
-                                        type: self.model.types.STRING
+                                        {
+                                            name: 'numFactura',
+                                            value: numFactura,
+                                            type: self.model.types.STRING
                                                 },
-                                    {
-                                        name: 'UUID',
-                                        value: uuid,
-                                        type: self.model.types.STRING
+                                        {
+                                            name: 'UUID',
+                                            value: uuid,
+                                            type: self.model.types.STRING
                                                 },
-                                    {
-                                        name: 'XML',
-                                        value: nombreXml,
-                                        type: self.model.types.STRING
+                                        {
+                                            name: 'XML',
+                                            value: nombreXml,
+                                            type: self.model.types.STRING
                                     }];
-                                getDatosFactura(res,self,'SEL_FACTURA_TXT_SP', paramsSER);
+                                    getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsSER);
+                                });
                             });
-                        });
-                    }
-                });
+                        }
+                    });
+                } else {
+                    res.end('');
+                }
                 console.log(result[0].tipoOrdenServicio);
-            } else if(result[0].tipoOrdenServicio == 'REF') {
-                getDatosFactura(res,self,'SEL_FACTURA_TXT_SP', paramsTipoOrden);
+            } else if (result[0].tipoOrdenServicio == 'REF') {
+                getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsTipoOrden);
                 console.log(result[0].tipoOrdenServicio);
             }
-            else{
-                res.end('');
-            }
+        } else {
+            res.end('');
         }
     });
-};   
+};
 
 //Obtiene datos factura y generar el txt
 function getDatosFactura(res, self, stored, params) {
@@ -202,6 +193,11 @@ function getDatosFactura(res, self, stored, params) {
 //Se obtiene la extensión del archivo
 var obtenerExtArchivo = function (file) {
     return '.' + file.split('.').pop();
+}
+
+//valida si existe al menos un archivo xml
+function checkExistsXML(file){
+    return file.split('.').pop() === 'xml';
 }
 
 module.exports = Orden;
