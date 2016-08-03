@@ -1,6 +1,6 @@
 registrationModule.controller('cotizacionEvidenciasController', function ($scope, localStorageService, alertFactory, cotizacionEvidenciasRepository, $rootScope) {
     var idCotizacion = localStorageService.get('cotizacion');
-    var idTrabajo = localStorageService.get('work');
+    $scope.idTrabajo = localStorageService.get('work');
     $scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
@@ -8,7 +8,7 @@ registrationModule.controller('cotizacionEvidenciasController', function ($scope
     }
 
     $scope.cargaEvidencias = function () {
-        cotizacionEvidenciasRepository.getEvidenciasByCotizacion(idCotizacion, $scope.userData.idTipoUsuario).then(function (result) {
+        cotizacionEvidenciasRepository.getEvidenciasByCotizacion(idCotizacion, $scope.userData.idTipoUsuario, $scope.idTrabajo).then(function (result) {
             if (result.data.length > 0) {
                 $scope.slides = result.data;
                 setTimeout(function () {
@@ -55,7 +55,7 @@ registrationModule.controller('cotizacionEvidenciasController', function ($scope
         idUsuario = contentForm.document.getElementById("idUsuario");
         idCategoria = contentForm.document.getElementById("idCategoria");
         idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-        idTrabajoEdit.value = idTrabajo;
+        idTrabajoEdit.value = $scope.idTrabajo;
         idCotizacionEdit.value = idCotizacion;
         idTipoEvidencia.value = 2;
         idCategoria.value = 1;
