@@ -902,20 +902,6 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
     ];
 
     var evidenciasByOrden = [];
-    var rutaPrincipal = dirname + req.query.idTrabajo + '/documentos';
-    var rutaAdendaCopade = rutaPrincipal + '/adendaCopade';
-    var rutaCertificadoConformidad = rutaPrincipal + '/certificadoConformidad';
-    var rutaComprobanteRecepcion = rutaPrincipal + '/comprobanteRecepcion';
-    var rutaFactura = rutaPrincipal + '/factura';
-    var rutaTransferenciaCustodia = rutaPrincipal + '/transferenciaCustodia';
-    var rutaEvidenciaTrabajo = rutaPrincipal + '/evidenciaTrabajo';
-
-    //busca la carpeta de Adenda y Copade
-    cargaDocumentos(rutaAdendaCopade, 'adendaCopade');
-    cargaDocumentos(rutaCertificadoConformidad, 'certificadoConformidad');
-    cargaDocumentos(rutaComprobanteRecepcion, 'comprobanteRecepcion');
-    cargaDocumentos(rutaFactura, 'factura');
-    cargaDocumentos(rutaTransferenciaCustodia, 'transferenciaCustodia');
 
     cargaCotizacionEvidencias(req.query.idTrabajo);
 
@@ -933,7 +919,7 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
         carpetas.forEach(function (carpeta) {
             var isCarpeta = fs.statSync(rutaPrincipal + '/' + carpeta).isDirectory();
             if (isCarpeta) {
-                if (carpeta == 'documentos' || carpeta == 'multimedia' || carpeta == 'evidenciaTrabajo') {
+                if (carpeta == 'documentos') {
                     var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
                     subCarpetas.forEach(function (subCarpeta) {
                         var isSubCarpeta = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta).isDirectory();
@@ -944,15 +930,28 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
                                 var idTipoArchivo = obtenerTipoArchivo(ext);
                                 var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
                                 evidenciasByOrden.push({
-                                    idTipoEvidencia: 2,
+                                    idTipoEvidencia: 1,
                                     idTipoArchivo: idTipoArchivo,
                                     nombreArchivo: documento,
                                     fecha: fecha,
-                                    idTrabajo: parseInt(trabajo),
-                                    idCotizacion: parseInt(carpeta)
+                                    carpeta: carpeta + '/' + subCarpeta
                                 });
                             });
                         }
+                    });
+                } else if (carpeta == 'multimedia' || carpeta == 'evidenciaTrabajo') {
+                    var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta);
+                    documentos.forEach(function (documento) {
+                        var ext = obtenerExtArchivo(documento);
+                        var idTipoArchivo = obtenerTipoArchivo(ext);
+                        var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + documento).mtime.getTime();
+                        evidenciasByOrden.push({
+                            idTipoEvidencia: 1,
+                            idTipoArchivo: idTipoArchivo,
+                            nombreArchivo: documento,
+                            fecha: fecha,
+                            carpeta: carpeta
+                        });
                     });
                 } else {
                     var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
@@ -974,40 +973,6 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
                     });
                 }
             }
-
-            /* if (carpeta != 'documentos' && carpeta != 'multimedia') {
-                 var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
-                 subCarpetas.forEach(function (subCarpeta) {
-                     var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
-                     documentos.forEach(function (documento) {
-                         var ext = obtenerExtArchivo(documento);
-                         var idTipoArchivo = obtenerTipoArchivo(ext);
-                         var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
-                         evidenciasByOrden.push({
-                             idTipoEvidencia: 2,
-                             idTipoArchivo: idTipoArchivo,
-                             nombreArchivo: documento,
-                             fecha: fecha,
-                             idTrabajo: parseInt(trabajo),
-                             idCotizacion: parseInt(carpeta)
-                         });
-                     });
-                 });
-             } else if (carpeta == 'multimedia') {
-                 var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta);
-                 documentos.forEach(function (documento) {
-                     var ext = obtenerExtArchivo(documento);
-                     var idTipoArchivo = obtenerTipoArchivo(ext);
-                     var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + documento).mtime.getTime();
-                     evidenciasByOrden.push({
-                         idTipoEvidencia: 1,
-                         idTipoArchivo: idTipoArchivo,
-                         nombreArchivo: documento,
-                         fecha: fecha,
-                         carpeta: carpeta
-                     });
-                 });
-             }*/
         });
     }
 
