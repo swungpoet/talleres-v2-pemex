@@ -40,11 +40,6 @@ var obtenerTipoArchivo = function (ext) {
     return type;
 }
 
-//Se obtiene la extensión del archivo
-var obtenerExtArchivo = function (file) {
-    return '.' + file.split('.').pop();
-}
-
 //obtiene el consecutivo de los archivos
 var obtieneConsecutivo = function (ruta) {
     var consecutivo = fs.readdirSync(ruta);
@@ -469,12 +464,11 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
     //res.end("File is uploaded");
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, dirname + 'pruebas')
-            var idTrabajo = req.body.idTrabajo[0];
-            var idCotizacion = req.body.idCotizacion[0];
-            var idCategoria = req.body.idCategoria[0];
-            var idNombreEspecial = req.body.idNombreEspecial[0];
-            if (idCotizacion == '') {
+            var idTrabajo = (req.body.idTrabajo).constructor !== Array ? req.body.idTrabajo : req.body.idTrabajo[0];
+            var idCotizacion = req.body.idCotizacion.constructor !== Array ? req.body.idCotizacion : req.body.idCotizacion[0];
+            var idCategoria = (req.body.idCategoria).constructor != Array ? req.body.idCategoria : req.body.idCategoria[0];
+            var idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
+            if (idCotizacion == 0) {
                 if (!fs.existsSync(dirname + idTrabajo)) {
                     fs.mkdirSync(dirname + idTrabajo);
                     fs.mkdirSync(dirname + idTrabajo + '/multimedia');
@@ -504,7 +498,11 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                         nameFile = 'Adenda';
                     }
                     cb(null, dirname + idTrabajo + '/documentos/adendaCopade');
-                } else {
+                } else if(idNombreEspecial == 5){
+                    nameFile = 'CertificadoConformidad';
+                    cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
+                }
+                else{
                     nameFile = 'CertificadoConformidad';
                     cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
                 }
@@ -572,7 +570,7 @@ Cotizacion.prototype.get_namefileserver = function (req, res, next) {
     var self = this;
     //Callback
     object.error = null;
-    object.result = getNameFile(dirname + req.query.idTrabajo + '/certificadoConformidad/');
+    object.result = getNameFile(dirname + req.query.idTrabajo + '/documentos/certificadoConformidad/');
 
     self.view.expositor(res, object);
 

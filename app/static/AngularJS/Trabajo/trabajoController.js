@@ -35,17 +35,15 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             if (nombreArchivo.data != null) {
                 $scope.certificadoConformidad = nombreArchivo.data[0];
                 trabajoRepository.descargaCerficadoConformidadTrabajo(20, idTrabajo).then(function (certificadoDescargado) {
-                    //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-                    alertFactory.success("Certificado de conformidad descargado");
-                    getTrabajo($scope.userData.idUsuario);
-                    getTrabajoTerminado($scope.userData.idUsuario);
-                    getTrabajoAprobado($scope.userData.idUsuario);
-                    //}
+                    if(certificadoDescargado.data[0].idHistorialProceso > 0){
+                        alertFactory.success("Certificado de conformidad descargado");
+                        getTrabajo($scope.userData.idUsuario);
+                        getTrabajoTerminado($scope.userData.idUsuario);
+                        getTrabajoAprobado($scope.userData.idUsuario);
+                    }
                 }, function (error) {
                     alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
-                })
-
-                //window.open($rootScope.vIpServer+'/uploads/files/'+idTrabajo+'/certificadoConformidad/'+$scope.certificadoConformidad, '_blank');   
+                }) 
             }
         }, function (error) {
             alertFactory.error("Error al encontrar nombre de archivo");
@@ -194,7 +192,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     //muestra el modal para la carga de archivos
     $scope.adjuntar = function (idTrabajo, idNombreEspecial) {
         $scope.idTrabajo = idTrabajo;
-        $scope.idCotizacion = '';
+        $scope.idCotizacion = 0;
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
         $('#modalCargaArchivos').appendTo('body').modal('show');
@@ -381,6 +379,13 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             $scope.newFile = file;
         },
         'sending': function(file, xhr, formData){
+            var objParams = {
+                idTrabajo : $scope.idTrabajo,
+                idCotizacion : $scope.idCotizacion,
+                idCategoria : $scope.idCategoria,
+                idNombreEspecial : $scope.idNombreEspecial
+            }
+            formData.append('objParams', objParams);
             formData.append('idTrabajo', $scope.idTrabajo);
             formData.append('idCotizacion', $scope.idCotizacion);
             formData.append('idCategoria', $scope.idCategoria);
