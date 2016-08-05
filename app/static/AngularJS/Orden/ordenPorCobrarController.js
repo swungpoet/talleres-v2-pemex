@@ -4,6 +4,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
+        $scope.fecha='';
         $scope.getOrdenesPorCobrar();
         if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
             $scope.preFacturas();
@@ -173,8 +174,48 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             alertFactory.error("Error al generar la prefactura");
         });
     }
+        $('#fechaTrabajo .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: true,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        todayHighlight: true
+    });
+
+     $scope.openFinishingTrabajoModal = function (idTrabajo) {
+        $('#finalizarTrabajoModal').appendTo("body").modal('show');
+         $scope.idTrabajo=idTrabajo;
+          ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo,5).then(function (result) {
+                   $scope.resultado = result.data[0];  
+                   $scope.fecha = $scope.resultado.fecha;
+                }, function (error) {
+                    alertFactory.error("Error al buscar la fecha");
+                });
+    }    
+    $scope.saveFecha = function () {
+      $scope.idTrabajo;
+      $scope.fecha;
+      if($scope.fecha!=''){
+              ordenPorCobrarRepository.putFechaCopade($scope.fecha,$scope.idTrabajo,5).then(function (result) {
+                   $scope.resultado = result.data; 
+                   $scope.fecha=''; 
+                    $('#finalizarTrabajoModal').modal('hide');  
+                }, function (error) {
+                    alertFactory.error("Error al insertar la fecha");
+                });
+       }else{
+           alertFactory.info('Debe ingresar una fecha');
+      }
+
+    } 
+    $scope.cleanfecha = function () {
+    $scope.fecha=''; 
+}
+
 
     $scope.downloadFile = function (downloadPath) {
         window.open(downloadPath, '_blank', 'Factura');  
     }
+
 });

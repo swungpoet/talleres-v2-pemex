@@ -40,6 +40,35 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+         putFechaCopade: function (fecha,idTrabajo,idTipoProceso) {
+            var objTrabajo = {
+                fecha:fecha,
+                idTrabajo: idTrabajo,
+                idTipoProceso:idTipoProceso
+            };
+
+            return $http({
+                url: ordenUrl + 'fechaCopade',
+                method: "POST",
+                data: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getFechaCopade: function (idTrabajo, idTipoProceso) {
+            return $http({
+                url: ordenUrl + 'searchFechaCopade',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo,
+                    idTipoProceso: idTipoProceso
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

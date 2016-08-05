@@ -26,6 +26,7 @@ delay:delay}">
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
                                                 <th>Fecha Fin Trabajo</th>
+                                                <!-- <th>Fecha COPADE</th> -->
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
@@ -42,6 +43,7 @@ delay:delay}">
                                                 <td>{{ orden.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                <!-- <td></td> -->
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
@@ -50,6 +52,9 @@ delay:delay}">
                                                     </button>
                                                     
                                                     <a id="downloadFactura" type="button" data-toggle="tooltip" tooltip="Generar Factura.txt" tooltip-placement="left" class="btn btn-primary" role="button" ng-click="generaTXT(orden.idTrabajo, orden.numeroTrabajo)"><span class="fa fa-file-text-o"></span></a>
+
+                                                     <button class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(orden.idTrabajo)" data-toggle="tooltip" tooltip="Fecha Copade" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span></button>
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -125,3 +130,29 @@ delay:delay}">
             </div>
         </div>
     </div>
+
+<div class="modal inmodal" id="finalizarTrabajoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+                <h4 class="modal-title">Capturar Fecha COPADE</h4>
+            </div>
+            <br>
+             <div class="col-xs-10">
+                   <div class="form-group" id="fechaTrabajo">
+                        <div class="input-group date">
+                            <input type="text" placeholder="Introduzca fecha copade" class="form-control" value="" ng-model="fecha">
+                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                   </div>
+             </div>
+             <br><br><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanfecha()">Salir</button>
+                <button type="button" class="btn btn-danger" ng-click="saveFecha()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
