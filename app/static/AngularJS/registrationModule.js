@@ -6,7 +6,7 @@
 // -- Fecha: 
 // -- =============================================
 var registrationModule = angular.module("registrationModule", ["ngRoute", "LocalStorageModule",
-        "ui.bootstrap", "angularUtils.directives.dirPagination", "cgBusy", "frapontillo.bootstrap-switch"])
+        "ui.bootstrap", "angularUtils.directives.dirPagination", "cgBusy", "frapontillo.bootstrap-switch","thatisuday.dropzone"])
     .config(function ($routeProvider, $locationProvider) {
 
         /*change the routes*/
