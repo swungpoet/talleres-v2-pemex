@@ -6,7 +6,7 @@ var idTipoArchivo;
 var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
-var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 var nameFile = '';
 var idTrabajo = 0;
 
