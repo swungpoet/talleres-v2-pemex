@@ -479,20 +479,25 @@ Cotizacion.prototype.get_evidenciasByCotizacion = function (req, res, next) {
         if (carpeta != 'documentos' && carpeta != 'multimedia' && carpeta != 'evidenciaTrabajo') {
             var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
             subCarpetas.forEach(function (subCarpeta) {
-                var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
-                documentos.forEach(function (documento) {
-                    var ext = obtenerExtArchivo(documento);
-                    var idTipoArchivo = obtenerTipoArchivo(ext);
-                    var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
-                    evidenciasByOrden.push({
-                        idTipoEvidencia: 2,
-                        idTipoArchivo: idTipoArchivo,
-                        nombreArchivo: documento,
-                        fecha: fecha,
-                        idTrabajo: req.query.idTrabajo,
-                        idCotizacion: req.query.idCotizacion
-                    });
-                });
+                var isSubCarpeta = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta).isDirectory();
+                if (isSubCarpeta) {
+                    if (subCarpeta == 'documentos' || subCarpeta == 'multimedia') {
+                        var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
+                        documentos.forEach(function (documento) {
+                            var ext = obtenerExtArchivo(documento);
+                            var idTipoArchivo = obtenerTipoArchivo(ext);
+                            var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
+                            evidenciasByOrden.push({
+                                idTipoEvidencia: 2,
+                                idTipoArchivo: idTipoArchivo,
+                                nombreArchivo: documento,
+                                fecha: fecha,
+                                idTrabajo: req.query.idTrabajo,
+                                idCotizacion: req.query.idCotizacion
+                            });
+                        });
+                    }
+                }
             });
         }
     });
@@ -956,20 +961,25 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
                 } else {
                     var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
                     subCarpetas.forEach(function (subCarpeta) {
-                        var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
-                        documentos.forEach(function (documento) {
-                            var ext = obtenerExtArchivo(documento);
-                            var idTipoArchivo = obtenerTipoArchivo(ext);
-                            var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
-                            evidenciasByOrden.push({
-                                idTipoEvidencia: 2,
-                                idTipoArchivo: idTipoArchivo,
-                                nombreArchivo: documento,
-                                fecha: fecha,
-                                idTrabajo: parseInt(trabajo),
-                                idCotizacion: parseInt(carpeta)
-                            });
-                        });
+                        var isSubCarpeta = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta).isDirectory();
+                        if (isSubCarpeta) {
+                            if (subCarpeta == 'documentos' || subCarpeta == 'multimedia') {
+                                var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
+                                documentos.forEach(function (documento) {
+                                    var ext = obtenerExtArchivo(documento);
+                                    var idTipoArchivo = obtenerTipoArchivo(ext);
+                                    var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
+                                    evidenciasByOrden.push({
+                                        idTipoEvidencia: 2,
+                                        idTipoArchivo: idTipoArchivo,
+                                        nombreArchivo: documento,
+                                        fecha: fecha,
+                                        idTrabajo: parseInt(trabajo),
+                                        idCotizacion: parseInt(carpeta)
+                                    });
+                                });
+                            }
+                        }
                     });
                 }
             }
