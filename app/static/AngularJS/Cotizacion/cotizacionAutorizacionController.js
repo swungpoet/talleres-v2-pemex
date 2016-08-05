@@ -48,7 +48,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         //$scope.getCotizacionByTrabajo();
         $scope.Detalle(idCotizacion, idTaller, $scope.userData.idUsuario);
         //$scope.lookUpTrabajo(idCita);
-        $scope.cargaEvidencias();
+        //$scope.cargaEvidencias();
         //$scope.cargaDocs(idCotizacion);
         $scope.cargaDatosCliente(idCita);
 

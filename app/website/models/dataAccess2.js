@@ -2,7 +2,7 @@ var sql = require('mssql'),
     config = {};
 
 //configuración genérica para modelo de acceso a datos
-var DataAccess2 = function(config) {
+var DataAccess2 = function (config) {
     //Inicializamos el objeto config
     this.config = config || {};
     //Inicializamos la conexión
@@ -23,36 +23,36 @@ var DataAccess2 = function(config) {
 };
 
 //método genérico para acciones get
-DataAccess2.prototype.query = function(stored, params, callback) {
+DataAccess2.prototype.query = function (stored, params, callback) {
     var self = this.connection;
-    this.connection.connect(function(err) {
+    this.connection.connect(function (err) {
         // Stored Procedure
         var request = new sql.Request(self);
         // Add inputs
-        if(params.length > 0){
-            params.forEach(function(param) {
+        if (params.length > 0) {
+            params.forEach(function (param) {
                 request.input(param.name, param.type, param.value);
             });
         }
 
         request.execute(stored)
-            .then(function(recordsets) {
+            .then(function (recordsets) {
                 callback(null, recordsets[0]);
-            }).catch(function(err) {
+            }).catch(function (err) {
                 callback(err);
             });
     });
 };
 
 //método genérico para acciones post
-DataAccess2.prototype.post = function (stored,params, callback) {
+DataAccess2.prototype.post = function (stored, params, callback) {
     var self = this.connection;
     this.connection.connect(function (err) {
         // Stored Procedure 
         var request = new sql.Request(self);
-        
-        if(params.length > 0){
-            params.forEach(function(param) {
+
+        if (params.length > 0) {
+            params.forEach(function (param) {
                 request.input(param.name, param.type, param.value);
             });
         }
@@ -79,8 +79,8 @@ DataAccess2.prototype.evidencia = function (msgObj, callback) {
             request.input('idProcesoEvidencia', sql.Numeric(18, 0), msgObj[i].idProcesoEvidencia);
             request.input('nombreArchivo', sql.VarChar(100), msgObj[i].nombreArchivo);
             request.input('idCategoria', sql.Numeric(18, 0), msgObj[i].idCategoria);
-            if(msgObj[i].idNombreEspecial != 0)
-            request.input('idNombreEspecial', sql.Numeric(18, 0), msgObj[i].idNombreEspecial);
+            if (msgObj[i].idNombreEspecial != 0)
+                request.input('idNombreEspecial', sql.Numeric(18, 0), msgObj[i].idNombreEspecial);
             request.execute('INS_EVIDENCIA_SP', function (err, recordsets, returnValue) {
 
             });
@@ -97,5 +97,9 @@ DataAccess2.prototype.evidencia = function (msgObj, callback) {
     });
 };
 
+DataAccess2.prototype.listaEvidencia = function (lstEvidencia, callback) {
+    callback(null, lstEvidencia);
+};
+
 //exportación del modelo
-module.exports = DataAccess2; 
+module.exports = DataAccess2;
