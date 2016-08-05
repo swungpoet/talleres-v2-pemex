@@ -87,7 +87,7 @@
 
                                                     <button ng-if="trabajo.estatus == 'CertificadoGenerado'" ng-hide="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span></button>
                                                     
-                                                    <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Descargar certificado de conformidad" tooltip-placement="up" href="{{vIpServer}}/uploads/files/{{trabajo.idTrabajo}}/certificadoConformidad/CertificadoConformidad.pdf" target="_parent" download="CeretificadoConformidad" class="btn btn-success" role="button" ng-click="descargaCertificadoConformidadPDF(trabajo.idTrabajo)"><span class="glyphicon glyphicon-download"></span></a>
+                                                    <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Descargar certificado de conformidad" tooltip-placement="up" href="{{vIpServer}}/uploads/files/{{trabajo.idTrabajo}}/documentos/certificadoConformidad/CertificadoConformidad.pdf" target="_parent" download="CeretificadoConformidad" class="btn btn-success" role="button" ng-click="descargaCertificadoConformidadPDF(trabajo.idTrabajo)"><span class="glyphicon glyphicon-download"></span></a>
 
                                                     <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Rechazar Trabajo" tooltip-placement="up" class="btn btn-cancela btn-danger btnTerminarTrabajo2" role="button" ng-click="openOrdenTrabajoModal(23, trabajo.idTrabajo)">&nbsp;<i class="fa fa-times"></i></a>  
 
@@ -165,7 +165,7 @@
     </div>
 </div>
 
-<div id="factura" class="modal inmodal fade" role="dialog">
+<div id="modalCargaArchivos" class="modal inmodal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
@@ -176,10 +176,11 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive m-t" style="margin-left:10%">
-                    <iframe src="/AngularJS/Templates/uploader.html" width="680px" height="380px" frameborder="0" id="uploader" scrolling="no"></iframe>
+                    <!--<iframe src="/AngularJS/Templates/uploader.html" width="680px" height="380px" frameborder="0" id="uploader" scrolling="no"></iframe>-->
+                    <div id="dropeZoneFiles" class="dropzone" options="dzOptionsFactura" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="cargaArchivosEspeciales()">Adjuntar</button>
+                    <button id="btnUploadFiles" type="button" class="btn btn-success" ng-click="dzMethods.processQueue();">Adjuntar</button>
                 </div>
             </div>
         </div>

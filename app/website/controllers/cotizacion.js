@@ -7,7 +7,7 @@ var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-
+var nameFile = '';
 var Cotizacion = function (conf) {
     this.conf = conf || {};
 
@@ -22,56 +22,8 @@ var Cotizacion = function (conf) {
 
 
     this.middlewares = [
-    	upload.array('file[]', 20)
    ]
 }
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        var idTrabajo = req.body.idTrabajo;
-        var idCotizacion = req.body.idCotizacion;
-
-        if (idCotizacion == '') {
-            if (!fs.existsSync(dirname + idTrabajo)) {
-                fs.mkdirSync(dirname + idTrabajo);
-                fs.mkdirSync(dirname + idTrabajo + '/multimedia');
-                fs.mkdirSync(dirname + idTrabajo + '/documentos');
-                fs.mkdirSync(dirname + idTrabajo + '/certificadoConformidad');
-            }
-
-            if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
-                cb(null, dirname + idTrabajo + '/multimedia')
-            } else {
-                cb(null, dirname + idTrabajo + '/documentos')
-            }
-            if (req.body.idCategoria == 2 && req.body.idNombreEspecial == 5) {
-                cb(null, dirname + idTrabajo + '/certificadoConformidad');
-            }
-        } else {
-            if (!fs.existsSync(dirname + idTrabajo)) {
-                fs.mkdirSync(dirname + idTrabajo);
-            }
-            if (!fs.existsSync(dirname + idTrabajo + '/' + idCotizacion)) {
-                fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion);
-                fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion + '/multimedia');
-                fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion + '/documentos');
-            }
-
-            if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
-                cb(null, dirname + idTrabajo + '/' + idCotizacion + '/multimedia')
-            } else {
-                cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
-            }
-        }
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-
-var upload = multer({
-    storage: storage //console.log("File name : "+ file.name +"\n"+ "FilePath: "+ file.path)
-});
 
 //Obtener el tipo de archivo
 var obtenerTipoArchivo = function (ext) {
@@ -93,6 +45,7 @@ var obtenerExtArchivo = function (file) {
     return '.' + file.split('.').pop();
 }
 
+//obtiene el consecutivo de los archivos
 var obtieneConsecutivo = function (ruta) {
     var consecutivo = fs.readdirSync(ruta);
     return consecutivo.length + 1;
@@ -479,20 +432,25 @@ Cotizacion.prototype.get_evidenciasByCotizacion = function (req, res, next) {
         if (carpeta != 'documentos' && carpeta != 'multimedia' && carpeta != 'evidenciaTrabajo') {
             var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
             subCarpetas.forEach(function (subCarpeta) {
-                var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
-                documentos.forEach(function (documento) {
-                    var ext = obtenerExtArchivo(documento);
-                    var idTipoArchivo = obtenerTipoArchivo(ext);
-                    var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
-                    evidenciasByOrden.push({
-                        idTipoEvidencia: 2,
-                        idTipoArchivo: idTipoArchivo,
-                        nombreArchivo: documento,
-                        fecha: fecha,
-                        idTrabajo: req.query.idTrabajo,
-                        idCotizacion: req.query.idCotizacion
-                    });
-                });
+                var isSubCarpeta = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta).isDirectory();
+                if (isSubCarpeta) {
+                    if (subCarpeta == 'documentos' || subCarpeta == 'multimedia') {
+                        var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
+                        documentos.forEach(function (documento) {
+                            var ext = obtenerExtArchivo(documento);
+                            var idTipoArchivo = obtenerTipoArchivo(ext);
+                            var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
+                            evidenciasByOrden.push({
+                                idTipoEvidencia: 2,
+                                idTipoArchivo: idTipoArchivo,
+                                nombreArchivo: documento,
+                                fecha: fecha,
+                                idTrabajo: req.query.idTrabajo,
+                                idCotizacion: req.query.idCotizacion
+                            });
+                        });
+                    }
+                }
             });
         }
     });
@@ -504,149 +462,94 @@ Cotizacion.prototype.get_evidenciasByCotizacion = function (req, res, next) {
 
         self.view.expositor(res, object);
     });
-
-    /*this.model.query('SEL_EVIDENCIAS_BY_COTIZACION_SP', params, function (error, result) {
-        //Callback
-        object.error = error;
-        object.result = result;
-
-        self.view.expositor(res, object);
-    });*/
 }
 
 ////Método para insertar evidencia
 Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
-    res.end("File is uploaded");
-    //Objeto que almacena la respuesta
-    var object = {};
-    //Referencia a la clase para callback
-    var self = this;
-    //Arreglo evidencia
-    var arrayEvidencia = [];
-    //var sIdProcesoEvidencia = "";
-    //si la categoría de los documentos es 2 = (documentos especiales)
-    //si la categoría de los documentos es 1 = (documentos normales)
-    if (req.body.idCategoria === "1") {
-        for (var i = 0; i < req.files.length; i++) {
-            var ext = obtenerExtArchivo(req.files[i].originalname);
-            var idTipoArchivo = obtenerTipoArchivo(ext);
-            arrayEvidencia.push({
-                idTipoEvidencia: req.body.idTipoEvidencia,
-                idTipoArchivo: idTipoArchivo,
-                idUsuario: req.body.idUsuario,
-                idProcesoEvidencia: req.body.idCotizacion == '' ? req.body.idTrabajo : req.body.idCotizacion,
-                idCategoria: req.body.idCategoria,
-                nombreArchivo: req.files[i].originalname,
-                idNombreEspecial: req.body.idNombreEspecial
-            });
-        }
-    } else
-    if (req.body.idCategoria === "2") {
-        var countDocs = 0;
-        var countImgs = 0;
-        var nuevoNombre = '';
-        var consecutivoDocs = 0;
-        var consecutivoImgs = 0;
-
-        //obtiene el número total por tipo de archivo
-        for (var i = 0; i < req.files.length; i++) {
-            var ext = obtenerExtArchivo(req.files[i].originalname);
-            var idTipoArchivo = obtenerTipoArchivo(ext);
-            if (idTipoArchivo == 1) {
-                countDocs++;
-            } else
-            if (idTipoArchivo == 2) {
-                countImgs++;
-            }
-        }
-        //crea la carpeta de certificado de conformidad 
-
-        if (req.body.idCategoria == 2 && req.body.idNombreEspecial == 5) {
-            if (req.files[0].originalname != undefined) {
-                fs.rename(dirname + req.body.idTrabajo + '/certificadoConformidad/' + req.files[0].originalname, dirname + req.body.idTrabajo + '/certificadoConformidad/' + 'CertificadoConformidad.pdf', function (err) {
-                    if (err) console.log('ERROR: ' + err);
-                });
-            }
-        }
-        //obtiene el número de documentos para renombrar
-        if ((countFilesDirectory(dirname + req.body.idTrabajo + '/documentos/') - countDocs) === 0) {
-            consecutivoDocs = 1;
-            console.log(consecutivoDocs);
-        } else {
-            consecutivoDocs = (countFilesDirectory(dirname + req.body.idTrabajo + '/documentos/') + 1) - countDocs;
-            console.log(consecutivoDocs);
-        }
-
-        //obtiene el número de imágenes para renombrar
-        if ((countFilesDirectory(dirname + req.body.idTrabajo + '/multimedia/') - countImgs) === 0) {
-            consecutivoImgs = 1;
-            console.log(consecutivoImgs);
-        } else {
-            consecutivoImgs = (countFilesDirectory(dirname + req.body.idTrabajo + '/multimedia/') + 1) - countImgs;
-            console.log(consecutivoImgs);
-        }
-
-        for (var i = 0; i < req.files.length; i++) {
-
-            var ext = obtenerExtArchivo(req.files[i].originalname);
-            var idTipoArchivo = obtenerTipoArchivo(ext);
-
-            if (req.body.idNombreEspecial == 1) nuevoNombre = 'ComprobanteRecepcion';
-            if (req.body.idNombreEspecial == 2) nuevoNombre = 'TranferenciaCustodia';
-            if (req.body.idNombreEspecial == 3) nuevoNombre = 'Factura';
-            if (req.body.idNombreEspecial == 4) {
-                if (ext == '.xml') {
-                    nuevoNombre = 'COPADE';
-                } else {
-                    nuevoNombre = 'Adenda';
+    //res.end("File is uploaded");
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, dirname + 'pruebas')
+            var idTrabajo = req.body.idTrabajo[0];
+            var idCotizacion = req.body.idCotizacion[0];
+            var idCategoria = req.body.idCategoria[0];
+            var idNombreEspecial = req.body.idNombreEspecial[0];
+            if (idCotizacion == '') {
+                if (!fs.existsSync(dirname + idTrabajo)) {
+                    fs.mkdirSync(dirname + idTrabajo);
+                    fs.mkdirSync(dirname + idTrabajo + '/multimedia');
+                    fs.mkdirSync(dirname + idTrabajo + '/documentos');
+                    fs.mkdirSync(dirname + idTrabajo + '/documentos/comprobanteRecepcion');
+                    fs.mkdirSync(dirname + idTrabajo + '/documentos/transferenciaCustodia');
+                    fs.mkdirSync(dirname + idTrabajo + '/documentos/certificadoConformidad');
+                    fs.mkdirSync(dirname + idTrabajo + '/documentos/factura');
+                    fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
                 }
             }
-            if (req.body.idNombreEspecial == 5) nuevoNombre = 'CertificadoConformidad';
-            if (req.body.idNombreEspecial == 6) nuevoNombre = 'CertificadoConformidad';
+            if (idCategoria == 2) {
+                if (idNombreEspecial == 1) {
+                    nameFile = 'ComprobanteRecepcion';
+                    cb(null, dirname + idTrabajo + '/documentos/comprobanteRecepcion');
+                } else if (idNombreEspecial == 2) {
+                    nameFile = 'TransferenciaCustodia';
+                    cb(null, dirname + idTrabajo + '/documentos/transferenciaCustodia');
+                } else if (idNombreEspecial == 3) {
+                    nameFile = 'Factura';
+                    cb(null, dirname + idTrabajo + '/documentos/factura');
+                } else if (idNombreEspecial == 4) {
+                    var extFile = obtenerExtArchivo(file.originalname);
+                    if (extFile === '.xml' || extFile === '.XML') {
+                        nameFile = 'COPADE';
+                    } else {
+                        nameFile = 'Adenda';
+                    }
+                    cb(null, dirname + idTrabajo + '/documentos/adendaCopade');
+                } else {
+                    nameFile = 'CertificadoConformidad';
+                    cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
+                }
+            } else {
+                if (!fs.existsSync(dirname + idTrabajo)) {
+                    fs.mkdirSync(dirname + idTrabajo);
+                }
+                if (!fs.existsSync(dirname + idTrabajo + '/' + idCotizacion)) {
+                    fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion);
+                    fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion + '/multimedia');
+                    fs.mkdirSync(dirname + idTrabajo + '/' + idCotizacion + '/documentos');
+                }
 
-            //tipo archivo documento
-
-            if (idTipoArchivo == 1) {
-                fs.rename(dirname + req.body.idTrabajo + '/documentos/' + req.files[i].originalname, dirname + req.body.idTrabajo + '/documentos/' + nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname), function (err) {
-                    if (err) console.log('ERROR: ' + err);
-                });
-
-                arrayEvidencia.push({
-                    idTipoEvidencia: req.body.idTipoEvidencia,
-                    idTipoArchivo: idTipoArchivo,
-                    idUsuario: req.body.idUsuario,
-                    idProcesoEvidencia: req.body.idTrabajo,
-                    idCategoria: req.body.idCategoria,
-                    nombreArchivo: nuevoNombre + consecutivoDocs + obtenerExtArchivo(req.files[i].originalname),
-                    idNombreEspecial: req.body.idNombreEspecial
-                });
-                consecutivoDocs++;
-            } else //tipo archivo imagen
-            if (idTipoArchivo == 2) {
-                fs.rename(dirname + req.body.idTrabajo + '/multimedia/' + req.files[i].originalname, dirname + req.body.idTrabajo + '/multimedia/' + nuevoNombre + consecutivoImgs + obtenerExtArchivo(req.files[i].originalname), function (err) {
-                    if (err) console.log('ERROR: ' + err);
-                });
-
-                arrayEvidencia.push({
-                    idTipoEvidencia: req.body.idTipoEvidencia,
-                    idTipoArchivo: idTipoArchivo,
-                    idUsuario: req.body.idUsuario,
-                    idProcesoEvidencia: req.body.idTrabajo,
-                    idCategoria: req.body.idCategoria,
-                    nombreArchivo: nuevoNombre + consecutivoImgs + obtenerExtArchivo(req.files[i].originalname),
-                    idNombreEspecial: req.body.idNombreEspecial
-                });
-                consecutivoImgs++;
+                if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
+                    cb(null, dirname + idTrabajo + '/' + idCotizacion + '/multimedia')
+                } else {
+                    cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
+                }
             }
+        },
+        filename: function (req, file, cb) {
+            cb(null, nameFile + obtenerExtArchivo(file.originalname));
         }
-    }
-    this.model.evidencia(arrayEvidencia, function (error, result) {
-        //Callback
-        object.error = error;
-        object.result = result;
-
-        self.view.expositor(res, object);
     });
+    var upload = multer({
+        storage: storage
+    }).any();
+
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+            return res.end("Error al subir el archivo.");
+        } else {
+            req.files.forEach(function (f) {
+                console.log(f.originalname);
+                // and move file to final destination...
+            });
+            res.end("Archivo subido");
+        }
+    });
+}
+
+//Se obtiene la extensión del archivo
+var obtenerExtArchivo = function (file) {
+    return '.' + file.split('.').pop();
 }
 
 var countFilesDirectory = function (dir) {
@@ -956,57 +859,33 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
                 } else {
                     var subCarpetas = fs.readdirSync(rutaPrincipal + '/' + carpeta);
                     subCarpetas.forEach(function (subCarpeta) {
-                        var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
-                        documentos.forEach(function (documento) {
-                            var ext = obtenerExtArchivo(documento);
-                            var idTipoArchivo = obtenerTipoArchivo(ext);
-                            var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
-                            evidenciasByOrden.push({
-                                idTipoEvidencia: 2,
-                                idTipoArchivo: idTipoArchivo,
-                                nombreArchivo: documento,
-                                fecha: fecha,
-                                idTrabajo: parseInt(trabajo),
-                                idCotizacion: parseInt(carpeta)
-                            });
-                        });
+                        var isSubCarpeta = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta).isDirectory();
+                        if (isSubCarpeta) {
+                            if (subCarpeta == 'documentos' || subCarpeta == 'multimedia') {
+                                var documentos = fs.readdirSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta);
+                                documentos.forEach(function (documento) {
+                                    var ext = obtenerExtArchivo(documento);
+                                    var idTipoArchivo = obtenerTipoArchivo(ext);
+                                    var fecha = fs.statSync(rutaPrincipal + '/' + carpeta + '/' + subCarpeta + '/' + documento).mtime.getTime();
+                                    evidenciasByOrden.push({
+                                        idTipoEvidencia: 2,
+                                        idTipoArchivo: idTipoArchivo,
+                                        nombreArchivo: documento,
+                                        fecha: fecha,
+                                        idTrabajo: parseInt(trabajo),
+                                        idCotizacion: parseInt(carpeta)
+                                    });
+                                });
+                            }
+                        }
                     });
                 }
             }
         });
     }
-
-    function cargaDocumentos(ruta, carpeta) {
-
-        if (fs.existsSync(ruta)) {
-            var documentos = fs.readdirSync(ruta);
-            documentos.forEach(function (documento) {
-                var ext = obtenerExtArchivo(documento);
-                var idTipoArchivo = obtenerTipoArchivo(ext);
-                var fecha = fs.statSync(ruta + '/' + documento).mtime.getTime();
-                evidenciasByOrden.push({
-                    idTipoEvidencia: 1,
-                    idTipoArchivo: idTipoArchivo,
-                    nombreArchivo: documento,
-                    fecha: fecha,
-                    carpeta: carpeta
-                });
-            });
-        }
-
-    }
-
-    /*this.model.query('SEL_EVIDENCIAS_BY_TRABAJO_SP', params, function (error, result) {
-        //Callback
-        object.error = error;
-        object.result = result;
-
-        self.view.expositor(res, object);
-    });*/
 }
 
-
-
+//obtine datos de la unidad
 Cotizacion.prototype.get_datosUnidad = function (req, res, next) {
     //Objeto que almacena la respuesta
     var object = {};
