@@ -174,9 +174,11 @@
   box-sizing: border-box; }
 
 .dropzone {
-  min-height: 150px;
+  min-height: 200px;
   border: 2px solid rgba(0, 0, 0, 0.3);
-  background: white;
+  background-image: url("../inspinia/images/backgroundDropzone.png");
+  background-repeat: no-repeat;
+  background-position: center;
   padding: 20px 20px; }
   .dropzone.dz-clickable {
     cursor: pointer; }

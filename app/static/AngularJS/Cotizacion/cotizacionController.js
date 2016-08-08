@@ -5,7 +5,7 @@
 // -- Modificó: Mario Mejía
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo) {
+registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo,uploadRepository) {
     $scope.arrayItem = [];
     $scope.arrayCambios = [];
     var valor = '';
@@ -53,6 +53,9 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         });
     }
     $scope.init = function () {
+        //configuraciones de dropzone
+        Dropzone.autoDiscover = false;
+        $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT",20);
         // Collapse ibox function
         $('.collapse-link').click(function () {
             var ibox = $(this).closest('div.ibox');
@@ -85,7 +88,9 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.estado = 2;
             $scope.idTaller = $scope.editCotizacion.idTaller;
             $scope.editarCotizacion($scope.editCotizacion.idCotizacion,
-                $scope.editCotizacion.idTaller, $scope.userData.idUsuario);
+            $scope.editCotizacion.idTaller, $scope.userData.idUsuario);
+            $scope.idCotizacion = $scope.editCotizacion.idCotizacion;
+            $scope.idTrabajo = $scope.editCotizacion.idTrabajo;
         }
         //Objeto de la pagina de orden servicio
         if (localStorageService.get('orden') != null) {
@@ -242,7 +247,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
 
     };
 
-    //Envia la cotización para autorización
+    //Envia la cotización para autorización Cotización Nueva
     var btnEnviaCotizacionLoading = $('#btnEnviaCotizacion').ladda();
     btnEnviaCotizacionLoading.click(function () {
         btnEnviaCotizacionLoading.ladda('start');
@@ -273,15 +278,16 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             item.idNivelAutorizacion)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
+                            if(($scope.arrayItem.length - i) === 1){
+                                $scope.dzMethods.processQueue();
+                                cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
+                                btnEnviaCotizacionLoading.ladda('stop');
+                            }
                         }, function (error) {
                             alertFactory.error('Error');
                             btnEnviaCotizacionLoading.ladda('stop');
                         });
                 });
-                cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
-                cargarArchivos($scope.idCotizacion, $scope.idTrabajo);
-                btnEnviaCotizacionLoading.ladda('stop');
-                //location.href = '/cotizacionconsulta';
             }, function (error) {
                 alertFactory.error('Error');
                 btnEnviaCotizacionLoading.ladda('stop');
@@ -311,7 +317,6 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     $scope.arrayCambios = $scope.arrayItem.slice();
                     $scope.observaciones = result.data[0].observaciones;
                     $scope.total = calculaTotalEditar();
-                    //$scope.importe = calcularImporte();
                     $scope.sub = calcularSubtotal();
                     $scope.iva = calcularIva();
                     alertFactory.success('Datos Cargados');
@@ -349,26 +354,6 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         btnCotizacionUpdLoading.ladda('start');
         console.log("clickhere");
         eliminarElementos();
-        $scope.arrayCambios.forEach(function (item, i) {
-            cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
-                    item.idTipoElemento,
-                    item.idItem,
-                    item.precio,
-                    item.cantidad,
-                    $scope.observaciones,
-                    item.idEstatus,
-                    0)
-                .then(function (result) {
-                    if (result.data[0].idCotizacion > 0)
-                        alertFactory.success('Cotización Actualizada ');
-                }, function (error) {
-                    alertFactory.error('Error');
-
-                });
-        }, function (error) {
-            alertFactory.error('Error');
-            btnCotizacionUpdLoading.ladda('stop');
-        });
         $scope.arrayItem.forEach(function (item, i) {
             cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
                     item.idTipoElemento,
@@ -379,7 +364,18 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     item.idEstatus,
                     1)
                 .then(function (result) {
-                    alertFactory.success('Cotización Actualizada ');
+                    if(($scope.arrayItem.length - i) === 1){
+                        alertFactory.success('Cotización Actualizada');
+                        cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
+                        if($scope.dzMethods.getAllFiles().length == 0){
+                            setTimeout(function(){
+                                location.href = "/cotizacionconsulta";  
+                            },1000);
+                        }else{
+                            $scope.dzMethods.processQueue();   
+                        }
+                        btnCotizacionUpdLoading.ladda('stop');
+                    }
                 }, function (error) {
                     alertFactory.error('Error');
                     btnCotizacionUpdLoading.ladda('stop');
@@ -388,43 +384,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             alertFactory.error('Error');
             btnCotizacionUpdLoading.ladda('stop');
         });
-        cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
-        cargarArchivos($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTrabajo);
-        btnCotizacionUpdLoading.ladda('stop');
-        //location.href = "/cotizacionconsulta";
     });
-
-    //Se realiza la carga de archivos
-    var cargarArchivos = function (idCotizacion, idTrabajo) {
-        //Se obtienen los datos de los archivos a subir
-        formArchivos = document.getElementById("uploader");
-        contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
-        if (contentForm.document)
-            btnSubmit = contentForm.document.getElementById("submit2");
-        elements = contentForm.document.getElementById("uploadForm").elements;
-        idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
-        idCotizacionEdit = contentForm.document.getElementById("idCotizacion");
-        idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
-        idUsuario = contentForm.document.getElementById("idUsuario");
-        idCategoria = contentForm.document.getElementById("idCategoria");
-        idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-        filesName = contentForm.document.getElementById("filesName");
-        idTrabajoEdit.value = idTrabajo;
-        idCotizacionEdit.value = idCotizacion;
-        idCategoria.value = 1;
-        //idNombreEspecial.value = 0;//sin nombre especial
-        idNombreEspecial.value = 0;
-        //tipo de evidencia 1 = trabajo,  2 = cotización
-        idTipoEvidencia.value = 2;
-        idUsuario.value = $scope.userData.idUsuario;
-        var nombreArchivos = filesName;
-        obtenerFiles(nombreArchivos);
-        //Submit del botón del Form para subir los archivos        
-        btnSubmit.click();
-        setTimeout(function () {
-            location.href = "/cotizacionconsulta";
-        }, 4000);
-    }
 
     //Se obtienen datos de la unidad a editar
     var datosFicha = function () {
@@ -485,17 +445,19 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             item.idNivelAutorizacion)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
+                            if(($scope.arrayItem.length - i) === 1){
+                                $scope.dzMethods.processQueue();
+                                cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
+                                btnNuevaCotizacionLoading.ladda('stop');
+                            }
                         }, function (error) {
                             alertFactory.error('Error');
                             btnNuevaCotizacionLoading.ladda('stop');
                         });
                 });
-                cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
-                cargarArchivos($scope.idCotizacion, $scope.idTrabajo);
-                btnNuevaCotizacionLoading.ladda('stop');
             }, function (error) {
                 alertFactory.error('Error');
-                btnNuevaCotizacionLoading.ladda('stop');
+                
             });
     });
 
@@ -622,8 +584,6 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                         } else {
                             $scope.arrayItem[i].importe = ($scope.arrayItem[i].cantidad) * ($scope.arrayItem[i].precio)
                         }
-
-                        //$scope.importe = $scope.arrayItem[i].importe;
                         $scope.sub = calcularSubtotal();
                         $scope.iva = calcularIva();
                         $scope.total = calculaTotal();
@@ -703,6 +663,51 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             exist = false;
         }
     };
-
+    
+     //call backs of drop zone
+    $scope.dzCallbacks = {
+        'addedfile': function (file) {
+            $scope.newFile = file;
+        },
+        'sending': function(file, xhr, formData){
+            formData.append('idTrabajo', $scope.idTrabajo);
+            formData.append('idCotizacion', $scope.idCotizacion);
+            formData.append('idCategoria', 1);
+            formData.append('idNombreEspecial', 0);
+        }
+        ,
+        'completemultiple': function (file, xhr) {
+            var checkErrorFile = file.some(checkExistsError);
+            if(!checkErrorFile){
+                var allSuccess = file.every(checkAllSuccess);
+                if(allSuccess){
+                    setTimeout(function(){
+                        location.href = '/cotizacionconsulta';
+                    }, 1000);
+                }
+            }
+        },
+        'error': function (file, xhr) {
+            if(!file.accepted){
+                $scope.dzMethods.removeFile(file);
+            }
+            else{
+                $scope.dzMethods.removeAllFiles(true);
+                alertFactory.info("No se pudieron subir los archivos");   
+            }
+        },
+    };
+    
+    $scope.dzMethods = {};
+    
+    //valida si todos son success
+    function checkAllSuccess(file, index, array) {
+        return file.status === 'success';
+    }
+    
+    //valida si existe algún error
+    function checkExistsError(file) {
+        return file.status === 'error';
+    }
 
 });
