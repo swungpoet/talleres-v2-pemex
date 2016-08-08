@@ -9,6 +9,7 @@ var totalFiles = 0;
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 var nameFile = '';
 var idTrabajo = 0;
+var idNombreEspecial = 0;
 
 var Cotizacion = function (conf) {
     this.conf = conf || {};
@@ -469,7 +470,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             idTrabajo = (req.body.idTrabajo).constructor !== Array ? req.body.idTrabajo : req.body.idTrabajo[0];
             var idCotizacion = req.body.idCotizacion.constructor !== Array ? req.body.idCotizacion : req.body.idCotizacion[0];
             var idCategoria = (req.body.idCategoria).constructor != Array ? req.body.idCategoria : req.body.idCategoria[0];
-            var idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
+            idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
             if (idCotizacion == 0) {
                 if (!fs.existsSync(dirname + idTrabajo)) {
                     fs.mkdirSync(dirname + idTrabajo);
@@ -531,10 +532,16 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             }
         },
         filename: function (req, file, cb) {
-            if(nameFile === 'Evidencia'){
-                nameFile = nameFile+obtieneConsecutivo(dirname+idTrabajo+'/evidenciaTrabajo');
+            if(nameFile !== ''){
+                if(nameFile === 'Evidencia'){
+                    nameFile = nameFile+obtieneConsecutivo(dirname+idTrabajo+'/evidenciaTrabajo');
+                }
+                cb(null, nameFile + obtenerExtArchivo(file.originalname));
             }
-            cb(null, nameFile + obtenerExtArchivo(file.originalname));
+            else{
+                cb(null, file.originalname);
+            }
+            nameFile = '';
         }
     });
     var upload = multer({
