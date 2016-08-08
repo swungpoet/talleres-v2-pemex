@@ -379,13 +379,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             $scope.newFile = file;
         },
         'sending': function(file, xhr, formData){
-            var objParams = {
-                idTrabajo : $scope.idTrabajo,
-                idCotizacion : $scope.idCotizacion,
-                idCategoria : $scope.idCategoria,
-                idNombreEspecial : $scope.idNombreEspecial
-            }
-            formData.append('objParams', objParams);
             formData.append('idTrabajo', $scope.idTrabajo);
             formData.append('idCotizacion', $scope.idCotizacion);
             formData.append('idCategoria', $scope.idCategoria);
@@ -421,5 +414,4 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     function checkExistsError(file) {
         return file.status === 'error';
     }
-
 });

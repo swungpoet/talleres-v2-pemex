@@ -11,7 +11,7 @@ registrationModule.factory('uploadRepository', function () {
                 acceptedFiles: acceptedFiles,/*"image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT",*/
                 createImageThumbnails: true,
                 maxFiles: maxFiles,
-                dictDefaultMessage : 'Clic o arrastrar archivos'
+                dictDefaultMessage : ''
             };
 
             return dzOptions;
