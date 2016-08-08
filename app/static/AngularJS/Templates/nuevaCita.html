@@ -50,16 +50,18 @@
                                         <!--default option -->
                                     </select>
                                 </form>
-<!--                                  <form role="form">
-                                    <select class="form-control m-b" name="trasladoUnidad" ng-model="datosCita.idTrasladoUnidad" ng-options="autotanque.idTrasladoUnidad as autotanque.descripcionTrasladoAutotanque for autotanque in TrasladosUnidad">
+                                <form role="form">
+                                    <select class="form-control m-b" name="trasladoUnidad" ng-model="datosCita.idTrasladoUnidad" ng-options="traslado.idTrasladoUnidad as traslado.descripcionTrasladoAutotanque for traslado in TrasladosUnidad" ng-show="datosCita.idEstadoAutotanque == 1">
                                         <option value="">Seleccione el traslado de la unidad</option>
                                     </select>
-                                </form> -->
+                                </form> 
+
                                 <form role="form">
                                      <select class="form-control" name="tipocita" ng-model="datosCita.tipoCita" ng-options="tipoCita.idTipoCita as tipoCita.tipoCita for tipoCita in tiposCita">
                                             <option value="">Seleccionar tipo de cita</option><!--default option -->
                                         </select> <!-- {{datosCita.tipoCita}}  -->
                                 </form>
+
                                 <br>
                                 <form role="form">
                                     <div class="form-group" id="fechaTrabajo">

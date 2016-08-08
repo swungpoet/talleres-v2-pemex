@@ -249,6 +249,11 @@ Cita.prototype.post_addcita = function (req, res, next) {
             name: 'idEstadoAutotanque',
             value: req.body.idEstadoAutotanque,
             type: self.model.types.INT
+        },
+        {
+            name: 'idTrasladoUnidad',
+            value: req.body.idTrasladoUnidad,
+            type: self.model.types.INT
         }];
 
     this.model.post('INS_CITA_SP', params, function (error, result) {
@@ -413,10 +418,15 @@ Cita.prototype.post_updateCita = function (req, res, next) {
             name: 'idTipoCita',
             value: req.body.idTipoCita,
             type: self.model.types.DECIMAL
-                        },
+        },
         {
             name: 'idEstadoAutotanque',
             value: req.body.idEstadoAutotanque,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTrasladoUnidad',
+            value: req.body.idTrasladoUnidad,
             type: self.model.types.INT
         }];
 
