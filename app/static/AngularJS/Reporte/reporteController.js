@@ -3,6 +3,7 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     
     $scope.init = function () {
         $scope.getReporte();
+        $rootScope.userData = localStorageService.get('userData');
     }
 
     $scope.getReporte = function () {

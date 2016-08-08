@@ -56,5 +56,6 @@ $scope.cargaChatCliente = function () {
     $scope.BorraComentario = function () {
         $scope.comentario = '';
     }
+    
 
 });

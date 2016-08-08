@@ -212,6 +212,15 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getTrasladoUnidad: function () {
+            return $http({
+                url: citaUrl + 'trasladoUnidad',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

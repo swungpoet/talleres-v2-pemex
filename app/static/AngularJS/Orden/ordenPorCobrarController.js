@@ -182,7 +182,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         autoclose: true,
         todayHighlight: true
     });
-
+    //Devuelve la fecha de la copade para su edicion
      $scope.openFinishingTrabajoModal = function (idTrabajo) {
         $('#finalizarTrabajoModal').appendTo("body").modal('show');
          $scope.idTrabajo=idTrabajo;
@@ -193,6 +193,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     alertFactory.error("Error al buscar la fecha");
                 });
     }    
+    //Guardamos la fecha capturable de la copade
     $scope.saveFecha = function () {
       $scope.idTrabajo;
       $scope.fecha;
@@ -209,6 +210,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
       }
 
     } 
+    //Limpia en campo de la fecha para su edicion
     $scope.cleanfecha = function () {
     $scope.fecha=''; 
 }

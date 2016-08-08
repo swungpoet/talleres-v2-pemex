@@ -42,7 +42,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             horaCita: "",
             trabajoCita: "",
             observacionCita: "",
-            idEstadoAutotanque: ""
+            idEstadoAutotanque: "",
+            idTrasladoUnidad:""
         }
         if (localStorageService.get('citaEdicion') != undefined) {
             var idCita = localStorageService.get('citaEdicion')
@@ -52,6 +53,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         }
         getTipoCita();
         getEstadoAutotanque();
+        getTrasladoUnidad();
         $scope.idTipoCita = 1;
         $scope.userData = localStorageService.get('userData');
 
@@ -936,6 +938,18 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             }
         }, function (error) {
             alertFactory.error('No se pudieron obtener los estados de un autotanque.');
+        });
+    };
+    //Devuelve los traslados de un autotanque
+    var getTrasladoUnidad = function () {
+        citaRepository.getTrasladoUnidad().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.TrasladosUnidad = result.data;
+            } else {
+                alertFactory.info('No se pudieron obtener los traslados de la unidad');
+            }
+        }, function (error) {
+            alertFactory.error('No se pudieron obtener los traslados.');
         });
     };
 
