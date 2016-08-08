@@ -279,8 +279,15 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
                             if(($scope.arrayItem.length - i) === 1){
-                                $scope.dzMethods.processQueue();
+                                alertFactory.success('Cotización creada');
                                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
+                                if($scope.dzMethods.getAllFiles().length == 0){
+                                    setTimeout(function(){
+                                        location.href = "/cotizacionconsulta";  
+                                    },1000);
+                                }else{
+                                    $scope.dzMethods.processQueue();   
+                                }
                                 btnEnviaCotizacionLoading.ladda('stop');
                             }
                         }, function (error) {
@@ -446,8 +453,15 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
                             if(($scope.arrayItem.length - i) === 1){
-                                $scope.dzMethods.processQueue();
+                                alertFactory.success('Cotización creada');
                                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
+                                if($scope.dzMethods.getAllFiles().length == 0){
+                                    setTimeout(function(){
+                                        location.href = "/cotizacionconsulta";  
+                                    },1000);
+                                }else{
+                                    $scope.dzMethods.processQueue();   
+                                }
                                 btnNuevaCotizacionLoading.ladda('stop');
                             }
                         }, function (error) {
