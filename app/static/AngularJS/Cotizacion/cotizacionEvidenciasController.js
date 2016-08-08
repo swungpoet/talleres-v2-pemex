@@ -1,9 +1,12 @@
-registrationModule.controller('cotizacionEvidenciasController', function ($scope, localStorageService, alertFactory, cotizacionEvidenciasRepository, $rootScope) {
+registrationModule.controller('cotizacionEvidenciasController', function ($scope, localStorageService, alertFactory, cotizacionEvidenciasRepository, $rootScope, uploadRepository) {
     var idCotizacion = localStorageService.get('cotizacion');
     $scope.idTrabajo = localStorageService.get('work');
     $scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
+        //configuraciones de dropzone
+        Dropzone.autoDiscover = false;
+        $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT",20);
         $scope.cargaEvidencias();
     }
 
@@ -41,31 +44,49 @@ registrationModule.controller('cotizacionEvidenciasController', function ($scope
     }
 
     //Se realiza la carga de archivos
-    $scope.cargarArchivos = function () {
-        //Se obtienen los datos de los archivos a subir
-        $scope.userData = localStorageService.get('userData');
-        formArchivos = document.getElementById("uploader");
-        contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
-        if (contentForm.document)
-            btnSubmit = contentForm.document.getElementById("submit2");
-        elements = contentForm.document.getElementById("uploadForm").elements;
-        idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
-        idCotizacionEdit = contentForm.document.getElementById("idCotizacion");
-        idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
-        idUsuario = contentForm.document.getElementById("idUsuario");
-        idCategoria = contentForm.document.getElementById("idCategoria");
-        idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-        idTrabajoEdit.value = $scope.idTrabajo;
-        idCotizacionEdit.value = idCotizacion;
-        idTipoEvidencia.value = 2;
-        idCategoria.value = 1;
-        idNombreEspecial.value = 0;
-        idUsuario.value = $scope.userData.idUsuario;
-        //Submit del botón del Form para subir los archivos        
-        btnSubmit.click();
+    //call backs of drop zone
+    $scope.dzCallbacks = {
+        'addedfile': function (file) {
+            $scope.newFile = file;
+        },
+        'sending': function(file, xhr, formData){
+            formData.append('idTrabajo', $scope.idTrabajo);
+            formData.append('idCotizacion', idCotizacion);
+            formData.append('idCategoria', 1);
+            formData.append('idNombreEspecial', 0);//evidenciaTrabajo
+        }
+        ,
+        'completemultiple': function (file, xhr) {
+            var checkErrorFile = file.some(checkExistsError);
+            if(!checkErrorFile){
+                var allSuccess = file.every(checkAllSuccess);
+                if(allSuccess){
+                    $scope.cargaEvidencias();
+                    setTimeout(function(){
+                        $scope.dzMethods.removeAllFiles(true);
+                        $('#cotizacionDetalle').appendTo('body').modal('hide');
+                    },1000);
+                }
+            }
+        },
+        'error': function (file, xhr) {
+            if(!file.accepted){
+                $scope.dzMethods.removeFile(file);
+            }
+            else{
+                $scope.dzMethods.removeAllFiles(true);
+                alertFactory.info("No se pudieron subir los archivos");   
+            }
+        },
+    };
 
-        setTimeout(function () {
-            $scope.cargaEvidencias();
-        }, 2000);
+    //valida si todos son success
+    function checkAllSuccess(file, index, array) {
+        return file.status === 'success';
+    }
+    
+    //valida si existe algún error
+    function checkExistsError(file) {
+        return file.status === 'error';
     }
 });

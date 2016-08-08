@@ -512,7 +512,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
                 else{
                     nameFile = 'Evidencia';
-                    cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
+                    cb(null, dirname + idTrabajo + '/evidenciaTrabajo');
                 }
             } else {
                 if (!fs.existsSync(dirname + idTrabajo)) {

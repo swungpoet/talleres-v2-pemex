@@ -696,6 +696,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 var allSuccess = file.every(checkAllSuccess);
                 if(allSuccess){
                     setTimeout(function(){
+                        $scope.dzMethods.removeAllFiles(true);
                         location.href = '/cotizacionconsulta';
                     }, 1000);
                 }

@@ -977,6 +977,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 if(allSuccess){
                     $scope.updateEstatusTrabajo();
                     setTimeout(function(){
+                        $scope.dzMethods.removeAllFiles(true);
                         $('#evidencia').appendTo('body').modal('hide');
                     },1000)
                 }
@@ -998,7 +999,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         trabajoRepository.insertTrabajo($scope.idCitaUpld, $scope.userData.idUsuario, $scope.idUnidadUpl)
          .then(function (trabajo) {
              $scope.idTrabajoNew = trabajo.data[0].idTrabajo;
-             $scope.dzMethods.processQueue()
+             if($scope.idTrabajoNew != null){
+                $scope.dzMethods.processQueue();   
+             }
              $scope.busquedaCita($scope.fecha);
          }, function (error) {
              alertFactory.error("Error al insertar el trabajo");
