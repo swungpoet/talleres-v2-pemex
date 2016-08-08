@@ -44,6 +44,7 @@
                                         <th ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">Costo Reparación</th>
                                         <th ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">Venta Reparación</th>
                                         <th ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">Porcentaje Utilidad</th>
+                                        <th>Numero de las partidas solicitadas por cada unidad</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,7 +75,7 @@
                                         <td>{{dato.fechaAceptacionTrabajo}}</td>
                                         <td>{{dato.fechaTrabajoGarantia}}</td>
                                         <td>{{dato.fechaFacturaTaller}}</td>
-                                        <th>{{dato.nuevafechaCOPADE}}</th>
+                                        <td>{{dato.nuevafechaCOPADE}}</td>
                                         <td>{{dato.fechaCOPADE}}</td>
                                         <td>{{dato.ordenSurtimiento}}</td>
                                         <td ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">{{dato.facturacionRefaccion}}</td>                                  
@@ -82,6 +83,7 @@
                                         <td ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">{{dato.ventaReparacion}}</td>
                                         <td ng-if="dato.ventaReparacion == 0" ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">{{0}}</td>
                                         <td ng-if="dato.ventaReparacion > 0" ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">{{((dato.ventaReparacion - dato.costoReparacion)*100)/dato.ventaReparacion}}</td>
+                                        <td>{{dato.partidasSolicitadas}}</td>
                                     </tr>
                                 </tbody>
                             </table>

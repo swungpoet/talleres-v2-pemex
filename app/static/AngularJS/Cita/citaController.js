@@ -334,6 +334,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idUsuario = $scope.userData.idUsuario;
                 citaTaller.idTipoCita = $scope.datosCita.tipoCita;
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
+                citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
 
                 citaRepository.addCita(citaTaller).then(function (cita) {
                     citaTaller.idCita = cita.data[0].idCita;
@@ -749,6 +750,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idUsuario = $scope.userData.idUsuario;
                 citaTaller.idTipoCita = $scope.datosCita.tipoCita;
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
+                citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
 
                     citaRepository.updateCita(citaTaller).then(function (cita) {
                         citaTaller.idCita = $scope.idCitaToUpdate;
@@ -811,6 +813,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 $scope.datosCita.direccion = citaDato[0].direccion;
                 $scope.datosCita.idTaller = citaDato[0].tallerid;
                 $scope.datosCita.idEstadoAutotanque = citaDato[0].idEstadoAutotanque;
+                $scope.datosCita.idTrasladoUnidad = citaDato[0].idTrasladoUnidad;
                 $scope.datosCita.tipoCita = citaDato[0].NumCita;
                 $scope.datosCita.fechaCita = citaDato[0].fechaCita;
                 $scope.datosCita.horaCita = citaDato[0].horaCita;
