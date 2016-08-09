@@ -531,8 +531,8 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
                 }
             }else{
-                var idDatosCopade = (req.body.idDatosCopade).constructor != Array ? req.body.idDatosCopade : req.body.idDatosCopade[0];
-                nameFile = 'COPADE_'+idDatosCopade;
+                //var idDatosCopade = (req.body.idDatosCopade).constructor != Array ? req.body.idDatosCopade : req.body.idDatosCopade[0];
+                nameFile = '';
                 cb(null, dirCopades);
             }
         },
