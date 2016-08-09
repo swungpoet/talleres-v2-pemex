@@ -42,13 +42,18 @@ Reporte.prototype.get_reportegral = function(req, res, next){
 
 Reporte.prototype.get_conformidadpdf = function(req, res, next) {
     var self = this;
-
+    var montoOS = parseFloat(req.query.montoOS.replace(/[^0-9| ./]/g, ''));
     var params = [
-        {
-            name: 'idTrabajo',
-            value: req.query.idTrabajo,
-            type: self.model.types.INT
-        }
+        {name: 'numeroReporte',value: req.query.noReporte,type: self.model.types.STRING},
+        {name: 'region',value: req.query.gerencia,type: self.model.types.STRING},
+        {name: 'tad',value: req.query.tad,type: self.model.types.STRING},
+        {name: 'solpe',value: req.query.solpe,type: self.model.types.STRING},
+        {name: 'ordenSurtimiento',value: req.query.ordenSurtimiento,type: self.model.types.STRING},
+        {name: 'montoOS',value: montoOS,type: self.model.types.DECIMAL},
+        {name: 'nombreEmisor',value: req.query.nombreEmisor,type: self.model.types.STRING},
+        {name: 'nombreProveedor',value: req.query.nombreProveedor,type: self.model.types.STRING},
+        {name: 'puestoProveedor',value: req.query.puestoProveedor,type: self.model.types.STRING},
+        {name: 'idTrabajo',value: req.query.idTrabajo,type: self.model.types.INT}
     ];
     var data = {};
 		    data = {
@@ -64,15 +69,25 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
 		        fecha: new Date()
 		    }
 
-        this.model.query('SEL_ORDEN_DETALLE_SP', params, function(error, result) {
-                data.data = result;
-                var total = 0;
-                for(var i in data.data){
-                    total = total +(data.data[i].cantidad * data.data[i].importe);
+        this.model.query('SEL_ORDEN_DETALLE_SP', [params[9]], function(error, result) {
+                if(result.length > 0){
+                    data.data = result;
+                    var total = 0;
+                    for(var i in data.data){
+                        total = total +(data.data[i].cantidad * data.data[i].importe);
+                    }
+                    data.total = "$ "+ parseFloat(total).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); +" M.N.";
+                    generateConfomidadReporte(data,res);
+                    self.model.query('SEL_EXISTE_CERTIFICADO_SP', params, function(error, result) {
+                            if(result[0].existeCertificado > 0){
+                                console.log("Certificado existente");
+                            }
+                            else{
+                                console.log("Certificado creado");
+                            }
+                    });
                 }
-                data.total = "$ "+ parseFloat(total).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); +" M.N.";
-                generateConfomidadReporte(data,res)
-            });
+        });
 }
 
 module.exports = Reporte;
