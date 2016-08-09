@@ -191,14 +191,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
               ordenPorCobrarRepository.putFechaCopade($scope.fecha,$scope.idTrabajo,5).then(function (result) {
                    $scope.resultado = result.data; 
                    $scope.fecha=''; 
-                    $('#finalizarTrabajoModal').modal('hide');  
+                    $('#finalizarTrabajoModal').modal('hide'); 
+                    location.href = '/ordenesporcobrar'; 
                 }, function (error) {
                     alertFactory.error("Error al insertar la fecha");
                 });
        }else{
            alertFactory.info('Debe ingresar una fecha');
       }
-      location.href = '/ordenesporcobrar';
+
     } 
     //Limpia en campo de la fecha para su edicion
     $scope.cleanfecha = function () {
