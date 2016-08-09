@@ -60,9 +60,28 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     //Carga Adenda y Copade
     $scope.subir = function (idTrabajo) {
         $scope.idTrabajo = idTrabajo;
+        $scope.ordenes.forEach(function (p, i) {
+           if(p.idTrabajo == idTrabajo){
+             if(p.fechaCopade != null){
         $('#subirAdenda').appendTo('body').modal('show');
+         }else{
+             alertFactory.info('Debe ingresar una fecha');
+         }
+       }
+     });
     }
-
+    $scope.removePieza = function(idItem){
+        $scope.listaPiezas.forEach(function(p, i){
+            if(p.idItem == idItem){
+                if(p.cantidad > 1){
+                    $scope.listaPiezas[i].cantidad =  p.cantidad - 1;
+                }
+                else{
+                    $scope.listaPiezas.splice(i,1); 
+                }
+            }   
+        })
+    }
     $scope.trabajoCobrado = function () {
         $('.dataTableOrdenesPorCobrar').DataTable().destroy();
         ordenPorCobrarRepository.putTrabajoCobrado($scope.idTrabajo).then(function (result) {
@@ -188,7 +207,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
          $scope.idTrabajo=idTrabajo;
           ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo,5).then(function (result) {
                    $scope.resultado = result.data[0];  
-                   $scope.fecha = $scope.resultado.fecha;
                 }, function (error) {
                     alertFactory.error("Error al buscar la fecha");
                 });
