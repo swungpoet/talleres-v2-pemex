@@ -335,6 +335,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idTipoCita = $scope.datosCita.tipoCita;
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
                 citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
+                citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
 
                 citaRepository.addCita(citaTaller).then(function (cita) {
                     citaTaller.idCita = cita.data[0].idCita;
@@ -751,7 +752,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idTipoCita = $scope.datosCita.tipoCita;
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
                 citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
-
+                citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
+                
                     citaRepository.updateCita(citaTaller).then(function (cita) {
                         citaTaller.idCita = $scope.idCitaToUpdate;
                         //citaTaller.idCita=localStorageService.get('idCitaActualizar');
