@@ -73,11 +73,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div id="tab-2" class="tab-pane">
-                        <div class="panel-body">
-                            Citas Rechazadas
-                        </div>
-                    </div> -->
                 </div>
             </div>
     </div>
@@ -92,11 +87,11 @@
                 <h4 class="modal-title">Cargar Comprobante de Recepción</h4>
             </div>
             <div class="modal-body">
-                <div class="table-responsive m-t" style="margin-left:10%">
-                    <iframe src="/AngularJS/Templates/uploader.html" width="680px" height="380px" frameborder="0" id="uploader" scrolling="no" ></iframe>
+                <div class="table-responsive m-t">
+                    <div class="dropzone" options="dzOptionsRecepcion" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="recepcion()">Guardar</button>
+                    <button type="button" class="btn btn-success" ng-click="updateEstatusTrabajo()">Guardar</button>
                 </div>
             </div>
         </div>

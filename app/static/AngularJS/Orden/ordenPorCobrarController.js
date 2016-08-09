@@ -1,9 +1,11 @@
-registrationModule.controller('ordenPorCobrarController', function ($scope, localStorageService, alertFactory, ordenPorCobrarRepository, $rootScope) {
+registrationModule.controller('ordenPorCobrarController', function ($scope, localStorageService, alertFactory, ordenPorCobrarRepository, $rootScope, uploadRepository) {
 
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
+        Dropzone.autoDiscover = false;
+        $scope.dzOptionsOrdenCobrar = uploadRepository.getDzOptions("application/pdf,text/xml",2);
         $scope.fecha='';
         $scope.getOrdenesPorCobrar();
         if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
@@ -93,37 +95,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }, function (error) {
             alertFactory.error("Error al actualizar el trabajo cobrado");
         });
-    }
-
-    //Se realiza la carga de archivos
-    $scope.cargarArchivos = function () {
-        //Se obtienen los datos de los archivos a subir
-        formArchivos = document.getElementById("uploader");
-        contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
-        if (contentForm.document)
-            btnSubmit = contentForm.document.getElementById("submit2");
-        elements = contentForm.document.getElementById("uploadForm").elements;
-        idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
-        idCotizacionEdit = contentForm.document.getElementById("idCotizacion");
-        idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
-        vTrabajo = contentForm.document.getElementById("vTrabajo");
-        idUsuario = contentForm.document.getElementById("idUsuario");
-        idCategoria = contentForm.document.getElementById("idCategoria");
-        idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-        idTrabajoEdit.value = $scope.idTrabajo;
-        vTrabajo.value = "1";
-        idTipoEvidencia.value = 1;
-        idCategoria.value = 2;
-        idNombreEspecial.value = 4; //Adenda
-        idUsuario.value = $scope.userData.idUsuario;
-        //Submit del botón del Form para subir los archivos        
-        btnSubmit.click();
-
-        setTimeout(function () {            
-            $scope.getOrdenesPorCobrar();
-            $scope.trabajoCobrado();
-            $scope.preFacturas();
-        }, 2000);
     }
 
     //Visualiza la órden de servicio
@@ -237,5 +208,53 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.downloadFile = function (downloadPath) {
         window.open(downloadPath, '_blank', 'Factura');  
     }
+    
+    //Se realiza la carga de archivos
+    //call backs of drop zone
+    $scope.dzCallbacks = {
+        'addedfile': function (file) {
+            $scope.newFile = file;
+        },
+        'sending': function(file, xhr, formData){
+            formData.append('idTrabajo', $scope.idTrabajo);
+            formData.append('idCotizacion', 0);
+            formData.append('idCategoria', 2);
+            formData.append('idNombreEspecial', 4);//adencaCopade
+        }
+        ,
+        'completemultiple': function (file, xhr) {
+            var checkErrorFile = file.some(checkExistsError);
+            if(!checkErrorFile){
+                var allSuccess = file.every(checkAllSuccess);
+                if(allSuccess){
+                    $scope.getOrdenesPorCobrar();
+                    $scope.trabajoCobrado();
+                    $scope.preFacturas();
+                    setTimeout(function(){
+                        $scope.dzMethods.removeAllFiles(true);
+                        $('#subirAdenda').appendTo('body').modal('hide');
+                    },1000);
+                }
+            }
+        },
+        'error': function (file, xhr) {
+            if(!file.accepted){
+                $scope.dzMethods.removeFile(file);
+            }
+            else{
+                $scope.dzMethods.removeAllFiles(true);
+                alertFactory.info("No se pudieron subir los archivos");   
+            }
+        },
+    };
 
+    //valida si todos son success
+    function checkAllSuccess(file, index, array) {
+        return file.status === 'success';
+    }
+    
+    //valida si existe algún error
+    function checkExistsError(file) {
+        return file.status === 'error';
+    }
 });

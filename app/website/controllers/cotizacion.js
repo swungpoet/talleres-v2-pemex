@@ -7,6 +7,7 @@ var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 var nameFile = '';
 var idTrabajo = 0;
 var idNombreEspecial = 0;
@@ -471,20 +472,20 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             var idCotizacion = req.body.idCotizacion.constructor !== Array ? req.body.idCotizacion : req.body.idCotizacion[0];
             var idCategoria = (req.body.idCategoria).constructor != Array ? req.body.idCategoria : req.body.idCategoria[0];
             idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
-            if (idCotizacion == 0) {
-                if (!fs.existsSync(dirname + idTrabajo)) {
-                    fs.mkdirSync(dirname + idTrabajo);
-                    fs.mkdirSync(dirname + idTrabajo + '/multimedia');
-                    fs.mkdirSync(dirname + idTrabajo + '/documentos');
-                    fs.mkdirSync(dirname + idTrabajo + '/evidenciaTrabajo');
-                    fs.mkdirSync(dirname + idTrabajo + '/documentos/comprobanteRecepcion');
-                    fs.mkdirSync(dirname + idTrabajo + '/documentos/transferenciaCustodia');
-                    fs.mkdirSync(dirname + idTrabajo + '/documentos/certificadoConformidad');
-                    fs.mkdirSync(dirname + idTrabajo + '/documentos/factura');
-                    fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
-                }
-            }
             if (idCategoria == 2) {
+                 if (idCotizacion == 0) {
+                    if (!fs.existsSync(dirname + idTrabajo)) {
+                        fs.mkdirSync(dirname + idTrabajo);
+                        fs.mkdirSync(dirname + idTrabajo + '/multimedia');
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos');
+                        fs.mkdirSync(dirname + idTrabajo + '/evidenciaTrabajo');
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos/comprobanteRecepcion');
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos/transferenciaCustodia');
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos/certificadoConformidad');
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos/factura');
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
+                    }
+                }
                 if (idNombreEspecial == 1) {
                     nameFile = 'ComprobanteRecepcion';
                     cb(null, dirname + idTrabajo + '/documentos/comprobanteRecepcion');
@@ -512,9 +513,9 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
                 else{
                     nameFile = 'Evidencia';
-                    cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
+                    cb(null, dirname + idTrabajo + '/evidenciaTrabajo');
                 }
-            } else {
+            } else if(idCategoria == 1){
                 if (!fs.existsSync(dirname + idTrabajo)) {
                     fs.mkdirSync(dirname + idTrabajo);
                 }
@@ -529,6 +530,10 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 } else {
                     cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
                 }
+            }else{
+                //var idDatosCopade = (req.body.idDatosCopade).constructor != Array ? req.body.idDatosCopade : req.body.idDatosCopade[0];
+                nameFile = '';
+                cb(null, dirCopades);
             }
         },
         filename: function (req, file, cb) {

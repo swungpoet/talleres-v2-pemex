@@ -8,7 +8,7 @@
 // -- Fecha: 08/07/2016
 // -- =============================================
 
-registrationModule.controller('citaController', function ($scope, $route, $rootScope, localStorageService, alertFactory, citaRepository, cotizacionRepository, trabajoRepository) {
+registrationModule.controller('citaController', function ($scope, $route, $rootScope, localStorageService, alertFactory, citaRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
     var idTrabajoNew = '';
     $scope.message = 'Buscando...';
     $scope.userData = localStorageService.get('userData');
@@ -168,6 +168,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //init de la pantalla tallerCita
     $scope.initTallerCita = function () {
+        Dropzone.autoDiscover = false;
+        $scope.dzOptionsRecepcion = uploadRepository.getDzOptions('image/*,application/pdf',1);
         $('#calendar .input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: true,
@@ -957,6 +959,67 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             alertFactory.error('No se pudieron obtener los traslados.');
         });
     };
+    
+    //call backs of drop zone
+    $scope.dzCallbacks = {
+        'addedfile': function (file) {
+            $scope.newFile = file;
+        },
+        'sending': function(file, xhr, formData){
+            formData.append('idTrabajo', $scope.idTrabajoNew);
+            formData.append('idCotizacion', 0);
+            formData.append('idCategoria', 2);
+            formData.append('idNombreEspecial', 1);
+        }
+        ,
+        'completemultiple': function (file, xhr) {
+            var checkErrorFile = file.some(checkExistsError);
+            if(!checkErrorFile){
+                var allSuccess = file.every(checkAllSuccess);
+                if(allSuccess){
+                    $scope.updateEstatusTrabajo();
+                    setTimeout(function(){
+                        $scope.dzMethods.removeAllFiles(true);
+                        $('#evidencia').appendTo('body').modal('hide');
+                    },1000)
+                }
+            }
+        },
+        'error': function (file, xhr) {
+            if(!file.accepted){
+                $scope.dzMethods.removeFile(file);
+            }
+            else{
+                $scope.dzMethods.removeAllFiles(true);
+                alertFactory.info("No se pudieron subir los archivos");   
+            }
+        },
+    };
+    
+    //comprobante recepción cargada
+    $scope.updateEstatusTrabajo = function () {
+        trabajoRepository.insertTrabajo($scope.idCitaUpld, $scope.userData.idUsuario, $scope.idUnidadUpl)
+         .then(function (trabajo) {
+             $scope.idTrabajoNew = trabajo.data[0].idTrabajo;
+             if($scope.idTrabajoNew != null){
+                $scope.dzMethods.processQueue();   
+             }
+             $scope.busquedaCita($scope.fecha);
+         }, function (error) {
+             alertFactory.error("Error al insertar el trabajo");
+         });
+    }
+    
+    $scope.dzMethods = {};
 
+    //valida si todos son success
+    function checkAllSuccess(file, index, array) {
+        return file.status === 'success';
+    }
+    
+    //valida si existe algún error
+    function checkExistsError(file) {
+        return file.status === 'error';
+    }
 
 });
