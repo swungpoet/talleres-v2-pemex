@@ -67,7 +67,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
              if(p.fechaCopade != null){
         $('#subirAdenda').appendTo('body').modal('show');
          }else{
-             alertFactory.info('Debe ingresar una fecha');
+             alertFactory.info('Debe ingresar la fecha Copade');
          }
        }
      });

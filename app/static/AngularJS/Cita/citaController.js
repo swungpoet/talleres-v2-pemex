@@ -338,7 +338,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
                 citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
                 citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
-
+                if(citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque==1 && citaTaller.idTrasladoUnidad != null){
                 citaRepository.addCita(citaTaller).then(function (cita) {
                     citaTaller.idCita = cita.data[0].idCita;
                     if (citaTaller.idCita > 0) {
@@ -380,6 +380,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 }, function (error) {
                     alertFactory.error("Error al insertar la cita");
                 });
+                }else{
+                 alertFactory.info("Debes de agregar una forma de traslado para la unidad");
+               }
             }
         } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             alertFactory.info("Llene la Pre-Orden");
@@ -755,7 +758,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
                 citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
                 citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
-                
+                 if(citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque==1 && citaTaller.idTrasladoUnidad != null){
                     citaRepository.updateCita(citaTaller).then(function (cita) {
                         citaTaller.idCita = $scope.idCitaToUpdate;
                         //citaTaller.idCita=localStorageService.get('idCitaActualizar');
@@ -797,9 +800,12 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                             });
                         }
                     }
-                }, function (error) {
-                    alertFactory.error("Error al insertar la cita");
-                });
+                    }, function (error) {
+                        alertFactory.error("Error al insertar la cita");
+                    });
+               }else{
+                alertFactory.info("Debes de agregar una forma de traslado para la unidad");
+               }
             }
         } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             alertFactory.info("Llene la Pre-Orden");
