@@ -177,7 +177,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $('#finalizarTrabajoModal').appendTo("body").modal('show');
          $scope.idTrabajo=idTrabajo;
           ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo,5).then(function (result) {
-                   $scope.resultado = result.data[0];  
+                   $scope.resultado = result.data[0]; 
+                   $scope.fecha = $scope.resultado.fecha; 
                 }, function (error) {
                     alertFactory.error("Error al buscar la fecha");
                 });
@@ -197,7 +198,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
        }else{
            alertFactory.info('Debe ingresar una fecha');
       }
-
+      location.href = '/ordenesporcobrar';
     } 
     //Limpia en campo de la fecha para su edicion
     $scope.cleanfecha = function () {
