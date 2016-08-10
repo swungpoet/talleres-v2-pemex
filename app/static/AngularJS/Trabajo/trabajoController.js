@@ -165,7 +165,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $('#finalizarTrabajoModal').appendTo("body").modal('show');
          $scope.idTrabajo = idTrabajo;
         }else{
-             alertFactory.info('Debe ingresar la fecha Copade');
+             alertFactory.info('Debe ingresar la fecha inicio del trabajo');
          }
        }
      });
