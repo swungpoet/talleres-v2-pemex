@@ -279,5 +279,47 @@ Trabajo.prototype.get_trabajorechazado = function(req, res, next){
         });
     });
 }
+Trabajo.prototype.post_putFechaServicioReal = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
 
+    var params = [
+            {
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+            },
+            {
+            name: 'fechaServicio',
+            value: req.body.fechaServicio,
+            type: self.model.types.STRING
+            }];
+
+    this.model.post('INS_FECHA_INICIO_REAL_TRABAJO_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+Trabajo.prototype.get_searchFechaTrabajoReal = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.INT
+        }];
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 module.exports = Trabajo;

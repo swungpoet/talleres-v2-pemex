@@ -142,6 +142,31 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 'Content-Type': 'application/json'
                 }
             });
+        },
+         putFechaRealTrabajo: function (idTrabajo,fechaServicio) {
+            var objTrabajo = {
+                idTrabajo: idTrabajo,
+                fechaServicio:fechaServicio  
+            };
+            return $http({
+                method: "POST",
+                data: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getFechaRealTrabajo: function (idTrabajo) {
+            return $http({
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
+
     };
 });

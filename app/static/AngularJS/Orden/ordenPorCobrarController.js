@@ -66,6 +66,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
            if(p.idTrabajo == idTrabajo){
              if(p.fechaServicio != null){
         $('#subirAdenda').appendTo('body').modal('show');
+        $scope.idTrabajo = idTrabajo;
          }else{
              alertFactory.info('Debe ingresar la fecha Copade');
          }

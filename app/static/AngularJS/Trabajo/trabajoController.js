@@ -159,8 +159,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //abre el modal para la finalización del trabajo
     $scope.openFinishingTrabajoModal = function (idTrabajo) {
+        $scope.trabajos.forEach(function (p, i) {
+           if(p.idTrabajo == idTrabajo){
+             if(p.fechaServicio != null){
         $('#finalizarTrabajoModal').appendTo("body").modal('show');
-        $scope.idTrabajo = idTrabajo;
+         $scope.idTrabajo = idTrabajo;
+        }else{
+             alertFactory.info('Debe ingresar la fecha Copade');
+         }
+       }
+     });
+       
     }
 
     //confirm del trabajo para su terminación
@@ -414,4 +423,53 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     function checkExistsError(file) {
         return file.status === 'error';
     }
+
+            $('#fechaTrabajo .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: true,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        todayHighlight: true
+    });
+
+      //Devuelve la fecha inicio real de trabajos para su edicion
+     $scope.cargaFecha = function (idTrabajo) {
+        $('#cargafechainIciorealTrabajo').appendTo("body").modal('show');
+         $scope.idTrabajo=idTrabajo;
+          trabajoRepository.getFechaRealTrabajo($scope.idTrabajo).then(function (result) {
+                   $scope.resultado = result.data[0]; 
+                   $scope.fecha = $scope.resultado.fecha; 
+                }, function (error) {
+                    alertFactory.error("Error al buscar la fecha");
+                });
+    }    
+    //Guardamos la fecha capturable de inicio real de trabajos
+    $scope.guardaFecha = function () {
+      $scope.idTrabajo;
+      $scope.fechaServicio=$scope.fecha;
+      if($scope.fecha!=''){
+              trabajoRepository.putFechaRealTrabajo($scope.idTrabajo,$scope.fechaServicio).then(function (result) {
+                   $scope.resultado = result.data[0]; 
+                   if($scope.resultado.fechaServicio == 1){
+                    alertFactory.success("Se actualizo correctamente la fecha");
+                   }else{
+                    alertFactory.success("Se inserto correctamente la fecha");
+                   }
+                   $scope.fecha=''; 
+                    $('#finalizarTrabajoModal').modal('hide'); 
+                    location.href = '/trabajo'; 
+                }, function (error) {
+                    alertFactory.error("Error al insertar la fecha");
+                });
+       }else{
+           alertFactory.info('Debe ingresar una fecha');
+      }
+
+    } 
+    //Limpia en campo de la fecha para su edicion
+    $scope.cleanfecha = function () {
+    $scope.fecha=''; 
+}
+
 });
