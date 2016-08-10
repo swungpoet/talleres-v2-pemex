@@ -41,11 +41,10 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-         putFechaCopade: function (fecha,idTrabajo,idTipoProceso) {
+         putFechaCopade: function (idTrabajo,fechaCopade) {
             var objTrabajo = {
-                fecha:fecha,
                 idTrabajo: idTrabajo,
-                idTipoProceso:idTipoProceso
+                fechaCopade:fechaCopade  
             };
 
             return $http({
@@ -57,13 +56,12 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getFechaCopade: function (idTrabajo, idTipoProceso) {
+        getFechaCopade: function (idTrabajo) {
             return $http({
                 url: ordenUrl + 'searchFechaCopade',
                 method: "GET",
                 params: {
-                    idTrabajo: idTrabajo,
-                    idTipoProceso: idTipoProceso
+                    idTrabajo: idTrabajo
                 },
                 headers: {
                     'Content-Type': 'application/json'

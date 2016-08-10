@@ -176,7 +176,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
      $scope.openFinishingTrabajoModal = function (idTrabajo) {
         $('#finalizarTrabajoModal').appendTo("body").modal('show');
          $scope.idTrabajo=idTrabajo;
-          ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo,5).then(function (result) {
+          ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo).then(function (result) {
                    $scope.resultado = result.data[0]; 
                    $scope.fecha = $scope.resultado.fecha; 
                 }, function (error) {
@@ -186,10 +186,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     //Guardamos la fecha capturable de la copade
     $scope.saveFecha = function () {
       $scope.idTrabajo;
-      $scope.fecha;
+      $scope.fechaCopade=$scope.fecha;
       if($scope.fecha!=''){
-              ordenPorCobrarRepository.putFechaCopade($scope.fecha,$scope.idTrabajo,5).then(function (result) {
-                   $scope.resultado = result.data; 
+              ordenPorCobrarRepository.putFechaCopade($scope.idTrabajo,$scope.fechaCopade).then(function (result) {
+                   $scope.resultado = result.data[0]; 
+                   if($scope.resultado.fechaCopade == 1){
+                    alertFactory.success("Se actualizo correctamente la fecha");
+                   }else{
+                    alertFactory.success("Se inserto correctamente la fecha");
+                   }
                    $scope.fecha=''; 
                     $('#finalizarTrabajoModal').modal('hide'); 
                     location.href = '/ordenesporcobrar'; 

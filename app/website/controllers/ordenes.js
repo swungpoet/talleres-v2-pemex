@@ -210,23 +210,19 @@ Orden.prototype.post_fechaCopade = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
 
-    var params = [{
-            name: 'fecha',
-            value: req.body.fecha,
-            type: self.model.types.STRING
-            },
+    var params = [
             {
             name: 'idTrabajo',
             value: req.body.idTrabajo,
             type: self.model.types.INT
             },
             {
-            name: 'idTipoProceso',
-            value: req.body.idTipoProceso,
-            type: self.model.types.INT
+            name: 'fechaCopade',
+            value: req.body.fechaCopade,
+            type: self.model.types.STRING
             }];
 
-    this.model.post('INS_FECHA_COPADE_SP', params, function (error, result) {
+    this.model.post('INS_FECHA_COPADE_TRABAJO_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;
@@ -240,11 +236,6 @@ Orden.prototype.get_searchFechaCopade = function (req, res, next) {
     var params = [{
         name: 'idTrabajo',
         value: req.query.idTrabajo,
-        type: self.model.types.INT
-        },
-        {
-        name: 'idTipoProceso',
-        value: req.query.idTipoProceso,
         type: self.model.types.INT
         }];
 
