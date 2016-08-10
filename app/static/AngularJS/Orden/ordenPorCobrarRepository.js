@@ -41,14 +41,13 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-         putFechaCopade: function (idTrabajo,fechaCopade) {
+         putFechaCopade: function (idTrabajo,fechaServicio) {
             var objTrabajo = {
                 idTrabajo: idTrabajo,
-                fechaCopade:fechaCopade  
+                fechaServicio:fechaServicio  
             };
-
             return $http({
-                url: ordenUrl + 'fechaCopade',
+                url: ordenUrl + 'putFechaServicio',
                 method: "POST",
                 data: objTrabajo,
                 headers: {

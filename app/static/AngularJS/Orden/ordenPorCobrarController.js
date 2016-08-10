@@ -64,7 +64,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $scope.idTrabajo = idTrabajo;
         $scope.ordenes.forEach(function (p, i) {
            if(p.idTrabajo == idTrabajo){
-             if(p.fechaCopade != null){
+             if(p.fechaServicio != null){
         $('#subirAdenda').appendTo('body').modal('show');
          }else{
              alertFactory.info('Debe ingresar la fecha Copade');
@@ -186,11 +186,11 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     //Guardamos la fecha capturable de la copade
     $scope.saveFecha = function () {
       $scope.idTrabajo;
-      $scope.fechaCopade=$scope.fecha;
+      $scope.fechaServicio=$scope.fecha;
       if($scope.fecha!=''){
-              ordenPorCobrarRepository.putFechaCopade($scope.idTrabajo,$scope.fechaCopade).then(function (result) {
+              ordenPorCobrarRepository.putFechaCopade($scope.idTrabajo,$scope.fechaServicio).then(function (result) {
                    $scope.resultado = result.data[0]; 
-                   if($scope.resultado.fechaCopade == 1){
+                   if($scope.resultado.fechaServicio == 1){
                     alertFactory.success("Se actualizo correctamente la fecha");
                    }else{
                     alertFactory.success("Se inserto correctamente la fecha");

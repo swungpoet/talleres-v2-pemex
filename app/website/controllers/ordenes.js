@@ -202,7 +202,7 @@ function checkExistsXML(file) {
     return file.split('.').pop() === 'xml';
 }
 
-Orden.prototype.post_fechaCopade = function (req, res, next) {
+Orden.prototype.post_putFechaServicio = function (req, res, next) {
     //Objeto que almacena la respuesta
     var object = {};
     //Objeto que envía los parámetros
@@ -217,8 +217,8 @@ Orden.prototype.post_fechaCopade = function (req, res, next) {
             type: self.model.types.INT
             },
             {
-            name: 'fechaCopade',
-            value: req.body.fechaCopade,
+            name: 'fechaServicio',
+            value: req.body.fechaServicio,
             type: self.model.types.STRING
             }];
 
