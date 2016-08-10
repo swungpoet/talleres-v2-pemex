@@ -149,6 +149,7 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 fechaServicio:fechaServicio  
             };
             return $http({
+                url: trabajoUrl + 'putFechaServicioReal',
                 method: "POST",
                 data: objTrabajo,
                 headers: {
@@ -158,6 +159,7 @@ registrationModule.factory('trabajoRepository', function ($http) {
         },
         getFechaRealTrabajo: function (idTrabajo) {
             return $http({
+                url: trabajoUrl + 'searchFechaTrabajoReal',
                 method: "GET",
                 params: {
                     idTrabajo: idTrabajo

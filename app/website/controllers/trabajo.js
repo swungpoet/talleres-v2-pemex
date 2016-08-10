@@ -316,6 +316,7 @@ Trabajo.prototype.get_searchFechaTrabajoReal = function (req, res, next) {
         type: self.model.types.INT
         }];
 
+    this.model.query('SEL_FECHA_INICIO_REAL_TRABAJO_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
