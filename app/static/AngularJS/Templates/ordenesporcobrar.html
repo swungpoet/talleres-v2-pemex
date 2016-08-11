@@ -1,3 +1,4 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title">Órdenes por cobrar<span class="subtitle">Call Center / Taller</span></span>
@@ -79,7 +80,7 @@ delay:delay}">
                                                <th>No. Estimación</th>
                                                <th>Subtotal</th>
                                                <th>Fecha de Carga</th>
-                                               <th></th>
+                                               <th>Acción</th>
                                            </tr>
                                        </thead>
                                        <tbody>
@@ -89,7 +90,7 @@ delay:delay}">
                                                <td>{{copade.subTotal | currency}}</td>
                                                <td>{{copade.fechaCarga}}</td>
                                                <td>
-                                                   <button class="btn btn-primary" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Buscar coincidencias" tooltip-placement="left"><span class="glyphicon glyphicon-search"></span></button>
+                                                   <button class="btn btn-primary" type="button" ng-click="buscaCoincidencia(copade.idDatosCopade)" data-toggle="tooltip" tooltip="Buscar coincidencias" tooltip-placement="left"><span class="glyphicon glyphicon-search"></span></button>
                                                </td>
                                            </tr>
                                        </tbody>
@@ -113,7 +114,7 @@ delay:delay}">
                                                 <th>Estatus</th>
                                                 <th>Dirección</th>
                                                 <th>Agendó</th>
-                                                <th></th>
+                                                <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -170,7 +171,6 @@ delay:delay}">
     <div class="modal-dialog">
         <div class="modal-content animated flipInY">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
                 <h4 class="modal-title">Capturar Fecha COPADE</h4>
             </div>
             <br>
@@ -191,3 +191,54 @@ delay:delay}">
     </div>
 </div>
 
+<div class="modal inmodal" id="mejorCoincidencia" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title">Mejor Coincidencia</h3>
+                        <h6 class="modal-title text-navy">
+                        <br>
+                            Número Económico: {{numeroEconomico}} &nbsp
+                            <br>
+                            Monto de la Orden: {{monto | currency}}
+                        </h6>
+                    </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" cg-busy="{promise:promise,message:message, minDuration: minDuration,delay:delay}">
+                                        <thead>
+                                            <tr>  
+                                                <th>Número de la Orden</th>
+                                                <th>Número Económico</th>
+                                                <th>TAR</th>
+                                                <th>Orden de Surtimiento</th>
+                                                <th>Monto de la Orden</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="coincidencias in coincidencia">
+                                                <td>{{coincidencias.numeroTrabajo}}</td>
+                                                <td>{{coincidencias.numEconomico}}</td>
+                                                <td>{{coincidencias.TAR}}</td>
+                                                <td>{{coincidencias.folio}}</td>
+                                                <td>{{coincidencias.montoOrden | currency}}</td>
+                                                <td>
+                                                 <div class="radio radio-inline">
+                                                <input type="radio" name="name" value="" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo,coincidencias.fechaServicio)" ng-hide="" data-toggle="tooltip" tooltip="" tooltip-placement="left" ng-disabled="">
+                                                <label for="inlineRadio"> Selecciona </label>
+                                                </td>
+                                            </div>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Salir</button>
+                        <button type="button" class="btn btn-primary" ng-click="asociarCopade()">Asignar</button>
+                </div>
+            </div>
+      </div>
+ </div>

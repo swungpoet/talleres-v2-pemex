@@ -285,8 +285,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
        $('.dataTablePreFacturas').DataTable().destroy();
        ordenPorCobrarRepository.getCopades().then(function (result) {
            if (result.data.length > 0) {
-               $scope.copades = result.data;
-               setTimeout(function () {
+               $scope.copades = result.data;  
+          setTimeout(function () {
                    $('.dataTableCopades').DataTable({
                        buttons: [
                            {
@@ -326,5 +326,61 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
        });
    }
 
+ $scope.buscaCoincidencia = function (idDatosCopade) {
+     $scope.copades.forEach(function (p, i) {
+         if (p.idDatosCopade == idDatosCopade) {
+             $scope.numeroEconomico = $scope.copades[i].numeroEconomico;
+             $scope.monto = $scope.copades[i].subTotal;
+             ordenPorCobrarRepository.getMejorCoincidencia($scope.numeroEconomico, $scope.monto).then(function (result) {
+                 if (result.data.length > 0) {
+                     $scope.coincidencia = result.data;
+                     $('#mejorCoincidencia').appendTo("body").modal('show');
+                 } else {
+                     alertFactory.info('No se encontró ninguna Coincidencia');
+                 }
+             }, function (error) {
+                 alertFactory.error("Error al obtener las COPADE");
+             });
+         }
+     });
+ }
 
-});
+ $scope.seleccionMejorCoincidencia = function (idTrabajo, fechaServicio) {
+     $scope.idTrabajo = idTrabajo;
+     $scope.fechaServicio = fechaServicio;
+ }
+
+ $scope.asociarCopade = function () {
+     $scope.seleccionMejorCoincidencia($scope.idTrabajo, $scope.fechaServicio);
+     if ($scope.idTrabajo != null) {
+         $('.btnTerminarTrabajo').ready(function () {
+             swal({
+                     title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
+                     text: "Se cambiará el estatus a 'Cobrado'",
+                     type: "warning",
+                     showCancelButton: true,
+                     confirmButtonColor: "#65BD10",
+                     confirmButtonText: "Si",
+                     cancelButtonText: "No",
+                     closeOnConfirm: false,
+                     closeOnCancel: false
+                 },
+                 function (isConfirm) {
+                     if (isConfirm) {
+                           //  $scope.trabajoCobrado($scope.idTrabajo);
+                             swal("Trabajo terminado!", "La copade se ha asociado", "success");
+                     } else {
+                         swal("Copade no asociada", "", "error");
+                         $('#finalizarTrabajoModal').modal('hide');
+                     }
+                 });
+         });
+     } else {
+         alertFactory.error("Debe seleccionar una orden de servicio");
+     }
+ }
+
+
+ });
+
+

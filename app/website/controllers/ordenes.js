@@ -315,4 +315,25 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
    });*/
 }
 
+Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'numeroEconomico',
+        value: req.query.numeroEconomico,
+        type: self.model.types.STRING
+        },
+        {
+        name: 'monto',
+        value: req.query.monto,
+        type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_MEJOR_COINCIDENCIA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Orden;

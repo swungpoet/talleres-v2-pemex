@@ -86,7 +86,20 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                    'Content-Type': 'application/json'
                }
            });
-       }
+       },
+       getMejorCoincidencia: function (numeroEconomico,monto) {
+            return $http({
+                url: ordenUrl + 'getCoincidenciaMejor',
+                method: "GET",
+                params: {
+                    numeroEconomico: numeroEconomico,
+                    monto:monto
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
        
     };
 });
