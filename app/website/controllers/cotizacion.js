@@ -11,6 +11,7 @@ var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/co
 var nameFile = '';
 var idTrabajo = 0;
 var idNombreEspecial = 0;
+var consecutivoArchivo = 0;
 
 var Cotizacion = function (conf) {
     this.conf = conf || {};
@@ -526,8 +527,10 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
 
                 if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' || file.mimetype == 'image/gif' || file.mimetype == 'image/jpg' || file.mimetype == 'image/bmp' || file.mimetype == 'video/mp4') {
+                    consecutivoArchivo = obtieneConsecutivo(dirname + idTrabajo + '/' + idCotizacion+'/multimedia');
                     cb(null, dirname + idTrabajo + '/' + idCotizacion + '/multimedia')
                 } else {
+                    consecutivoArchivo = obtieneConsecutivo(dirname + idTrabajo + '/' + idCotizacion+'/documentos');
                     cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
                 }
             }else{
@@ -543,10 +546,14 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
                 cb(null, nameFile + obtenerExtArchivo(file.originalname));
             }
+            else if(consecutivoArchivo > 0){
+                    cb(null, 'Evidencia'+consecutivoArchivo+obtenerExtArchivo(file.originalname));   
+            }
             else{
                 cb(null, file.originalname);
             }
             nameFile = '';
+            consecutivoArchivo = 0;
         }
     });
     var upload = multer({
