@@ -11,6 +11,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
             $scope.preFacturas();
         }
+        if ($scope.userData.idTipoUsuario == 1) {
+             $scope.getCopades();
+         }
     }
 
     //Devuelve las órdenes por cobrar
@@ -61,18 +64,18 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Carga Adenda y Copade
     $scope.subir = function (idTrabajo) {
-        $scope.idTrabajo = idTrabajo;
-        $scope.ordenes.forEach(function (p, i) {
-           if(p.idTrabajo == idTrabajo){
-             if(p.fechaServicio != null){
+     //   $scope.ordenes.forEach(function (p, i) {
+        //   if(p.idTrabajo == idTrabajo){
+           //  if(p.fechaServicio != null){
         $('#subirAdenda').appendTo('body').modal('show');
         $scope.idTrabajo = idTrabajo;
-         }else{
-             alertFactory.info('Debe ingresar la fecha Copade');
-         }
-       }
-     });
+    //     }else{
+       //      alertFactory.info('Debe ingresar la fecha Copade');
+      //   }
+     //  }
+   //  });
     }
+
     $scope.removePieza = function(idItem){
         $scope.listaPiezas.forEach(function(p, i){
             if(p.idItem == idItem){
@@ -216,45 +219,56 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.downloadFile = function (downloadPath) {
         window.open(downloadPath, '_blank', 'Factura');  
     }
-    
+
     //Se realiza la carga de archivos
-    //call backs of drop zone
-    $scope.dzCallbacks = {
-        'addedfile': function (file) {
-            $scope.newFile = file;
-        },
-        'sending': function(file, xhr, formData){
-            formData.append('idTrabajo', $scope.idTrabajo);
-            formData.append('idCotizacion', 0);
-            formData.append('idCategoria', 2);
-            formData.append('idNombreEspecial', 4);//adencaCopade
-        }
-        ,
-        'completemultiple': function (file, xhr) {
-            var checkErrorFile = file.some(checkExistsError);
-            if(!checkErrorFile){
-                var allSuccess = file.every(checkAllSuccess);
-                if(allSuccess){
-                    $scope.getOrdenesPorCobrar();
+   //call backs of drop zone
+   $scope.dzCallbacks = {
+       'addedfile': function (file) {
+           $scope.newFile = file;
+       },
+       'sending': function (file, xhr, formData) {
+           formData.append('idTrabajo', $scope.idTrabajo);
+           formData.append('idCotizacion', 0);
+           formData.append('idCategoria', 3);
+           formData.append('idNombreEspecial', 0); //adencaCopade
+           formData.append('idDatosCopade', 1);
+       },
+       'completemultiple': function (file, xhr) {
+           var checkErrorFile = file.some(checkExistsError);
+           if (!checkErrorFile) {
+               var allSuccess = file.every(checkAllSuccess);
+               if (allSuccess) {
+                   var nombreCopades = [];
+                   file.forEach(function(archivo){
+                       nombreCopades.push(archivo.name);
+                   });
+                   
+                   ordenPorCobrarRepository.putGeneraDatosCopade(nombreCopades).then(function (result) {
+                       var algo = result.data;
+                       var otro = 'stop';
+                   }, function (error) {
+
+                   });
+
+                   /* $scope.getOrdenesPorCobrar();
                     $scope.trabajoCobrado();
-                    $scope.preFacturas();
-                    setTimeout(function(){
-                        $scope.dzMethods.removeAllFiles(true);
-                        $('#subirAdenda').appendTo('body').modal('hide');
-                    },1000);
-                }
-            }
-        },
-        'error': function (file, xhr) {
-            if(!file.accepted){
-                $scope.dzMethods.removeFile(file);
-            }
-            else{
-                $scope.dzMethods.removeAllFiles(true);
-                alertFactory.info("No se pudieron subir los archivos");   
-            }
-        },
-    };
+                    $scope.preFacturas();*/
+                   setTimeout(function () {
+                       $scope.dzMethods.removeAllFiles(true);
+                       $('#subirAdenda').appendTo('body').modal('hide');
+                   }, 1000);
+               }
+           }
+       },
+       'error': function (file, xhr) {
+           if (!file.accepted) {
+               $scope.dzMethods.removeFile(file);
+           } else {
+               $scope.dzMethods.removeAllFiles(true);
+               alertFactory.info("No se pudieron subir los archivos");
+           }
+       },
+   };
 
     //valida si todos son success
     function checkAllSuccess(file, index, array) {
@@ -265,4 +279,52 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     function checkExistsError(file) {
         return file.status === 'error';
     }
+
+    //Devuelve las copades pendientes por asignar
+   $scope.getCopades = function () {
+       $('.dataTablePreFacturas').DataTable().destroy();
+       ordenPorCobrarRepository.getCopades().then(function (result) {
+           if (result.data.length > 0) {
+               $scope.copades = result.data;
+               setTimeout(function () {
+                   $('.dataTableCopades').DataTable({
+                       buttons: [
+                           {
+                               extend: 'copy'
+                                   },
+                           {
+                               extend: 'csv'
+                                   },
+                           {
+                               extend: 'excel',
+                               title: 'ExampleFile'
+                                   },
+                           {
+                               extend: 'pdf',
+                               title: 'ExampleFile'
+                                   },
+
+                           {
+                               extend: 'print',
+                               customize: function (win) {
+                                   $(win.document.body).addClass('white-bg');
+                                   $(win.document.body).css('font-size', '10px');
+
+                                   $(win.document.body).find('table')
+                                       .addClass('compact')
+                                       .css('font-size', 'inherit');
+                               }
+                           }
+                       ]
+                   });
+               }, 1000);
+           } else {
+               alertFactory.info('No se encontró ninguna COPADE');
+           }
+       }, function (error) {
+           alertFactory.error("Error al obtener las COPADES");
+       });
+   }
+
+
 });

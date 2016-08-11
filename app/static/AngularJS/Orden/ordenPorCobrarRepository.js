@@ -66,6 +66,27 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+       getCopades: function () {
+           return $http({
+               url: ordenUrl + 'copades',
+               method: "GET"
+           });
+       },
+        putGeneraDatosCopade: function (archivos) {
+           var objArchivos = {
+               archivos: archivos
+           };
+
+           return $http({
+               url: ordenUrl + 'generaDatosCopade',
+               method: "POST",
+               data: objArchivos,
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           });
+       }
+       
     };
 });

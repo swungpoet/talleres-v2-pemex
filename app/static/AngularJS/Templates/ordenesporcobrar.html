@@ -63,7 +63,40 @@ delay:delay}">
                                     </table>
                                 </div>
                             </tab>
-                            <tab heading="PreFactura Generada" index="1" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
+                            <tab heading="Cargar COPADES" index="1" ng-show="userData.idTipoUsuario == 1">
+                               <br>
+                               <button class="btn btn-success" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar COPADE" tooltip-placement="right" ng-click="subir(orden.idTrabajo)">
+                                   <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal">&nbsp;Cargar COPADE</span>
+                               </button>
+                               <br>
+                               <br>
+                               <div class="table-responsive">
+                                   <table class="table table-striped table-bordered table-hover dataTableCopades" cg-busy="{promise:promise,message:message, minDuration: minDuration,
+delay:delay}">
+                                       <thead>
+                                           <tr>
+                                               <th>Orden de Surtimiento</th>
+                                               <th>No. Estimación</th>
+                                               <th>Subtotal</th>
+                                               <th>Fecha de Carga</th>
+                                               <th></th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           <tr ng-repeat="copade in copades">
+                                               <td>{{copade.ordenSurtimiento}}</td>
+                                               <td>{{copade.numeroEstimacion}}</td>
+                                               <td>{{copade.subTotal | currency}}</td>
+                                               <td>{{copade.fechaCarga}}</td>
+                                               <td>
+                                                   <button class="btn btn-primary" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Buscar coincidencias" tooltip-placement="left"><span class="glyphicon glyphicon-search"></span></button>
+                                               </td>
+                                           </tr>
+                                       </tbody>
+                                   </table>
+                               </div>
+                           </tab>
+                            <tab heading="PreFactura Generada" index="2" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
                                 <br>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTablePreFacturas" cg-busy="{ promise:promise,message:message } ">

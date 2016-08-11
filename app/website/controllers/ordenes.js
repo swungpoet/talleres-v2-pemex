@@ -247,4 +247,72 @@ Orden.prototype.get_searchFechaCopade = function (req, res, next) {
     });
 }
 
+//URIEL
+//Obtiene las copades que aún no han sido asignadas
+Orden.prototype.get_copades = function (req, res, next) {
+   var self = this;
+   var params = [];
+
+   this.model.query('SEL_COPADES_SP', params, function (error, result) {
+       self.view.expositor(res, {
+           error: error,
+           result: result
+       });
+   });
+}
+
+//Lee la copade xml, guarda los datos en base de datos y cambia el nombre a las copades cargadas
+Orden.prototype.post_generaDatosCopade = function (req, res, next) {
+   //Objeto que almacena la respuesta
+   var object = {};
+   //Objeto que envía los parámetros
+   var params = {};
+   //Referencia a la clase para callback
+   var self = this;
+
+   var nombreArchivos = req.body.archivos;
+   var subTotal, numeroEconomico, ordenSurtimiento;
+
+   nombreArchivos.forEach(function (file) {
+       var extension = obtenerExtArchivo(file);
+       if (extension == '.xml' || extension == '.XML') {
+           var parser = new xml2js.Parser();
+           fs.readFile(dirCopades + file, function (err, data) {
+
+               parser.parseString(data, function (err, lector) {
+                   subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];
+                   numeroEconomico = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'];
+                   ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'];
+                   var algo;
+               });
+
+           });
+       }
+   });
+
+   /*var params = [{
+           name: 'fecha',
+           value: req.body.fecha,
+           type: self.model.types.STRING
+           },
+           {
+           name: 'idTrabajo',
+           value: req.body.idTrabajo,
+           type: self.model.types.INT
+           },
+           {
+           name: 'idTipoProceso',
+           value: req.body.idTipoProceso,
+           type: self.model.types.INT
+           }];
+
+   this.model.post('INS_FECHA_COPADE_SP', params, function (error, result) {
+       //Callback
+       object.error = error;
+       object.result = result;
+
+       self.view.expositor(res, object);
+   });*/
+}
+
 module.exports = Orden;
