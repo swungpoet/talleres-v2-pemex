@@ -4,8 +4,8 @@ var OrdenView = require('../views/ejemploVista'),
 var fs = require('fs'),
     xml2js = require('xml2js');
 
-var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 
 var Orden = function (conf) {
     this.conf = conf || {};
@@ -262,6 +262,7 @@ Orden.prototype.get_copades = function (req, res, next) {
     });
 }
 
+var paramValuesCopade = [];
 //Lee la copade xml, guarda los datos en base de datos y cambia el nombre a las copades cargadas
 Orden.prototype.post_generaDatosCopade = function (req, res, next) {
     //Objeto que almacena la respuesta
@@ -288,8 +289,28 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
                     numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'];
                     numeroEconomico = '11614';
                     ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'];
-
-                    var params = [
+                    paramValuesCopade.push([{
+                                            name: 'subTotal',
+                                            value: subTotal,
+                                            type: self.model.types.DECIMAL
+                                                                },
+                                        {
+                                            name: 'numeroEconomico',
+                                            value: numeroEconomico,
+                                            type: self.model.types.STRING
+                                                                },
+                                        {
+                                            name: 'numeroEstimacion',
+                                            value: numeroEstimacion,
+                                            type: self.model.types.STRING
+                                                                },
+                                        {
+                                            name: 'ordenSurtimiento',
+                                            value: ordenSurtimiento,
+                                            type: self.model.types.STRING
+                                        }]);
+                    console.log(paramValuesCopade);
+                    /*var params = [
                         {
                             name: 'subTotal',
                             value: subTotal,
@@ -310,12 +331,29 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
                             value: ordenSurtimiento,
                             type: self.model.types.STRING
                         }
-                    ];
-                    if(nombreArchivos.length - i == 1){
+                    ];*/
+                    
+                    /*self.model.query('INS_DATOS_COPADE_SP',params, function (error, result) {
+                        //Callback
+                        object.error = error;
+                        object.result = result;
+                        fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
+                        //return 1;
+                        if (result.length > 0) {
+                            fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
+                            //self.view.expositor(res, object);
+                        }
+                    });*/
+                    
+                   /* if((nombreArchivos.length - i) == 1){
                         res.end("Finalizado");
+                    }*/
+                        //insertaDatosCopade(res, self, 'INS_DATOS_COPADE_SP', params, file);
+                    if((nombreArchivos.length - i) == 1){
+                        object.error = err;
+                        object.result = paramValuesCopade;
+                        self.view.expositor(res, object);
                     }
-                    else
-                        insertaDatosCopade(res, self, 'INS_DATOS_COPADE_SP', params, file);
                 });
             });
         }
@@ -338,7 +376,7 @@ function insertaDatosCopade(res, self, stored, params, file) {
         //Callback
          object.error = error;
          object.result = result;
-        //s.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
+        fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
         //return 1;
         /*if (result.length > 0) {
             fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));

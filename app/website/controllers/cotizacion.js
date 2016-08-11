@@ -546,10 +546,11 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 }
                 cb(null, nameFile + obtenerExtArchivo(file.originalname));
             }
-            else{
-                if(consecutivoArchivo > 0){
+            else if(consecutivoArchivo > 0){
                     cb(null, 'Evidencia'+consecutivoArchivo+obtenerExtArchivo(file.originalname));   
-                }
+            }
+            else{
+                cb(null, file.originalname);
             }
             nameFile = '';
             consecutivoArchivo = 0;
