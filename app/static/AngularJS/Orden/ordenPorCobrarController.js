@@ -14,6 +14,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         if ($scope.userData.idTipoUsuario == 1) {
              $scope.getCopades();
          }
+         $scope.cleanfecha();
     }
 
     //Devuelve las órdenes por cobrar
@@ -157,64 +158,70 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
 
     $scope.generaTXT = function (idTrabajo, numeroTrabajo) {
-        ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
-            if (result.data.length > 0) {
-                alertFactory.success("PreFactura generada correctamente!");
-                $scope.downloadFile($rootScope.vIpServer + '/facturas/factura-' + numeroTrabajo + '.txt')
-            } else {
-                alertFactory.info('No existe la factura.xml');
-            }
-        }, function (error) {
-            alertFactory.error("Error al generar la prefactura");
-        });
-    }
-        $('#fechaTrabajo .input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: true,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true,
-        todayHighlight: true
-    });
-    //Devuelve la fecha de la copade para su edicion
-     $scope.openFinishingTrabajoModal = function (idTrabajo) {
-        $('#finalizarTrabajoModal').appendTo("body").modal('show');
-         $scope.idTrabajo=idTrabajo;
-          ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo).then(function (result) {
-                   $scope.resultado = result.data[0]; 
-                   $scope.fecha = $scope.resultado.fecha; 
-                }, function (error) {
-                    alertFactory.error("Error al buscar la fecha");
-                });
-    }    
-    //Guardamos la fecha capturable de la copade
-    $scope.saveFecha = function () {
-      $scope.idTrabajo;
-      $scope.fechaServicio=$scope.fecha;
-      if($scope.fecha!=''){
-              ordenPorCobrarRepository.putFechaCopade($scope.idTrabajo,$scope.fechaServicio).then(function (result) {
-                   $scope.resultado = result.data[0]; 
-                   if($scope.resultado.fechaServicio == 1){
-                    alertFactory.success("Se actualizo correctamente la fecha");
-                   }else{
-                    alertFactory.success("Se inserto correctamente la fecha");
-                   }
-                   $scope.fecha=''; 
-                    $('#finalizarTrabajoModal').modal('hide'); 
-                    location.href = '/ordenesporcobrar'; 
-                }, function (error) {
-                    alertFactory.error("Error al insertar la fecha");
-                });
-       }else{
-           alertFactory.info('Debe ingresar una fecha');
-      }
+       ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
+           if (result.data.length > 0) {
+               alertFactory.success("PreFactura generada correctamente!");
+               $scope.downloadFile($rootScope.vIpServer + '/facturas/factura-' + numeroTrabajo + '.txt')
+           } else {
+               alertFactory.info('No existe la factura.xml');
+           }
+       }, function (error) {
+           alertFactory.error("Error al generar la prefactura");
+       });
+   }
+   $('#fechaTrabajo .input-group.date').datepicker({
+       todayBtn: "linked",
+       keyboardNavigation: true,
+       forceParse: false,
+       calendarWeeks: true,
+       autoclose: true,
+       todayHighlight: true
+   });
+   //Devuelve la fecha de la copade para su edicion
+   $scope.openFinishingTrabajoModal = function (idTrabajo) {
+           $('#finalizarTrabajoModal').appendTo("body").modal('show');
+           $scope.idTrabajo = idTrabajo;
+           ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo).then(function (result) {
+               $scope.resultado = result.data[0];
+               $scope.fecha = $scope.resultado.fecha;
+               $scope.hora = $scope.resultado.hora;
+           }, function (error) {
+               alertFactory.error("Error al buscar la fecha");
+           });
+       }
+       //Guardamos la fecha capturable de la copade
+   $scope.saveFecha = function () {
+           $scope.idTrabajo;
+           $scope.fechaServicio = $scope.fecha + ' ' + $scope.hora;;
+           if ($scope.fecha != '') {
+               if ($scope.hora != '') {
+                   ordenPorCobrarRepository.putFechaCopade($scope.idTrabajo, $scope.fechaServicio).then(function (result) {
+                       $scope.resultado = result.data[0];
+                       if ($scope.resultado.fechaServicio == 1) {
+                           alertFactory.success("Se actualizo correctamente la fecha");
+                       } else {
+                           alertFactory.success("Se inserto correctamente la fecha");
+                       }
+                       $scope.cleanfecha();
+                       $('#finalizarTrabajoModal').modal('hide');
+                       location.href = '/ordenesporcobrar';
+                   }, function (error) {
+                       alertFactory.error("Error al insertar la fecha");
+                   });
+               } else {
+                   alertFactory.info('Debe ingresar una hora');
+               }
+           } else {
+               alertFactory.info('Debe ingresar una fecha');
+           }
 
-    } 
-    //Limpia en campo de la fecha para su edicion
-    $scope.cleanfecha = function () {
-    $scope.fecha=''; 
-}
-
+       }
+       //Limpia en campo de la fecha para su edicion
+   $scope.cleanfecha = function () {
+       $scope.fecha = '';
+       $scope.hora = '';
+   }
+   $('.clockpicker').clockpicker();
 
     $scope.downloadFile = function (downloadPath) {
         window.open(downloadPath, '_blank', 'Factura');  

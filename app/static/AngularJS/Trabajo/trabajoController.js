@@ -28,6 +28,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             nombreProveedor: "",
             puestoProveedor: ""
         }
+         $scope.cleanfecha();
     }
 
     var obtieneNombreArchivo = function (idTrabajo) {
@@ -424,7 +425,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         return file.status === 'error';
     }
 
-            $('#fechaTrabajo .input-group.date').datepicker({
+    $('#fechaTrabajo .input-group.date').datepicker({
         todayBtn: "linked",
         keyboardNavigation: true,
         forceParse: false,
@@ -433,43 +434,51 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         todayHighlight: true
     });
 
-      //Devuelve la fecha inicio real de trabajos para su edicion
-     $scope.cargaFecha = function (idTrabajo) {
-        $('#cargafechainIciorealTrabajo').appendTo("body").modal('show');
-         $scope.idTrabajo=idTrabajo;
-          trabajoRepository.getFechaRealTrabajo($scope.idTrabajo).then(function (result) {
-                   $scope.resultado = result.data[0]; 
-                   $scope.fecha = $scope.resultado.fecha; 
-                }, function (error) {
-                    alertFactory.error("Error al buscar la fecha");
-                });
-    }    
-    //Guardamos la fecha capturable de inicio real de trabajos
+    //Devuelve la fecha inicio real de trabajos para su edicion
+    $scope.cargaFecha = function (idTrabajo) {
+            $('#cargafechainIciorealTrabajo').appendTo("body").modal('show');
+            $scope.idTrabajo = idTrabajo;
+            trabajoRepository.getFechaRealTrabajo($scope.idTrabajo).then(function (result) {
+                $scope.resultado = result.data[0];
+                $scope.fecha = $scope.resultado.fecha;
+                $scope.hora = $scope.resultado.hora;
+            }, function (error) {
+                alertFactory.error("Error al buscar la fecha");
+            });
+        }
+        //Guardamos la fecha capturable de inicio real de trabajos
     $scope.guardaFecha = function () {
-      $scope.idTrabajo;
-      $scope.fechaServicio=$scope.fecha;
-      if($scope.fecha!=''){
-              trabajoRepository.putFechaRealTrabajo($scope.idTrabajo,$scope.fechaServicio).then(function (result) {
-                   $scope.resultado = result.data[0]; 
-                   if($scope.resultado.fechaServicio == 1){
-                    alertFactory.success("Se actualizo correctamente la fecha");
-                   }else{
-                    alertFactory.success("Se inserto correctamente la fecha");
-                   }
-                   $scope.fecha=''; 
-                    $('#finalizarTrabajoModal').modal('hide'); 
-                    location.href = '/trabajo'; 
-                }, function (error) {
-                    alertFactory.error("Error al insertar la fecha");
-                });
-       }else{
-           alertFactory.info('Debe ingresar una fecha');
-      }
+            $scope.idTrabajo;
+            $scope.fechaServicio = $scope.fecha + ' ' + $scope.hora;;
+            if ($scope.fecha != '') {
+                if ($scope.hora != '') {
+                    trabajoRepository.putFechaRealTrabajo($scope.idTrabajo, $scope.fechaServicio).then(function (result) {
+                        $scope.resultado = result.data[0];
+                        if ($scope.resultado.fechaServicio == 1) {
+                            alertFactory.success("Se actualizo correctamente la fecha");
+                        } else {
+                            alertFactory.success("Se inserto correctamente la fecha");
+                        }
+                        $scope.cleanfecha();
+                        $('#finalizarTrabajoModal').modal('hide');
+                        location.href = '/trabajo';
+                    }, function (error) {
+                        alertFactory.error("Error al insertar la fecha");
+                    });
+                } else {
+                    alertFactory.info('Debe ingresar una hora');
+                }
+            } else {
+                alertFactory.info('Debe ingresar una fecha');
+            }
 
-    } 
-    //Limpia en campo de la fecha para su edicion
+        }
+        //Limpia en campo de la fecha para su edicion
     $scope.cleanfecha = function () {
-    $scope.fecha=''; 
-}
+        $scope.fecha = '';
+        $scope.hora = '';
+    }
+
+    $('.clockpicker').clockpicker();
 
 });

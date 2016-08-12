@@ -38,7 +38,7 @@
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td ng-class="{'rowAzul': trabajo.estatus=='OrdenGarantia'}">{{trabajo.descripcionLarga}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
-                                                <td>{{trabajo.fechaServicio | date:"dd-MM-yy HH:mm"}}
+                                                <td>{{trabajo.fechaServicio}}
                                                 <br>
                                                 <button class="btn btn-success" type="button" ng-click="cargaFecha(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Fecha Inicio real de trabajos" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span></button>
                                                 </td>
@@ -264,19 +264,33 @@
     <div class="modal-dialog">
         <div class="modal-content animated flipInY">
             <div class="modal-header">
-                <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
                 <h4 class="modal-title">Capturar Fecha Inicio Real de Trabajos</h4>
             </div>
             <br>
-             <div class="col-xs-10">
-                   <div class="form-group" id="fechaTrabajo">
+            <form role="form">
+                <div class="col-xs-10">
+                    <div class="form-group" id="fechaTrabajo">
                         <div class="input-group date">
-                            <input type="text" placeholder="Introduzca fecha inicio de trabajo" class="form-control" value="" ng-model="fecha">
-                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="text" placeholder="Introduzca la fecha inicio del trabajo" class="form-control" value="" ng-model="fecha">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                         </div>
-                   </div>
-             </div>
-             <br><br><br>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="col-xs-10">
+                    <div class="input-group clockpicker" data-autoclose="true">
+                        <input type="text" placeholder="Introduzca la hora inicio del trabajo" class="form-control" value="" ng-model="hora">
+                        <span class="input-group-addon">
+                                    <span class="fa fa-clock-o"></span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <br>
+            <br>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanfecha()">Salir</button>
                 <button type="button" class="btn btn-success" ng-click="guardaFecha()">Guardar</button>
