@@ -212,8 +212,7 @@ delay:delay}">
                     <h3 class="modal-title">Mejor Coincidencia</h3>
                         <h6 class="modal-title text-navy">
                         <br>
-                            Número Económico: {{numeroEconomico}} &nbsp
-                            <br>
+                            Orden de Surtimiento: {{folio}} &nbsp
                             Monto de la Orden: {{monto | currency}}
                         </h6>
                     </div>
@@ -239,7 +238,7 @@ delay:delay}">
                                                 <td>{{coincidencias.montoOrden | currency}}</td>
                                                 <td>
                                                  <div class="radio radio-inline">
-                                                <input type="radio" name="name" value="" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo,coincidencias.fechaServicio)" ng-hide="" data-toggle="tooltip" tooltip="" tooltip-placement="left" ng-disabled="">
+                                                <input type="radio" name="name" value="" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo)" ng-hide="" data-toggle="tooltip" tooltip="" tooltip-placement="left" ng-disabled="">
                                                 <label for="inlineRadio"> Selecciona </label>
                                                 </td>
                                             </div>

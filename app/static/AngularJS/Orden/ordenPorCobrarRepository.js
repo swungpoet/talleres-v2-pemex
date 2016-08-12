@@ -87,12 +87,12 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                }
            });
        },
-       getMejorCoincidencia: function (numeroEconomico,monto) {
+       getMejorCoincidencia: function (folio,monto) {
             return $http({
                 url: ordenUrl + 'getCoincidenciaMejor',
                 method: "GET",
                 params: {
-                    numeroEconomico: numeroEconomico,
+                    folio: folio,
                     monto:monto
                 },
                 headers: {

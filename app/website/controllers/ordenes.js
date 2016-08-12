@@ -372,8 +372,8 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
 Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
     var self = this;
     var params = [{
-        name: 'numeroEconomico',
-        value: req.query.numeroEconomico,
+        name: 'folio',
+        value: req.query.folio,
         type: self.model.types.STRING
         },
         {

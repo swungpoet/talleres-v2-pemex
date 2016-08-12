@@ -15,6 +15,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
              $scope.getCopades();
          }
          $scope.cleanfecha();
+         $scope.idTrabajo='';
     }
 
     //Devuelve las órdenes por cobrar
@@ -336,9 +337,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
  $scope.buscaCoincidencia = function (idDatosCopade) {
      $scope.copades.forEach(function (p, i) {
          if (p.idDatosCopade == idDatosCopade) {
-             $scope.numeroEconomico = $scope.copades[i].numeroEconomico;
+             $scope.folio = $scope.copades[i].ordenSurtimiento;
              $scope.monto = $scope.copades[i].subTotal;
-             ordenPorCobrarRepository.getMejorCoincidencia($scope.numeroEconomico, $scope.monto).then(function (result) {
+             ordenPorCobrarRepository.getMejorCoincidencia($scope.folio, $scope.monto).then(function (result) {
                  if (result.data.length > 0) {
                      $scope.coincidencia = result.data;
                      $('#mejorCoincidencia').appendTo("body").modal('show');
@@ -352,14 +353,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
      });
  }
 
- $scope.seleccionMejorCoincidencia = function (idTrabajo, fechaServicio) {
+ $scope.seleccionMejorCoincidencia = function (idTrabajo) {
      $scope.idTrabajo = idTrabajo;
-     $scope.fechaServicio = fechaServicio;
  }
 
  $scope.asociarCopade = function () {
-     $scope.seleccionMejorCoincidencia($scope.idTrabajo, $scope.fechaServicio);
-     if ($scope.idTrabajo != null) {
+     $scope.seleccionMejorCoincidencia($scope.idTrabajo);
+     if ($scope.idTrabajo != '') {
          $('.btnTerminarTrabajo').ready(function () {
              swal({
                      title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
@@ -374,8 +374,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                  },
                  function (isConfirm) {
                      if (isConfirm) {
-                           //  $scope.trabajoCobrado($scope.idTrabajo);
-                             swal("Trabajo terminado!", "La copade se ha asociado", "success");
+                             $scope.trabajoCobrado($scope.idTrabajo);
+                             swal("Trabajo terminado!", "La copade se ha asociada", "success");
+                             location.href = '/ordenesporcobrar';
                      } else {
                          swal("Copade no asociada", "", "error");
                          $('#finalizarTrabajoModal').modal('hide');
