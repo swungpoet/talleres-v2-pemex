@@ -4,8 +4,8 @@ var OrdenView = require('../views/ejemploVista'),
 var fs = require('fs'),
     xml2js = require('xml2js');
 
-var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 
 var Orden = function (conf) {
     this.conf = conf || {};
@@ -95,7 +95,7 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
         object.result = result;
         if (result.length > 0) {
             if (result[0].tipoOrdenServicio == 'SER') {
-                var directorioFactura = dirname + req.query.idTrabajo + '/documentos';
+                var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
                 var fecha, numFactura, uuid, nombreXml;
 
@@ -179,7 +179,7 @@ function getDatosFactura(res, self, stored, params) {
                 object.error = error;
                 object.result = result;
 
-                var wstream = fs.createWriteStream('C:/Produccion/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
+                var wstream = fs.createWriteStream('C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
                 if (wstream) {
                     var carrito = '';
                     var lineToInsert = '';

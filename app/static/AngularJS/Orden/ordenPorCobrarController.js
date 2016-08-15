@@ -258,9 +258,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                    }, function (error) {
 
                    });
-
-                   /* $scope.getOrdenesPorCobrar();
-                    $scope.preFacturas();*/
                    setTimeout(function () {
                        $scope.dzMethods.removeAllFiles(true);
                        $('#subirAdenda').appendTo('body').modal('hide');
