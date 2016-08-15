@@ -8,9 +8,10 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 method: "GET"
             });
         },
-        putTrabajoCobrado: function (idTrabajo) {
+        putTrabajoCobrado: function (idTrabajo,idDatosCopade) {
             var objTrabajo = {
-                idTrabajo: idTrabajo
+                idTrabajo: idTrabajo,
+                idDatosCopade:idDatosCopade
             };
 
             return $http({

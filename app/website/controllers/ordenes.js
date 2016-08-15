@@ -46,6 +46,11 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
         name: 'idTrabajo',
         value: req.body.idTrabajo,
         type: self.model.types.INT
+        },
+        {
+        name: 'idDatosCopade',
+        value: req.body.idDatosCopade,
+        type: self.model.types.INT
         }];
 
     this.model.post('INS_TRABAJO_CONCLUIDO_SP', params, function (error, result) {
