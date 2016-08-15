@@ -412,5 +412,22 @@ function insertaDatosCopade(res, self, stored, params, file) {
     });
 };
 
+//obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
+Orden.prototype.get_getadmonordenes = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'numeroTrabajo',
+        value: req.query.numeroTrabajo,
+        type: self.model.types.STRING
+        }];
+
+    this.model.query('SEL_ADMINISTRACION_ORDENES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 
 module.exports = Orden;
