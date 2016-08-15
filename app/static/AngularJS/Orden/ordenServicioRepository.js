@@ -92,6 +92,18 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 url: ordenUrl + 'ordenesporcobrar',
                 method: "GET"
             });
+        },
+        getAdmonOrdenes: function (numeroTrabajo) {
+            return $http({
+                url: ordenUrl + 'getadmonordenes/',
+                method: "GET",
+                params: {
+                    numeroTrabajo: numeroTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });

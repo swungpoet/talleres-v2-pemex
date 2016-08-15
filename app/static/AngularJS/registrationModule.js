@@ -94,7 +94,12 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/osur.html',
             controller: 'osurController'
         });
-
+        
+        $routeProvider.when('/administracionordenes', {
+            templateUrl: 'AngularJS/Templates/administracionOrdenes.html',
+            controller: 'administracionOrdenController'
+        });
+        
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
