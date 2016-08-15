@@ -101,5 +101,38 @@ DataAccess2.prototype.listaEvidencia = function (lstEvidencia, callback) {
     callback(null, lstEvidencia);
 };
 
+
+//Inserta los datos de la copade
+DataAccess2.prototype.datosCopade = function (copadeObj, callback) {
+   var self = this.connection;
+   this.connection.connect(function (err) {
+       for (var i = 0; i < copadeObj.length; i++) {
+           // Stored Procedure 
+           var request = new sql.Request(self);
+           request.stream = true;
+           request.input('subTotal', sql.Decimal(18, 2), copadeObj[i].subTotal);
+           request.input('numeroEstimacion', sql.VarChar(180), copadeObj[i].numeroEstimacion);
+           request.input('ordenSurtimiento', sql.VarChar(100), copadeObj[i].ordenSurtimiento);
+           request.input('nombreCopade', sql.VarChar(350), copadeObj[i].nombreCopade);
+           request.execute('INS_DATOS_COPADE_SP', function (err, recordsets, returnValue) {
+               if (recordsets != null) {
+                   callback(err, recordsets[0]);
+               } else {
+                   console.log('Error: ' + params + ' mensaje: ' + err);
+               }
+           });
+       }
+
+       request.on('done', function (returnValue, affected) {
+           callback(null, returnValue);
+       });
+
+       request.on('error', function (err) {
+           callback(err, null);
+           console.log('Error al insertar datos copade, mensaje: ' + err);
+       });
+   });
+};
+
 //exportación del modelo
 module.exports = DataAccess2;

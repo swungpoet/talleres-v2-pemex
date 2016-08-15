@@ -6,6 +6,7 @@ var fs = require('fs'),
 
 var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var paramValuesCopade = [];
 
 var Orden = function (conf) {
     this.conf = conf || {};
@@ -267,112 +268,50 @@ Orden.prototype.get_copades = function (req, res, next) {
     });
 }
 
-var paramValuesCopade = [];
-//Lee la copade xml, guarda los datos en base de datos y cambia el nombre a las copades cargadas
+//Lee la copade xml, y devuelve todo en un Array para después almacenarlos en bd
 Orden.prototype.post_generaDatosCopade = function (req, res, next) {
-    //Objeto que almacena la respuesta
-    var object = {};
-    //Objeto que envía los parámetros
-    var params = {};
-    //Referencia a la clase para callback
-    var self = this;
+   //Objeto que almacena la respuesta
+   var object = {};
+   //Objeto que envía los parámetros
+   var params = {};
+   //Referencia a la clase para callback
+   var self = this;
 
-    var nombreArchivos = req.body.archivos;
-    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento;
-    var copades = [];
+   var nombreArchivos = req.body.archivos;
+   var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento;
+   var copades = [];
+   var objCopade = [];
 
-    nombreArchivos.forEach(function (file,i) {
-        console.log(i);
-        var extension = obtenerExtArchivo(file);
-        if (extension == '.xml' || extension == '.XML') {
-            var parser = new xml2js.Parser();
+   nombreArchivos.forEach(function (file, i) {
+       var extension = obtenerExtArchivo(file);
+       if (extension == '.xml' || extension == '.XML') {
+           var parser = new xml2js.Parser();
 
-            fs.readFile(dirCopades + file, function (err, data) {
-                console.log(i);
-                parser.parseString(data, function (err, lector) {
-                    subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];
-                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'];
-                    numeroEconomico = '11614';
-                    ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'];
-                    paramValuesCopade.push([{
-                                            name: 'subTotal',
-                                            value: subTotal,
-                                            type: self.model.types.DECIMAL
-                                                                },
-                                        {
-                                            name: 'numeroEconomico',
-                                            value: numeroEconomico,
-                                            type: self.model.types.STRING
-                                                                },
-                                        {
-                                            name: 'numeroEstimacion',
-                                            value: numeroEstimacion,
-                                            type: self.model.types.STRING
-                                                                },
-                                        {
-                                            name: 'ordenSurtimiento',
-                                            value: ordenSurtimiento,
-                                            type: self.model.types.STRING
-                                        }]);
-                    console.log(paramValuesCopade);
-                    /*var params = [
-                        {
-                            name: 'subTotal',
-                            value: subTotal,
-                            type: self.model.types.DECIMAL
-                        },
-                        {
-                            name: 'numeroEconomico',
-                            value: numeroEconomico,
-                            type: self.model.types.STRING
-                        },
-                        {
-                            name: 'numeroEstimacion',
-                            value: numeroEstimacion,
-                            type: self.model.types.STRING
-                        },
-                        {
-                            name: 'ordenSurtimiento',
-                            value: ordenSurtimiento,
-                            type: self.model.types.STRING
-                        }
-                    ];*/
-                    
-                    /*self.model.query('INS_DATOS_COPADE_SP',params, function (error, result) {
-                        //Callback
-                        object.error = error;
-                        object.result = result;
-                        fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
-                        //return 1;
-                        if (result.length > 0) {
-                            fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
-                            //self.view.expositor(res, object);
-                        }
-                    });*/
-                    
-                   /* if((nombreArchivos.length - i) == 1){
-                        res.end("Finalizado");
-                    }*/
-                        //insertaDatosCopade(res, self, 'INS_DATOS_COPADE_SP', params, file);
-                    if((nombreArchivos.length - i) == 1){
-                        object.error = err;
-                        object.result = paramValuesCopade;
-                        self.view.expositor(res, object);
-                    }
-                });
-            });
-        }
-    });
+           fs.readFile(dirCopades + file, function (err, data) {
+               parser.parseString(data, function (err, lector) {
+                   subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];
+                   numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];
+                   ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];
+                   
+                   objCopade = {
+                       subTotal: subTotal,
+                       numeroEstimacion: numeroEstimacion,
+                       ordenSurtimiento: ordenSurtimiento,
+                       nombreCopade: file
+                   };
+                   
+                   paramValuesCopade.push(objCopade);
 
-    /* this.model.post('INS_DATOS_COPADE_SP', params, function (error, result) {
-         //Callback
-         object.error = error;
-         object.result = result;
-
-         self.view.expositor(res, object);
-     });*/
+                   if ((nombreArchivos.length - i) == 1) {
+                       object.error = err;
+                       object.result = paramValuesCopade;
+                       self.view.expositor(res, object);
+                   }
+               });
+           });
+       }
+   });
 }
-
 
 Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
     var self = this;
@@ -395,22 +334,6 @@ Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
     });
 }
 
-//Inserta los datos de la copade en bd
-function insertaDatosCopade(res, self, stored, params, file) {
-    //Objeto que almacena la respuesta
-    var object = {};
-    self.model.query(stored, params, function (error, result) {
-        //Callback
-         object.error = error;
-         object.result = result;
-        fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
-        //return 1;
-        /*if (result.length > 0) {
-            fs.renameSync(dirCopades + file, dirCopades + result[0][''] + obtenerExtArchivo(file));
-            //self.view.expositor(res, object);
-        }*/
-    });
-};
 
 //obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
 Orden.prototype.get_getadmonordenes = function (req, res, next) {
@@ -429,5 +352,22 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
+
+//Inserta los datos de la copade en bd
+Orden.prototype.post_insertaDatosCopade = function (req, res, next) {
+   var self = this;
+   var object = {};
+
+   var infoCopade = req.body.copades;
+
+   this.model.datosCopade(infoCopade, function (error, result) {
+       //Callback
+       object.error = error;
+       object.result = result;
+
+       self.view.expositor(res, object);
+   });
+
+}
 
 module.exports = Orden;

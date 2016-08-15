@@ -251,13 +251,16 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                    file.forEach(function(archivo){
                        nombreCopades.push(archivo.name);
                    });
-                   
                    ordenPorCobrarRepository.putGeneraDatosCopade(nombreCopades).then(function (result) {
-                       var algo = result.data;
-                       var otro = 'stop';
-                   }, function (error) {
-
-                   });
+                       var copadesInfo = result.data;
+                       ordenPorCobrarRepository.putInsertaDatosCopade(copadesInfo).then(function (resp) {
+                           var respuesta = resp.data;
+                       }, function (error) {
+alertFactory.error(error);
+                       });
+                   }, function (error) {
+alertFactory.error(error);
+                   });
                    setTimeout(function () {
                        $scope.dzMethods.removeAllFiles(true);
                        $('#subirAdenda').appendTo('body').modal('hide');

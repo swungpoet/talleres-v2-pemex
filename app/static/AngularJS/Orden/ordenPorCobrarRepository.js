@@ -100,7 +100,21 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+        putInsertaDatosCopade: function (copades) {
+           var objCopades = {
+               copades: copades
+           };
+
+           return $http({
+               url: ordenUrl + 'insertaDatosCopade',
+               method: "POST",
+               data: objCopades,
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           });
+       }
        
     };
 });
