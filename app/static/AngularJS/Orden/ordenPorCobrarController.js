@@ -15,7 +15,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
              $scope.getCopades();
          }
          $scope.cleanfecha();
-         $scope.idTrabajo='';
+         $scope.cleanDatos();
     }
 
     //Devuelve las órdenes por cobrar
@@ -90,9 +90,10 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }   
         })
     }
-    $scope.trabajoCobrado = function () {
+    //Inserta a historial proceso y Asocia DatosCopadeOrden
+    $scope.trabajoCobrado = function (idTrabajo,idDatosCopade) {
         $('.dataTableOrdenesPorCobrar').DataTable().destroy();
-        ordenPorCobrarRepository.putTrabajoCobrado($scope.idTrabajo).then(function (result) {
+        ordenPorCobrarRepository.putTrabajoCobrado(idTrabajo,idDatosCopade).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success('Trabajo cobrado exitosamente');
             } else {
@@ -259,7 +260,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                    });
 
                    /* $scope.getOrdenesPorCobrar();
-                    $scope.trabajoCobrado();
                     $scope.preFacturas();*/
                    setTimeout(function () {
                        $scope.dzMethods.removeAllFiles(true);
@@ -333,12 +333,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
            alertFactory.error("Error al obtener las COPADES");
        });
    }
-
+//Busqueda de las mejores coincidencias para los datos Copade
  $scope.buscaCoincidencia = function (idDatosCopade) {
      $scope.copades.forEach(function (p, i) {
          if (p.idDatosCopade == idDatosCopade) {
              $scope.folio = $scope.copades[i].ordenSurtimiento;
              $scope.monto = $scope.copades[i].subTotal;
+             $scope.idDatosDeCopade = $scope.copades[i].idDatosCopade;
              ordenPorCobrarRepository.getMejorCoincidencia($scope.folio, $scope.monto).then(function (result) {
                  if (result.data.length > 0) {
                      $scope.coincidencia = result.data;
@@ -353,13 +354,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
      });
  }
 
+//Selecciona una orden en Radio y obtiene idTrabajo
  $scope.seleccionMejorCoincidencia = function (idTrabajo) {
-     $scope.idTrabajo = idTrabajo;
+     $scope.idDeTrabajo = idTrabajo;
  }
-
+//Asociamos un idtrabajo con DatosCopade
  $scope.asociarCopade = function () {
-     $scope.seleccionMejorCoincidencia($scope.idTrabajo);
-     if ($scope.idTrabajo != '') {
+     if ($scope.idDeTrabajo != '') {
          $('.btnTerminarTrabajo').ready(function () {
              swal({
                      title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
@@ -374,11 +375,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                  },
                  function (isConfirm) {
                      if (isConfirm) {
-                             $scope.trabajoCobrado($scope.idTrabajo);
+                             $scope.trabajoCobrado($scope.idDeTrabajo,$scope.idDatosDeCopade);
+                             $scope.cleanDatos();
                              swal("Trabajo terminado!", "La copade se ha asociada", "success");
-                             location.href = '/ordenesporcobrar';
+                             location.href = '/ordenesporcobrar';  
                      } else {
                          swal("Copade no asociada", "", "error");
+                         $scope.cleanDatos();
                          $('#finalizarTrabajoModal').modal('hide');
                      }
                  });
@@ -386,6 +389,10 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
      } else {
          alertFactory.error("Debe seleccionar una orden de servicio");
      }
+ }
+ //Limpiamos campos idTrabajo
+ $scope.cleanDatos = function () {
+  $scope.idDeTrabajo='';
  }
 
 
