@@ -63,6 +63,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                     alertFactory.success("Archivos subidos satisfactoriamente");
                     setTimeout(function () {
                         $('#cargaArchivosModal').appendTo("body").modal('hide');
+                        $scope.dzMethods.removeAllFiles(true);
                     }, 1000)
                 }
             }
@@ -97,7 +98,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     //genera el txt de la factura
     $scope.generaTXT = function (idTrabajo, numeroTrabajo) {
         ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
-            if (result.statusText === 'OK') {
+            if (result.data.length > 0) {
                 alertFactory.success("PreFactura generada correctamente!");
                 window.open($rootScope.vIpServer + '/facturas/factura-' + numeroTrabajo + '.txt', '_blank', 'Factura'); 
             } else {
