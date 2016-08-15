@@ -14,6 +14,12 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsArchivos = uploadRepository.getDzOptions('text/xml,application/pdf', 2);
+        //realiza la búsqueda si viene la página órdenes
+        if(localStorageService.get('actualizaCosto') != null){
+            $scope.numeroTrabajo = localStorageService.get('actualizaCosto');
+            localStorageService.remove('actualizaCosto');
+            $scope.getAdmonOrdenes($scope.numeroTrabajo);
+        }
     }
 
     $scope.getAdmonOrdenes = function (numeroTrabajo) {
