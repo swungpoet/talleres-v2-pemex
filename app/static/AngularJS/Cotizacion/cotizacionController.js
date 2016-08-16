@@ -359,8 +359,29 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     });
     btnCotizacionUpdLoading.click(function () {
         btnCotizacionUpdLoading.ladda('start');
-        console.log("clickhere");
         eliminarElementos();
+        $scope.arrayCambios.forEach(function (item, i) {
+            cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
+                    item.idTipoElemento,
+                    item.idItem,
+                    item.precio,
+                    item.cantidad,
+                    $scope.observaciones,
+                    item.idEstatus,
+                    0)
+                .then(function (result) {
+                    if (result.data[0].idCotizacion > 0)
+                        alertFactory.success('Cotización Actualizada ');
+                }, function (error) {
+                    alertFactory.error('Error');
+                    btnCotizacionUpdLoading.ladda('stop');
+                    alertFactory.error('Error');
+
+                });
+        }, function (error) {
+            alertFactory.error('Error');
+            btnCotizacionUpdLoading.ladda('stop');
+        });
         $scope.arrayItem.forEach(function (item, i) {
             cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
                     item.idTipoElemento,
