@@ -45,9 +45,6 @@ delay:delay}">
                                                 <td>{{orden.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <!--<td> 
-                                                {{orden.fechaServicio | date:'dd-MM-yyyy HH:mm'}}
-                                                <br>
-                                                <button class="btn btn-success" type="button" ng-click="openFinishingTrabajoModal(orden.idTrabajo)" data-toggle="tooltip" tooltip="Fecha Copade" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span></button>
                                                 </td>-->
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
@@ -66,14 +63,14 @@ delay:delay}">
                             </tab>
                             <tab heading="Cargar COPADES" index="1" ng-show="userData.idTipoUsuario == 1">
                                <br>
-                               <button class="btn btn-success" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar COPADE" tooltip-placement="right" ng-click="subir(orden.idTrabajo)">
+                               <button class="btn btn-primary" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar COPADE" tooltip-placement="right" ng-click="subir(orden.idTrabajo)" ng-disabled="fechaRecepcionCopade==''">
                                    <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal">&nbsp;Cargar COPADE</span>
-                               </button>
+                               </button>&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-success" type="button" ng-click="fechaRecepcibeCopade()" data-toggle="tooltip" tooltip="Fecha de Recepcion COPADE" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Fecha de Recepcion COPADE</button>&nbsp;&nbsp;{{fechaRecepcionCopade}}
                                <br>
                                <br>
                                <div class="table-responsive">
-                                   <table class="table table-striped table-bordered table-hover dataTableCopades" cg-busy="{promise:promise,message:message, minDuration: minDuration,
-delay:delay}">
+                                   <table class="table table-striped table-bordered table-hover dataTableCopades" cg-busy="{promise:promise,message:message, minDuration: minDuration, delay:delay}">
                                        <thead>
                                            <tr>
                                                <th>Orden de Surtimiento</th>
@@ -171,19 +168,19 @@ delay:delay}">
     <div class="modal-dialog">
         <div class="modal-content animated flipInY">
             <div class="modal-header">
-                <h4 class="modal-title">Capturar Fecha COPADE</h4>
+                <h4 class="modal-title">Capturar Fecha Recepcion COPADE</h4>
             </div>
             <br>
             <div class="col-xs-10">
                 <div class="form-group" id="fechaTrabajo">
                     <div class="input-group date">
-                        <input type="text" placeholder="Introduzca la fecha de la Copade" class="form-control" value="" ng-model="fecha">
+                        <input type="text" placeholder="Introduzca la fecha de la Copade" class="form-control" value="" ng-model="fechaRecepcionCopade">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
             <br>
-            <br>
+<!--             <br>
             <br>
             <div class="col-xs-10">
                 <div class="input-group clockpicker" data-autoclose="true">
@@ -193,11 +190,11 @@ delay:delay}">
                     </span>
                 </div>
             </div>
-            <br>
+            <br> -->
             <br>
             <br>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanfecha()">Salir</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">Salir</button>
                 <button type="button" class="btn btn-success" ng-click="saveFecha()">Guardar</button>
             </div>
         </div>

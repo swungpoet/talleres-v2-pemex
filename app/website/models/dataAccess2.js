@@ -114,6 +114,7 @@ DataAccess2.prototype.datosCopade = function (copadeObj, callback) {
            request.input('numeroEstimacion', sql.VarChar(180), copadeObj[i].numeroEstimacion);
            request.input('ordenSurtimiento', sql.VarChar(100), copadeObj[i].ordenSurtimiento);
            request.input('nombreCopade', sql.VarChar(350), copadeObj[i].nombreCopade);
+           request.input('fechaRecepcionCopade', sql.VarChar(180), copadeObj[i].fechaRecepcionCopade);
            request.execute('INS_DATOS_COPADE_SP', function (err, recordsets, returnValue) {
                if (recordsets != null) {
                    callback(err, recordsets[0]);

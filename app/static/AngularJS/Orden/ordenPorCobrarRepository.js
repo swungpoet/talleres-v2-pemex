@@ -42,41 +42,16 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-         putFechaCopade: function (idTrabajo,fechaServicio) {
-            var objTrabajo = {
-                idTrabajo: idTrabajo,
-                fechaServicio:fechaServicio  
-            };
-            return $http({
-                url: ordenUrl + 'putFechaServicio',
-                method: "POST",
-                data: objTrabajo,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        },
-        getFechaCopade: function (idTrabajo) {
-            return $http({
-                url: ordenUrl + 'searchFechaCopade',
-                method: "GET",
-                params: {
-                    idTrabajo: idTrabajo
-                },
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-        },
        getCopades: function () {
            return $http({
                url: ordenUrl + 'copades',
                method: "GET"
            });
        },
-        putGeneraDatosCopade: function (archivos) {
+        putGeneraDatosCopade: function (archivos,fechaRecepcionCopade) {
            var objArchivos = {
-               archivos: archivos
+               archivos: archivos,
+               fechaRecepcionCopade:fechaRecepcionCopade
            };
 
            return $http({
