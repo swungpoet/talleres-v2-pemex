@@ -15,10 +15,10 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        putTrabajoCobrado: function (idTrabajo,idDatosCopade) {
+        putTrabajoCobrado: function (idTrabajo, idDatosCopade) {
             var objTrabajo = {
                 idTrabajo: idTrabajo,
-                idDatosCopade:idDatosCopade
+                idDatosCopade: idDatosCopade
             };
 
             return $http({
@@ -49,54 +49,55 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-       getCopades: function () {
-           return $http({
-               url: ordenUrl + 'copades',
-               method: "GET"
-           });
-       },
-        putGeneraDatosCopade: function (archivos,fechaRecepcionCopade) {
-           var objArchivos = {
-               archivos: archivos,
-               fechaRecepcionCopade:fechaRecepcionCopade
-           };
+        getCopades: function () {
+            return $http({
+                url: ordenUrl + 'copades',
+                method: "GET"
+            });
+        },
+        putGeneraDatosCopade: function (archivos, fechaRecepcionCopade) {
+            var objArchivos = {
+                archivos: archivos,
+                fechaRecepcionCopade: fechaRecepcionCopade
+            };
 
-           return $http({
-               url: ordenUrl + 'generaDatosCopade',
-               method: "POST",
-               data: objArchivos,
-               headers: {
-                   'Content-Type': 'application/json'
-               }
-           });
-       },
-       getMejorCoincidencia: function (folio,monto) {
+            return $http({
+                url: ordenUrl + 'generaDatosCopade',
+                method: "POST",
+                data: objArchivos,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getMejorCoincidencia: function (folio, monto) {
             return $http({
                 url: ordenUrl + 'getCoincidenciaMejor',
                 method: "GET",
                 params: {
                     folio: folio,
-                    monto:monto
+                    monto: monto
                 },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        putInsertaDatosCopade: function (copades) {
-           var objCopades = {
-               copades: copades
-           };
+        putInsertaDatosCopade: function (copades) {     
+            var objCopades = copades;
 
-           return $http({
-               url: ordenUrl + 'insertaDatosCopade',
-               method: "POST",
-               data: objCopades,
-               headers: {
-                   'Content-Type': 'application/json'
-               }
-           });
-       }
-       
+                  
+            return $http({        
+                url: ordenUrl + 'insertaDatosCopade',
+                        method: "POST",
+                        data: objCopades,
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
+        putRenombraCopade: function (idCopade, nombre) {
+
+        }
     };
 });

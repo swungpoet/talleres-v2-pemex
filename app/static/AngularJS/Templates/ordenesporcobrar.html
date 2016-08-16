@@ -59,10 +59,16 @@
                             </tab> -->
                             <tab heading="Cargar COPADES" index="1" ng-show="userData.idTipoUsuario == 1">
                                <br>
+                                <div class="ibox-content" ng-show="fechaRecepcionCopade==''">
+                                    <div class="alert alert-danger">
+                                       <strong>Seleccione una FECHA, </strong> para poder subir COPADE.
+                                    </div>
+                                </div>
+                                {{fechaRecepcionCopade}}&nbsp;&nbsp;
+                               <button class="btn btn-success" type="button" ng-click="fechaRecepcibeCopade()" data-toggle="tooltip" tooltip="Fecha de Recepcion COPADE" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Fecha de Recepcion COPADE</button>&nbsp;&nbsp;
                                <button class="btn btn-primary" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar COPADE" tooltip-placement="right" ng-click="subir(orden.idTrabajo)" ng-disabled="fechaRecepcionCopade==''">
                                    <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal">&nbsp;Cargar COPADE</span>
                                </button>&nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-success" type="button" ng-click="fechaRecepcibeCopade()" data-toggle="tooltip" tooltip="Fecha de Recepcion COPADE" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span>&nbsp;Fecha de Recepcion COPADE</button>&nbsp;&nbsp;{{fechaRecepcionCopade}}
                                <br>
                                <br>
                                <div class="table-responsive">
@@ -190,7 +196,7 @@
             <br>
             <br>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Salir</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="limpiaFecha()">Cancelar</button>
                 <button type="button" class="btn btn-success" ng-click="saveFecha()">Guardar</button>
             </div>
         </div>

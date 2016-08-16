@@ -4,8 +4,8 @@ var OrdenView = require('../views/ejemploVista'),
 var fs = require('fs'),
     xml2js = require('xml2js');
 
-var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 
 
 var Orden = function (conf) {
@@ -184,7 +184,7 @@ function getDatosFactura(res, self, stored, params) {
                 object.error = error;
                 object.result = result;
 
-                var wstream = fs.createWriteStream('C:/Produccion/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
+                var wstream = fs.createWriteStream('C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
                 if (wstream) {
                     var carrito = '';
                     var lineToInsert = '';
@@ -229,52 +229,53 @@ Orden.prototype.get_copades = function (req, res, next) {
 
 //Lee la copade xml, y devuelve todo en un Array para después almacenarlos en bd
 
-Orden.prototype.post_generaDatosCopade = function (req, res, next) {
-   //Objeto que almacena la respuesta
-   var object = {};
-   //Objeto que envía los parámetros
-   var params = [];
-   //Referencia a la clase para callback
-   var self = this;
+Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto que almacena la respuesta
+      
+    var object = {};   //Objeto que envía los parámetros
+      
+    var params = [];   //Referencia a la clase para callback
+      
+    var self = this;
 
-   var nombreArchivos = [];
-   nombreArchivos = req.body.archivos;
-   var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, fechaRecepcionCopade = req.body.fechaRecepcionCopade;
-   var objCopade = [];
-   var paramValuesCopade = [];
+      
+    var nombreArchivos = [];
+    nombreArchivos = req.body.archivos;  
+    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, fechaRecepcionCopade = req.body.fechaRecepcionCopade;  
+    var objCopade = [];
+    var paramValuesCopade = [];
 
-   nombreArchivos.forEach(function (file, i) {
-       var extension = obtenerExtArchivo(file);
-       if (extension == '.xml' || extension == '.XML') {
-           var parser = new xml2js.Parser();
+      
+    nombreArchivos.forEach(function (file, i) {    
+        var extension = obtenerExtArchivo(file);    
+        if (extension == '.xml' || extension == '.XML') {      
+            var parser = new xml2js.Parser();
 
-           fs.readFile(dirCopades + file, function (err, data) {
-               parser.parseString(data, function (err, lector) {
-                   subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];
-                   numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];
-                   ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];
-                   
-                   objCopade = {
-                       subTotal: subTotal,
-                       numeroEstimacion: numeroEstimacion,
-                       ordenSurtimiento: ordenSurtimiento,
-                       nombreCopade: file,
-                       fechaRecepcionCopade:fechaRecepcionCopade
-                   };
-                   
-                   paramValuesCopade.push(objCopade);
+                  
+            fs.readFile(dirCopades + file, function (err, data) {        
+                parser.parseString(data, function (err, lector) {          
+                    subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];          
+                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];          
+                    ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];                    
+                    objCopade = {            
+                        subTotal: subTotal,
+                        numeroEstimacion: numeroEstimacion,
+                        ordenSurtimiento: ordenSurtimiento,
+                        nombreCopade: file,
+                        fechaRecepcionCopade: fechaRecepcionCopade          
+                    };                    
 
-                   if ((nombreArchivos.length - i) == 1) {
-                       object.error = err;
-                       object.result = paramValuesCopade;
-                       self.view.expositor(res, object);
-                       nombreArchivos = [];
-                       paramValuesCopade = [];
-                   }
-               });
-           });
-       }
-   });
+                    paramValuesCopade.push(objCopade);       
+                    if ((nombreArchivos.length - i) == 1) {            
+                        object.error = err;            
+                        object.result = paramValuesCopade;            
+                        self.view.expositor(res, object);
+                        nombreArchivos = [];
+                        paramValuesCopade = [];          
+                    } 
+                });      
+            });    
+        }  
+    });
 }
 
 Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
@@ -317,22 +318,48 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
 
 //Inserta los datos de la copade en bd
 Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
-    var self = this;  
+    //Objeto que almacena la respuesta
     var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
 
-      
-    var infoCopade = req.body.copades;
+    var params = [
+        {
+            name: 'subTotal',
+            value: req.body[0].subTotal,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'numeroEstimacion',
+            value: req.body[0].numeroEstimacion,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'ordenSurtimiento',
+            value: req.body[0].ordenSurtimiento,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'nombreCopade',
+            value: req.body[0].nombreCopade,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'fechaRecepcionCopade',
+            value: req.body[0].fechaRecepcionCopade,
+            type: self.model.types.STRING
+        }
+    ];
 
-      
-    this.model.datosCopade(infoCopade, function (error, result) {     //Callback
-            
-        object.error = error;    
-        object.result = result;
+    this.model.post('INS_DATOS_COPADE_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;       
 
-            
-        self.view.expositor(res, object);  
+        self.view.expositor(res, object);
     });
-
 }
 
 //Actualiza el precio de una partida desde la orden de servicio
