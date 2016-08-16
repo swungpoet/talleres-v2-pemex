@@ -3,7 +3,7 @@ var ordenUrl = global_settings.urlCORS + '/api/orden/';
 registrationModule.factory('ordenPorCobrarRepository', function ($http) {
     return {
         getOrdenesPorCobrar: function (monto) {
-          var objTrabajo = {
+            var objTrabajo = {
                 monto: monto
             };
             return $http({
@@ -96,8 +96,20 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }      
             });    
         },
-        putRenombraCopade: function (idCopade, nombre) {
+        putRenombraCopade: function (nombre, idCopade) {
+            var objRenombre = {
+                nombreCopade: nombre,
+                idCopade: idCopade
+            };
 
+            return $http({        
+                url: ordenUrl + 'cambiaNombreCopade',
+                        method: "POST",
+                        data: objRenombre,
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            }); 
         }
     };
 });

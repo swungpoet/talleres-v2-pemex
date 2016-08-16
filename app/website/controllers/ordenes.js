@@ -356,7 +356,7 @@ Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
     this.model.post('INS_DATOS_COPADE_SP', params, function (error, result) {
         //Callback
         object.error = error;
-        object.result = result;       
+        object.result = result;
 
         self.view.expositor(res, object);
     });
@@ -396,6 +396,34 @@ Orden.prototype.post_precioEditado = function (req, res, next) {
 
         self.view.expositor(res, object);
     });
+}
+
+//Renombra el nombre de la copade con su identity 
+Orden.prototype.post_cambiaNombreCopade = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var nombreArchivos = req.body.nombreCopade;
+    var identificador = req.body.idCopade[0].id;
+
+    nombreArchivos.forEach(function (nombre) {
+        var extension = obtenerExtArchivo(nombre);
+        if (extension == '.pdf' || extension == '.PDF') {
+            var modificacion = fs.renameSync(dirCopades + nombre, dirCopades + 'COPADE_' + identificador + extension);
+        }
+        if (extension == '.xml' || extension == '.XML') {
+            var modificacion = fs.renameSync(dirCopades + nombre, dirCopades + 'COPADE_' + identificador + extension);
+        }
+    });
+
+    object.error = null;            
+    object.result = 1;            
+    self.view.expositor(res, object);
+
 }
 
 module.exports = Orden;
