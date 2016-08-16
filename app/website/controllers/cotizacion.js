@@ -475,17 +475,24 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
             if (idCategoria == 2) {
                  if (idCotizacion == 0) {
-                    if (!fs.existsSync(dirname + idTrabajo)) {
-                        fs.mkdirSync(dirname + idTrabajo);
-                        fs.mkdirSync(dirname + idTrabajo + '/multimedia');
-                        fs.mkdirSync(dirname + idTrabajo + '/documentos');
-                        fs.mkdirSync(dirname + idTrabajo + '/evidenciaTrabajo');
-                        fs.mkdirSync(dirname + idTrabajo + '/documentos/comprobanteRecepcion');
-                        fs.mkdirSync(dirname + idTrabajo + '/documentos/transferenciaCustodia');
-                        fs.mkdirSync(dirname + idTrabajo + '/documentos/certificadoConformidad');
-                        fs.mkdirSync(dirname + idTrabajo + '/documentos/factura');
-                        fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
-                    }
+                        if (!fs.existsSync(dirname + idTrabajo))
+                            fs.mkdirSync(dirname + idTrabajo);
+                        if(!fs.existsSync(dirname + idTrabajo+ '/multimedia'))
+                            fs.mkdirSync(dirname + idTrabajo + '/multimedia');
+                        if(!fs.existsSync(dirname + idTrabajo+ '/documentos'))
+                            fs.mkdirSync(dirname + idTrabajo + '/documentos');
+                        if(!fs.existsSync(dirname + idTrabajo + '/evidenciaTrabajo'))
+                            fs.mkdirSync(dirname + idTrabajo + '/evidenciaTrabajo');
+                        if(!fs.existsSync(dirname + idTrabajo + '/documentos/comprobanteRecepcion'))
+                            fs.mkdirSync(dirname + idTrabajo + '/documentos/comprobanteRecepcion')
+                        if(!fs.existsSync(dirname + idTrabajo + '/documentos/transferenciaCustodia'))
+                            fs.mkdirSync(dirname + idTrabajo + '/documentos/transferenciaCustodia')
+                        if(!fs.existsSync(dirname + idTrabajo + '/documentos/certificadoConformidad'))
+                            fs.mkdirSync(dirname + idTrabajo + '/documentos/certificadoConformidad');
+                        if(!fs.existsSync(dirname + idTrabajo + '/documentos/factura'))
+                            fs.mkdirSync(dirname + idTrabajo + '/documentos/factura');
+                        if(!fs.existsSync(dirname + idTrabajo + '/documentos/adendaCopade'))
+                            fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
                 }
                 if (idNombreEspecial == 1) {
                     nameFile = 'ComprobanteRecepcion';
