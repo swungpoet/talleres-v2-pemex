@@ -9,11 +9,10 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <tabset>
-                            <tab heading="Órdenes por Cobrar" index="0">
+                            <!-- <tab heading="Órdenes por Cobrar" index="0">
                                 <br>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover dataTableOrdenesPorCobrar" cg-busy="{promise:promise,message:message, minDuration: minDuration,
-delay:delay}">
+                                    <table class="table table-striped table-bordered table-hover dataTableOrdenesPorCobrar" cg-busy="{promise:promise,message:message, minDuration: minDuration,delay:delay}">
                                         <thead>
                                             <tr>
                                                 <th>Taller</th>
@@ -27,7 +26,6 @@ delay:delay}">
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
                                                 <th>Fecha Fin Trabajo</th>
-                                                <!-- <th>Fecha COPADE</th> -->
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
@@ -44,14 +42,12 @@ delay:delay}">
                                                 <td>{{orden.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{orden.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                <!--<td> 
-                                                </td>-->
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(orden, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
-                                                    <!-- <button ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar Adenda, COPADE" tooltip-placement="left" ng-click="subir(orden.idTrabajo)">
+                                                     <button ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar Adenda, COPADE" tooltip-placement="left" ng-click="subir(orden.idTrabajo)">
                                                     <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal"></span>
-                                                    </button> -->
+                                                    </button> 
                                                                                                 
                                                     <a id="downloadFactura" type="button" data-toggle="tooltip" tooltip="Generar Factura.txt" tooltip-placement="left" class="btn btn-primary" role="button" ng-click="generaTXT(orden.idTrabajo, orden.numeroTrabajo)"><span class="fa fa-file-text-o"></span></a>
 
@@ -60,7 +56,7 @@ delay:delay}">
                                         </tbody>
                                     </table>
                                 </div>
-                            </tab>
+                            </tab> -->
                             <tab heading="Cargar COPADES" index="1" ng-show="userData.idTipoUsuario == 1">
                                <br>
                                <button class="btn btn-primary" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar COPADE" tooltip-placement="right" ng-click="subir(orden.idTrabajo)" ng-disabled="fechaRecepcionCopade==''">
@@ -200,54 +196,84 @@ delay:delay}">
         </div>
     </div>
 </div> 
-
+<!-- dataTableCoincidencia
+dataTableOrdenesPorCobrar -->
 <div class="modal inmodal" id="mejorCoincidencia" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
             <div class="modal-header">
                 <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
-                    <h3 class="modal-title">Mejor Coincidencia</h3>
-                        <h6 class="modal-title text-navy">
+                <h3 class="modal-title">Mejor Coincidencia</h3>
+                <h6 class="modal-title text-navy">
                         <br>
                             Orden de Surtimiento: {{folio}} &nbsp
                             Monto de la Orden: {{monto | currency}}
                         </h6>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTableCoincidencia">
+                        <thead>
+                            <tr>
+                                <th>Número de la Orden</th>
+                                <th>Número Económico</th>
+                                <th>TAR</th>
+                                <th>Orden de Surtimiento</th>
+                                <th>Monto de la Orden</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="coincidencias in coincidencia">
+                                <td>{{coincidencias.numeroTrabajo}}</td>
+                                <td>{{coincidencias.numEconomico}}</td>
+                                <td>{{coincidencias.TAR}}</td>
+                                <td>{{coincidencias.folio}}</td>
+                                <td>{{coincidencias.montoOrden | currency}}</td>
+                                <td>
+                                    
+                                        <input  type="radio" name="name" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo)" data-toggle="tooltip" tooltip="" tooltip-placement="left">&nbsp;Elegir
+                                    
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="modal-header">
+                        <h3 class="modal-title">Ordenes Restantes</h3>
                     </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" cg-busy="{promise:promise,message:message, minDuration: minDuration,delay:delay}">
-                                        <thead>
-                                            <tr>  
-                                                <th>Número de la Orden</th>
-                                                <th>Número Económico</th>
-                                                <th>TAR</th>
-                                                <th>Orden de Surtimiento</th>
-                                                <th>Monto de la Orden</th>
-                                                <th>Acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="coincidencias in coincidencia">
-                                                <td>{{coincidencias.numeroTrabajo}}</td>
-                                                <td>{{coincidencias.numEconomico}}</td>
-                                                <td>{{coincidencias.TAR}}</td>
-                                                <td>{{coincidencias.folio}}</td>
-                                                <td>{{coincidencias.montoOrden | currency}}</td>
-                                                <td>
-                                                 <div class="radio radio-inline">
-                                                <input type="radio" name="name" value="" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo)" ng-hide="" data-toggle="tooltip" tooltip="" tooltip-placement="left" ng-disabled="">
-                                                <label for="inlineRadio"> Selecciona </label>
-                                                </td>
-                                            </div>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanDatos()">Salir</button>
-                        <button type="button" class="btn btn-primary" ng-click="asociarCopade()">Asignar</button>
+                    <table class="table table-striped table-bordered table-hover dataTableOrdenesPorCobrar">
+                        <thead>
+                            <tr>
+                                <th>Número de la Orden</th>
+                                <th>Número Económico</th>
+                                <th>TAR</th>
+                                <th>Orden de Surtimiento</th>
+                                <th>Monto de la Orden</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="orden in ordenes">
+                                <td>{{orden.numeroTrabajo}}</td>
+                                <td>{{orden.numEconomico}}</td>
+                                <td>{{orden.TAR}}</td>
+                                <td>{{orden.folio}}</td>
+                                <td>{{orden.montoOrden | currency}}</td>
+                                <td>
+                                    
+                                        <input type="radio" name="name" ng-click="seleccionMejorCoincidencia(orden.idTrabajo)"  data-toggle="tooltip" tooltip-placement="left">&nbsp;Elegir
+                                     
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-      </div>
- </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanDatos()">Salir</button>
+                <button type="button" class="btn btn-primary" ng-click="asociarCopade()">Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
