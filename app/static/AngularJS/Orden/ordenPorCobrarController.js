@@ -14,7 +14,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         if ($scope.userData.idTipoUsuario == 1) {
              $scope.getCopades();
          }
-         $scope.cleanfecha();
+          $scope.fechaRecepcionCopade = '';
          $scope.cleanDatos();
     }
 
@@ -66,16 +66,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Carga Adenda y Copade
     $scope.subir = function (idTrabajo) {
-     //   $scope.ordenes.forEach(function (p, i) {
-        //   if(p.idTrabajo == idTrabajo){
-           //  if(p.fechaServicio != null){
         $('#subirAdenda').appendTo('body').modal('show');
         $scope.idTrabajo = idTrabajo;
-    //     }else{
-       //      alertFactory.info('Debe ingresar la fecha Copade');
-      //   }
-     //  }
-   //  });
     }
 
     $scope.removePieza = function(idItem){
@@ -179,50 +171,20 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
        autoclose: true,
        todayHighlight: true
    });
-   //Devuelve la fecha de la copade para su edicion
-   $scope.openFinishingTrabajoModal = function (idTrabajo) {
+   //Muestra la captura de la fecha
+   $scope.fechaRecepcibeCopade = function () {
            $('#finalizarTrabajoModal').appendTo("body").modal('show');
-           $scope.idTrabajo = idTrabajo;
-           ordenPorCobrarRepository.getFechaCopade($scope.idTrabajo).then(function (result) {
-               $scope.resultado = result.data[0];
-               $scope.fecha = $scope.resultado.fecha;
-               $scope.hora = $scope.resultado.hora;
-           }, function (error) {
-               alertFactory.error("Error al buscar la fecha");
-           });
        }
        //Guardamos la fecha capturable de la copade
    $scope.saveFecha = function () {
-           $scope.idTrabajo;
-           $scope.fechaServicio = $scope.fecha + ' ' + $scope.hora;;
-           if ($scope.fecha != '') {
-               if ($scope.hora != '') {
-                   ordenPorCobrarRepository.putFechaCopade($scope.idTrabajo, $scope.fechaServicio).then(function (result) {
-                       $scope.resultado = result.data[0];
-                       if ($scope.resultado.fechaServicio == 1) {
-                           alertFactory.success("Se actualizo correctamente la fecha");
-                       } else {
-                           alertFactory.success("Se inserto correctamente la fecha");
-                       }
-                       $scope.cleanfecha();
+           if ($scope.fechaRecepcionCopade != '') {
                        $('#finalizarTrabajoModal').modal('hide');
-                       location.href = '/ordenesporcobrar';
-                   }, function (error) {
-                       alertFactory.error("Error al insertar la fecha");
-                   });
-               } else {
-                   alertFactory.info('Debe ingresar una hora');
-               }
            } else {
                alertFactory.info('Debe ingresar una fecha');
            }
-
        }
-       //Limpia en campo de la fecha para su edicion
-   $scope.cleanfecha = function () {
-       $scope.fecha = '';
-       $scope.hora = '';
-   }
+
+
    $('.clockpicker').clockpicker();
 
     $scope.downloadFile = function (downloadPath) {
@@ -251,15 +213,16 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                    file.forEach(function(archivo){
                        nombreCopades.push(archivo.name);
                    });
-                   ordenPorCobrarRepository.putGeneraDatosCopade(nombreCopades).then(function (result) {
+                   ordenPorCobrarRepository.putGeneraDatosCopade(nombreCopades,$scope.fechaRecepcionCopade).then(function (result) {
                        var copadesInfo = result.data;
                        ordenPorCobrarRepository.putInsertaDatosCopade(copadesInfo).then(function (resp) {
-                           var respuesta = resp.data;
+                            alertFactory.success("COPADE insertada");
+                            copadesInfo = [];
                        }, function (error) {
-alertFactory.error(error);
+                alertFactory.error(error);
                        });
                    }, function (error) {
-alertFactory.error(error);
+              alertFactory.error(error);
                    });
                    setTimeout(function () {
                        $scope.dzMethods.removeAllFiles(true);

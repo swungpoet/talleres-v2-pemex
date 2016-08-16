@@ -209,51 +209,6 @@ function checkExistsXML(file) {
     return file.split('.').pop() === 'xml';
 }
 
-Orden.prototype.post_putFechaServicio = function (req, res, next) {
-    //Objeto que almacena la respuesta
-    var object = {};
-    //Objeto que envía los parámetros
-    var params = {};
-    //Referencia a la clase para callback
-    var self = this;
-
-    var params = [
-        {
-            name: 'idTrabajo',
-            value: req.body.idTrabajo,
-            type: self.model.types.INT
-            },
-        {
-            name: 'fechaServicio',
-            value: req.body.fechaServicio,
-            type: self.model.types.STRING
-            }];
-
-    this.model.post('INS_FECHA_COPADE_TRABAJO_SP', params, function (error, result) {
-        //Callback
-        object.error = error;
-        object.result = result;
-
-        self.view.expositor(res, object);
-    });
-}
-
-Orden.prototype.get_searchFechaCopade = function (req, res, next) {
-    var self = this;
-    var params = [{
-        name: 'idTrabajo',
-        value: req.query.idTrabajo,
-        type: self.model.types.INT
-        }];
-
-    this.model.query('SEL_FECHA_COPADE_SP', params, function (error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
-        });
-    });
-}
-
 //URIEL
 //Obtiene las copades que aún no han sido asignadas
 Orden.prototype.get_copades = function (req, res, next) {
@@ -273,13 +228,13 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
    //Objeto que almacena la respuesta
    var object = {};
    //Objeto que envía los parámetros
-   var params = {};
+   var params = [];
    //Referencia a la clase para callback
    var self = this;
 
-   var nombreArchivos = req.body.archivos;
-   var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento;
-   var copades = [];
+   var nombreArchivos = [];
+   nombreArchivos = req.body.archivos;
+   var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, fechaRecepcionCopade = req.body.fechaRecepcionCopade;
    var objCopade = [];
 
    nombreArchivos.forEach(function (file, i) {
@@ -297,7 +252,8 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
                        subTotal: subTotal,
                        numeroEstimacion: numeroEstimacion,
                        ordenSurtimiento: ordenSurtimiento,
-                       nombreCopade: file
+                       nombreCopade: file,
+                       fechaRecepcionCopade:fechaRecepcionCopade
                    };
                    
                    paramValuesCopade.push(objCopade);
@@ -306,6 +262,8 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
                        object.error = err;
                        object.result = paramValuesCopade;
                        self.view.expositor(res, object);
+                       nombreArchivos = [];
+                        paramValuesCopade = [];
                    }
                });
            });
