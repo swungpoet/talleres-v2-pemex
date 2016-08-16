@@ -2,10 +2,17 @@ var ordenUrl = global_settings.urlCORS + '/api/orden/';
 
 registrationModule.factory('ordenPorCobrarRepository', function ($http) {
     return {
-        getOrdenesPorCobrar: function () {
+        getOrdenesPorCobrar: function (monto) {
+          var objTrabajo = {
+                monto: monto
+            };
             return $http({
                 url: ordenUrl + 'ordenesporcobrar',
-                method: "GET"
+                method: "GET",
+                params: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         },
         putTrabajoCobrado: function (idTrabajo, idDatosCopade) {

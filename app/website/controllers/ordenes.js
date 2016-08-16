@@ -24,7 +24,11 @@ var Orden = function (conf) {
 //Obtiene las ordenes pendientes por cobrar
 Orden.prototype.get_ordenesporcobrar = function (req, res, next) {
     var self = this;
-    var params = [];
+    var params = [{
+        name: 'monto',
+        value: req.query.monto,
+        type: self.model.types.INT
+        }];
 
     this.model.query('SEL_ORDENES_POR_COBRAR_SP', params, function (error, result) {
         self.view.expositor(res, {

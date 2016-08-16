@@ -7,61 +7,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         Dropzone.autoDiscover = false;
         $scope.dzOptionsOrdenCobrar = uploadRepository.getDzOptions("application/pdf,text/xml", 2);
         $scope.fecha = '';
-        $scope.getOrdenesPorCobrar();
+
         if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
             $scope.preFacturas();
         }
         if ($scope.userData.idTipoUsuario == 1) {
             $scope.getCopades();
         }
-        $scope.fechaRecepcionCopade = '';
+        $scope.limpiaFecha();
         $scope.cleanDatos();
-    }
-
-    //Devuelve las órdenes por cobrar
-    $scope.getOrdenesPorCobrar = function () {
-        $scope.promise =
-            ordenPorCobrarRepository.getOrdenesPorCobrar().then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.ordenes = result.data;
-                    setTimeout(function () {
-                        $('.dataTableOrdenesPorCobrar').DataTable({
-                            buttons: [
-                                {
-                                    extend: 'copy'
-                                    },
-                                {
-                                    extend: 'csv'
-                                    },
-                                {
-                                    extend: 'excel',
-                                    title: 'ExampleFile'
-                                    },
-                                {
-                                    extend: 'pdf',
-                                    title: 'ExampleFile'
-                                    },
-
-                                {
-                                    extend: 'print',
-                                    customize: function (win) {
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
-
-                                        $(win.document.body).find('table')
-                                            .addClass('compact')
-                                            .css('font-size', 'inherit');
-                                    }
-                            }
-                        ]
-                        });
-                    }, 1000);
-                } else {
-                    alertFactory.info('No se encontraron ordenes por cobrar.');
-                }
-            }, function (error) {
-                alertFactory.error("No se pudieron obtener las órdenes por cobrar");
-            });
     }
 
     //Carga Adenda y Copade
@@ -183,6 +137,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }
     }
 
+    $scope.limpiaFecha = function () {
+        $scope.fechaRecepcionCopade = '';
+    }
 
     $('.clockpicker').clockpicker();
 
@@ -215,12 +172,11 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     ordenPorCobrarRepository.putGeneraDatosCopade(nombreCopades, $scope.fechaRecepcionCopade).then(function (result) {
                         if (result.data.length > 0) {
                             ordenPorCobrarRepository.putInsertaDatosCopade(result.data).then(function (resp) {
-                                if(resp.data.length > 0){
-                                    
-                                }
-                                else{
+                                if (resp.data.length > 0) {
+
+                                } else {
                                     alertFactory.error('No se pudieron extraer los datos de la copade');
-                                }                                            
+                                }            
                             }, function (error) {
                                 alertFactory.error(error);            
                             }); 
@@ -259,110 +215,124 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Devuelve las copades pendientes por asignar
     $scope.getCopades = function () {
-            $('.dataTablePreFacturas').DataTable().destroy();
-            ordenPorCobrarRepository.getCopades().then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.copades = result.data;
-                    setTimeout(function () {
-                        $('.dataTableCopades').DataTable({
-                            buttons: [
-                                {
-                                    extend: 'copy'
+        $('.dataTablePreFacturas').DataTable().destroy();
+        ordenPorCobrarRepository.getCopades().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.copades = result.data;
+                setTimeout(function () {
+                    $('.dataTableCopades').DataTable({
+                        buttons: [
+                            {
+                                extend: 'copy'
                                    },
-                                {
-                                    extend: 'csv'
+                            {
+                                extend: 'csv'
                                    },
-                                {
-                                    extend: 'excel',
-                                    title: 'ExampleFile'
+                            {
+                                extend: 'excel',
+                                title: 'ExampleFile'
                                    },
-                                {
-                                    extend: 'pdf',
-                                    title: 'ExampleFile'
+                            {
+                                extend: 'pdf',
+                                title: 'ExampleFile'
                                    },
 
-                                {
-                                    extend: 'print',
-                                    customize: function (win) {
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
+                            {
+                                extend: 'print',
+                                customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
 
-                                        $(win.document.body).find('table')
-                                            .addClass('compact')
-                                            .css('font-size', 'inherit');
-                                    }
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
                            }
                        ]
-                        });
-                    }, 1000);
-                } else {
-                    alertFactory.info('No se encontró ninguna COPADE');
-                }
-            }, function (error) {
-                alertFactory.error("Error al obtener las COPADES");
-            });
-        }
-        //Busqueda de las mejores coincidencias para los datos Copade
+                    });
+                }, 1000);
+            } else {
+                alertFactory.info('No se encontró ninguna COPADE');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener las COPADES");
+        });
+    }
+
+    //Busqueda de las mejores coincidencias para los datos Copade
     $scope.buscaCoincidencia = function (idDatosCopade) {
+        $('.dataTableCoincidencia').DataTable().destroy();
+        $('.dataTableOrdenesPorCobrar').DataTable().destroy();
+        $scope.ordenes = [];
+        $scope.coincidencia = [];
         $scope.copades.forEach(function (p, i) {
             if (p.idDatosCopade == idDatosCopade) {
                 $scope.folio = $scope.copades[i].ordenSurtimiento;
                 $scope.monto = $scope.copades[i].subTotal;
                 $scope.idDatosDeCopade = $scope.copades[i].idDatosCopade;
                 ordenPorCobrarRepository.getMejorCoincidencia($scope.folio, $scope.monto).then(function (result) {
-                    if (result.data.length > 0) {
-                        $scope.coincidencia = result.data;
-                        $('#mejorCoincidencia').appendTo("body").modal('show');
-                    } else {
-                        alertFactory.info('No se encontró ninguna Coincidencia');
-                    }
+                    $scope.coincidencia = result.data;
+                    $('#mejorCoincidencia').modal('show');
+                    setTimeout(function () {
+                        $('.dataTableCoincidencia').DataTable();
+                    }, 1500);
                 }, function (error) {
                     alertFactory.error("Error al obtener las COPADE");
                 });
+                ordenPorCobrarRepository.getOrdenesPorCobrar($scope.monto).then(function (result) {
+                    $scope.ordenes = result.data;
+                    setTimeout(function () {
+                        $('.dataTableOrdenesPorCobrar').DataTable();
+                    }, 1500);
+                }, function (error) {
+                    alertFactory.error("No se pudieron obtener las órdenes por cobrar");
+                });
+
             }
         });
     }
 
     //Selecciona una orden en Radio y obtiene idTrabajo
     $scope.seleccionMejorCoincidencia = function (idTrabajo) {
-            $scope.idDeTrabajo = idTrabajo;
-        }
-        //Asociamos un idtrabajo con DatosCopade
+        $scope.idDeTrabajo = idTrabajo;
+    }
+
+    //Asociamos un idtrabajo con DatosCopade
     $scope.asociarCopade = function () {
-            if ($scope.idDeTrabajo != '') {
-                $('.btnTerminarTrabajo').ready(function () {
-                    swal({
-                            title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
-                            text: "Se cambiará el estatus a 'Cobrado'",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#65BD10",
-                            confirmButtonText: "Si",
-                            cancelButtonText: "No",
-                            closeOnConfirm: false,
-                            closeOnCancel: false
-                        },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
-                                $scope.cleanDatos();
-                                swal("Trabajo terminado!", "La copade se ha asociada", "success");
-                                location.href = '/ordenesporcobrar';
-                            } else {
-                                swal("Copade no asociada", "", "error");
-                                $scope.cleanDatos();
-                                $('#finalizarTrabajoModal').modal('hide');
-                            }
-                        });
-                });
-            } else {
-                alertFactory.error("Debe seleccionar una orden de servicio");
-            }
+        if ($scope.idDeTrabajo != '') {
+            $('.btnTerminarTrabajo').ready(function () {
+                swal({
+                        title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
+                        text: "Se cambiará el estatus a 'Cobrado'",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#65BD10",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
+                            $scope.cleanDatos();
+                            swal("Trabajo terminado!", "La copade se ha asociada", "success");
+                            location.href = '/ordenesporcobrar';
+                        } else {
+                            swal("Copade no asociada", "", "error");
+                            $scope.cleanDatos();
+                            $('#finalizarTrabajoModal').modal('hide');
+                        }
+                    });
+            });
+        } else {
+            alertFactory.error("Debe seleccionar una orden de servicio");
         }
-        //Limpiamos campos idTrabajo
+    }
+
+    //Limpiamos campos idTrabajo
     $scope.cleanDatos = function () {
         $scope.idDeTrabajo = '';
     }
-
 
 });
