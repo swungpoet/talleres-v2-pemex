@@ -47,6 +47,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         objBotonera.idCita = trabajo.idCita;
         localStorageService.set('objTrabajo', trabajo);
         localStorageService.set("botonera", objBotonera);
+        localStorageService.set('actualizaCosto', trabajo.numeroTrabajo)
         location.href = '/ordenservicio';
     }
 

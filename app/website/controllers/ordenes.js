@@ -44,14 +44,14 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
     var self = this;
 
     var params = [{
-        name: 'idTrabajo',
-        value: req.body.idTrabajo,
-        type: self.model.types.INT
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
         },
         {
-        name: 'idDatosCopade',
-        value: req.body.idDatosCopade,
-        type: self.model.types.INT
+            name: 'idDatosCopade',
+            value: req.body.idDatosCopade,
+            type: self.model.types.INT
         }];
 
     this.model.post('INS_TRABAJO_CONCLUIDO_SP', params, function (error, result) {
@@ -269,61 +269,63 @@ Orden.prototype.get_copades = function (req, res, next) {
 }
 
 //Lee la copade xml, y devuelve todo en un Array para después almacenarlos en bd
-Orden.prototype.post_generaDatosCopade = function (req, res, next) {
-   //Objeto que almacena la respuesta
-   var object = {};
-   //Objeto que envía los parámetros
-   var params = {};
-   //Referencia a la clase para callback
-   var self = this;
+Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto que almacena la respuesta
+      
+    var object = {};   //Objeto que envía los parámetros
+      
+    var params = {};   //Referencia a la clase para callback
+      
+    var self = this;
 
-   var nombreArchivos = req.body.archivos;
-   var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento;
-   var copades = [];
-   var objCopade = [];
+      
+    var nombreArchivos = req.body.archivos;  
+    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento;  
+    var copades = [];  
+    var objCopade = [];
 
-   nombreArchivos.forEach(function (file, i) {
-       var extension = obtenerExtArchivo(file);
-       if (extension == '.xml' || extension == '.XML') {
-           var parser = new xml2js.Parser();
+      
+    nombreArchivos.forEach(function (file, i) {    
+        var extension = obtenerExtArchivo(file);    
+        if (extension == '.xml' || extension == '.XML') {      
+            var parser = new xml2js.Parser();
 
-           fs.readFile(dirCopades + file, function (err, data) {
-               parser.parseString(data, function (err, lector) {
-                   subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];
-                   numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];
-                   ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];
-                   
-                   objCopade = {
-                       subTotal: subTotal,
-                       numeroEstimacion: numeroEstimacion,
-                       ordenSurtimiento: ordenSurtimiento,
-                       nombreCopade: file
-                   };
-                   
-                   paramValuesCopade.push(objCopade);
+                  
+            fs.readFile(dirCopades + file, function (err, data) {        
+                parser.parseString(data, function (err, lector) {          
+                    subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];          
+                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];          
+                    ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];                    
+                    objCopade = {            
+                        subTotal: subTotal,
+                                    numeroEstimacion: numeroEstimacion,
+                                    ordenSurtimiento: ordenSurtimiento,
+                                    nombreCopade: file          
+                    };                    
+                    paramValuesCopade.push(objCopade);
 
-                   if ((nombreArchivos.length - i) == 1) {
-                       object.error = err;
-                       object.result = paramValuesCopade;
-                       self.view.expositor(res, object);
-                   }
-               });
-           });
-       }
-   });
+                              
+                    if ((nombreArchivos.length - i) == 1) {            
+                        object.error = err;            
+                        object.result = paramValuesCopade;            
+                        self.view.expositor(res, object);          
+                    }        
+                });      
+            });    
+        }  
+    });
 }
 
 Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
     var self = this;
     var params = [{
-        name: 'folio',
-        value: req.query.folio,
-        type: self.model.types.STRING
+            name: 'folio',
+            value: req.query.folio,
+            type: self.model.types.STRING
         },
         {
-        name: 'monto',
-        value: req.query.monto,
-        type: self.model.types.INT
+            name: 'monto',
+            value: req.query.monto,
+            type: self.model.types.INT
         }];
 
     this.model.query('SEL_MEJOR_COINCIDENCIA_SP', params, function (error, result) {
@@ -333,7 +335,6 @@ Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {
         });
     });
 }
-
 
 //obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
 Orden.prototype.get_getadmonordenes = function (req, res, next) {
@@ -352,22 +353,60 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
-
 //Inserta los datos de la copade en bd
-Orden.prototype.post_insertaDatosCopade = function (req, res, next) {
-   var self = this;
-   var object = {};
+Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
+    var self = this;  
+    var object = {};
 
-   var infoCopade = req.body.copades;
+      
+    var infoCopade = req.body.copades;
 
-   this.model.datosCopade(infoCopade, function (error, result) {
-       //Callback
-       object.error = error;
-       object.result = result;
+      
+    this.model.datosCopade(infoCopade, function (error, result) {     //Callback
+            
+        object.error = error;    
+        object.result = result;
 
-       self.view.expositor(res, object);
-   });
+            
+        self.view.expositor(res, object);  
+    });
 
+}
+
+//Actualiza el precio de una partida desde la orden de servicio
+Orden.prototype.post_precioEditado = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idCotizacion',
+            value: req.body.idCotizacion,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idPartida',
+            value: req.body.idPartida,
+            type: self.model.types.INT
+        },
+        {
+            name: 'nuevoPrecio',
+            value: req.body.nuevoPrecio,
+            type: self.model.types.DECIMAL
+        },
+    ];
+
+    this.model.post('UPD_PRECIO_PARTIDA_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
 }
 
 module.exports = Orden;

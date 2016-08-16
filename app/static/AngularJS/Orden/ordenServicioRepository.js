@@ -36,7 +36,8 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 url: searchUrl + 'cotizacionByTrabajo',
                 method: "GET",
                 params: {
-                    idCita: idCita, idUsuario:idUsuario
+                    idCita: idCita,
+                    idUsuario: idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,6 +105,22 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
+        },
+        putPrecioEditado: function (idCotizacion, idPartida, nuevoPrecio) {
+            var precioObj = {
+                idCotizacion: idCotizacion,
+                idPartida: idPartida,
+                nuevoPrecio: nuevoPrecio
+            };
+
+            return $http({
+                url: ordenUrl + 'precioEditado',
+                method: "POST",
+                data: precioObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

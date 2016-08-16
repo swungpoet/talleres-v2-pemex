@@ -1,4 +1,4 @@
-registrationModule.controller('ordenServicioController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository) {
+registrationModule.controller('ordenServicioController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository, ordenServicioRepository) {
 
     var cDetalles = [];
     var cPaquetes = [];
@@ -19,6 +19,7 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
     $scope.size = 'mini';
     $scope.isSelected = 'yep';
     $scope.inverse = true;
+    localStorageService.get('actualizaCosto') != null ? $scope.urlReturn = 1 : $scope.urlReturn = 0;
 
     $scope.init = function () {
         $scope.cargaFicha();
@@ -338,4 +339,24 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
             }
         }
     });
+
+    //Invoca popup para editar el precio
+    $scope.editarPrecio = function (partida) {
+        $scope.pieza = partida;
+        $scope.precioActual = partida.precio;
+        $('#editaPrecio').appendTo('body').modal('show');
+
+    };
+
+    //Actualiza el precio de la partida en la bd
+    $scope.precioEditado = function (partida) {
+        ordenServicioRepository.putPrecioEditado(partida.idCotizacion, partida.idItem, $scope.precioActual).then(function (result) {
+            if (result.data.length > 0) {
+                alertFactory.info("El precio se actualizo correctamente");
+                $scope.getCotizacionByTrabajo();
+            }
+        }, function (error) {
+            alertFactory.error(error);
+        });
+    }
 });
