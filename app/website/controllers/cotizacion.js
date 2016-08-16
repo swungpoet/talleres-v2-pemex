@@ -6,8 +6,8 @@ var idTipoArchivo;
 var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
-var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 var nameFile = '';
 var idTrabajo = 0;
 var idNombreEspecial = 0;
@@ -534,7 +534,6 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
                 }
             }else{
-                //var idDatosCopade = (req.body.idDatosCopade).constructor != Array ? req.body.idDatosCopade : req.body.idDatosCopade[0];
                 nameFile = '';
                 cb(null, dirCopades);
             }
