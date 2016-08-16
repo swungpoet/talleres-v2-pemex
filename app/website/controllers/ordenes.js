@@ -6,7 +6,7 @@ var fs = require('fs'),
 
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
-var paramValuesCopade = [];
+
 
 var Orden = function (conf) {
     this.conf = conf || {};
@@ -237,6 +237,7 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
    nombreArchivos = req.body.archivos;
    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, fechaRecepcionCopade = req.body.fechaRecepcionCopade;
    var objCopade = [];
+   var paramValuesCopade = [];
 
    nombreArchivos.forEach(function (file, i) {
        var extension = obtenerExtArchivo(file);
@@ -264,59 +265,12 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
                        object.result = paramValuesCopade;
                        self.view.expositor(res, object);
                        nombreArchivos = [];
-                        paramValuesCopade = [];
+                       paramValuesCopade = [];
                    }
                });
            });
        }
    });
-}
-
-Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto que almacena la respuesta
-      
-    var object = {};   //Objeto que envía los parámetros
-      
-    var params = {};   //Referencia a la clase para callback
-      
-    var self = this;
-
-      
-    var nombreArchivos = req.body.archivos;  
-    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento;  
-    var copades = [];  
-    var objCopade = [];
-
-      
-    nombreArchivos.forEach(function (file, i) {    
-        var extension = obtenerExtArchivo(file);    
-        if (extension == '.xml' || extension == '.XML') {      
-            var parser = new xml2js.Parser();
-
-                  
-            fs.readFile(dirCopades + file, function (err, data) {        
-                parser.parseString(data, function (err, lector) {          
-                    subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];          
-                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];          
-                    ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];                    
-                    objCopade = {            
-                        subTotal: subTotal,
-                                    numeroEstimacion: numeroEstimacion,
-                                    ordenSurtimiento: ordenSurtimiento,
-                                    nombreCopade: file          
-                    };                    
-                    paramValuesCopade.push(objCopade);
-
-                              
-                    if ((nombreArchivos.length - i) == 1) {            
-                        object.error = err;            
-                        object.result = paramValuesCopade;            
-                        self.view.expositor(res, object);          
-                    }        
-                });      
-            });    
-        }  
-    });
-
 }
 
 Orden.prototype.get_getCoincidenciaMejor = function (req, res, next) {

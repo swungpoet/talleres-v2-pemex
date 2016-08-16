@@ -216,8 +216,16 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                    ordenPorCobrarRepository.putGeneraDatosCopade(nombreCopades,$scope.fechaRecepcionCopade).then(function (result) {
                        var copadesInfo = result.data;
                        ordenPorCobrarRepository.putInsertaDatosCopade(copadesInfo).then(function (resp) {
+                          alertFactory.error("Error al insertar la copade");
+                            copadesInfo = [];
+                            /*var copadesInsert = resp.data;   
+                            if(resp.data.length > 0){
                             alertFactory.success("COPADE insertada");
                             copadesInfo = [];
+                          }else{
+                          alertFactory.error("Error al insertar la copade");
+                          copadesInfo = [];
+                          }*/
                        }, function (error) {
                 alertFactory.error(error);
                        });
