@@ -14,7 +14,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         if ($scope.userData.idTipoUsuario == 1) {
              $scope.getCopades();
          }
-          $scope.fechaRecepcionCopade = '';
+         $scope.limpiaFecha();
          $scope.cleanDatos();
     }
 
@@ -138,6 +138,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
            }
        }
 
+    $scope.limpiaFecha = function () {
+      $scope.fechaRecepcionCopade = '';
+    }
 
    $('.clockpicker').clockpicker();
 
