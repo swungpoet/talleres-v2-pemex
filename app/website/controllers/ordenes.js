@@ -270,6 +270,7 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {
            });
        }
    });
+}
 
 Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto que almacena la respuesta
       
