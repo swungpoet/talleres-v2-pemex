@@ -81,7 +81,7 @@
                                     <td>{{articulo.cantidad}}</td>
                                     <td>{{ vistaPrecio == 1 ? articulo.precio : articulo.precioCliente | currency }}
                                         <!--<div ng-show="vistaPrecio == 1">-->
-                                        <button class="btn btn-success" type="button" id="btnCotizar" ng-click="editarPrecio(articulo)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-show="vistaPrecio == 1 && userData.idTipoUsuario == 1">
+                                        <button class="btn btn-success" type="button" id="btnCotizar" ng-click="editarPrecio(articulo)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-show="vistaPrecio == 1 && userData.idTipoUsuario == 1" ng-if="vistaEditaPrecio == 1">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                         <!--</div>-->

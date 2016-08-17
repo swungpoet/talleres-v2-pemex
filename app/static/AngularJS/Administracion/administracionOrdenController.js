@@ -48,7 +48,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         localStorageService.set('objTrabajo', trabajo);
         localStorageService.set("botonera", objBotonera);
         localStorageService.set('actualizaCosto', trabajo.numeroTrabajo)
-        location.href = '/ordenservicio';
+        location.href = '/ordenservicio?state=1';
     }
 
     //call backs of drop zone

@@ -20,6 +20,11 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
     $scope.isSelected = 'yep';
     $scope.inverse = true;
     localStorageService.get('actualizaCosto') != null ? $scope.urlReturn = 1 : $scope.urlReturn = 0;
+    if(window.location.href.indexOf('state') > -1) {
+           $scope.vistaEditaPrecio=1;
+      }else{
+            $scope.vistaEditaPrecio=0;
+      }
 
     $scope.init = function () {
         $scope.cargaFicha();
