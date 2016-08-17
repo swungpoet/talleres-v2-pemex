@@ -110,6 +110,20 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'        
                 }      
             }); 
+        },
+        putMueveCopade: function (idTrabajo, idDatosCopade) {     
+            var objArchivo = {
+                idTrabajo: idTrabajo,
+                idDatosCopade: idDatosCopade
+            };      
+            return $http({        
+                url: ordenUrl + 'mueveCopade',
+                        method: "POST",
+                        data: objArchivo,
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
         }
     };
 });

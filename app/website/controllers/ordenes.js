@@ -59,6 +59,30 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
         }];
 
     this.model.post('INS_TRABAJO_CONCLUIDO_SP', params, function (error, result) {
+        var nombreXmlMinusculas = 'COPADE_' + req.body.idDatosCopade + '.xml';
+        var nombreXmlMayusculas = 'COPADE_' + req.body.idDatosCopade + '.XML';
+        var nombrePdfMinusculas = 'COPADE_' + req.body.idDatosCopade + '.pdf';
+        var nombrePdfMayusculas = 'COPADE_' + req.body.idDatosCopade + '.PDF';
+
+        var archivosCopade = fs.readdirSync(dirCopades);
+
+        archivosCopade.forEach(function (archivo) {
+            var rutaDestino = dirname + req.body.idTrabajo + '/documentos/adendaCopade';
+            if (fs.existsSync(rutaDestino)) {
+                console.log('Existe carpeta adendaCopade');
+                var moveFile = fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
+            } else {
+                console.log('No se encuentra la carpeta adendaCopade');
+                fs.mkdir(rutaDestino, function (err) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    var moveFile = fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
+                    console.log("Directory created successfully!");
+                });
+            }
+        });
+
         //Callback
         object.error = error;
         object.result = result;
@@ -114,7 +138,12 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
                                 fs.readFile(directorioFactura + '/' + file, function (err, data) {
                                     parser.parseString(data, function (err, result) {
                                         fecha = result['cfdi:Comprobante'].$['fecha'];
-                                        if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
+                                        if ((result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') &&
+                                            (result['cfdi:Comprobante'].$['folio'] == undefined ||
+                                                result['cfdi:Comprobante'].$['folio'] == ''
+                                            )) {
+                                            numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                        } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
                                             numFactura = result['cfdi:Comprobante'].$['folio'];
                                         } else {
                                             numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
