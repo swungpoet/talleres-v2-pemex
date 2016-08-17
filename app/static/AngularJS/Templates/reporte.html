@@ -12,6 +12,7 @@
                                 <thead>
                                     <tr>
                                         <th>ConsecutivoOrden</th>
+                                        <th>Descripcion Estatus Orden Servicio</th>
                                         <th>Número Órden</th>
                                         <th>Número Cotización</th>
                                         <th>idTaller</th>
@@ -39,7 +40,7 @@
                                         <th>Fecha de Aceptacion del Trabajo por Pemex, Entrada Servicios SAP</th>
                                         <th>Fecha Trabajo en Garantía</th>
                                         <th>Fecha Factura Taller</th>
-                                        <th>Fecha COPADE</th>
+                                        <th>Fecha Recepcion COPADE</th>
                                         <th>Fecha de Facturacion a la bóveda electronica</th>
                                         <th>Orden de Surtimiento</th>
                                         <th ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">Facturación refacción</th>
@@ -52,6 +53,7 @@
                                 <tbody>
                                     <tr ng-repeat="dato in datos ">
                                         <td>{{dato.consecutivoOrden}}</td>
+                                        <td>{{dato.descripcionEstatus}}</td>
                                         <td>{{dato.numeroOrden}}</td>
                                         <td>{{dato.numeroCotizacion}}</td>
                                         <td>{{dato.idTaller}}</td>
@@ -79,7 +81,7 @@
                                         <td>{{dato.fechaAceptacionTrabajo}}</td>
                                         <td>{{dato.fechaTrabajoGarantia}}</td>
                                         <td>{{dato.fechaFacturaTaller}}</td>
-                                        <td>{{dato.nuevafechaCOPADE}}</td>
+                                        <td>{{dato.fechaRecepcionCOPADE}}</td>
                                         <td>{{dato.fechaCOPADE}}</td>
                                         <td>{{dato.ordenSurtimiento}}</td>
                                         <td ng-hide="userData.idSubtipoUsuario == 5 || userData.idSubtipoUsuario == 6 || userData.idSubtipoUsuario == 7 || userData.idSubtipoUsuario == 8 || userData.idSubtipoUsuario == 9">{{dato.facturacionRefaccion}}</td>                                  
