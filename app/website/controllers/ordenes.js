@@ -126,7 +126,7 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
             if (result[0].tipoOrdenServicio == 'SER') {
                 var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
-                var fecha, numFactura, uuid, nombreXml;
+                var fecha, numFactura, uuid, nombreXml, totalFactura;
 
                 var existeFacturaXML = files.some(checkExistsXML);
                 if (existeFacturaXML) {
@@ -149,6 +149,8 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
                                             numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
                                         }
                                         uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                        
+                                        totalFactura = result['cfdi:Comprobante'].$['total'];
                                         var nombreXml = file;
 
                                         console.log('Fecha: ' + fecha);
@@ -181,7 +183,13 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
                                                 name: 'XML',
                                                 value: nombreXml,
                                                 type: self.model.types.STRING
-                                    }];
+                                            },
+                                            {
+                                                name: 'totalFactura',
+                                                value: totalFactura,
+                                                type: self.model.types.DECIMAL
+                                            }
+                                        ];
                                         getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsSER);
                                     });
                                 });
