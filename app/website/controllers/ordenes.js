@@ -1,11 +1,13 @@
 var OrdenView = require('../views/ejemploVista'),
     OrdenModel = require('../models/dataAccess2');
 
+var mkdirp = require('mkdirp');
 var fs = require('fs'),
     xml2js = require('xml2js');
 
-var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 
 
 var Orden = function (conf) {
@@ -197,7 +199,7 @@ function getDatosFactura(res, self, stored, params) {
                 object.error = error;
                 object.result = result;
 
-                var wstream = fs.createWriteStream('C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
+                var wstream = fs.createWriteStream('C:/Produccion/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
                 if (wstream) {
                     var carrito = '';
                     var lineToInsert = '';
@@ -448,52 +450,34 @@ Orden.prototype.post_mueveCopade = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
 
-    var params = [{
-            name: 'idTrabajo',
-            value: req.body.idTrabajo,
-            type: self.model.types.INT
-        },
-        {
-            name: 'idDatosCopade',
-            value: req.body.idDatosCopade,
-            type: self.model.types.INT
-        }];
+    var idTrabajo = req.body.idTrabajo;
+    var idCopade = req.body.idDatosCopade;
 
-    var nombreXmlMinusculas = 'COPADE_' + req.body.idDatosCopade + '.xml';
-    var nombreXmlMayusculas = 'COPADE_' + req.body.idDatosCopade + '.XML';
-    var nombrePdfMinusculas = 'COPADE_' + req.body.idDatosCopade + '.pdf';
-    var nombrePdfMayusculas = 'COPADE_' + req.body.idDatosCopade + '.PDF';
+    var nombreXmlMinusculas = 'COPADE_' + idCopade + '.xml';
+    var nombreXmlMayusculas = 'COPADE_' + idCopade + '.XML';
+    var nombrePdfMinusculas = 'COPADE_' + idCopade + '.pdf';
+    var nombrePdfMayusculas = 'COPADE_' + idCopade + '.PDF';
+    var rutaDestino = dirname + idTrabajo + '/documentos/adendaCopade';
 
-    var archivosCopade = fs.readdirSync(dirCopades);
+    if (!fs.existsSync(rutaDestino)) {
+        fs.mkdirSync(rutaDestino);
+    }
 
-    archivosCopade.forEach(function (archivo) {
-        var rutaDestino = dirname + req.body.idTrabajo + '/documentos/adendaCopade';
-        if (fs.existsSync(rutaDestino)) {
-            console.log('Existe carpeta adendaCopade');
-
-            fs.rename(dirCopades + archivo, rutaDestino + '/' + archivo, function (err) {
-                if (err) throw err;
-                console.log('Move complete.');
-            });
-
-            //fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
-        } else {
-            console.log('No se encuentra la carpeta adendaCopade');
-            fs.mkdirSync(dirname + req.body.idTrabajo + '/documentos' + '/adendaCopade');
-            fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
-            console.log("Directory created successfully!");
-
-            /*fs.mkdir(rutaDestino, function (err) {
-                if (err) {
-                    return console.error(err);
-                }
-                
-            });*/
-        }
-    });
+    if (fs.existsSync(dirCopades + nombreXmlMinusculas)) {
+        fs.renameSync(dirCopades + nombreXmlMinusculas, rutaDestino + '/' + nombreXmlMinusculas);
+    }
+    if (fs.existsSync(dirCopades + nombreXmlMayusculas)) {
+        fs.renameSync(dirCopades + nombreXmlMayusculas, rutaDestino + '/' + nombreXmlMayusculas);
+    }
+    if (fs.existsSync(dirCopades + nombrePdfMinusculas)) {
+        fs.renameSync(dirCopades + nombrePdfMinusculas, rutaDestino + '/' + nombrePdfMinusculas);
+    }
+    if (fs.existsSync(dirCopades + nombrePdfMayusculas)) {
+        fs.renameSync(dirCopades + nombrePdfMayusculas, rutaDestino + '/' + nombrePdfMayusculas);
+    }
 
     //Callback
-    object.error = error;
+    object.error = null;
     object.result = 1;
 
     self.view.expositor(res, object);
