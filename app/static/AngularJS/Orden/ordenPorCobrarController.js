@@ -324,6 +324,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     function (isConfirm) {
                         if (isConfirm) {
                             $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
+                            ordenPorCobrarRepository.putMueveCopade($scope.idDeTrabajo, $scope.idDatosDeCopade).then(function (resp) {
+                                if (resp.data > 0) {
+                                    alertFactory.success('La copade se copio correctamente');
+                                }
+                            }, function (error) {
+                                alertFactory.error('La copade no se pudo depositar en su carpeta');
+                            });
                             $scope.cleanDatos();
                             swal("Trabajo terminado!", "La copade se ha asociada", "success");
                             location.href = '/ordenesporcobrar';

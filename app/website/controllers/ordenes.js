@@ -59,30 +59,6 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
         }];
 
     this.model.post('INS_TRABAJO_CONCLUIDO_SP', params, function (error, result) {
-        var nombreXmlMinusculas = 'COPADE_' + req.body.idDatosCopade + '.xml';
-        var nombreXmlMayusculas = 'COPADE_' + req.body.idDatosCopade + '.XML';
-        var nombrePdfMinusculas = 'COPADE_' + req.body.idDatosCopade + '.pdf';
-        var nombrePdfMayusculas = 'COPADE_' + req.body.idDatosCopade + '.PDF';
-
-        var archivosCopade = fs.readdirSync(dirCopades);
-
-        archivosCopade.forEach(function (archivo) {
-            var rutaDestino = dirname + req.body.idTrabajo + '/documentos/adendaCopade';
-            if (fs.existsSync(rutaDestino)) {
-                console.log('Existe carpeta adendaCopade');
-                var moveFile = fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
-            } else {
-                console.log('No se encuentra la carpeta adendaCopade');
-                fs.mkdir(rutaDestino, function (err) {
-                    if (err) {
-                        return console.error(err);
-                    }
-                    var moveFile = fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
-                    console.log("Directory created successfully!");
-                });
-            }
-        });
-
         //Callback
         object.error = error;
         object.result = result;
@@ -149,7 +125,7 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
                                             numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
                                         }
                                         uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                        
+
                                         totalFactura = result['cfdi:Comprobante'].$['total'];
                                         var nombreXml = file;
 
@@ -461,6 +437,66 @@ Orden.prototype.post_cambiaNombreCopade = function (req, res, next) {
     object.result = 1;            
     self.view.expositor(res, object);
 
+}
+
+//Quita la copade de la carpeta 'copades' y la pone en su respectiva orden de servicio 'idTrabajo/documentos/adendaCopade'
+Orden.prototype.post_mueveCopade = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idDatosCopade',
+            value: req.body.idDatosCopade,
+            type: self.model.types.INT
+        }];
+
+    var nombreXmlMinusculas = 'COPADE_' + req.body.idDatosCopade + '.xml';
+    var nombreXmlMayusculas = 'COPADE_' + req.body.idDatosCopade + '.XML';
+    var nombrePdfMinusculas = 'COPADE_' + req.body.idDatosCopade + '.pdf';
+    var nombrePdfMayusculas = 'COPADE_' + req.body.idDatosCopade + '.PDF';
+
+    var archivosCopade = fs.readdirSync(dirCopades);
+
+    archivosCopade.forEach(function (archivo) {
+        var rutaDestino = dirname + req.body.idTrabajo + '/documentos/adendaCopade';
+        if (fs.existsSync(rutaDestino)) {
+            console.log('Existe carpeta adendaCopade');
+
+            fs.rename(dirCopades + archivo, rutaDestino + '/' + archivo, function (err) {
+                if (err) throw err;
+                console.log('Move complete.');
+            });
+
+            //fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
+        } else {
+            console.log('No se encuentra la carpeta adendaCopade');
+            fs.mkdirSync(dirname + req.body.idTrabajo + '/documentos' + '/adendaCopade');
+            fs.renameSync(dirCopades + archivo, rutaDestino + '/' + archivo);
+            console.log("Directory created successfully!");
+
+            /*fs.mkdir(rutaDestino, function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+                
+            });*/
+        }
+    });
+
+    //Callback
+    object.error = error;
+    object.result = 1;
+
+    self.view.expositor(res, object);
 }
 
 module.exports = Orden;
