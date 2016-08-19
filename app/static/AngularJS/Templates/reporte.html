@@ -136,6 +136,7 @@
                                         <th>Fecha Recepcion COPADE</th>
                                         <th>Fecha de Facturacion a la bóveda electronica</th>
                                         <th>Orden de Surtimiento</th>
+                                        <th>Venta Reparación</th>
                                         <th>Numero de las partidas solicitadas por cada unidad</th>
                                     </tr>
                                 </thead>
@@ -175,6 +176,8 @@
                                         <td>{{dato.fechaRecepcionCOPADE}}</td>
                                         <td>{{dato.fechaCOPADE}}</td>
                                         <td>{{dato.ordenSurtimiento}}</td>
+                                        <td ng-if="dato.ventaReparacion == 0">{{0}}</td>
+                                        <td ng-if="dato.ventaReparacion > 0">{{((dato.ventaReparacion - dato.costoReparacion)*100)/dato.ventaReparacion}}</td>
                                         <td>{{dato.numeroPartida}}</td>
                                     </tr>
                                 </tbody>
