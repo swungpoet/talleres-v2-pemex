@@ -26,11 +26,11 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
                                     },
                                     {
                                         extend: 'excel',
-                                        title: 'ExampleFile'
+                                        title: 'ReporteGeneral'
                                     },
                                     {
                                         extend: 'pdf',
-                                        title: 'ExampleFile'
+                                        title: 'ReporteGeneral'
                                     },
 
                                     {
