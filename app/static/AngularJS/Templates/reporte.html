@@ -12,7 +12,10 @@
                                 <thead>
                                     <tr>
                                         <th>ConsecutivoOrden</th>
+                                        <th>Fecha Cita</th>
                                         <th>Descripcion Estatus Orden Servicio</th>
+                                        <th>Estatus Cotizacion</th>
+                                        <th>Estatus Cotizacion Detalle</th>
                                         <th>Número Órden</th>
                                         <th>Número Cotización</th>
                                         <th>idTaller</th>
@@ -22,7 +25,6 @@
                                         <th>Número Económico</th>
                                         <th>Marca - Modelo</th> 
                                         <th>Fecha Creacion Cita</th>                        
-                                        <th>Fecha Cita</th>
                                         <th>Estado Autotanque</th>
                                         <th>Fecha Confirmación Cita</th>
                                         <th>Estatus Cancelación</th>                             
@@ -53,7 +55,10 @@
                                 <tbody>
                                     <tr ng-repeat="dato in datos ">
                                         <td>{{dato.consecutivoOrden}}</td>
-                                        <td>{{dato.descripcionEstatus}}</td>
+                                        <td>{{dato.fechaCita}}</td>
+                                        <td>{{dato.estatusServicio}}</td>
+                                        <td>{{dato.estatusCotizacion}}</td>
+                                        <td>{{dato.estatusCotizacionDetalle}}</td>
                                         <td>{{dato.numeroOrden}}</td>
                                         <td>{{dato.numeroCotizacion}}</td>
                                         <td>{{dato.idTaller}}</td>
@@ -63,7 +68,6 @@
                                         <td>{{dato.numeroEconomico}}</td>
                                         <td>{{dato.marcaModelo}}</td> 
                                         <td>{{dato.fechaCreacionCita}}</td>                       
-                                        <td>{{dato.fechaCita}}</td>
                                         <td>{{dato.estadoAutotanque}}</td>
                                         <td>{{dato.fechaConfirmacionCita}}</td>
                                         <td>{{dato.estatusCancelacionCita}}</td>
@@ -86,10 +90,10 @@
                                         <td>{{dato.ordenSurtimiento}}</td>
                                         <td>{{dato.facturacionRefaccion}}</td>                                  
                                         <td>{{dato.costoReparacion}}</td>
-                                        <td>{{dato.ventaReparacion}}</td>
                                         <td ng-if="dato.ventaReparacion == 0">{{0}}</td>
                                         <td ng-if="dato.ventaReparacion > 0">{{((dato.ventaReparacion - dato.costoReparacion)*100)/dato.ventaReparacion}}</td>
-                                        <td>{{dato.partidasSolicitadas}}</td>
+                                        <td>{{dato.porcentajeUtilidad}}</td>
+                                        <td>{{dato.numeroPartida}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -99,7 +103,10 @@
                                 <thead>
                                     <tr>
                                         <th>ConsecutivoOrden</th>
+                                        <th>Fecha Cita</th>
                                         <th>Descripcion Estatus Orden Servicio</th>
+                                        <th>Estatus Cotizacion</th>
+                                        <th>Estatus Cotizacion Detalle</th>
                                         <th>Número Órden</th>
                                         <th>Número Cotización</th>
                                         <th>idTaller</th>
@@ -109,7 +116,6 @@
                                         <th>Número Económico</th>
                                         <th>Marca - Modelo</th> 
                                         <th>Fecha Creacion Cita</th>                        
-                                        <th>Fecha Cita</th>
                                         <th>Estado Autotanque</th>
                                         <th>Fecha Confirmación Cita</th>
                                         <th>Estatus Cancelación</th>                             
@@ -136,7 +142,10 @@
                                 <tbody>
                                     <tr ng-repeat="dato in datos ">
                                         <td>{{dato.consecutivoOrden}}</td>
-                                        <td>{{dato.descripcionEstatus}}</td>
+                                        <td>{{dato.fechaCita}}</td>
+                                        <td>{{dato.estatusServicio}}</td>
+                                        <td>{{dato.estatusCotizacion}}</td>
+                                        <td>{{dato.estatusCotizacionDetalle}}</td>
                                         <td>{{dato.numeroOrden}}</td>
                                         <td>{{dato.numeroCotizacion}}</td>
                                         <td>{{dato.idTaller}}</td>
@@ -146,7 +155,6 @@
                                         <td>{{dato.numeroEconomico}}</td>
                                         <td>{{dato.marcaModelo}}</td> 
                                         <td>{{dato.fechaCreacionCita}}</td>                       
-                                        <td>{{dato.fechaCita}}</td>
                                         <td>{{dato.estadoAutotanque}}</td>
                                         <td>{{dato.fechaConfirmacionCita}}</td>
                                         <td>{{dato.estatusCancelacionCita}}</td>
@@ -167,7 +175,7 @@
                                         <td>{{dato.fechaRecepcionCOPADE}}</td>
                                         <td>{{dato.fechaCOPADE}}</td>
                                         <td>{{dato.ordenSurtimiento}}</td>
-                                        <td>{{dato.partidasSolicitadas}}</td>
+                                        <td>{{dato.numeroPartida}}</td>
                                     </tr>
                                 </tbody>
                             </table>

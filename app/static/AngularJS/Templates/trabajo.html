@@ -24,7 +24,7 @@
                                                 <th>Descripción</th>
                                                 <th>Estatus</th>
                                                 <th>Fecha</th>
-                                                <th>Fecha inicio real de trabajos</th>
+                                                <th ng-hide="userData.idTipoUsuario == 4">Fecha inicio real de trabajos</th>
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
@@ -38,7 +38,7 @@
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td ng-class="{'rowAzul': trabajo.estatus=='OrdenGarantia'}">{{trabajo.descripcionLarga}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
-                                                <td>{{trabajo.fechaServicio}}
+                                                <td ng-hide="userData.idTipoUsuario == 4">{{trabajo.fechaServicio}}
                                                 <br>
                                                 <button class="btn btn-success" type="button" ng-click="cargaFecha(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Fecha Inicio real de trabajos" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span></button>
                                                 </td>
