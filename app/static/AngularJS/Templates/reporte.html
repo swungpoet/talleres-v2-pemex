@@ -92,8 +92,8 @@
                                         <td>{{dato.costoReparacion}}</td>
                                         <td>{{dato.ventaReparacion }}</td>
                                         <td ng-if="dato.ventaReparacion > 0">{{((dato.ventaReparacion - dato.costoReparacion)*100)/dato.ventaReparacion}}</td>
-                                        <td ng-if="dato.ventaReparacion == 0"></td>
-                                        <td>{{0}}</td>
+                                        <td ng-if="dato.ventaReparacion == 0">{{0}}</td>
+                                        <td>{{dato.numeroPartida}}</td>
                                     </tr>
                                 </tbody>
                             </table>
