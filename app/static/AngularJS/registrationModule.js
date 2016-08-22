@@ -107,7 +107,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
 
         $routeProvider.when('/acciontaller', {
             templateUrl: 'AngularJS/Templates/accionTaller.html',
-            controller: 'accionTallerController'
+            controller: 'tallerController'
         });
         
         $locationProvider.html5Mode({

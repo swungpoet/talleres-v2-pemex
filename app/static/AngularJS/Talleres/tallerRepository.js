@@ -18,6 +18,7 @@ return {
         },
                 getTallerTar: function () {
             return $http({
+                url: tallerUrl + 'obtienetar/',
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
@@ -36,6 +37,15 @@ return {
                 getTallerEstatus: function () {
             return $http({
                 url: tallerUrl + 'obtieneestatustaller/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getTallerInformation: function () {
+            return $http({
+                url: tallerUrl + 'obtienetalleres/',
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json'

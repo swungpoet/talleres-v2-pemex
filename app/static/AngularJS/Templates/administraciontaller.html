@@ -39,7 +39,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="ciudad">
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="direccion">
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="encargado">
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="telefono">
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="email">
                                 </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="pais">
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="estado">
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="ciudad">
                                 </div>
                             </div>
                         </div>
@@ -171,7 +171,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="delegacion">
                                 </div>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="colonia">
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="calle">
                                 </div>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="numeroExterior">
                                 </div>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="codigoPostal">
                                 </div>
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="claveUsuario">
                                 </div>
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group date">
-                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="datosCita.fechaCita">
+                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="fechaOperacion">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
@@ -281,7 +281,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group date">
-                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="datosCita.fechaCita">
+                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="fechaTaller">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
@@ -293,7 +293,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group clockpicker" data-autoclose="true">
-                                    <input type="text" placeholder="Hora" class="form-control" value="" ng-model="datosCita.horaCita">
+                                    <input type="text" placeholder="Hora" class="form-control" value="" ng-model="horaTaller">
                                     <span class="input-group-addon">
                                                 <span class="fa fa-clock-o"></span>
                                     </span>
@@ -307,7 +307,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="CveUsuario">
                                 </div>
                             </div>
                         </div>
@@ -318,7 +318,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="idTar">
                                 </div>
                             </div>
                         </div>
@@ -329,7 +329,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="idProveedor">
                                 </div>
                             </div>
                         </div>
