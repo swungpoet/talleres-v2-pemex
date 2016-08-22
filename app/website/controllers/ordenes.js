@@ -225,7 +225,7 @@ var obtenerExtArchivo = function (file) {
 
 //valida si existe al menos un archivo xml
 function checkExistsXML(file) {
-    return file.split('.').pop() === 'xml';
+    return file.split('.').pop() === 'xml' || file.split('.').pop() === 'XML';
 }
 
 //URIEL
