@@ -94,7 +94,7 @@ Taller.prototype.get_obtieneestatustaller = function (req, res, next) {
     //asignación de valores mediante parámetros del request
     var params = [];
 
-    this.model.query('SEL_ESTATUS_TALLER_SP', params, function (error, result) {
+    this.model.query('SEL_STATUS_TALLER_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
