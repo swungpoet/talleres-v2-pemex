@@ -1,0 +1,85 @@
+<div ng-init="init()">
+    <div class="headTitleTallerCita">
+        <span class="title"> Administracion de Talleres<span class="subtitle">Modo Edicion</span></span>
+    </div>
+    <div class="wrapper wrapper-content">
+        
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover dataTableTaller" cg-busy="{promise:promise,message:message}">
+                                        <thead>
+                                            <tr>
+                                                <th>GAR</th>
+                                                <th>TAD</th>
+                                                <th>Ciudad</th>
+                                                <th>Razon Social</th>
+                                                <th>Direccion</th>
+                                                <th>Encargado</th>
+                                                <th>RFC</th>
+                                                <th>Tipo</th>
+                                                <th>Telefono</th>
+                                                <th>Email</th>
+                                                <th>Pais</th>
+                                                <th>Estado</th>
+                                                <th>Ciudad</th>
+                                                <th>Delegacion</th>
+                                                <th>Colonia</th>
+                                                <th>Calle</th>
+                                                <th>Numero Exterior</th>
+                                                <th>Codigo Postal</th>
+                                                <th>CVEUSU</th>
+                                                <th>FechaOPE</th>
+                                                <th>Estatus</th>
+                                                <th>Lada</th>
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th>CVEUSU</th>
+                                                <th>idTar</th>
+                                                <th>idProvedor</th>
+                                                <th>Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="taller in talleres">
+                                                <td>{{taller.GAR}}</td>
+                                                <td>{{taller.TAD}}</td>
+                                                <td>{{taller.ciudad}}</td>
+                                                <td>{{taller.razonSocial}}</td>
+                                                <td>{{taller.direccion}}</td>
+                                                <td>{{taller.encargado}}</td>
+                                                <td>{{taller.PER_RFC}}</td>
+                                                <td>{{taller.PER_TIPO}}</td>
+                                                <td>{{taller.PER_TELEFONO1}}</td>
+                                                <td>{{taller.PER_EMAIL}}</td>
+                                                <td>{{taller.PER_PAIS}}</td>
+                                                <td>{{taller.PER_ESTADO}}</td>
+                                                <td>{{taller.PER_CIUDAD}}</td>
+                                                <td>{{taller.PER_DELEGAC}}</td>
+                                                <td>{{taller.PER_COLONIA}}</td>
+                                                <td>{{taller.PER_CALLE1}}</td>
+                                                <td>{{taller.PER_NUMEXTER}}</td>
+                                                <td>{{taller.PER_CODPOS}}</td>
+                                                <td>{{taller.PER_CVEUSU}}</td>
+                                                <td>{{taller.PER_FECHOPE}}</td>
+                                                <td>{{taller.PER_STATUS}}</td>
+                                                <td>{{taller.PER_LADA}}</td>
+                                                <td>{{taller.PER_FECING}}</td>
+                                                <td>{{taller.PER_HORING}}</td>
+                                                <td>{{taller.PER_CVEUSUING}}</td>
+                                                <td>{{taller.idTAR}}</td>
+                                                <td>{{taller.idProveedor}}</td>
+                                                <td>
+
+                                                <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar" id="btnCotizar" tooltip-placement="top" ng-click="editaCita(cita.idCita, cita.idUnidad, 1, cita)"><i class="glyphicon glyphicon-refresh"></i>  
+                                                </button>
+
+                                                 <button class="btn btn-cancela btn-danger btnTerminarTrabajo" type="button" data-toggle="tooltip" tooltip="Eliminar" id="btnCotizar" tooltip-placement="top" ng-click="openFinishingTrabajoModal(cita.idCita)"><i class="glyphicon glyphicon-remove-circle"></i>  
+                                                </button>
+
+                                                </td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+    </div>
+</div>

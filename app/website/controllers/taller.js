@@ -31,7 +31,7 @@ Taller.prototype.get_obtienetaller = function (req, res, next) {
             type: self.model.types.INT
         }];
 
-    this.model.query('SEL_OBTIENE_TALLER', params, function (error, result) {
+    this.model.query('SEL_OBTIENE_TALLER_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
@@ -52,7 +52,7 @@ Taller.prototype.get_obtienetalleres = function (req, res, next) {
     //asignación de valores mediante parámetros del request
     var params = [];
 
-    this.model.query('SEL_OBTIENE_TALLERES', params, function (error, result) {
+    this.model.query('SEL_OBTIENE_TALLER_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
