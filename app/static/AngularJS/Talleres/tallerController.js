@@ -16,33 +16,33 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
               $scope.promise = tallerRepository.getTallerGar().then(function (gar) {
             $scope.selectedGar = gar.data;
         }, function (error) {
-            alertFactory.error('Error al obtener los datos');
+            alertFactory.error('Error al obtener los datos GAR');
         });
     }
     $scope.getrecuperaTAR = function () {
               $scope.promise = tallerRepository.getTallerTar().then(function (tar) {
             $scope.tar = tar.data;
         }, function (error) {
-            alertFactory.error('Error al obtener los datos');
+            alertFactory.error('Error al obtener los datos TAR');
         });
     }
     $scope.getrecuperaTipoUsuario = function () {
               $scope.promise = tallerRepository.getTallerTipoUsuario().then(function (tipoUsuario) {
             $scope.tipoUsuario = tipoUsuario.data;
         }, function (error) {
-            alertFactory.error('Error al obtener los datos');
+            alertFactory.error('Error al obtener los datos Usuario');
         });
     }
     $scope.getrecuperaEstatus = function () {
               $scope.promise = tallerRepository.getTallerEstatus().then(function (estatus) {
             $scope.estatus = estatus.data;
         }, function (error) {
-            alertFactory.error('Error al obtener los datos');
+            alertFactory.error('Error al obtener los datos Estatus');
         });
     }
 
      $('.clockpicker').clockpicker();
-     
+
         $('#fechaTrabajo .input-group.date').datepicker({
         todayBtn: "linked",
         keyboardNavigation: true,
