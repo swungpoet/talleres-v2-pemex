@@ -6,5 +6,6 @@
      login: require('./controllers/login'),
      example: require('./controllers/example'),
      reporte: require('./controllers/reporte'),
-     osur: require('./controllers/osur')
+     osur: require('./controllers/osur'),
+     taller: require('./controllers/taller')
  }
