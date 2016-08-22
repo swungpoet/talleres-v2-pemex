@@ -269,10 +269,135 @@ Taller.prototype.post_actualizataller = function (req, res, next) {
     var self = this;
     //Asigno a params el valor de mis variables
     var params = [{
-            name: 'idTaller',
-            value: req.body.idTaller,
-            type: self.model.types.INT
-        }];
+                    name: 'idTaller',
+                    value: req.body.idTaller,
+                    type: self.model.types.INT
+                 },
+                 {
+                    name: 'gar',
+                    value: req.body.gar,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'tad',
+                    value: req.body.gar,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'ciudad',
+                    value: req.body.ciudad,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'razonSocial',
+                    value: req.body.razonSocial,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'encargado',
+                    value: req.body.encargado,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'rfc',
+                    value: req.body.rfc,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'tipo',
+                    value: req.body.tipo,
+                    type: self.model.types.INT
+                 },
+                 {
+                    name: 'telefono',
+                    value: req.body.telefono,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'email',
+                    value: req.body.email,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'pais',
+                    value: req.body.pais,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'estado',
+                    value: req.body.estado,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'delegacion',
+                    value: req.body.delegacion,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'colonia',
+                    value: req.body.colonia,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'calle',
+                    value: req.body.calle,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'numeroExt',
+                    value: req.body.numeroExt,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'codPostal',
+                    value: req.body.codPostal,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'cveusu',
+                    value: req.body.cveusu,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'fechope',
+                    value: req.body.fechope,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'status',
+                    value: req.body.status,
+                    type: self.model.types.INT
+                 },
+                 {
+                    name: 'lada',
+                    value: req.body.status,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'fecing',
+                    value: req.body.status,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'horing',
+                    value: req.body.status,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'cveusuing',
+                    value: req.body.status,
+                    type: self.model.types.STRING
+                 },
+                 {
+                    name: 'idTar',
+                    value: req.body.status,
+                    type: self.model.types.INT
+                 },
+                 {
+                    name: 'idProveedor',
+                    value: req.body.idProveedor,
+                    type: self.model.types.INT
+                 }];
 
     this.model.post('UPD_ACTUALIZA_TALLER_SP', params, function (error, result) {
         //Callback
