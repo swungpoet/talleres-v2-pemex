@@ -7,7 +7,7 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
 	//this is the first method executed in the view
 	$scope.init = function(){
 	$scope.getrecuperaGAR();
-	$scope.getrecuperaTAR();
+	
 	$scope.getrecuperaTipoUsuario();
 	$scope.getrecuperaEstatus();
     $scope.getTaller();
@@ -15,14 +15,19 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
 
 	$scope.getrecuperaGAR = function () {
               $scope.promise = tallerRepository.getTallerGar().then(function (gar) {
-            $scope.selectedGar = gar.data;
+            $scope.tipoGar = gar.data;
         }, function (error) {
             alertFactory.error('Error al obtener los datos GAR');
         });
     }
+        $scope.obtieneZona = function () {
+        $scope.idZona=$scope.idGar;
+        $scope.getrecuperaTAR($scope.idZona);
+    }
     $scope.getrecuperaTAR = function () {
-              $scope.promise = tallerRepository.getTallerTar().then(function (tar) {
-            $scope.tar = tar.data;
+        tallerRepository.getTallerTar($scope.idZona).then(function (tar) {
+            $scope.tipoTar = tar.data;
+            
         }, function (error) {
             alertFactory.error('Error al obtener los datos TAR');
         });
@@ -100,6 +105,14 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
         autoclose: true,
         todayHighlight: true
     });
+
+    $scope.insertaTaller = function () {
+        
+
+    }
+
+
+
 
 });
 

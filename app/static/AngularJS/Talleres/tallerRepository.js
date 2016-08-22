@@ -16,10 +16,13 @@ return {
                 }
             });
         },
-                getTallerTar: function () {
+                getTallerTar: function (idZona) {
             return $http({
                 url: tallerUrl + 'obtienetar/',
                 method: "GET",
+                params: {
+                    idZona: idZona
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }

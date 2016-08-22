@@ -13,20 +13,19 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="Gar" ng-model="selectedGar" ng-options="datosG.idGAR as datosG.descripcionGAR for datosG in gars" >
+                                <select class="form-control m-b" name="gar" ng-model="idGar" ng-options="gar.idGAR as gar.descripcionGAR  for gar in tipoGar" ng-change="obtieneZona()">
                                     <option value="">Seleccione una GAR</option>
                                     <!--default option -->
                                 </select>
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label class="col-xs-2 control-label">TAD:</label>
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                <select class="form-control m-b" name="tar" ng-model="idTar" ng-options="tar.idTar as tar.nombreTar  for tar in tipoTar">
                                     <option value="">Seleccione una TAD</option>
                                     <!--default option -->
                                 </select>
@@ -52,17 +51,6 @@
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
                                     <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">Direccion:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group m-b">
-                                    <input type="text" class="form-control" ng-model="direccion">
                                 </div>
                             </div>
                         </div>
@@ -115,8 +103,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                         <div class="form-group">
                             <label class="col-xs-2 control-label">Email:</label>
@@ -198,6 +184,9 @@
                             </div>
                         </div>
 
+                    </div>
+                    <div class="col-xs-4">
+
                         <div class="form-group">
                             <label class="col-xs-2 control-label">Numero Exterior:</label>
                             <br>
@@ -209,9 +198,6 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="col-xs-4">
 
                         <div class="form-group">
                             <label class="col-xs-2 control-label">Codigo Postal:</label>
@@ -228,7 +214,8 @@
 
 
                         <div class="form-group">
-                            <label class="col-xs-2 control-label">CVEUSU:</label>
+                            <label class="col-xs-2 control-label">Clave Usuario:</label>
+                            <br>
                             <br>
                             <br>
                             <div class="col-xs-10">
@@ -238,19 +225,6 @@
                             </div>
                         </div>
 
-
-
-                        <div class="form-group" id="fechaTrabajo">
-                            <label class="col-xs-3 control-label">FechaOPE:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group date">
-                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="fechaOperacion">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-xs-2 control-label">Estatus:</label>
@@ -271,54 +245,6 @@
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
                                     <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group" id="fechaTrabajo">
-                            <label class="col-xs-3 control-label">Fecha:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group date">
-                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="fechaTaller">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">Hora de Alta:</label>
-                            <br>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group clockpicker" data-autoclose="true">
-                                    <input type="text" placeholder="Hora" class="form-control" value="" ng-model="horaTaller">
-                                    <span class="input-group-addon">
-                                                <span class="fa fa-clock-o"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-4 control-label">CVEUsuario:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group m-b">
-                                    <input type="text" class="form-control" ng-model="CveUsuario">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">IdTar:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group m-b">
-                                    <input type="text" class="form-control" ng-model="idTar">
                                 </div>
                             </div>
                         </div>
