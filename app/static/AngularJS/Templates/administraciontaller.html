@@ -1,111 +1,355 @@
 <div ng-init="init()">
+    <div class="headTitleAdmonTaller">
+        <span class="title"> Administracion de Talleres <span class="subtitle">Vesrion 1.0</span></span>
+    </div>
     <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="ibox-content" ng-hide="conTar">
-                <div class="alert alert-danger">
-                   <strong>Seleccione una TAR, </strong> para trabajar con ella.
-                </div>
-            </div>
-            <br>
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-success pull-right">Inicial</span>
-                        <h5>Presupuesto</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{presupuesto | currency}}</h1>
-                        <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
-                        <small></small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-info pull-right">Actual</span>
-                        <h5>Saldo</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{saldo | currency}}</h1>
-                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
-                        <small></small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-danger pull-right">Cotizaciones</span>
-                        <h5>Gastado</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{gasto | currency}}</h1>
-                        <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
-                        <small></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
         <div class="row">
             <div class="col-lg-offset-1 col-lg-8">
                 <form class="form-horizontal">
-                  <div class="form-group">
-                        <label class="col-sm-2 control-label">TAR</label>
-                        <div class="col-sm-10">
-                            <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
-                                <option value="">Seleccione una TAR</option>
-                                <!--default option -->
-                            </select>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">GAR:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                    <option value="">Seleccione una GAR</option>
+                                    <!--default option -->
+                                </select>
+                            </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">TAD:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                    <option value="">Seleccione una TAD</option>
+                                    <!--default option -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ciudad:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">RazonSocial:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Direccion:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Encargado:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">RFC:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tipo:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                    <option value="">Seleccione un tipo de Usuario</option>
+                                    <!--default option -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">NombreRazon:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                   <div class="form-group">
-                        <label class="col-sm-2 control-label">Folio</label>
-                        <div class="col-sm-10">
-                            <div class="input-group m-b">
-                                <input type="text" class="form-control">
+                    <div class="col-lg-4">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Telefono:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Pais:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Estado:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Ciudad:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Delegacion:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Colonia:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Calle:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Numero Exterior:</label>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Codigo Postal:</label>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">CVEUSU:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Fechope:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Estatus:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                    <option value="">Seleccione un Estatus</option>
+                                    <!--default option -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lada:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="fechaTrabajo">
+                            <label class="col-sm-3 control-label">Fecha:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group date">
+                                    <input type="text" placeholder="Fecha" class="form-control" value="" ng-model="datosCita.fechaCita">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Hora de Alta:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group clockpicker" data-autoclose="true">
+                                    <input type="text" placeholder="Hora" class="form-control" value="" ng-model="datosCita.horaCita">
+                                    <span class="input-group-addon">
+                                                <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">CVEUsuario:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">IdTar:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">IdProveedor:</label>
+                            <br>
+                            <br>
+                            <div class="col-sm-10">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Presupuesto</label>
-                        <div class="col-sm-10">
-                            <div class="input-group m-b"><span class="input-group-addon">$</span>
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-                    </div>                    
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Fecha Inicial</label>
-                        <div class="col-sm-10">
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control" value="03/04/2014">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Fecha Final</label>
-                        <div class="col-sm-10">
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control" value="03/04/2014">
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <div class="col-sm-offset-10 col-sm-2">
                             <button class="btn btn-primary"><i class="fa fa-check">
                                 </i> Guardar</button>
                         </div>
                     </div>
+
                 </form>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-success"><i class="fa fa-history">
-                </i> Ver Historial</button>
-            </div>
         </div>
+
     </div>
 </div>
