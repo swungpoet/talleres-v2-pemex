@@ -100,6 +100,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'administracionOrdenController'
         });
         
+        $routeProvider.when('/administraciontaller', {
+            templateUrl: 'AngularJS/Templates/administracionTaller.html',
+            controller: 'talleresController'
+        });
+        
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
