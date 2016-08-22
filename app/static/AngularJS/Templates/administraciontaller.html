@@ -13,12 +13,13 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                <select class="form-control m-b" name="Gar" ng-model="selectedGar" ng-options="datosG.idGAR as datosG.descripcionGAR for datosG in gars" >
                                     <option value="">Seleccione una GAR</option>
                                     <!--default option -->
                                 </select>
                             </div>
                         </div>
+
 
                         <div class="form-group">
                             <label class="col-xs-2 control-label">TAD:</label>
@@ -44,7 +45,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-xs-2 control-label">RazonSocial:</label>
+                            <label class="col-xs-2 control-label">Razon Social:</label>
+                            <br>
                             <br>
                             <br>
                             <div class="col-xs-10">
@@ -88,25 +90,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-xs-2 control-label">Tipo:</label>
+                            <label class="col-xs-2 control-label">Tipo Usuario:</label>
+                            <br>
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                <select class="form-control m-b" name="usuario" ng-model="idTipoPersona" ng-options="usuario.idTipoPersona as usuario.descripcionLarga  for usuario in tipoUsuario">
                                     <option value="">Seleccione un tipo de Usuario</option>
                                     <!--default option -->
                                 </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">NombreRazon:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group m-b">
-                                    <input type="text" class="form-control">
-                                </div>
                             </div>
                         </div>
 
@@ -265,7 +257,7 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                <select class="form-control m-b" name="status" ng-model="idStatusTaller" ng-options="status.idStatusTaller as status.descripcionLarga  for status in estatus">
                                     <option value="">Seleccione un Estatus</option>
                                     <!--default option -->
                                 </select>
@@ -295,7 +287,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-5 control-label">Hora de Alta:</label>
+                            <label class="col-xs-4 control-label">Hora de Alta:</label>
+                            <br>
                             <br>
                             <br>
                             <div class="col-xs-10">

@@ -2,8 +2,7 @@
     <div class="headTitleTallerCita">
         <span class="title"> Administracion de Talleres<span class="subtitle">Modo Edicion</span></span>
     </div>
-    <div class="wrapper wrapper-content">
-        
+    <div class="wrapper wrapper-content">        
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTableTaller" cg-busy="{promise:promise,message:message}">
                                         <thead>
@@ -69,17 +68,26 @@
                                                 <td>{{taller.idProveedor}}</td>
                                                 <td>
 
-                                                <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar" id="btnCotizar" tooltip-placement="top" ng-click="editaCita(cita.idCita, cita.idUnidad, 1, cita)"><i class="glyphicon glyphicon-refresh"></i>  
+                                                <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)"><i class="glyphicon glyphicon-refresh"></i>  
                                                 </button>
 
                                                  <button class="btn btn-cancela btn-danger btnTerminarTrabajo" type="button" data-toggle="tooltip" tooltip="Eliminar" id="btnCotizar" tooltip-placement="top" ng-click="openFinishingTrabajoModal(cita.idCita)"><i class="glyphicon glyphicon-remove-circle"></i>  
                                                 </button>
 
                                                 </td>
-                                                
+
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                <br>
+                                <br>
+                                <br>
+                        <div class="form-group">
+                        <div class="col-xs-offset-10 col-xs-2">
+                            <button class="btn btn-primary" ng-click="nuevoTaller()"><i class="fa fa-check">
+                                </i>&nbsp;Inserta Nuevo Taller</button>
+                        </div>
+                    </div>
     </div>
 </div>

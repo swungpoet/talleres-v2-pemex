@@ -51,5 +51,14 @@ registrationModule.controller('accionTallerController', function($scope, alertFa
             alertFactory.error('Error al obtener los datos');
         });
     }
+    
+    $scope.editaTaller = function () {
+        location.href = '/administraciontaller';
+    }
+    $scope.nuevoTaller = function () {
+        location.href = '/administraciontaller';
+    }
+    
+
 
 });
