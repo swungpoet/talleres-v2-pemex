@@ -102,7 +102,7 @@ Taller.prototype.get_obtieneestatustaller = function (req, res, next) {
     });
 }
 
-//obtiene las gar de los talleres
+//obtiene las gar(zonas) de los talleres
 Taller.prototype.get_obtienegar = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -116,6 +116,32 @@ Taller.prototype.get_obtienegar = function (req, res, next) {
     var params = [];
 
     this.model.query('SEL_GAR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//obtiene las terminales de los talleres
+Taller.prototype.get_obtienetar = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+
+    //asignación de valores mediante parámetros del request
+    var params = [
+                {
+                    name: 'idZona',
+                    value: req.query.idZona,
+                    type: self.model.types.INT
+                }];
+
+    this.model.query('SEL_TAR_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
