@@ -161,7 +161,7 @@ Taller.prototype.post_insertataller = function (req, res, next) {
                  },
                  {
                     name: 'tad',
-                    value: req.body.gar,
+                    value: req.body.tad,
                     type: self.model.types.STRING
                  },
                  {
@@ -240,32 +240,12 @@ Taller.prototype.post_insertataller = function (req, res, next) {
                     type: self.model.types.STRING
                  },
                  {
-                    name: 'fechope',
-                    value: req.body.fechope,
-                    type: self.model.types.STRING
-                 },
-                 {
                     name: 'status',
                     value: req.body.status,
                     type: self.model.types.INT
                  },
                  {
                     name: 'lada',
-                    value: req.body.status,
-                    type: self.model.types.STRING
-                 },
-                 {
-                    name: 'fecing',
-                    value: req.body.status,
-                    type: self.model.types.STRING
-                 },
-                 {
-                    name: 'horing',
-                    value: req.body.status,
-                    type: self.model.types.STRING
-                 },
-                 {
-                    name: 'cveusuing',
                     value: req.body.status,
                     type: self.model.types.STRING
                  },
@@ -306,7 +286,7 @@ Taller.prototype.post_actualizataller = function (req, res, next) {
                  },
                  {
                     name: 'tad',
-                    value: req.body.gar,
+                    value: req.body.tad,
                     type: self.model.types.STRING
                  },
                  {
@@ -385,32 +365,12 @@ Taller.prototype.post_actualizataller = function (req, res, next) {
                     type: self.model.types.STRING
                  },
                  {
-                    name: 'fechope',
-                    value: req.body.fechope,
-                    type: self.model.types.STRING
-                 },
-                 {
                     name: 'status',
                     value: req.body.status,
                     type: self.model.types.INT
                  },
                  {
                     name: 'lada',
-                    value: req.body.status,
-                    type: self.model.types.STRING
-                 },
-                 {
-                    name: 'fecing',
-                    value: req.body.status,
-                    type: self.model.types.STRING
-                 },
-                 {
-                    name: 'horing',
-                    value: req.body.status,
-                    type: self.model.types.STRING
-                 },
-                 {
-                    name: 'cveusuing',
                     value: req.body.status,
                     type: self.model.types.STRING
                  },
