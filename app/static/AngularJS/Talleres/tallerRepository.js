@@ -6,7 +6,7 @@
 var tallerUrl = global_settings.urlCORS + '/api/taller/';
 
 registrationModule.factory('tallerRepository', function ($http) {
-return {
+    return {
         getTallerGar: function () {
             return $http({
                 url: tallerUrl + 'obtienegar/',
@@ -16,7 +16,7 @@ return {
                 }
             });
         },
-                getTallerTar: function (idZona) {
+        getTallerTar: function (idZona) {
             return $http({
                 url: tallerUrl + 'obtienetar/',
                 method: "GET",
@@ -28,7 +28,7 @@ return {
                 }
             });
         },
-                getTallerTipoUsuario: function () {
+        getTallerTipoUsuario: function () {
             return $http({
                 url: tallerUrl + 'obtienetipopersona/',
                 method: "GET",
@@ -37,7 +37,7 @@ return {
                 }
             });
         },
-                getTallerEstatus: function () {
+        getTallerEstatus: function () {
             return $http({
                 url: tallerUrl + 'obtieneestatustaller/',
                 method: "GET",
@@ -55,20 +55,21 @@ return {
                 }
             });
         },
-        putEliminaTaller: function (idTaller) {
-           var objTaller = {
-               idTaller: idTaller
-           };
+        putEliminaTaller: function (idTaller) {     
+            var objTaller = {        
+                idTaller: idTaller      
+            };
 
-           return $http({
-               url: tallerUrl + 'eliminataller',
-               method: "POST",
-               data: objTaller,
-               headers: {
-                   'Content-Type': 'application/json'
-               }
-           });
-       },
+                  
+            return $http({        
+                url: tallerUrl + 'eliminataller',
+                        method: "POST",
+                        data: objTaller,
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
         addTaller: function (taller) {
             return $http({
                 url: tallerUrl + 'insertataller/',
@@ -91,7 +92,16 @@ return {
                 }
             });
         },
-        
+        updateTaller: function (taller) {
+            return $http({
+                url: tallerUrl + 'actualizataller/',
+                method: "POST",
+                data: taller,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 
 });

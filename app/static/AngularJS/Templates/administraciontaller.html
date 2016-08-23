@@ -1,6 +1,6 @@
 <div ng-init="initAdministracion()">
     <div class="headTitleAdmonTaller">
-        <span class="title"> Administracion de Talleres <span class="subtitle">Vesrion 1.0</span></span>
+        <span class="title">Administracion de Talleres<span class="subtitle">Administrador</span></span>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label class="col-xs-2 control-label">TAD:</label>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="tar" ng-model="nombreTar" ng-options="tar.nombreTar for tar in tipoTar" ng-disabled="idZona==''">
+                                <select class="form-control m-b" name="tar" ng-model="idTAR" ng-options="tar.idTAR as tar.nombreTar for tar in tipoTar" ng-disabled="idZona==''">
                                     <option value="">Seleccione una TAD</option>
                                     <!--default option -->
                                 </select>
@@ -170,8 +170,14 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-10 col-xs-2">
-                            <button class="btn btn-primary" ng-click="insertaTaller()"><i class="fa fa-check">
+                            <button class="btn btn-primary" ng-click="insertaTaller()" ng-if="actualizarTaller!=1"><i class="fa fa-check">
                                 </i> Guardar</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-10 col-xs-2">
+                            <button class="btn btn-primary" ng-click="actualizaTaller()" ng-if="actualizarTaller==1"><i class="fa fa-check">
+                                </i> Actualizar</button>
                         </div>
                     </div>
                 </form>
