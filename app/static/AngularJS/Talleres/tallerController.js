@@ -185,7 +185,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
                 alertFactory.error("Error al insertar el taller");
             });
         } else {
-            alertFactory.info('Debes llenar todos los campos');
+            alertFactory.info('Debe llenar los campos requeridos');
         }
 
     }
@@ -281,7 +281,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
                 alertFactory.error("Error al insertar el taller");
             });
          } else {
-            alertFactory.info('Debes llenar todos los campos');
+            alertFactory.info('Debe llenar los campos requeridos');
         }
 
     }
