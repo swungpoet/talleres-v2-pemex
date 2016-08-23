@@ -31,7 +31,7 @@ Reporte.prototype.get_reportegral = function(req, res, next){
     var self = this;
     //Obtención de valores de los parámetros del request
     var params = [];
-    
+
     this.model.query('SEL_REPORTE_GRAL_SP', params, function(error, result) {
         self.view.expositor(res, {
             error: error,
@@ -100,8 +100,8 @@ function generateConfomidadReporte(data,res) {
 		doc.fontSize(7)
 		doc.lineWidth(1)
 
-    doc.rect(30, 40, 555, 700).stroke()
-		doc.rect(40, 50, 535, 680).stroke()
+    doc.rect(30, 40, 570, 710).stroke()
+		doc.rect(40, 50, 535, 690).stroke()
 
     doc.image('app/static/image/pemex_logo.png', 50, 55,{width: 90,height:45} )
 
@@ -218,8 +218,8 @@ function generateConfomidadReporte(data,res) {
                     top = 0;
                     paginas++;
                     doc.addPage();
-                    doc.rect(30, 40, 555, 700).stroke()
-                    doc.rect(40, 50, 535, 680).stroke()
+                    doc.rect(30, 40, 570, 710).stroke()
+                    doc.rect(40, 50, 535, 690).stroke()
                 }
             }
         }
@@ -234,8 +234,8 @@ function generateConfomidadReporte(data,res) {
             top = 0;
             paginas++;
             doc.addPage();
-            doc.rect(30, 40, 555, 700).stroke()
-            doc.rect(40, 50, 535, 680).stroke()
+            doc.rect(30, 40, 570, 710).stroke()
+            doc.rect(40, 50, 535, 690).stroke()
         }else{
           top += Math.ceil(data.data[i].descripcion.length/30)+2
         }
@@ -256,13 +256,13 @@ function generateConfomidadReporte(data,res) {
         if(top>55 ||  (top > 30 && paginas == 0)){
           paginas++;
           doc.addPage();
-          doc.rect(30, 40, 555, 700).stroke()
-          doc.rect(40, 50, 535, 680).stroke()
+          doc.rect(30, 40, 570, 710).stroke()
+          doc.rect(40, 50, 535, 690).stroke()
           extra = -480;
         }
     }else{
           extra = -480;
-      
+
     }
     doc.rect(48, 539+extra, 334, 12).stroke()
     doc.rect(382, 539+extra, 62, 12).stroke()
@@ -280,33 +280,46 @@ function generateConfomidadReporte(data,res) {
     doc.text("TOTAL",382,542+extra,{width: 62,align:'center'})
     doc.text(data.total,444,542+extra,{width: 100,align:'right'})
     if(/*paginas == 0 && */tableHeight>270){
-      doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO",30,745)
+      doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO",30,753)
       doc.addPage();
-      doc.rect(30, 40, 555, 700).stroke()
-      doc.rect(40, 50, 535, 680).stroke()
+      doc.rect(30, 40, 570, 710).stroke()
+      doc.rect(40, 50, 535, 690).stroke()
       extra = -520
     }
-    doc.rect(48, 590+extra, 272, 90).stroke()
-    doc.rect(320, 590+extra, 234, 90).stroke()
-    doc.text("EMISIÓN POR PARTE DE PEMEX:",50,600+extra,{width: 270,align: 'center'})
-    doc.text("NOMBRE Y FIRMA _______________________________________________",55,625+extra)
-    doc.text("FECHA                    _______________________________________________",55,642+extra)
+    doc.rect(48, 590+extra, 272, 140).stroke()
+    doc.rect(320, 590+extra, 234, 140).stroke()
+    doc.text("EMISIÓN POR PARTE DE PEMEX:",50,592+extra,{width: 270,align: 'center'})
+    doc.text("Jefe de mantenimiento Xalapa",50,605+extra,{width: 270,align: 'center'})
+    doc.text("________________________________________________________________",50,625+extra,{width: 270,align: 'center'})
+    doc.text("Nombre y firma",50,633+extra,{width: 270,align: 'center'})
+    doc.text("Fecha  __________________________________________________________",50,648+extra,{width: 270,align: 'center'})
+    doc.text(fecha.format(data.fecha, 'DD  MMMM  YYYY'),55,647+extra,{width: 270,align: 'center'})
+
+    doc.text("Superintendente de terminal Xalapa",50,660+extra,{width: 270,align: 'center'})
+    doc.text("________________________________________________________________",50,678+extra,{width: 270,align: 'center'})
+    doc.text("Nombre y firma",50,686+extra,{width: 270,align: 'center'})
+    doc.text("Fecha  __________________________________________________________",50,700+extra,{width: 270,align: 'center'})
+    doc.text(fecha.format(data.fecha, 'DD  MMMM  YYYY'),55,698+extra,{width: 270,align: 'center'})
+
+
+
+
     doc.fontSize(5);
-    doc.text("SELLO: (cuando aplique)",55,659+extra)
+
+    doc.text("SELLO: (cuando aplique)",55,710+extra)
     doc.fontSize(7);
     doc.text(data.nombreEmisor,100,625+extra,{width: 220,align: 'center'})
-    doc.text(fecha.format(data.fecha, 'DD  MMMM  YYYY'),100,642+extra,{width: 220,align: 'center'})
-    doc.text("ACEPTACIÓN DEL PROVEEDOR:",325,600+extra,{width: 230,align: 'center'})
-    doc.text("NOMBRE Y FIRMA ________________________________________",326,625+extra)
-    doc.text("FECHA                    ________________________________________",326,642+extra)
-    doc.text("PUESTO                 ________________________________________",326,659+extra)
+    doc.text("ACEPTACIÓN DEL PROVEEDOR:",325,592+extra,{width: 230,align: 'center'})
+    doc.text("Nombre y firma ________________________________________",326,650+extra)
+    doc.text("Fecha                    ________________________________________",326,668+extra)
+    doc.text("Puesto                 ________________________________________",326,684+extra)
 
-    doc.text(data.nombreProveedor,340,625+extra,{width: 220,align: 'center'})
-    doc.text(fecha.format(data.fecha, 'DD  MMMM  YYYY'),340,642+extra,{width: 220,align: 'center'})
-    doc.text(data.puestoProveedor,340,659+extra,{width: 220,align: 'center'})
+    doc.text(data.nombreProveedor,340,650+extra,{width: 220,align: 'center'})
+    doc.text(fecha.format(data.fecha, 'DD  MMMM  YYYY'),340,668+extra,{width: 220,align: 'center'})
+    doc.text(data.puestoProveedor,340,684+extra,{width: 220,align: 'center'})
     doc.fontSize(5);
-    doc.text("*ESTE REPORTE TIENE UNA VIGENCIA DE 15 DIAS CALENDARIO A PARTIR DE SU EXPEDICIÓN",50,685+extra)
+    doc.text("*ESTE REPORTE TIENE UNA VIGENCIA DE 15 DIAS CALENDARIO A PARTIR DE SU EXPEDICIÓN",50,735+extra)
     doc.fontSize(7);
-    doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO",30,745)
+    doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO",30,753)
 		doc.end();
 }
