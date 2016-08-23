@@ -78,7 +78,19 @@ return {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+        getrecuperaTaller: function (idTaller) {
+            return $http({
+                url: tallerUrl + 'obtienetaller/',
+                method: "GET",
+                params: {
+                    idTaller: idTaller
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         
     };
 

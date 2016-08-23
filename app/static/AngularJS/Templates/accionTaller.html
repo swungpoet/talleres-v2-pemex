@@ -1,5 +1,5 @@
 <link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
-<div ng-init="init()">
+<div ng-init="initTaller()">
     <div class="headTitleTallerCita">
         <span class="title"> Administracion de Talleres<span class="subtitle">Modo Edicion</span></span>
     </div>
@@ -69,10 +69,10 @@
                                                 <td>{{taller.idProveedor}}</td>
                                                 <td>
 
-                                                <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)"><i class="glyphicon glyphicon-refresh"></i>  
+                                                <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar Taller" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)"><i class="glyphicon glyphicon-refresh"></i>  
                                                 </button>
 
-                                                 <button class="btn btn-cancela btn-danger btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar" id="btnCotizar" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)"><i class="glyphicon glyphicon-remove-circle"></i>
+                                                <button class="btn btn-cancela btn-danger btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" id="btnCotizar" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)"><i class="glyphicon glyphicon-remove-circle"></i>
                                                  </button>
 
                                                 </td>

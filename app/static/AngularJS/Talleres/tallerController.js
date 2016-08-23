@@ -3,15 +3,18 @@
 // -- Create date: 22/08/2016
 // -- Description: talleres controller
 // -- =============================================
-registrationModule.controller('tallerController', function($scope, alertFactory,tallerRepository){
+registrationModule.controller('tallerController', function($scope, alertFactory,tallerRepository,localStorageService){
 	//this is the first method executed in the view
-	$scope.init = function(){
-    $scope.limpiaCasillasTaller();
-	$scope.getrecuperaGAR();
-	$scope.getrecuperaTipoUsuario();
-	$scope.getrecuperaEstatus();
+	$scope.initTaller = function(){
     $scope.getTaller();
 	}
+        $scope.initAdministracion = function(){
+    $scope.limpiaCasillasTaller();
+    $scope.getrecuperaGAR();
+    $scope.getrecuperaTipoUsuario();
+    $scope.getrecuperaEstatus();
+    $scope.edicionTalleres();
+    }
 
 	$scope.getrecuperaGAR = function () {
               $scope.promise = tallerRepository.getTallerGar().then(function (gar) {
@@ -87,9 +90,21 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
         });
     }
     
-    $scope.editaTaller = function () {
+    $scope.editaTaller = function (idTaller) { 
+    localStorageService.set('idDeTaller', idTaller); 
         location.href = '/administraciontaller';
     }
+
+    $scope.edicionTalleres = function () { 
+    var idTallerEdicion = localStorageService.get('idDeTaller'); 
+                tallerRepository.getrecuperaTaller(idTallerEdicion).then(function (taller) {
+                var tallerInfo = taller.data[0];
+                localStorageService.remove('idDeTaller');
+                    },function(error){
+                        alertFactory.error("Error al insertar el taller");
+                    });
+    }
+
     $scope.nuevoTaller = function () {
         location.href = '/administraciontaller';
     }
@@ -106,7 +121,12 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
     });
 
     $scope.insertaTaller = function () {
-       // if($scope.idZona!='' && $scope.nombreTar != ''){
+        if(($scope.idZona!='' && $scope.idZona != null) && ($scope.nombreTar != '' && $scope.nombreTar != null) 
+        && ($scope.idStatusTaller!='' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) 
+        && $scope.ciudad!='' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc!='' && $scope.telefono != '' 
+        && $scope.email!='' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion!='' && $scope.colonia != ''
+        && $scope.calle != '' && $scope.numeroExterior!='' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != ''){
+
 var insertTaller = {};
 insertTaller.zona = $scope.idZona;
 insertTaller.gar = $scope.nombreTar.GAR;
@@ -129,7 +149,6 @@ insertTaller.cveusu = $scope.claveUsuario;
 insertTaller.status = $scope.idStatusTaller;
 insertTaller.lada = $scope.lada;
 insertTaller.idTar = $scope.nombreTar.idTAR;
-insertTaller.idProveedor = $scope.idProveedor;
 tallerRepository.addTaller(insertTaller).then(function (taller) {
                     if(taller.data[0].id > 0){
                         alertFactory.success("Taller insertado satisfactoriamente"); 
@@ -140,10 +159,10 @@ tallerRepository.addTaller(insertTaller).then(function (taller) {
                 },function(error){
                     alertFactory.error("Error al insertar el taller");
                 });
-//}else{
-//   alertFactory.error('Debes llenar todos los campos');  
-//   $scope.limpiaCasillasTaller();
-//}
+}else{
+   alertFactory.error('Debes llenar todos los campos');  
+}
+
 }
 
 $scope.limpiaCasillasTaller = function () {
@@ -153,7 +172,7 @@ $scope.ciudad = '';
 $scope.razonSocial = '';
 $scope.encargado = '';
 $scope.rfc = '';
-$scope.descripcionUsuario = '';
+$scope.idTipoPersona = '';
 $scope.telefono = '';
 $scope.email = '';
 $scope.pais = '';
@@ -164,7 +183,7 @@ $scope.calle = '';
 $scope.numeroExterior = '';
 $scope.codigoPostal = '';
 $scope.claveUsuario = '';
-$scope.descripcionLarga = '';
+$scope.idStatusTaller = '';
 $scope.lada = '';
 $scope.idTar = '';
 $scope.idProveedor = '';
