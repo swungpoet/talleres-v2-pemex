@@ -130,6 +130,36 @@ insertTaller.idTar = $scope.idTar;
 insertTaller.idProveedor = $scope.idProveedor;
    }
 
+$scope.openEliminaTallerModal = function (idTaller) {
+   $('.btnEliminarTaller').ready(function () {
+           swal({
+                   title: "¿Esta seguro que desea eliminar el taller?",
+                   /*text: "Se cambiará el estatus a 'Cita Cancelada'",*/
+                   type: "warning",
+                   showCancelButton: true,
+                   confirmButtonColor: "#65BD10 ",
+                   confirmButtonText: "Si",
+                   cancelButtonText: "No",
+                   closeOnConfirm: false,
+                   closeOnCancel: false
+               },
+               function (isConfirm) {
+                   if (isConfirm) {
+                       tallerRepository.putEliminaTaller(idTaller).then(function (result) {
+                           if (result.data.lenght > 0) {
+                               swal("Taller eliminado!", "success");
+                           }
+                       }, function (error) {
+                           swal("No se pudo eliminar el taller", "error");
+                       });
+                       swal("Taller eliminado!", "success");
+                   } else {
+                       swal("Acción cancelada", "", "error");
+                       $('#openEliminaTallerModal').modal('hide');
+                   }
+               });
+       });
+}
 
 });
 

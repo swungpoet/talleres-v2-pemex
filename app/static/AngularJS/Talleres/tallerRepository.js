@@ -54,7 +54,21 @@ return {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+        putEliminaTaller: function (idTaller) {
+           var objTaller = {
+               idTaller: idTaller
+           };
+
+           return $http({
+               url: tallerUrl + 'eliminataller',
+               method: "POST",
+               data: objTaller,
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           });
+       }
         
     };
 

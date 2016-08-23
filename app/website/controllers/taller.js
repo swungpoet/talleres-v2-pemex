@@ -405,7 +405,7 @@ Taller.prototype.post_eliminataller = function (req, res, next) {
             type: self.model.types.INT
         }];
 
-    this.model.post('UPD_ACTUALIZA_TALLER_SP', params, function (error, result) {
+    this.model.post('DEL_ELIMINA_TALLER_SP', params, function (error, result) {
         //Callback
         self.view.expositor(res, {
             error: error,
