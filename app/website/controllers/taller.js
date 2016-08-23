@@ -246,12 +246,12 @@ Taller.prototype.post_insertataller = function (req, res, next) {
                  },
                  {
                     name: 'lada',
-                    value: req.body.status,
+                    value: req.body.lada,
                     type: self.model.types.STRING
                  },
                  {
                     name: 'idTar',
-                    value: req.body.status,
+                    value: req.body.idTar,
                     type: self.model.types.INT
                  },
                  {
@@ -371,12 +371,12 @@ Taller.prototype.post_actualizataller = function (req, res, next) {
                  },
                  {
                     name: 'lada',
-                    value: req.body.status,
+                    value: req.body.lada,
                     type: self.model.types.STRING
                  },
                  {
                     name: 'idTar',
-                    value: req.body.status,
+                    value: req.body.idTar,
                     type: self.model.types.INT
                  },
                  {

@@ -68,7 +68,17 @@ return {
                    'Content-Type': 'application/json'
                }
            });
-       }
+       },
+        addTaller: function (taller) {
+            return $http({
+                url: tallerUrl + 'insertataller/',
+                method: "POST",
+                data: taller,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
         
     };
 

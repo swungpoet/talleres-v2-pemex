@@ -25,7 +25,7 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="tar" ng-model="idTar" ng-options="tar.idTar as tar.nombreTar  for tar in tipoTar">
+                                <select class="form-control m-b" name="tar" ng-model="nombreTar" ng-options="tar.nombreTar for tar in tipoTar" ng-disabled="idZona==''">
                                     <option value="">Seleccione una TAD</option>
                                     <!--default option -->
                                 </select>
@@ -83,13 +83,13 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="usuario" ng-model="descripcionLarga" ng-options="usuario.idTipoPersona as usuario.descripcionLarga  for usuario in tipoUsuario">
+                                <select class="form-control m-b" name="usuario" ng-model="idTipoPersona" ng-options="usuario.idTipoPersona as usuario.descripcionLarga  for usuario in tipoUsuario">
                                     <option value="">Seleccione un tipo de Usuario</option>
                                     <!--default option -->
                                 </select>
                             </div>
                         </div>
-
+                        
                     </div>
                     <div class="col-xs-4">
 
@@ -219,7 +219,7 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="status" ng-model="descripcionLarga" ng-options="status.idStatusTaller as status.descripcionLarga  for status in estatus">
+                                <select class="form-control m-b" name="status" ng-model="idStatusTaller" ng-options="status.idStatusTaller as status.descripcionLargaStatus  for status in estatus">
                                     <option value="">Seleccione un Estatus</option>
                                     <!--default option -->
                                 </select>
