@@ -106,11 +106,29 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
     });
 
     $scope.insertaTaller = function () {
-        
-
-    }
-
-
+var insertTaller = {};
+insertTaller.gar = $scope.descripcionZona;
+insertTaller.tad = $scope.nombreTar;
+insertTaller.ciudad = $scope.ciudad;
+insertTaller.razonSocial = $scope.razonSocial;
+insertTaller.encargado = $scope.encargado;
+insertTaller.rfc = $scope.rfc;
+insertTaller.tipo = $scope.descripcionLarga;
+insertTaller.telefono = $scope.telefono;
+insertTaller.email = $scope.email;
+insertTaller.pais = $scope.pais;
+insertTaller.estado = $scope.estado;
+insertTaller.delegacion = $scope.delegacion;
+insertTaller.colonia = $scope.colonia;
+insertTaller.calle = $scope.calle;
+insertTaller.numeroExt = $scope.numeroExterior;
+insertTaller.codPostal = $scope.codigoPostal;
+insertTaller.cveusu = $scope.claveUsuario;
+insertTaller.status = $scope.descripcionLargaEstatus;
+insertTaller.lada = $scope.lada;
+insertTaller.idTar = $scope.idTar;
+insertTaller.idProveedor = $scope.idProveedor;
+   }
 
 
 });

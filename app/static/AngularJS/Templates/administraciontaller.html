@@ -50,7 +50,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="razonSocial">
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="rfc">
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="usuario" ng-model="idTipoPersona" ng-options="usuario.idTipoPersona as usuario.descripcionLarga  for usuario in tipoUsuario">
+                                <select class="form-control m-b" name="usuario" ng-model="descripcionLarga" ng-options="usuario.idTipoPersona as usuario.descripcionLarga  for usuario in tipoUsuario">
                                     <option value="">Seleccione un tipo de Usuario</option>
                                     <!--default option -->
                                 </select>
@@ -138,18 +138,6 @@
                             </div>
                         </div>
 
-
-
-                        <div class="form-group">
-                            <label class="col-xs-2 control-label">Ciudad:</label>
-                            <br>
-                            <br>
-                            <div class="col-xs-10">
-                                <div class="input-group m-b">
-                                    <input type="text" class="form-control" ng-model="ciudad">
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label class="col-xs-2 control-label">Delegacion:</label>
@@ -231,7 +219,7 @@
                             <br>
                             <br>
                             <div class="col-xs-10">
-                                <select class="form-control m-b" name="status" ng-model="idStatusTaller" ng-options="status.idStatusTaller as status.descripcionLarga  for status in estatus">
+                                <select class="form-control m-b" name="status" ng-model="descripcionLarga" ng-options="status.idStatusTaller as status.descripcionLarga  for status in estatus">
                                     <option value="">Seleccione un Estatus</option>
                                     <!--default option -->
                                 </select>
@@ -244,7 +232,7 @@
                             <br>
                             <div class="col-xs-10">
                                 <div class="input-group m-b">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="lada">
                                 </div>
                             </div>
                         </div>
@@ -263,7 +251,7 @@
 
                     <div class="form-group">
                         <div class="col-xs-offset-10 col-xs-2">
-                            <button class="btn btn-primary" ng-click="accionesTaller()"><i class="fa fa-check">
+                            <button class="btn btn-primary" ng-click="insertaTaller()"><i class="fa fa-check">
                                 </i> Guardar</button>
                         </div>
                     </div>
