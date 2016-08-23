@@ -14,7 +14,7 @@
                         <th>Razon Social</th>
                         <th>Direccion</th>
                         <th>Encargado</th>
-                        <th>RFC</th>
+                        <!-- <th>RFC</th>
                         <th>Tipo</th>
                         <th>Telefono</th>
                         <th>Email</th>
@@ -25,15 +25,15 @@
                         <th>Colonia</th>
                         <th>Calle</th>
                         <th>Numero Exterior</th>
-                        <th>Codigo Postal</th>
+                        <th>Codigo Postal</th> -->
                         <th>Clave Usuario</th>
-                        <th>Fecha Operacion</th>
+                        <!-- <th>Fecha Operacion</th> -->
                         <th>Estatus</th>
-                        <th>Lada</th>
+                        <!-- <th>Lada</th>
                         <th>Fecha de Ingreso</th>
                         <th>Hora de Alta</th>
-                        <th>CLave Usuario</th>
-                        <th>idTar</th>
+                        <th>CLave Usuario</th> 
+                        <th>idTar</th>-->
                         <th>idProvedor</th>
                         <th>Acción</th>
                     </tr>
@@ -46,7 +46,7 @@
                         <td>{{taller.razonSocial}}</td>
                         <td>{{taller.direccion}}</td>
                         <td>{{taller.encargado}}</td>
-                        <td>{{taller.PER_RFC}}</td>
+                       <!--  <td>{{taller.PER_RFC}}</td>
                         <td>{{taller.PER_TIPO}}</td>
                         <td>{{taller.PER_TELEFONO1}}</td>
                         <td>{{taller.PER_EMAIL}}</td>
@@ -57,22 +57,23 @@
                         <td>{{taller.PER_COLONIA}}</td>
                         <td>{{taller.PER_CALLE1}}</td>
                         <td>{{taller.PER_NUMEXTER}}</td>
-                        <td>{{taller.PER_CODPOS}}</td>
+                        <td>{{taller.PER_CODPOS}}</td> -->
                         <td>{{taller.PER_CVEUSU}}</td>
-                        <td>{{taller.PER_FECHOPE}}</td>
-                        <td ng-class="{'rowRojo': taller.PER_STATUS=='2'}">{{taller.PER_STATUS}}</td>
-                        <td>{{taller.PER_LADA}}</td>
+                        <!-- <td>{{taller.PER_FECHOPE}}</td> -->
+                        <td ng-if="taller.PER_STATUS == 2" ng-class="{'rowRojo': taller.PER_STATUS=='2'}">INACTIVO</td>
+                        <td ng-if="taller.PER_STATUS != 2" ng-class="{'rowVerde': taller.PER_STATUS!='2'}">ACTIVO</td>
+                        <!-- <td>{{taller.PER_LADA}}</td>
                         <td>{{taller.PER_FECING}}</td>
                         <td>{{taller.PER_HORING}}</td>
-                        <td>{{taller.PER_CVEUSUING}}</td>
-                        <td>{{taller.idTAR}}</td>
+                        <td>{{taller.PER_CVEUSUING}}</td> 
+                        <td>{{taller.idTAR}}</td> -->
                         <td>{{taller.idProveedor}}</td>
                         <td>
 
-                            <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar Taller" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)"><i class="glyphicon glyphicon-refresh"></i>
+                            <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar Taller" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)" ng-disabled="taller.PER_STATUS == 2"><i class="glyphicon glyphicon-refresh"></i>
                             </button>
                             <br>
-                            <button class="btn btn-cancela btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)"><i class="glyphicon glyphicon-remove-circle"></i>
+                            <button class="btn btn-cancela btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)" ng-disabled="taller.PER_STATUS == 2"><i class="glyphicon glyphicon-remove-circle"></i>
                             </button>
 
                         </td>

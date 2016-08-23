@@ -229,12 +229,13 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
                 if (isConfirm) {            
                     tallerRepository.putEliminaTaller(idTaller).then(function (result) {              
                         if (result.data.lenght > 0) {                
-                            swal("Taller eliminado!", "success");              
+                            swal("Taller eliminado!", "success");         
                         }            
                     }, function (error) {              
                         swal("No se pudo eliminar el taller", "error");            
                     });            
-                    swal("Taller eliminado!", "success");          
+                    swal("Taller eliminado!", "success"); 
+                    location.href = '/acciontaller';           
                 } else {            
                     swal("Acción cancelada", "", "error");            
                     $('#openEliminaTallerModal').modal('hide');          
