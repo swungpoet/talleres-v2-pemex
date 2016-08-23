@@ -60,7 +60,7 @@
                                                 <td>{{taller.PER_CODPOS}}</td>
                                                 <td>{{taller.PER_CVEUSU}}</td>
                                                 <td>{{taller.PER_FECHOPE}}</td>
-                                                <td>{{taller.PER_STATUS}}</td>
+                                                <td ng-class="{'rowRojo': taller.PER_STATUS=='2'}">{{taller.PER_STATUS}}</td>
                                                 <td>{{taller.PER_LADA}}</td>
                                                 <td>{{taller.PER_FECING}}</td>
                                                 <td>{{taller.PER_HORING}}</td>
@@ -70,10 +70,9 @@
                                                 <td>
 
                                                 <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar Taller" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)"><i class="glyphicon glyphicon-refresh"></i>  
+                                                </button> <br>
+                                                <button class="btn btn-cancela btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)"><i class="glyphicon glyphicon-remove-circle"></i>  
                                                 </button>
-
-                                                <button class="btn btn-cancela btn-danger btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" id="btnCotizar" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)"><i class="glyphicon glyphicon-remove-circle"></i>
-                                                 </button>
 
                                                 </td>
 

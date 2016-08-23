@@ -155,14 +155,14 @@ Taller.prototype.post_insertataller = function (req, res, next) {
     var self = this;
     //Asigno a params el valor de mis variables
     var params = [{
-                    name: 'gar',
-                    value: req.body.gar,
-                    type: self.model.types.STRING
+                    name: 'idZona',
+                    value: req.body.idZona,
+                    type: self.model.types.INT
                  },
                  {
-                    name: 'tad',
-                    value: req.body.tad,
-                    type: self.model.types.STRING
+                    name: 'idTad',
+                    value: req.body.idTad,
+                    type: self.model.types.INT
                  },
                  {
                     name: 'ciudad',

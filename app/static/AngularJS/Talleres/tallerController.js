@@ -5,6 +5,9 @@
 // -- =============================================
 registrationModule.controller('tallerController', function($scope, alertFactory,tallerRepository,localStorageService){
 	//this is the first method executed in the view
+    $scope.actualizarTaller = '';
+
+
 	$scope.initTaller = function(){
     $scope.getTaller();
 	}
@@ -23,7 +26,7 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
             alertFactory.error('Error al obtener los datos GAR');
         });
     }
-        $scope.obtieneZona = function () {
+        $scope.obtieneZona = function (idZona) {
         $scope.getrecuperaTAR($scope.idZona);
     }
     $scope.getrecuperaTAR = function () {
@@ -91,14 +94,41 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
     }
     
     $scope.editaTaller = function (idTaller) { 
-    localStorageService.set('idDeTaller', idTaller); 
+    localStorageService.set('idDeTaller', idTaller);
+    localStorageService.set('actualizarTaller', 1);
         location.href = '/administraciontaller';
     }
 
     $scope.edicionTalleres = function () { 
     var idTallerEdicion = localStorageService.get('idDeTaller'); 
+    $scope.actualizarTaller = localStorageService.get('actualizarTaller'); 
+    localStorageService.remove('actualizarTaller');
                 tallerRepository.getrecuperaTaller(idTallerEdicion).then(function (taller) {
                 var tallerInfo = taller.data[0];
+                   $scope.idZona = tallerInfo.idZona;
+                   $scope.calle = tallerInfo.PER_CALLE1;
+                   $scope.codigoPostal = tallerInfo.PER_CODPOS;
+                   $scope.colonia = tallerInfo.PER_COLONIA;
+                   $scope.claveUsuario = tallerInfo.PER_CVEUSU;
+                   $scope.delegacion = tallerInfo.PER_DELEGAC;
+                   $scope.email = tallerInfo.PER_EMAIL;
+                   $scope.estado = tallerInfo.PER_ESTADO;
+                   $scope.lada = tallerInfo.PER_LADA;
+                   $scope.numeroExterior = tallerInfo.PER_NUMEXTER;
+                   $scope.pais = tallerInfo.PER_PAIS;
+                   $scope.rfc = tallerInfo.PER_RFC;
+                   $scope.idStatusTaller = tallerInfo.PER_STATUS;
+                   $scope.telefono = tallerInfo.PER_TELEFONO1;
+                   $scope.idTipoPersona = tallerInfo.PER_TIPO;
+                   $scope.nombreTar = tallerInfo.TAD;
+                   $scope.ciudad = tallerInfo.ciudad;
+                   $scope.encargado = tallerInfo.encargado;
+                    tallerInfo.idProveedor;
+                   $scope.idTAR = tallerInfo.idTAR;
+                    tallerInfo.idTaller;
+                   $scope.razonSocial = tallerInfo.razonSocial;
+                   $scope.obtieneZona($scope.idZona);
+
                 localStorageService.remove('idDeTaller');
                     },function(error){
                         alertFactory.error("Error al insertar el taller");
@@ -121,16 +151,15 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
     });
 
     $scope.insertaTaller = function () {
-        if(($scope.idZona!='' && $scope.idZona != null) && ($scope.nombreTar != '' && $scope.nombreTar != null) 
+        if(($scope.idZona!='' && $scope.idZona != null) && ($scope.idTAR!='' && $scope.idTAR != null)
         && ($scope.idStatusTaller!='' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) 
         && $scope.ciudad!='' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc!='' && $scope.telefono != '' 
         && $scope.email!='' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion!='' && $scope.colonia != ''
         && $scope.calle != '' && $scope.numeroExterior!='' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != ''){
 
 var insertTaller = {};
-insertTaller.zona = $scope.idZona;
-insertTaller.gar = $scope.nombreTar.GAR;
-insertTaller.tad = $scope.nombreTar.nombreTar;
+insertTaller.idZona = $scope.idZona;
+insertTaller.idTad = $scope.idTAR;
 insertTaller.ciudad = $scope.ciudad;
 insertTaller.razonSocial = $scope.razonSocial;
 insertTaller.encargado = $scope.encargado;
@@ -148,7 +177,7 @@ insertTaller.codPostal = $scope.codigoPostal;
 insertTaller.cveusu = $scope.claveUsuario;
 insertTaller.status = $scope.idStatusTaller;
 insertTaller.lada = $scope.lada;
-insertTaller.idTar = $scope.nombreTar.idTAR;
+insertTaller.idTar = $scope.idTAR;
 tallerRepository.addTaller(insertTaller).then(function (taller) {
                     if(taller.data[0].id > 0){
                         alertFactory.success("Taller insertado satisfactoriamente"); 
@@ -167,7 +196,7 @@ tallerRepository.addTaller(insertTaller).then(function (taller) {
 
 $scope.limpiaCasillasTaller = function () {
 $scope.idZona = '';
-$scope.nombreTar = '';
+$scope.idTAR = '';
 $scope.ciudad = '';
 $scope.razonSocial = '';
 $scope.encargado = '';
@@ -188,7 +217,6 @@ $scope.lada = '';
 $scope.idTar = '';
 $scope.idProveedor = '';
 }
-
 
 $scope.openEliminaTallerModal = function (idTaller) {
    $('.btnEliminarTaller').ready(function () {
@@ -219,6 +247,50 @@ $scope.openEliminaTallerModal = function (idTaller) {
                    }
                });
        });
+}
+
+    $scope.actualizaTaller = function () {
+        if(($scope.idZona!='' && $scope.idZona != null) && ($scope.idTAR!='' && $scope.idTAR != null)
+        && ($scope.idStatusTaller!='' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) 
+        && $scope.ciudad!='' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc!='' && $scope.telefono != '' 
+        && $scope.email!='' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion!='' && $scope.colonia != ''
+        && $scope.calle != '' && $scope.numeroExterior!='' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != ''){
+
+var insertTallerUpdate = {};
+insertTallerUpdate.idZona = $scope.idZona;
+insertTallerUpdate.idTad = $scope.idTAR;
+insertTallerUpdate.ciudad = $scope.ciudad;
+insertTallerUpdate.razonSocial = $scope.razonSocial;
+insertTallerUpdate.encargado = $scope.encargado;
+insertTallerUpdate.rfc = $scope.rfc;
+insertTallerUpdate.tipo = $scope.idTipoPersona;
+insertTallerUpdate.telefono = $scope.telefono;
+insertTallerUpdate.email = $scope.email;
+insertTallerUpdate.pais = $scope.pais;
+insertTallerUpdate.estado = $scope.estado;
+insertTallerUpdate.delegacion = $scope.delegacion;
+insertTallerUpdate.colonia = $scope.colonia;
+insertTallerUpdate.calle = $scope.calle;
+insertTallerUpdate.numeroExt = $scope.numeroExterior;
+insertTallerUpdate.codPostal = $scope.codigoPostal;
+insertTallerUpdate.cveusu = $scope.claveUsuario;
+insertTallerUpdate.status = $scope.idStatusTaller;
+insertTallerUpdate.lada = $scope.lada;
+insertTallerUpdate.idTar = $scope.idTAR;
+tallerRepository.updateTaller(insertTallerUpdate).then(function (taller) {
+                    if(taller.data[0].id > 0){
+                        alertFactory.success("Taller insertado satisfactoriamente"); 
+                        setTimeout(function () {    
+                            location.href = '/acciontaller'                
+                        }, 1000);
+                    }
+                },function(error){
+                    alertFactory.error("Error al insertar el taller");
+                });
+}else{
+   alertFactory.error('Debes llenar todos los campos');  
+}
+
 }
 
 });
