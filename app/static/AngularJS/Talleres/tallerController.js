@@ -21,13 +21,12 @@ registrationModule.controller('tallerController', function($scope, alertFactory,
         });
     }
         $scope.obtieneZona = function () {
-        $scope.idZona=$scope.idGar;
         $scope.getrecuperaTAR($scope.idZona);
     }
     $scope.getrecuperaTAR = function () {
         tallerRepository.getTallerTar($scope.idZona).then(function (tar) {
             $scope.tipoTar = tar.data;
-            
+
         }, function (error) {
             alertFactory.error('Error al obtener los datos TAR');
         });
