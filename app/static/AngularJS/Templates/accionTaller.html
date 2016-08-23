@@ -3,6 +3,16 @@
     <div class="headTitleTallerCita">
         <span class="title">Administracion de Talleres<span class="subtitle">Modo Edicion</span></span>
     </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-10 col-xs-2">
+                <button class="btn btn-primary" ng-click="nuevoTaller()"><i class="fa fa-check">
+                                </i>&nbsp;Inserta Nuevo Taller</button>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
     <div class="wrapper wrapper-content">
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover dataTableTaller" cg-busy="{promise:promise,message:message}">
@@ -70,10 +80,10 @@
                         <td>{{taller.idProveedor}}</td>
                         <td>
 
-                            <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar Taller" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)" ng-disabled="taller.PER_STATUS == 2"><i class="glyphicon glyphicon-refresh"></i>
+                            <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Editar Taller" tooltip-placement="top" ng-click="editaTaller(taller.idTaller)"><i class="glyphicon glyphicon-refresh"></i>
                             </button>
                             <br>
-                            <button class="btn btn-cancela btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)" ng-disabled="taller.PER_STATUS == 2"><i class="glyphicon glyphicon-remove-circle"></i>
+                            <button class="btn btn-cancela btnEliminarTaller" type="button" data-toggle="tooltip" tooltip="Eliminar Taller" tooltip-placement="top" ng-click="openEliminaTallerModal(taller.idTaller)"><i class="glyphicon glyphicon-remove-circle"></i>
                             </button>
 
                         </td>
@@ -81,15 +91,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="form-group">
-            <div class="col-xs-offset-10 col-xs-2">
-                <button class="btn btn-primary" ng-click="nuevoTaller()"><i class="fa fa-check">
-                                </i>&nbsp;Inserta Nuevo Taller</button>
-            </div>
         </div>
     </div>
 </div>

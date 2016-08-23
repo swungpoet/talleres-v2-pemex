@@ -151,7 +151,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
     });
 
     $scope.insertaTaller = function () {
-        if (($scope.idZona != '' && $scope.idZona != null) && ($scope.idTAR != '' && $scope.idTAR != null) && ($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.email != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
+      //  if (($scope.idZona != '' && $scope.idZona != null) && ($scope.idTAR != '' && $scope.idTAR != null) && ($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.email != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
 
             var insertTaller = {};
             insertTaller.idZona = $scope.idZona;
@@ -184,9 +184,9 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
             }, function (error) {
                 alertFactory.error("Error al insertar el taller");
             });
-        } else {
-            alertFactory.error('Debes llenar todos los campos');
-        }
+        //} else {
+        //    alertFactory.error('Debes llenar todos los campos');
+        //}
 
     }
 
@@ -245,7 +245,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
     }
 
     $scope.actualizaTaller = function () {
-        if (($scope.idZona != '' && $scope.idZona != null) && ($scope.idTAR != '' && $scope.idTAR != null) && ($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.email != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
+       // if (($scope.idZona != '' && $scope.idZona != null) && ($scope.idTAR != '' && $scope.idTAR != null) && ($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.encargado != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.email != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
 
             var insertTallerUpdate = {};
             insertTallerUpdate.idProveedor = $scope.idelProveedor
@@ -280,9 +280,9 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
             }, function (error) {
                 alertFactory.error("Error al insertar el taller");
             });
-        } else {
-            alertFactory.error('Debes llenar todos los campos');
-        }
+      //   } else {
+      //      alertFactory.error('Debes llenar todos los campos');
+      //  }
 
     }
 
