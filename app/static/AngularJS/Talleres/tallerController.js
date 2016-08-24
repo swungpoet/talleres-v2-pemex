@@ -123,12 +123,11 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
             $scope.nombreTar = tallerInfo.TAD;
             $scope.ciudad = tallerInfo.ciudad;
             $scope.encargado = tallerInfo.encargado;
-            $scope.idelProveedor = tallerInfo.idProveedor;
+            $scope.idProveedor = tallerInfo.idProveedor;
             $scope.idTAR = tallerInfo.idTAR;
             $scope.idelTaller = tallerInfo.idTaller;
             $scope.razonSocial = tallerInfo.razonSocial;
             $scope.obtieneZona($scope.idZona);
-
             localStorageService.remove('idDeTaller');
         }, function (error) {
             alertFactory.error("Error al insertar el taller");
@@ -151,44 +150,93 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
     });
 
     $scope.insertaTaller = function () {
-      if (($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
-
-            var insertTaller = {};
-            insertTaller.idZona = $scope.idZona;
-            insertTaller.idTad = $scope.idTAR;
-            insertTaller.ciudad = $scope.ciudad;
-            insertTaller.razonSocial = $scope.razonSocial;
-            insertTaller.encargado = $scope.encargado;
-            insertTaller.rfc = $scope.rfc;
-            insertTaller.tipo = $scope.idTipoPersona;
-            insertTaller.telefono = $scope.telefono;
-            insertTaller.email = $scope.email;
-            insertTaller.pais = $scope.pais;
-            insertTaller.estado = $scope.estado;
-            insertTaller.delegacion = $scope.delegacion;
-            insertTaller.colonia = $scope.colonia;
-            insertTaller.calle = $scope.calle;
-            insertTaller.numeroExt = $scope.numeroExterior;
-            insertTaller.codPostal = $scope.codigoPostal;
-            insertTaller.cveusu = $scope.claveUsuario;
-            insertTaller.status = $scope.idStatusTaller;
-            insertTaller.lada = $scope.lada;
-            insertTaller.idTar = $scope.idTAR;
-            tallerRepository.addTaller(insertTaller).then(function (taller) {
-                if (taller.data[0].id > 0) {
-                    alertFactory.success("Taller insertado satisfactoriamente");
-                    setTimeout(function () {
-                        location.href = '/acciontaller'
-                    }, 1000);
-                }
-            }, function (error) {
-                alertFactory.error("Error al insertar el taller");
-            });
-        } else {
-            alertFactory.info('Debe llenar los campos requeridos');
-        }
-
-    }
+       if (($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
+           var insertTaller = {};
+           insertTaller.idZona = $scope.idZona;
+           insertTaller.idTad = $scope.idTAR;
+           insertTaller.ciudad = $scope.ciudad;
+           insertTaller.razonSocial = $scope.razonSocial;
+           insertTaller.encargado = $scope.encargado;
+           insertTaller.rfc = $scope.rfc;
+           insertTaller.tipo = $scope.idTipoPersona;
+           insertTaller.telefono = $scope.telefono;
+           insertTaller.email = $scope.email;
+           insertTaller.pais = $scope.pais;
+           insertTaller.estado = $scope.estado;
+           insertTaller.delegacion = $scope.delegacion;
+           insertTaller.colonia = $scope.colonia;
+           insertTaller.calle = $scope.calle;
+           insertTaller.numeroExt = $scope.numeroExterior;
+           insertTaller.codPostal = $scope.codigoPostal;
+           insertTaller.cveusu = $scope.claveUsuario;
+           insertTaller.status = $scope.idStatusTaller;
+           insertTaller.lada = $scope.lada;
+           insertTaller.idTar = $scope.idTAR;
+           $scope.idProveedor == '' ? $scope.idProveedor = 0 : $scope.idProveedor;
+           insertTaller.idProveedor = $scope.idProveedor;
+           if (insertTaller.idProveedor == 0) {
+               $('.btnidProveedor').ready(function () {     
+                   swal({          
+                       title: "¿Esta seguro que desea Guardar sin especificar el idProveedor esto generara un nuevo registro en BPRO?",
+                                  /*text: "Se cambiará el estatus a 'Cita Cancelada'",*/           type: "warning",
+                                 showCancelButton: true,
+                                 confirmButtonColor: "#65BD10 ",
+                                 confirmButtonText: "Si",
+                                 cancelButtonText: "No",
+                                 closeOnConfirm: false,
+                                 closeOnCancel: false        
+                   },         function (isConfirm) {          
+                       if (isConfirm) {            
+                          tallerRepository.addTaller(insertTaller).then(function (taller) {
+                               if (taller.data[0].id > 0) {
+                                   alertFactory.success("Taller insertado satisfactoriamente");
+                                   setTimeout(function () {
+                                       location.href = '/acciontaller'
+                                   }, 1000);
+                               }
+                           }, function (error) {
+                               alertFactory.error("Error al insertar el taller");
+                           });
+                           swal("Taller registrado correctamente!"); 
+                       } else {            
+                           swal("Proceso cancelado", "", "error");                     
+                       }        
+                   });    
+               });
+           } else {
+               $('.btnidProveedor').ready(function () {     
+                   swal({          
+                       title: "¿Esta seguro que desea Guardar este idProveedor se enlazara dentro de BPRO?",
+                                  /*text: "Se cambiará el estatus a 'Cita Cancelada'",*/           type: "warning",
+                                 showCancelButton: true,
+                                 confirmButtonColor: "#65BD10 ",
+                                 confirmButtonText: "Si",
+                                 cancelButtonText: "No",
+                                 closeOnConfirm: false,
+                                 closeOnCancel: false        
+                   },         function (isConfirm) {          
+                       if (isConfirm) {  
+                       tallerRepository.addTaller(insertTaller).then(function (taller) {
+                               if (taller.data[0].id > 0) {
+                                   alertFactory.success("Taller insertado satisfactoriamente");
+                                   setTimeout(function () {
+                                       location.href = '/acciontaller'
+                                   }, 1000);
+                               }
+                           }, function (error) {
+                               alertFactory.error("Error al insertar el taller");
+                           }); 
+                           swal("Taller registrado correctamente!"); 
+                       } else {            
+                           swal("Proceso cancelado", "", "error");                     
+                       }        
+                   });    
+               });
+           }
+       } else {
+           alertFactory.info('Debe llenar los campos requeridos');
+       }
+   }
 
     $scope.limpiaCasillasTaller = function () {
         $scope.idZona = '';
@@ -229,12 +277,12 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
                 if (isConfirm) {            
                     tallerRepository.putEliminaTaller(idTaller).then(function (result) {              
                         if (result.data.lenght > 0) {                
-                            swal("Taller eliminado!", "success");         
+                            swal("Taller eliminado!");         
                         }            
                     }, function (error) {              
                         swal("No se pudo eliminar el taller", "error");            
                     });            
-                    swal("Taller eliminado!", "success"); 
+                    swal("Taller eliminado!"); 
                     location.href = '/acciontaller';           
                 } else {            
                     swal("Acción cancelada", "", "error");            
@@ -245,45 +293,94 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
     }
 
     $scope.actualizaTaller = function () {
-        if (($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
-
-            var insertTallerUpdate = {};
-            insertTallerUpdate.idProveedor = $scope.idelProveedor
-            insertTallerUpdate.idTaller = $scope.idelTaller
-            insertTallerUpdate.idZona = $scope.idZona;
-            insertTallerUpdate.idTad = $scope.idTAR;
-            insertTallerUpdate.ciudad = $scope.ciudad;
-            insertTallerUpdate.razonSocial = $scope.razonSocial;
-            insertTallerUpdate.encargado = $scope.encargado;
-            insertTallerUpdate.rfc = $scope.rfc;
-            insertTallerUpdate.tipo = $scope.idTipoPersona;
-            insertTallerUpdate.telefono = $scope.telefono;
-            insertTallerUpdate.email = $scope.email;
-            insertTallerUpdate.pais = $scope.pais;
-            insertTallerUpdate.estado = $scope.estado;
-            insertTallerUpdate.delegacion = $scope.delegacion;
-            insertTallerUpdate.colonia = $scope.colonia;
-            insertTallerUpdate.calle = $scope.calle;
-            insertTallerUpdate.numeroExt = $scope.numeroExterior;
-            insertTallerUpdate.codPostal = $scope.codigoPostal;
-            insertTallerUpdate.cveusu = $scope.claveUsuario;
-            insertTallerUpdate.status = $scope.idStatusTaller;
-            insertTallerUpdate.lada = $scope.lada;
-            insertTallerUpdate.idTar = $scope.idTAR;
-            tallerRepository.updateTaller(insertTallerUpdate).then(function (taller) {
-                if (taller.data[0].id > 0) {
-                    alertFactory.success("Taller insertado satisfactoriamente");
-                    setTimeout(function () {
-                        location.href = '/acciontaller'
-                    }, 1000);
-                }
-            }, function (error) {
-                alertFactory.error("Error al insertar el taller");
+    if (($scope.idStatusTaller != '' && $scope.idStatusTaller != null) && ($scope.idTipoPersona != '' && $scope.idTipoPersona != null) && $scope.ciudad != '' && $scope.razonSocial != '' && $scope.rfc != '' && $scope.telefono != '' && $scope.pais != '' && $scope.estado != '' && $scope.delegacion != '' && $scope.colonia != '' && $scope.calle != '' && $scope.numeroExterior != '' && $scope.codigoPostal != '' && $scope.claveUsuario != '' && $scope.lada != '') {
+        var insertTallerUpdate = {};
+        insertTallerUpdate.idTaller = $scope.idelTaller
+        insertTallerUpdate.idZona = $scope.idZona;
+        insertTallerUpdate.idTad = $scope.idTAR;
+        insertTallerUpdate.ciudad = $scope.ciudad;
+        insertTallerUpdate.razonSocial = $scope.razonSocial;
+        insertTallerUpdate.encargado = $scope.encargado;
+        insertTallerUpdate.rfc = $scope.rfc;
+        insertTallerUpdate.tipo = $scope.idTipoPersona;
+        insertTallerUpdate.telefono = $scope.telefono;
+        insertTallerUpdate.email = $scope.email;
+        insertTallerUpdate.pais = $scope.pais;
+        insertTallerUpdate.estado = $scope.estado;
+        insertTallerUpdate.delegacion = $scope.delegacion;
+        insertTallerUpdate.colonia = $scope.colonia;
+        insertTallerUpdate.calle = $scope.calle;
+        insertTallerUpdate.numeroExt = $scope.numeroExterior;
+        insertTallerUpdate.codPostal = $scope.codigoPostal;
+        insertTallerUpdate.cveusu = $scope.claveUsuario;
+        insertTallerUpdate.status = $scope.idStatusTaller;
+        insertTallerUpdate.lada = $scope.lada;
+        insertTallerUpdate.idTar = $scope.idTAR;
+        $scope.idProveedor == '' || $scope.idProveedor == null ? $scope.idProveedor = 0 : $scope.idProveedor;
+        insertTallerUpdate.idProveedor = $scope.idProveedor
+        if (insertTallerUpdate.idProveedor == 0) {
+            $('.btnidProveedor').ready(function () {     
+                swal({          
+                    title: "¿Esta seguro que desea Guardar sin especificar el idProveedor esto generara un nuevo registro en BPRO?",
+                               /*text: "Se cambiará el estatus a 'Cita Cancelada'",*/           type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#65BD10 ",
+                              confirmButtonText: "Si",
+                              cancelButtonText: "No",
+                              closeOnConfirm: false,
+                              closeOnCancel: false        
+                },         function (isConfirm) {          
+                    if (isConfirm) {  
+                       tallerRepository.updateTaller(insertTallerUpdate).then(function (taller) {
+                            if (taller.data[0].id > 0) {
+                                alertFactory.success("Taller actualizado satisfactoriamente");
+                                setTimeout(function () {
+                                    location.href = '/acciontaller'
+                                }, 1000);
+                            }
+                        }, function (error) {
+                            alertFactory.error("Error al insertar el taller");
+                        });         
+                        swal("Actualización Correcta!"); 
+                    } else {            
+                        swal("Proceso cancelado", "", "error");                     
+                    }        
+                });    
             });
-         } else {
-            alertFactory.info('Debe llenar los campos requeridos');
+        } else {
+            $('.btnidProveedor').ready(function () {     
+                swal({          
+                    title: "¿Esta seguro que desea Guardar este idProveedor se enlazara dentro de BPRO?",
+                               /*text: "Se cambiará el estatus a 'Cita Cancelada'",*/           type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#65BD10 ",
+                              confirmButtonText: "Si",
+                              cancelButtonText: "No",
+                              closeOnConfirm: false,
+                              closeOnCancel: false        
+                },         function (isConfirm) {          
+                    if (isConfirm) { 
+                        tallerRepository.updateTaller(insertTallerUpdate).then(function (taller) {
+                            if (taller.data[0].id > 0) {
+                                alertFactory.success("Taller actualizado satisfactoriamente");
+                                setTimeout(function () {
+                                    location.href = '/acciontaller'
+                                }, 1000);
+                            }
+                        }, function (error) {
+                            alertFactory.error("Error al insertar el taller");
+                        }); 
+                        swal("Actualización Correcta!"); 
+                    } else {            
+                        swal("Proceso cancelado", "", "error");                     
+                    }        
+                });    
+            });
         }
-
+    } else {
+        alertFactory.info('Debe llenar los campos requeridos');
     }
+
+}
 
 });
