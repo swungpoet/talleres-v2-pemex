@@ -55,9 +55,10 @@ registrationModule.factory('tallerRepository', function ($http) {
                 }
             });
         },
-        putEliminaTaller: function (idTaller) {     
+        putEliminaTaller: function (idTaller, idProveedor) {     
             var objTaller = {        
-                idTaller: idTaller      
+                idTaller: idTaller,
+                idProveedor:idProveedor      
             };
 
                   

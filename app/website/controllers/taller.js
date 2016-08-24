@@ -253,6 +253,11 @@ Taller.prototype.post_insertataller = function (req, res, next) {
             name: 'idTar',
             value: req.body.idTar,
             type: self.model.types.INT
+                 },
+                 {
+            name: 'idProveedor',
+            value: req.body.idProveedor,
+            type: self.model.types.INT
                  }];
 
     this.model.post('INS_INSERTA_TALLER_SP', params, function (error, result) {
@@ -397,6 +402,11 @@ Taller.prototype.post_eliminataller = function (req, res, next) {
     var params = [{
         name: 'idTaller',
         value: req.body.idTaller,
+        type: self.model.types.INT
+        },
+        {
+        name: 'idProveedor',
+        value: req.body.idProveedor,
         type: self.model.types.INT
         }];
 
