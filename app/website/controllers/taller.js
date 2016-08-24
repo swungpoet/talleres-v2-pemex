@@ -403,6 +403,11 @@ Taller.prototype.post_eliminataller = function (req, res, next) {
         name: 'idTaller',
         value: req.body.idTaller,
         type: self.model.types.INT
+        },
+        {
+        name: 'idProveedor',
+        value: req.body.idProveedor,
+        type: self.model.types.INT
         }];
 
     this.model.post('DEL_ELIMINA_TALLER_SP', params, function (error, result) {

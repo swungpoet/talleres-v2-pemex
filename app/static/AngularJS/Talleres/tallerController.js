@@ -262,7 +262,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
         $scope.idProveedor = '';
     }
 
-    $scope.openEliminaTallerModal = function (idTaller) {
+    $scope.openEliminaTallerModal = function (idTaller, idProveedor) {
         $('.btnEliminarTaller').ready(function () {     
             swal({          
                 title: "¿Esta seguro que desea eliminar el taller?",
@@ -275,7 +275,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
                           closeOnCancel: false        
             },         function (isConfirm) {          
                 if (isConfirm) {            
-                    tallerRepository.putEliminaTaller(idTaller).then(function (result) {              
+                    tallerRepository.putEliminaTaller(idTaller,idProveedor).then(function (result) {              
                         if (result.data.lenght > 0) {                
                             swal("Taller eliminado!");         
                         }            
