@@ -540,13 +540,33 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         }
         //Cambiamos el estatus a Orden verificada
     $scope.verificaOrden = function (idTrabajo) {
-        trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
-            if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                alertFactory.success("Trabajo verificado");
-                location.href = '/ordenesporcobrar';
-            }
-        }, function (error) {
-            alertFactory.error("Error al verificar la orden");
+    $('.btnVerificarOrden').ready(function () {
+        swal({
+                title: "¿Está seguro de verificar la Orden?",
+                text: "Pasara a Orden por Cobrar",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#67BF11",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                  trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
+                    if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                        alertFactory.success("Trabajo verificado");
+                        swal("Orden Verificada Correctamente!"); 
+                        location.href = '/ordenesporcobrar';
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al verificar la orden");
+                });              
+                } else {
+                    swal("Cancelacion de Orden");
+                }
+            });
         });
     }
 
