@@ -11,7 +11,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsFactura = uploadRepository.getDzOptions('text/xml,application/pdf', 2);
-        $scope.dzOptionsPreFactura = uploadRepository.getDzOptions('application/pdf', 2);
         $scope.userData = localStorageService.get('userData');
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
@@ -204,12 +203,18 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     });
 
     //muestra el modal para la carga de archivos
-    $scope.adjuntar = function (idTrabajo, idNombreEspecial, ejecutaMetodo) {
-        $scope.idTrabajo = idTrabajo;
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
+        $scope.idTrabajo = objOrden.idTrabajo;
         $scope.idCotizacion = 0;
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
         $scope.ejecutaMetodo = ejecutaMetodo;
+        if (anticipo == 1) {
+            $scope.anticipo = 1;
+            $scope.tituloModal = 'Solicitud de Anticipo';
+            $scope.textoBoton = 'Solicitar';
+            $scope.getMontoOrdenTrabajo(objOrden.idCita);
+        }
         $('#modalCargaArchivos').appendTo('body').modal('show');
     }
 
@@ -509,16 +514,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     $('.clockpicker').clockpicker();
-
-    //Muestra el modal para la carga de remisón o prefactura
-    $scope.cargaComprobante = function (objOrden) {
-        $scope.getMontoOrdenTrabajo(objOrden.idCita);
-        $scope.idTrabajo = objOrden.idTrabajo;
-        $scope.idNombreEspecial = 7;
-        $scope.idCotizacion = 0;
-        $scope.idCategoria = 2;
-        $('#modalCargaComprobante').appendTo('body').modal('show');
-    }
 
     $scope.getAdmonOrdenes = function () {
         $('.dataTableOrdenporVerificar').DataTable().destroy();
