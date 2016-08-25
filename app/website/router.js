@@ -7,5 +7,6 @@
      example: require('./controllers/example'),
      reporte: require('./controllers/reporte'),
      osur: require('./controllers/osur'),
-     taller: require('./controllers/taller')
+     taller: require('./controllers/taller'),
+     ordenAnticipo: require('./controllers/ordenAnticipo')
  }

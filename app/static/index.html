@@ -95,6 +95,9 @@
                         <li><a href="/acciontaller">Talleres</a></li>
                     </ul>
                 </li>
+                <li ng-show="userData.idTipoUsuario == 1">
+                    <a href="ordenanticipo" ng-click="showChat = 0"><i class="fa fa-usd"></i> <span class="nav-label">Anticipos de órdenes</span></a>
+                </li>
             </ul>
 
         </div>
@@ -283,6 +286,8 @@
     <script src="AngularJS/Administracion/administracionOrdenController.js"></script>
     <script src="AngularJS/Talleres/tallerRepository.js"></script>
     <script src="AngularJS/Talleres/tallerController.js"></script>
+    <script src="AngularJS/OrdenAnticipo/ordenAnticipoRepository.js"></script>
+    <script src="AngularJS/OrdenAnticipo/ordenAnticipoController.js"></script>
 
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>

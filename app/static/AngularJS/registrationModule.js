@@ -110,6 +110,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'tallerController'
         });
         
+        $routeProvider.when('/ordenanticipo', {
+            templateUrl: 'AngularJS/Templates/ordenAnticipo.html',
+            controller: 'ordenAnticipoController'
+        });
+        
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
