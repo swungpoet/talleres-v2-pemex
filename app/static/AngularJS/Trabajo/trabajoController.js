@@ -275,6 +275,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 alertFactory.error("Error al cargar el certificado de conformidad");
             });
         }
+
     }
 
     //genera el formato para el certificado de conformidad
@@ -480,5 +481,13 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     $('.clockpicker').clockpicker();
+
+       //muestra el modal para la carga de archivos
+    $scope.cargaComprobante = function (idTrabajo, idNombreEspecial) {
+        $scope.idTrabajo = idTrabajo;
+        $scope.idNombreEspecial = idNombreEspecial;
+        $('#modalCargaComprobante').appendTo('body').modal('show');
+    }
+
 
 });
