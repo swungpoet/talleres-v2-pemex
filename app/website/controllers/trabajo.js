@@ -323,4 +323,35 @@ Trabajo.prototype.get_searchFechaTrabajoReal = function (req, res, next) {
         });
     });
 }
+
+//obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
+Trabajo.prototype.get_getadmonordenes = function (req, res, next) {
+    var self = this;
+    var params = {};
+
+    this.model.query('SEL_ORDENES_POR_VERIFICAR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//realiza la actualización del trabajo a estatus certificado conformidad cargada cliente
+Trabajo.prototype.post_updatestatusVerificado = function(req, res, next){
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+    
+    this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Trabajo;

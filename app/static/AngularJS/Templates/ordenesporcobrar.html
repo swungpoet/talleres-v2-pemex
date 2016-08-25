@@ -9,7 +9,7 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <tabset>
-                            <!-- <tab heading="Órdenes por Cobrar" index="0">
+                            <tab heading="Órdenes por Cobrar" index="0">
                                 <br>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTableOrdenesPorCobrar" cg-busy="{promise:promise,message:message, minDuration: minDuration,delay:delay}">
@@ -56,8 +56,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </tab> -->
-                            <tab heading="Cargar COPADES" index="0" ng-show="userData.idTipoUsuario == 1">
+                            </tab> 
+                            <tab heading="Cargar COPADES" index="1" ng-show="userData.idTipoUsuario == 1">
                                <div ng-show="userData.idTipoUsuario == 1">
                                    <br>
                                 <div class="ibox-content" ng-show="fechaRecepcionCopade==''">
@@ -98,7 +98,7 @@
                                </div>
                                </div>
                            </tab>
-                            <tab heading="PreFactura Generada" index="1" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4">
+                            <tab heading="PreFactura Generada" index="2" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4">
                                 <br>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTablePreFacturas" cg-busy="{ promise:promise,message:message } ">
