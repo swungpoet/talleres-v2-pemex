@@ -42,6 +42,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         getTrabajo($scope.userData.idUsuario);
                         getTrabajoTerminado($scope.userData.idUsuario);
                         getTrabajoAprobado($scope.userData.idUsuario);
+                        $scope.getAdmonOrdenes();
                     }
                 }, function (error) {
                     alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
@@ -201,11 +202,12 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     });
 
     //muestra el modal para la carga de archivos
-    $scope.adjuntar = function (idTrabajo, idNombreEspecial) {
+    $scope.adjuntar = function (idTrabajo, idNombreEspecial, ejecutaMetodo) {
         $scope.idTrabajo = idTrabajo;
         $scope.idCotizacion = 0;
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
+        $scope.ejecutaMetodo = ejecutaMetodo;
         $('#modalCargaArchivos').appendTo('body').modal('show');
     }
 
@@ -223,11 +225,13 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
                     getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
                 }
             }, function (error) {
                 alertFactory.error("Error al cargar la Transferencia de custodia");
             });
         } else if (idNombreEspecial == 3) {//Facturado
+            if($scope.ejecutaMetodo != 1){ 
             trabajoRepository.facturaTrabajo(12, idTrabajo).then(function (trabajoFacturado) {
                 if (trabajoFacturado.data[0].idHistorialProceso > 0) {
                     alertFactory.success("Archivos cargados satisfactoriamente");
@@ -239,10 +243,23 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
                     getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
                 }
             }, function (error) {
                 alertFactory.error("Error al cargar la factura");
             });
+          }else{
+            alertFactory.success("Factura cargada");
+            $scope.ejecutaMetodo='';
+            setTimeout(function () {
+                        $scope.dzMethods.removeAllFiles();
+                        $('#modalCargaArchivos').appendTo('body').modal('hide');
+            }, 1000);
+                    getTrabajo($scope.userData.idUsuario);
+                    getTrabajoTerminado($scope.userData.idUsuario);
+                    getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
+          }
         } else if (idNombreEspecial == 5) {//certificado cliente
             trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo1) {
                 if (certificadoTrabajo1.data[0].idHistorialProceso > 0) {
@@ -255,6 +272,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
                     getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
                 }
             }, function (error) {
                 alertFactory.error("Error al cargar el certificado de conformidad");
@@ -271,6 +289,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
                     getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
                 }
             }, function (error) {
                 alertFactory.error("Error al cargar el certificado de conformidad");
@@ -289,6 +308,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 getTrabajo($scope.userData.idUsuario);
                 getTrabajoTerminado($scope.userData.idUsuario);
                 getTrabajoAprobado($scope.userData.idUsuario);
+                $scope.getAdmonOrdenes();
                 //}
             }, function (error) {
                 alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
@@ -401,7 +421,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             var checkErrorFile = file.some(checkExistsError);
             if(!checkErrorFile){
                 var allSuccess = file.every(checkAllSuccess);
-                if(allSuccess){
+                if(allSuccess){           
                     upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
                 }
             }
@@ -519,13 +539,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         localStorageService.set("botonera", objBotonera);
         localStorageService.set('actualizaCosto', trabajo.numeroTrabajo)
         location.href = '/ordenservicio?state=1';
-    }
-
-    $scope.openFacturaModal = function (idTrabajo) {
-        $('#modalCargaArchivos').appendTo("body").modal('show');
-        $scope.idTrabajo = idTrabajo;
-        $scope.idCategoria = 2;
-        $scope.idNombreEspecial = 3;
     }
 
 });
