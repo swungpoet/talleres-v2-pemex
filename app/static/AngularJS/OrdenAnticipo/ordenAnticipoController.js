@@ -18,6 +18,7 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
     var getOrdenesAnticipoPendiente = function(){
         ordenAnticipoRepository.getOrdenesAnticipoPendiente().then(function(anticipoPendiente){
             if(anticipoPendiente.data.length){
+                $scope.ordenesAticipoPendiente = anticipoPendiente.data;
                 alertFactory.success("Órdenes con anticipos pendientes cargados");
             }
             else{
@@ -32,6 +33,7 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
     var getOrdenesAnticipoAplicado = function(){
         ordenAnticipoRepository.getOrdenesAnticipoAplicado().then(function(anticipoAplicado){
             if(anticipoAplicado.data.length){
+                $scope.ordenesAticipoAplicado = anticipoPendiente.data;
                 alertFactory.success("Órdenes con anticipos aplicados cargados");
             }
             else{
