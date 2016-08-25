@@ -483,4 +483,17 @@ Orden.prototype.post_mueveCopade = function (req, res, next) {
     self.view.expositor(res, object);
 }
 
+//Obtiene las copades que aún no han sido asignadas
+Orden.prototype.get_ordenesverificadas = function (req, res, next) {
+    var self = this;
+    var params = [];
+
+    this.model.query('SEL_ORDEN_VERIFICADA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Orden;
