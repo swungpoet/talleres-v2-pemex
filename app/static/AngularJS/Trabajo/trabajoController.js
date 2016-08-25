@@ -5,12 +5,13 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository, cotizacionRepository, uploadRepository) {
+registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository) {
     //this is the first method executed in the view
     $scope.init = function () {
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
-        $scope.dzOptionsFactura = uploadRepository.getDzOptions('text/xml,application/pdf',2);
+        $scope.dzOptionsFactura = uploadRepository.getDzOptions('text/xml,application/pdf', 2);
+        $scope.dzOptionsPreFactura = uploadRepository.getDzOptions('application/pdf', 2);
         $scope.userData = localStorageService.get('userData');
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
@@ -28,7 +29,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             nombreProveedor: "",
             puestoProveedor: ""
         }
-         $scope.cleanfecha();
+        $scope.cleanfecha();
     }
 
     var obtieneNombreArchivo = function (idTrabajo) {
@@ -36,7 +37,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             if (nombreArchivo.data != null) {
                 $scope.certificadoConformidad = nombreArchivo.data[0];
                 trabajoRepository.descargaCerficadoConformidadTrabajo(20, idTrabajo).then(function (certificadoDescargado) {
-                    if(certificadoDescargado.data[0].idHistorialProceso > 0){
+                    if (certificadoDescargado.data[0].idHistorialProceso > 0) {
                         alertFactory.success("Certificado de conformidad descargado");
                         getTrabajo($scope.userData.idUsuario);
                         getTrabajoTerminado($scope.userData.idUsuario);
@@ -44,7 +45,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     }
                 }, function (error) {
                     alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
-                }) 
+                })
             }
         }, function (error) {
             alertFactory.error("Error al encontrar nombre de archivo");
@@ -161,16 +162,16 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     //abre el modal para la finalización del trabajo
     $scope.openFinishingTrabajoModal = function (idTrabajo) {
         $scope.trabajos.forEach(function (p, i) {
-           if(p.idTrabajo == idTrabajo){
-             if(p.fechaServicio != null){
-        $('#finalizarTrabajoModal').appendTo("body").modal('show');
-         $scope.idTrabajo = idTrabajo;
-        }else{
-             alertFactory.info('Debe ingresar la fecha inicio del trabajo');
-         }
-       }
-     });
-       
+            if (p.idTrabajo == idTrabajo) {
+                if (p.fechaServicio != null) {
+                    $('#finalizarTrabajoModal').appendTo("body").modal('show');
+                    $scope.idTrabajo = idTrabajo;
+                } else {
+                    alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                }
+            }
+        });
+
     }
 
     //confirm del trabajo para su terminación
@@ -210,7 +211,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //cambia el trabajo a estatus a facturado
     var upadateEstatusTrabajo = function (idTrabajo, idNombreEspecial) {
-        if (idNombreEspecial == 2) {//Transferencia de custodia
+        if (idNombreEspecial == 2) { //Transferencia de custodia
             trabajoRepository.transfResponsabilidadTrabajo(14, idTrabajo).then(function (transferenciaCustodia) {
                 if (transferenciaCustodia.data[0].idHistorialProceso > 0) {
                     alertFactory.success("Archivos cargados satisfactoriamente");
@@ -226,7 +227,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }, function (error) {
                 alertFactory.error("Error al cargar la Transferencia de custodia");
             });
-        } else if (idNombreEspecial == 3) {//Facturado
+        } else if (idNombreEspecial == 3) { //Facturado
             trabajoRepository.facturaTrabajo(12, idTrabajo).then(function (trabajoFacturado) {
                 if (trabajoFacturado.data[0].idHistorialProceso > 0) {
                     alertFactory.success("Archivos cargados satisfactoriamente");
@@ -242,7 +243,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }, function (error) {
                 alertFactory.error("Error al cargar la factura");
             });
-        } else if (idNombreEspecial == 5) {//certificado cliente
+        } else if (idNombreEspecial == 5) { //certificado cliente
             trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo1) {
                 if (certificadoTrabajo1.data[0].idHistorialProceso > 0) {
                     alertFactory.success("Archivos cargados satisfactoriamente");
@@ -389,29 +390,27 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         'addedfile': function (file) {
             $scope.newFile = file;
         },
-        'sending': function(file, xhr, formData){
+        'sending': function (file, xhr, formData) {
             formData.append('idTrabajo', $scope.idTrabajo);
             formData.append('idCotizacion', $scope.idCotizacion);
             formData.append('idCategoria', $scope.idCategoria);
             formData.append('idNombreEspecial', $scope.idNombreEspecial);
-        }
-        ,
+        },
         'completemultiple': function (file, xhr) {
             var checkErrorFile = file.some(checkExistsError);
-            if(!checkErrorFile){
+            if (!checkErrorFile) {
                 var allSuccess = file.every(checkAllSuccess);
-                if(allSuccess){
+                if (allSuccess) {
                     upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
                 }
             }
         },
         'error': function (file, xhr) {
-            if(!file.accepted){
+            if (!file.accepted) {
                 $scope.dzMethods.removeFile(file);
-            }
-            else{
+            } else {
                 $scope.dzMethods.removeAllFiles(true);
-                alertFactory.info("No se pudieron subir los archivos");   
+                alertFactory.info("No se pudieron subir los archivos");
             }
         },
     };
@@ -420,7 +419,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     function checkAllSuccess(file, index, array) {
         return file.status === 'success';
     }
-    
+
     //valida si existe algún error
     function checkExistsError(file) {
         return file.status === 'error';
@@ -482,12 +481,48 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     $('.clockpicker').clockpicker();
 
-       //muestra el modal para la carga de archivos
-    $scope.cargaComprobante = function (idTrabajo, idNombreEspecial) {
-        $scope.idTrabajo = idTrabajo;
-        $scope.idNombreEspecial = idNombreEspecial;
+    //Muestra el modal para la carga de remisón o prefactura
+    $scope.cargaComprobante = function (objOrden) {
+        $scope.getMontoOrdenTrabajo(objOrden.idCita);
+        $scope.idTrabajo = objOrden.idTrabajo;
+        $scope.idNombreEspecial = 7;
+        $scope.idCotizacion = 0;
+        $scope.idCategoria = 2;
         $('#modalCargaComprobante').appendTo('body').modal('show');
     }
 
+    //Obtiene el monto de la órden de servicio
+    $scope.getMontoOrdenTrabajo = function (idCita) {
+        $scope.sumaIvaTotal = 0;
+        $scope.sumaPrecioTotal = 0;
+        $scope.sumaGranTotal = 0;
+        $scope.sumaIvaTotalCliente = 0;
+        $scope.sumaPrecioTotalCliente = 0;
+        $scope.sumaGranTotalCliente = 0;
 
+        cotizacionAutorizacionRepository.getCotizacionByTrabajo(idCita, $scope.userData.idUsuario).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.total = 0;
+                    $scope.articulos = result.data;
+                    for (var i = 0; i < result.data.length; i++) {
+                        //Sumatoria Taller
+                        $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
+
+                        $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
+
+
+                        //Sumatoria Cliente
+                        $scope.sumaIvaTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente) * (result.data[i].valorIva / 100);
+
+                        $scope.sumaPrecioTotalCliente += (result.data[i].cantidad * result.data[i].precioCliente);
+                    }
+                    //Total Taller
+                    $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
+
+                    //Total Cliente
+                    $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
+                }
+            },
+            function (error) {});
+    }
 });

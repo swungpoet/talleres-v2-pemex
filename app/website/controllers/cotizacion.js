@@ -493,6 +493,8 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/factura');
                     if (!fs.existsSync(dirname + idTrabajo + '/documentos/adendaCopade'))
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
+                    if (!fs.existsSync(dirname + idTrabajo + '/documentos/preFactura'))
+                        fs.mkdirSync(dirname + idTrabajo + '/documentos/preFactura');
                 }
                 if (idNombreEspecial == 1) {
                     nameFile = 'ComprobanteRecepcion';
@@ -517,6 +519,9 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                 } else if (idNombreEspecial == 6) {
                     nameFile = 'CertificadoConformidad';
                     cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
+                } else if (idNombreEspecial == 7) {
+                    nameFile = 'ComprobantePreFactura';
+                    cb(null, dirname + idTrabajo + '/documentos/preFactura');
                 } else {
                     nameFile = 'Evidencia';
                     cb(null, dirname + idTrabajo + '/evidenciaTrabajo');
