@@ -423,6 +423,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             if (!checkErrorFile) {
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
+
                     upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
                 }
             }
@@ -587,6 +588,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
                 }
             },
-            function (error) {});
+            function (error) {
+                alertFactory.error('No se pudo obtener el monto de la órden');
+            });
     }
 });
