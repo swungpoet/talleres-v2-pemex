@@ -29,6 +29,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             puestoProveedor: ""
         }
          $scope.cleanfecha();
+         $scope.getAdmonOrdenes();
     }
 
     var obtieneNombreArchivo = function (idTrabajo) {
@@ -124,11 +125,11 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     },
                     {
                         extend: 'excel',
-                        title: 'ExampleFile'
+                        title: 'OrdenServicio'
                     },
                     {
                         extend: 'pdf',
-                        title: 'ExampleFile'
+                        title: 'OrdenServicio'
                     },
 
                     {
@@ -489,5 +490,42 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $('#modalCargaComprobante').appendTo('body').modal('show');
     }
 
+    $scope.getAdmonOrdenes = function () {
+        $('.dataTableOrdenporVerificar').DataTable().destroy();
+        trabajoRepository.getAdmonOrdenes().then(function (admonOrden) {
+             $scope.admonOrdenes = admonOrden.data;
+            if (admonOrden.data.length > 0) {
+                waitDrawDocument("dataTableOrdenporVerificar");
+                alertFactory.success("Ordenes por verificar cargados");
+            } else {
+                alertFactory.info("No se encontraron Ordenes por verificar");
+            }         
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden");
+        });
+    }
+
+    $scope.verFactura = function (idTrabajo) {
+        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
+        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
+    }
+
+    //visualiza la orden de servicio
+    $scope.lookAt = function (trabajo, valBotonera) {
+        var objBotonera = {};
+        objBotonera.accion = valBotonera;
+        objBotonera.idCita = trabajo.idCita;
+        localStorageService.set('objTrabajo', trabajo);
+        localStorageService.set("botonera", objBotonera);
+        localStorageService.set('actualizaCosto', trabajo.numeroTrabajo)
+        location.href = '/ordenservicio?state=1';
+    }
+
+    $scope.openFacturaModal = function (idTrabajo) {
+        $('#modalCargaArchivos').appendTo("body").modal('show');
+        $scope.idTrabajo = idTrabajo;
+        $scope.idCategoria = 2;
+        $scope.idNombreEspecial = 3;
+    }
 
 });

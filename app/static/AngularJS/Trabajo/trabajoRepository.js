@@ -168,7 +168,17 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getAdmonOrdenes: function () {
+            return $http({
+                url: trabajoUrl + 'getadmonordenes/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
 
     };
 });
+

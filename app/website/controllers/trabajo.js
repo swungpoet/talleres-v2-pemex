@@ -323,4 +323,18 @@ Trabajo.prototype.get_searchFechaTrabajoReal = function (req, res, next) {
         });
     });
 }
+
+//obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
+Trabajo.prototype.get_getadmonordenes = function (req, res, next) {
+    var self = this;
+    var params = {};
+
+    this.model.query('SEL_ORDENES_POR_VERIFICAR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Trabajo;
