@@ -337,4 +337,21 @@ Trabajo.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
+//realiza la actualización del trabajo a estatus certificado conformidad cargada cliente
+Trabajo.prototype.post_updatestatusVerificado = function(req, res, next){
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
+                  {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
+    
+    this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Trabajo;

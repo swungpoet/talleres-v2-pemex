@@ -540,5 +540,16 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         localStorageService.set('actualizaCosto', trabajo.numeroTrabajo)
         location.href = '/ordenservicio?state=1';
     }
+    //Cambiamos el estatus a Orden verificada
+    $scope.verificaOrden = function (idTrabajo) {
+        trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
+            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                alertFactory.success("Trabajo verificado");
+                location.href = '/ordenesporcobrar';
+            }
+        }, function (error) {
+            alertFactory.error("Error al verificar la orden");
+        });
+    }
 
 });

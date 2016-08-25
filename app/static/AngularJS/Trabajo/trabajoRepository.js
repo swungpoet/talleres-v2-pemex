@@ -177,6 +177,16 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
+        },
+         updEstatusVerificado: function(idEstatus,idTrabajo){
+            return $http({
+                url: trabajoUrl + 'updatestatusVerificado/',
+                method: "POST",
+                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
 
     };
