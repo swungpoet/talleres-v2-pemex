@@ -233,7 +233,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 alertFactory.error("Error al cargar la Transferencia de custodia");
             });
         } else if (idNombreEspecial == 3) { //Facturado
-            if ($scope.ejecutaMetodo != 1) {
                 trabajoRepository.facturaTrabajo(12, idTrabajo).then(function (trabajoFacturado) {
                     if (trabajoFacturado.data[0].idHistorialProceso > 0) {
                         alertFactory.success("Archivos cargados satisfactoriamente");
@@ -250,18 +249,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 }, function (error) {
                     alertFactory.error("Error al cargar la factura");
                 });
-            } else {
-                alertFactory.success("Factura cargada");
-                $scope.ejecutaMetodo = '';
-                setTimeout(function () {
-                    $scope.dzMethods.removeAllFiles();
-                    $('#modalCargaArchivos').appendTo('body').modal('hide');
-                }, 1000);
-                getTrabajo($scope.userData.idUsuario);
-                getTrabajoTerminado($scope.userData.idUsuario);
-                getTrabajoAprobado($scope.userData.idUsuario);
-                $scope.getAdmonOrdenes();
-            }
         } else if (idNombreEspecial == 5) { //certificado cliente
             trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo1) {
                 if (certificadoTrabajo1.data[0].idHistorialProceso > 0) {
@@ -430,6 +417,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                             $scope.dzMethods.removeAllFiles();
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                         }, 1000);
+                        $scope.getAdmonOrdenes();
                     }
                 }
             }
