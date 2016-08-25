@@ -10,14 +10,19 @@ var ordenAnticipoUrl = global_settings.urlCORS + '/api/ordenanticipo/';
 registrationModule.factory('ordenAnticipoRepository', function ($http) {
 
     return {
-        //borrar función de ejemplo
-        getExmapleFunction: function (id) {
+        getOrdenesAnticipoPendiente: function () {
             return $http({
-                url: ordenAnticipoUrl + 'example/',
+                url: ordenAnticipoUrl + 'ordenanticipopendiente/',
                 method: "GET",
-                params: {
-                    id: id
-                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+        getOrdenesAnticipoAplicado: function () {
+            return $http({
+                url: ordenAnticipoUrl + 'ordenanticipoaplicado/',
+                method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 }
