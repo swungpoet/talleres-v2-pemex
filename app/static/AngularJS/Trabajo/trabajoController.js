@@ -423,8 +423,14 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             if (!checkErrorFile) {
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
-
-                    upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                    if ($scope.ejecutaMetodo == 1) {
+                        upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                    } else {
+                        setTimeout(function () {
+                            $scope.dzMethods.removeAllFiles();
+                            $('#modalCargaArchivos').appendTo('body').modal('hide');
+                        }, 1000);
+                    }
                 }
             }
         },

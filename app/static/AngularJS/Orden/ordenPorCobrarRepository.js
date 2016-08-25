@@ -124,6 +124,13 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'        
                 }      
             });    
+        },
+        getOrdenesVerificadas: function () {
+            return $http({
+                url: ordenUrl + 'ordenesverificadas',
+                method: "GET"
+            });
         }
+
     };
 });

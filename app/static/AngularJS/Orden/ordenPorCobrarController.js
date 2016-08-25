@@ -16,6 +16,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }
         $scope.limpiaFecha();
         $scope.cleanDatos();
+        $scope.getOrdenesPorCobrar(); 
     }
 
     //Carga Adenda y Copade
@@ -349,6 +350,52 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     //Limpiamos campos idTrabajo
     $scope.cleanDatos = function () {
         $scope.idDeTrabajo = '';
+    }
+
+     //Devuelve las copades pendientes por asignar
+    $scope.getOrdenesPorCobrar = function () {
+        $('.dataTableOrdenesVerificadas').DataTable().destroy();
+        ordenPorCobrarRepository.getOrdenesVerificadas().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.verificadas = result.data;
+                setTimeout(function () {
+                    $('.dataTableOrdenesVerificadas').DataTable({
+                        buttons: [
+                            {
+                                extend: 'copy'
+                                   },
+                            {
+                                extend: 'csv'
+                                   },
+                            {
+                                extend: 'excel',
+                                title: 'ExampleFile'
+                                   },
+                            {
+                                extend: 'pdf',
+                                title: 'ExampleFile'
+                                   },
+
+                            {
+                                extend: 'print',
+                                customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                           }
+                       ]
+                    });
+                }, 1000);
+            } else {
+                alertFactory.info('No se encontró ninguna Orden Verificada');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener las Ordenes" + error);
+        });
     }
 
 });
