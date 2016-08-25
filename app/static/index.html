@@ -95,8 +95,8 @@
                         <li><a href="/acciontaller">Talleres</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="ordenanticipo" ng-click="showChat = 0"><i class="fa fa-usd"></i> <span class="nav-label">Ancipos de órdenes</span></a>
+                <li ng-show="userData.idTipoUsuario == 1">
+                    <a href="ordenanticipo" ng-click="showChat = 0"><i class="fa fa-usd"></i> <span class="nav-label">Anticipos de órdenes</span></a>
                 </li>
             </ul>
 
