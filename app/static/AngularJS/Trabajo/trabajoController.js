@@ -5,7 +5,7 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository) {
+registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository) {
     //this is the first method executed in the view
     $scope.init = function () {
         //configuraciones de dropzone
@@ -214,7 +214,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             $scope.tituloModal = 'Solicitud de Anticipo';
             $scope.textoBoton = 'Solicitar';
             $scope.getMontoOrdenTrabajo(objOrden.idCita);
-        }else{
+        } else {
             $scope.anticipo = 0;
             $scope.tituloModal = 'Carga Archivo';
             $scope.textoBoton = 'Cargar';
@@ -242,22 +242,22 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 alertFactory.error("Error al cargar la Transferencia de custodia");
             });
         } else if (idNombreEspecial == 3) { //Facturado
-                trabajoRepository.facturaTrabajo(12, idTrabajo).then(function (trabajoFacturado) {
-                    if (trabajoFacturado.data[0].idHistorialProceso > 0) {
-                        alertFactory.success("Archivos cargados satisfactoriamente");
-                        alertFactory.success("Factura cargada");
-                        setTimeout(function () {
-                            $scope.dzMethods.removeAllFiles();
-                            $('#modalCargaArchivos').appendTo('body').modal('hide');
-                        }, 1000);
-                        getTrabajo($scope.userData.idUsuario);
-                        getTrabajoTerminado($scope.userData.idUsuario);
-                        getTrabajoAprobado($scope.userData.idUsuario);
-                        $scope.getAdmonOrdenes();
-                    }
-                }, function (error) {
-                    alertFactory.error("Error al cargar la factura");
-                });
+            trabajoRepository.facturaTrabajo(12, idTrabajo).then(function (trabajoFacturado) {
+                if (trabajoFacturado.data[0].idHistorialProceso > 0) {
+                    alertFactory.success("Archivos cargados satisfactoriamente");
+                    alertFactory.success("Factura cargada");
+                    setTimeout(function () {
+                        $scope.dzMethods.removeAllFiles();
+                        $('#modalCargaArchivos').appendTo('body').modal('hide');
+                    }, 1000);
+                    getTrabajo($scope.userData.idUsuario);
+                    getTrabajoTerminado($scope.userData.idUsuario);
+                    getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar la factura");
+            });
         } else if (idNombreEspecial == 5) { //certificado cliente
             trabajoRepository.uploadCertificadoCallCenterTrabajo(19, idTrabajo).then(function (certificadoTrabajo1) {
                 if (certificadoTrabajo1.data[0].idHistorialProceso > 0) {
@@ -421,6 +421,20 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 if (allSuccess) {
                     if ($scope.ejecutaMetodo == 1) {
                         upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                    } else if ($scope.anticipo == 1) {
+                        setTimeout(function () {
+                            $scope.dzMethods.removeAllFiles();
+                            $('#modalCargaArchivos').appendTo('body').modal('hide');
+                        }, 1000);
+                        $scope.anticipo = 0;
+                        ordenAnticipoRepository.putAnticipo($scope.idTrabajo, 'pemex', 'andrade', 'referencia', 57, $scope.tasaIva, $scope.sumaPrecioTotal, $scope.sumaIvaTotal, $scope.sumaGranTotal).then(function (result) {
+                            if (result.data.length > 0) {
+                                $scope.init();
+                                alertFactory.success('Anticipo solicitado correctamente');
+                            }
+                        }, function (error) {
+                            alertFactory.error('No se pudo solicitar el anticipo');
+                        });
                     } else {
                         setTimeout(function () {
                             $scope.dzMethods.removeAllFiles();
@@ -539,33 +553,33 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         }
         //Cambiamos el estatus a Orden verificada
     $scope.verificaOrden = function (idTrabajo) {
-    $('.btnVerificarOrden').ready(function () {
-        swal({
-                title: "¿Está seguro de verificar la Orden?",
-                text: "Pasara a Orden por Cobrar",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#67BF11",
-                confirmButtonText: "Si",
-                cancelButtonText: "No",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                  trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
-                    if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                        alertFactory.success("Trabajo verificado");
-                        swal("Orden Verificada Correctamente!"); 
-                        location.href = '/ordenesporcobrar';
+        $('.btnVerificarOrden').ready(function () {
+            swal({
+                    title: "¿Está seguro de verificar la Orden?",
+                    text: "Pasara a Orden por Cobrar",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#67BF11",
+                    confirmButtonText: "Si",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
+                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                alertFactory.success("Trabajo verificado");
+                                swal("Orden Verificada Correctamente!");
+                                location.href = '/ordenesporcobrar';
+                            }
+                        }, function (error) {
+                            alertFactory.error("Error al verificar la orden");
+                        });
+                    } else {
+                        swal("Cancelacion de Orden");
                     }
-                }, function (error) {
-                    alertFactory.error("Error al verificar la orden");
-                });              
-                } else {
-                    swal("Cancelacion de Orden");
-                }
-            });
+                });
         });
     }
 
@@ -577,6 +591,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $scope.sumaIvaTotalCliente = 0;
         $scope.sumaPrecioTotalCliente = 0;
         $scope.sumaGranTotalCliente = 0;
+        $scope.tasaIva = 0;
 
         cotizacionAutorizacionRepository.getCotizacionByTrabajo(idCita, $scope.userData.idUsuario).then(function (result) {
                 if (result.data.length > 0) {
@@ -585,6 +600,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     for (var i = 0; i < result.data.length; i++) {
                         //Sumatoria Taller
                         $scope.sumaIvaTotal += (result.data[i].cantidad * result.data[i].precio) * (result.data[i].valorIva / 100);
+                        $scope.tasaIva = result.data[i].valorIva;
 
                         $scope.sumaPrecioTotal += (result.data[i].cantidad * result.data[i].precio);
 

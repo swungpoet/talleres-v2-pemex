@@ -54,4 +54,72 @@ OrdenAnticipo.prototype.get_ordenanticipoaplicado = function (req, res, next) {
     });
 }
 
+//Inserta solicitud de anticipo en BPRO y tabla local de anticipos
+OrdenAnticipo.prototype.post_registraAnticipo = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables    
+    var params = [
+        {
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        },
+        {
+            name: 'ordenPemex',
+            value: req.body.ordenPemex,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'ordenAndrade',
+            value: req.body.ordenAndrade,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'referencia',
+            value: req.body.referencia,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'idProveedor',
+            value: req.body.idProveedor,
+            type: self.model.types.INT
+        },
+        {
+            name: 'tasaIva',
+            value: req.body.tasaIva,
+            type: self.model.types.INT
+        },
+        {
+            name: 'subTotal',
+            value: req.body.subTotal,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'iva',
+            value: req.body.iva,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'total',
+            value: req.body.total,
+            type: self.model.types.DECIMAL
+        }
+    ];
+
+
+    this.model.post('INS_INSERTA_ANTICIPO_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = OrdenAnticipo;

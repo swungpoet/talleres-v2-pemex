@@ -27,6 +27,27 @@ registrationModule.factory('ordenAnticipoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
+        },
+        putAnticipo: function (idTrabajo, ordenPemex, ordenAndrade, referencia, idProveedor, tasaIva, subTotal, iva, total) {
+            var anticipoObj = {
+                idTrabajo: idTrabajo,
+                ordenPemex: ordenPemex,
+                ordenAndrade: ordenAndrade,
+                referencia: referencia,
+                idProveedor: idProveedor,
+                tasaIva: tasaIva,
+                subTotal: subTotal,
+                iva: iva,
+                total: total
+            };
+            return $http({
+                url: ordenAnticipoUrl + 'registraAnticipo',
+                method: "POST",
+                data: anticipoObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
