@@ -30,6 +30,7 @@
                                                 <th>Estatus de proceso Bpro</th>
                                                 <th>Fecha proceso Bpro</th>
                                                 <th>Hora proceso Bpro</th>
+                                                <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -48,6 +49,9 @@
                                                 <td>{{anticipoPendiente.OAN_STATUS}}</td>
                                                 <td>{{anticipoPendiente.OAN_FECHAPROCESO}}</td>
                                                 <td>{{anticipoPendiente.OAN_HORAPROCESO}}</td>
+                                                <td>
+                                                    <button class="btn btn-success" type="button" ng-click="verPreFactura(anticipoPendiente.idTrabajo)" data-toggle="tooltip" tooltip="Ver  Prefactura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                </td>
                                                 <!--<td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
@@ -80,6 +84,7 @@
                                                 <th>Estatus de proceso Bpro</th>
                                                 <th>Fecha proceso Bpro</th>
                                                 <th>Hora proceso Bpro</th>
+                                                <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -98,6 +103,9 @@
                                                 <td>{{anticipoAplicado.OAN_STATUS}}</td>
                                                 <td>{{anticipoAplicado.OAN_FECHAPROCESO}}</td>
                                                 <td>{{anticipoAplicado.OAN_HORAPROCESO}}</td>
+                                                <td>
+                                                    <button class="btn btn-success" type="button" ng-click="verPreFactura(anticipoAplicado.idTrabajo)" data-toggle="tooltip" tooltip="Ver  Prefactura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                </td>
                                                 <!--<td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 

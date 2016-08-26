@@ -84,4 +84,10 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
             });
         }, 2500);
     }
+    
+    //visualiza las prefacturas del anticipo
+    $scope.verPreFactura = function (idTrabajo) {
+        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/preFactura/ComprobantePreFactura.xml', '_blank', 'PreFactura');
+        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/preFactura/ComprobantePreFactura.pdf', '_blank', 'PreFactura');
+    }
 });
