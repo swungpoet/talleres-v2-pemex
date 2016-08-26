@@ -214,6 +214,10 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             $scope.tituloModal = 'Solicitud de Anticipo';
             $scope.textoBoton = 'Solicitar';
             $scope.getMontoOrdenTrabajo(objOrden.idCita);
+        }else{
+            $scope.anticipo = 0;
+            $scope.tituloModal = 'Carga Archivo';
+            $scope.textoBoton = 'Cargar';
         }
         $('#modalCargaArchivos').appendTo('body').modal('show');
     }

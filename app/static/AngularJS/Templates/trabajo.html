@@ -86,17 +86,17 @@
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
-                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo.idTrabajo,2,1)" data-toggle="tooltip" tooltip="Cargar hoja de transferencia de custodia" tooltip-placement="left"><span class="glyphicon glyphicon-open-file"></span></button>
+                                                    <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo,2,1,0)" data-toggle="tooltip" tooltip="Cargar hoja de transferencia de custodia" tooltip-placement="left"><span class="glyphicon glyphicon-open-file"></span></button>
 
                                                     <button ng-if="trabajo.estatus == 'TransResponsabilidad'" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="datosEntradaCertificadoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span></button>
 
-                                                    <button ng-if="trabajo.estatus == 'CertificadoGenerado'" ng-hide="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,5,1)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span></button>
+                                                    <button ng-if="trabajo.estatus == 'CertificadoGenerado'" ng-hide="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,5,1,0)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span></button>
 
                                                     <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Descargar certificado de conformidad" tooltip-placement="up" href="{{vIpServer}}/uploads/files/{{trabajo.idTrabajo}}/documentos/certificadoConformidad/CertificadoConformidad.pdf" target="_parent" download="CeretificadoConformidad" class="btn btn-success" role="button" ng-click="descargaCertificadoConformidadPDF(trabajo.idTrabajo)"><span class="glyphicon glyphicon-download"></span></a>
 
                                                     <a ng-if="trabajo.estatus == 'CertificadoCall'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" type="button" data-toggle="tooltip" tooltip="Rechazar Trabajo" tooltip-placement="up" class="btn btn-cancela btn-danger btnTerminarTrabajo2" role="button" ng-click="openOrdenTrabajoModal(23, trabajo.idTrabajo)">&nbsp;<i class="fa fa-times"></i></a>
 
-                                                    <button ng-if="trabajo.estatus == 'CertificadoDescargado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,6,1)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span></button>
+                                                    <button ng-if="trabajo.estatus == 'CertificadoDescargado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,6,1,0)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="left"><span class="glyphicon glyphicon-upload"></span></button>
 
                                                     <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo, 7, 0, 1)" data-toggle="tooltip" tooltip="Cargar Comprobante (Remisión, Prefactura)" tooltip-placement="left"><span class="glyphicon glyphicon-level-up"></span></button>
 
@@ -140,7 +140,7 @@
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
-                                                    <button ng-if="trabajo.estatus == 'Cerrado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo.idTrabajo,3,1)" data-toggle="tooltip" tooltip="Cargar factura" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span> </button>
+                                                    <button ng-if="trabajo.estatus == 'Cerrado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,3,1,0)" data-toggle="tooltip" tooltip="Cargar factura" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span> </button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -148,7 +148,7 @@
                                 </div>
                             </tab>
 
-                            <tab heading="Cierre de Orden" index="3">
+                            <tab heading="Cierre de Orden" index="3" ng-show="userData.idTipoUsuario == 1">
                                 <div class="wrapper wrapper-content">
                                     <br/>
                                     <div class="table-responsive">
@@ -170,22 +170,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="orden in admonOrdenes ">
-                                                    <td>{{orden.numeroTrabajo}}</td>
-                                                    <td>{{orden.numEconomico}}</td>
-                                                    <td>{{orden.razonSocial}}</td>
-                                                    <td>{{orden.TAR}}</td>
-                                                    <td>{{orden.folio}}</td>
-                                                    <td>{{orden.montoOrden | currency}}</td>
-                                                    <td>{{orden.trabajo}}</td>
-                                                    <td>{{orden.descripcionLarga }}</td>
+                                                <tr ng-repeat="trabajo in admonOrdenes ">
+                                                    <td>{{trabajo.numeroTrabajo}}</td>
+                                                    <td>{{trabajo.numEconomico}}</td>
+                                                    <td>{{trabajo.razonSocial}}</td>
+                                                    <td>{{trabajo.TAR}}</td>
+                                                    <td>{{trabajo.folio}}</td>
+                                                    <td>{{trabajo.montoOrden | currency}}</td>
+                                                    <td>{{trabajo.trabajo}}</td>
+                                                    <td>{{trabajo.descripcionLarga }}</td>
                                                     <td>
-                                                        <button class="btn btn-success" type="button" ng-click="verFactura(orden.idTrabajo)" data-toggle="tooltip" tooltip="Ver  Factura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
+                                                        <button class="btn btn-success" type="button" ng-click="verFactura(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Ver  Factura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
 
-                                                        <button class="btn btn-info" type="button" ng-click="adjuntar(orden.idTrabajo, 3, 0)" data-toggle="tooltip" tooltip="Cargar Factura" tooltip-placement="left"><span class="glyphicon glyphicon-open"></span></button>
+                                                        <button class="btn btn-info" type="button" ng-click="adjuntar(trabajo, 3, 0, 0)" data-toggle="tooltip" tooltip="Cargar Factura" tooltip-placement="left"><span class="glyphicon glyphicon-open"></span></button>
                                                     </td>
                                                     <td>
-                                                        <button class="btn btn-success" type="button" ng-click="lookAt(orden, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
+                                                        <button class="btn btn-success" type="button" ng-click="lookAt(trabajo, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                                     </td>
                                                     <td>
                                                         <a type="button" data-toggle="tooltip" tooltip="Verificar Orden" tooltip-placement="left" class="btn btn-primary btnVerificarOrden" role="button" ng-click="verificaOrden(orden.idTrabajo)"><span class="fa fa-check"></span></a> 
