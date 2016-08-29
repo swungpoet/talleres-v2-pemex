@@ -35,7 +35,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="piezas in listaPiezas" ng-class="{'rowVerde': piezas.idNivelAutorizacion==1, 'rowOlivo': piezas.idNivelAutorizacion == 2, 'rowAmarillo' : piezas.idNivelAutorizacion == 3, 'rowRojo': piezas.idNivelAutorizacion == 4}">
+                                        <tr ng-repeat="piezas in listaPiezas" ng-class="{'rowVerde': piezas.idNivelAutorizacion==1, 'rowAzul': piezas.idNivelAutorizacion == 2, 'rowAmarillo' : piezas.idNivelAutorizacion == 3, 'rowRojo': piezas.idNivelAutorizacion == 4}">
                                             <td>{{ piezas.numeroPartida }}</td>
                                             <td>{{ piezas.numeroParte }}</td>
                                             <td>{{ piezas.item }}</td>
@@ -74,7 +74,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="piezas in arrayItem" ng-class="{'rowVerde': piezas.idNivelAutorizacion==1, 'rowOlivo': piezas.idNivelAutorizacion == 2, 'rowAmarillo' : piezas.idNivelAutorizacion == 3, 'rowRojo': piezas.idNivelAutorizacion == 4}">
+                                <tr ng-repeat="piezas in arrayItem" ng-class="{'rowVerde': piezas.idNivelAutorizacion==1, 'rowAzul': piezas.idNivelAutorizacion == 2, 'rowAmarillo' : piezas.idNivelAutorizacion == 3, 'rowRojo': piezas.idNivelAutorizacion == 4}">
 
                                     <td>{{piezas.numeroPartida}}</td>
                                     <td>{{piezas.numeroParte}}</td>
