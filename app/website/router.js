@@ -8,5 +8,6 @@
      reporte: require('./controllers/reporte'),
      osur: require('./controllers/osur'),
      taller: require('./controllers/taller'),
-     ordenAnticipo: require('./controllers/ordenAnticipo')
+     ordenAnticipo: require('./controllers/ordenAnticipo'),
+     dashboard: require('./controllers/dashboard'),
  }

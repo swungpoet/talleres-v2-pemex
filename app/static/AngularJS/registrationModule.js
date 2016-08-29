@@ -115,6 +115,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'ordenAnticipoController'
         });
         
+        $routeProvider.when('/dashboardgeneral', {
+            templateUrl: 'AngularJS/Templates/dashBoardGeneral.html',
+            controller: 'dashBoardController'
+        });
+        
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
