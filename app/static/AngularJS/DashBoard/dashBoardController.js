@@ -74,6 +74,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 }],
                     resize: true,
                     colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
+                }).on('click', function (i, row) {
+                    location.href = '/reportecita?tipoCita=' + i;
                 });
             }
         }, function (error) {
@@ -139,9 +141,4 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
             alertFactory.error('No se pudo recuperar información de las citas');
         });
     }
-
-
-    $("#morris-donut-citas").click(function () {
-        location.href = '/reportecita';
-    });
 });
