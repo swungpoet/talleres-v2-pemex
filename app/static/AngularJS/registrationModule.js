@@ -119,6 +119,16 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/dashBoardGeneral.html',
             controller: 'dashBoardController'
         });
+
+        $routeProvider.when('/reportecita', {
+            templateUrl: 'AngularJS/Templates/reporteCita.html',
+            controller: 'reporteCitaController'
+        });
+
+        $routeProvider.when('/reporteorden', {
+            templateUrl: 'AngularJS/Templates/reporteOrden.html',
+            controller: 'reporteOrdenController'
+        });
         
         $locationProvider.html5Mode({
             enabled: true,
