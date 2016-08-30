@@ -7,38 +7,28 @@
     <br>
     <div class="ibox-content" ng-show="tipoCita==undefined">
         <div class="alert alert-danger">
-            <strong>Seleccione un registro de Cita, </strong> para poder ver el Historial Proceso.
+            <strong>Seleccione una Cita,</strong> para poder ver el Historial.
         </div>
     </div>
-
-    <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-
-                        <div class="col-lg-12">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-title">
+	    <div class="wrapper wrapper-content">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="ibox float-e-margins">
+	                    <div class="ibox-content">
                                     <span class="pull-right">
-	                <button class="btn btn-danger" type="button" ng-click="citaCancelada()" data-toggle="tooltip" tooltip-placement="left">Canceladas<br><div class="font-bold">{{citascanceladas}}</div></button>&nbsp;&nbsp;
-	            </span>
+					                <button class="btn btn-danger" type="button" ng-click="citaCancelada()" data-toggle="tooltip" tooltip-placement="left">Canceladas<br><div class="font-bold">{{citascanceladas}}</div></button>&nbsp;&nbsp;
+					                </span>
                                     <span class="pull-right">
-	                <button class="btn btn-info" type="button" ng-click="citaConfirmada()" data-toggle="tooltip" tooltip-placement="left">Confirmadas<br><div class="font-bold">{{citasconfirmadas}}</div></button>&nbsp;&nbsp;
-	            </span>
-
+					                <button class="btn btn-info" type="button" ng-click="citaConfirmada()" data-toggle="tooltip" tooltip-placement="left">Confirmadas<br><div class="font-bold">{{citasconfirmadas}}</div></button>&nbsp;&nbsp;
+					         	   </span>
                                     <span class="pull-right">
-	                <button class="btn btn-success" type="button" ng-click="citaAgendada()" data-toggle="tooltip" tooltip-placement="left">Agendadas<br><div class="font-bold">{{citasagendadas}}</div></button>&nbsp;&nbsp;
-	            </span>
-                                    <h1 class="no-margins">Citas Registradas</h1>
-                                </div>
+					                <button class="btn btn-success" type="button" ng-click="citaAgendada()" data-toggle="tooltip" tooltip-placement="left">Agendadas<br><div class="font-bold">{{citasagendadas}}</div></button>&nbsp;&nbsp;
+					          		</span>
+                                    <h1 class="no-margins">Citas Registradas</h1>    
                                 <br>
                                 <div class="ibox-content">
-                                    <div class="stat-percent font-bold text-navy">50% <i class="fa fa-level-up"></i></div>
-
                                     <div ng-show="tipoCita==0">
                                         CITAS AGENDADAS
-
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableAgendada" cg-busy="{promise:promise,message:message}">
                                                 <thead>
@@ -79,16 +69,15 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Zona</th>
-                                                        <th>tar</th>
-                                                        <th>Razon Social</th>
-                                                        <th>fecha Creacion</th>
-                                                        <th>fechaCita</th>
-                                                        <th>numEconomico</th>
-                                                        <th>trabajo</th>
-                                                        <th>observacion</th>
-                                                        <th>estatus</th>
-                                                        <th>horasTranscurridasSinConfirmacion</th>
-                                                        <th>Seleccionar</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Creación</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas sin Confirmación</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -103,9 +92,6 @@
                                                         <td>{{confirmadas.observacion}}</td>
                                                         <td>{{confirmadas.estatus}}</td>
                                                         <td>{{confirmadas.horasTranscurridasSinConfirmacion}}</td>
-                                                        <td>
-                                                            <button class="btn btn-primary" tooltip="Seleccionar Unidad" type="button" ng-click=""><span class="glyphicon glyphicon-check"></span></button>
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -117,17 +103,16 @@
                                             <table class="table table-striped table-bordered table-hover dataTableCancelada" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
-                                                        <th>Cliente</th>
-                                                        <th>Número Económico</th>
-                                                        <th>Número Económico Cliente</th>
-                                                        <th>Número de Inventario</th>
-                                                        <th>Número de TAR</th>
-                                                        <th>TAR</th>
-                                                        <th>GAR</th>
-                                                        <th>Ubicación</th>
-                                                        <th>Marca</th>
-                                                        <th>Modelo</th>
-                                                        <th>Seleccionar</th>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Creación</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas sin Confirmación</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -142,23 +127,14 @@
                                                         <td>{{canceldas.observacion}}</td>
                                                         <td>{{canceldas.estatus}}</td>
                                                         <td>{{canceldas.horasTranscurridasSinConfirmacion}}</td>
-                                                        <td>
-                                                            <button class="btn btn-primary" tooltip="Seleccionar Unidad" type="button" ng-click=""><span class="glyphicon glyphicon-check"></span></button>
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
