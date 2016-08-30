@@ -3,29 +3,39 @@
     <div class="headTitleTallerCita">
         <span class="title">Reporte de Citas<span class="subtitle">Administrador</span></span>
     </div>
-    <br><br>
-	<div class="col-lg-12">
-	    <div class="ibox float-e-margins">
-	        <div class="ibox-title">
-	            <span class="pull-right">
+    <br>
+    <br>
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="pull-right">
 
-	                <button class="btn btn-danger" type="button" ng-click="verPreFactura()" data-toggle="tooltip" tooltip-placement="left">Canceladas<br><div class="font-bold">{{citascanceladas}}</div></button>&nbsp;&nbsp;
+	                <button class="btn btn-danger" type="button" ng-click="citaCancelada(2)" data-toggle="tooltip" tooltip-placement="left">Canceladas<br><div class="font-bold">{{citascanceladas}}</div></button>&nbsp;&nbsp;
 	            </span>
-	            <span class="pull-right">
-	                <button class="btn btn-info" type="button" ng-click="verPreFactura()" data-toggle="tooltip" tooltip-placement="left">Confirmadas<br><div class="font-bold">{{citasconfirmadas}}</div></button>&nbsp;&nbsp;
+                <span class="pull-right">
+	                <button class="btn btn-info" type="button" ng-click="citaConfirmada(1)" data-toggle="tooltip" tooltip-placement="left">Confirmadas<br><div class="font-bold">{{citasconfirmadas}}</div></button>&nbsp;&nbsp;
 	            </span>
-	            
-	            <span class="pull-right">
-	                <button class="btn btn-success" type="button" ng-click="verPreFactura()" data-toggle="tooltip" tooltip-placement="left">Agendadas<br><div class="font-bold">{{citasagendadas}}</div></button>&nbsp;&nbsp;
-	            </span>
-	            <h1 class="no-margins">Citas Registradas</h1>
-	        </div>
-	        <br>
-	        <div class="ibox-content"> 
-	            <div class="stat-percent font-bold text-navy">50% <i class="fa fa-level-up"></i></div>
-	        </div>
 
-	    </div>
-	</div>
+                <span class="pull-right">
+	                <button class="btn btn-success" type="button" ng-click="citaAgendada(0)" data-toggle="tooltip" tooltip-placement="left">Agendadas<br><div class="font-bold">{{citasagendadas}}</div></button>&nbsp;&nbsp;
+	            </span>
+                <h1 class="no-margins">Citas Registradas</h1>
+            </div>
+            <br>
+            <div class="ibox-content">
+                <div class="stat-percent font-bold text-navy">50% <i class="fa fa-level-up"></i></div>
 
+                <div ng-show="tipoCita==0">
+                    CITAS AGENDADAS
+                </div>
+                <div ng-show="tipoCita==1">
+                    CITAS CONFIRMADAS
+                </div>
+                <div ng-show="tipoCita==2">
+                    CITAS CANCELADAS
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
