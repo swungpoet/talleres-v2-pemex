@@ -70,6 +70,15 @@
                     </div>
                 </li>
                 <li>
+                   <a href="dashboardgeneral"><i class="fa fa-home"></i> <span class="nav-label">Home</span><span class="fa arrow"></span></a>
+                   <ul class="nav nav-second-level">
+                       <li><a href="/reporte">Reporte General</a></li>
+                       <li><a href="">Citas</a></li>
+                       <li><a href="">Órdenes</a></li>   
+                                               
+                   </ul>
+               </li>
+                <li>
                     <a href="cita" ng-hide="userData.idTipoUsuario == 3" ng-click="showChat = 0"><i class="fa fa-car"></i> <span class="nav-label">Nueva Cita</span></a>
                 </li>
                 <li>
@@ -288,11 +297,14 @@
     <script src="AngularJS/Talleres/tallerController.js"></script>
     <script src="AngularJS/OrdenAnticipo/ordenAnticipoRepository.js"></script>
     <script src="AngularJS/OrdenAnticipo/ordenAnticipoController.js"></script>
-
+    <script src="AngularJS/DashBoard/dashBoardRepository.js"></script>
+    <script src="AngularJS/DashBoard/dashBoardController.js"></script>
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia/slimscroll/jquery.slimscroll.min.js"></script>
-
+    <!-- Morris -->
+   <script src="js/inspinia/morris/raphael-2.1.0.min.js"></script>
+   <script src="js/inspinia/morris/morris.js"></script>
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia/inspinia.js"></script>
     <script src="js/inspinia/pace/pace.min.js"></script>
