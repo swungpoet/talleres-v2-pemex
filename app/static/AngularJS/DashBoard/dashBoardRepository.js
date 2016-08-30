@@ -2,10 +2,15 @@ var tableroUrl = global_settings.urlCORS + '/api/dashboard/';
 
 registrationModule.factory('dashBoardRepository', function ($http) {
     return {
-        getTotalCitas: function () {
+        getTotalCitas: function (idTar) {
+            var objTAR = {
+                idTar: idTar
+            };
+            
             return $http({
                 url: tableroUrl + 'sumatoriaCitas/',
-                method: "GET",
+                method: "POST",
+                data: objTAR,
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -35,8 +40,8 @@ registrationModule.factory('dashBoardRepository', function ($http) {
             };
 
             return $http({
-                url: tableroUrl + 'tars/',
-                method: "GET",
+                url: tableroUrl + 'tars',
+                method: "POST",
                 data: objZona,
                 headers: {
                     'Content-Type': 'application/json'

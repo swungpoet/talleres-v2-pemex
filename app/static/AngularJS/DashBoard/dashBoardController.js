@@ -1,4 +1,6 @@
 registrationModule.controller('dashBoardController', function ($scope, alertFactory, $rootScope, localStorageService, $route, dashBoardRepository) {
+    $scope.zonaSelected = null;
+    $scope.tarSelected = null;
 
     $scope.init = function () {
         $scope.devuelveZonas();
@@ -22,7 +24,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     value: 20
                 }],
             resize: true,
-            colors: ['#87d6c6', '#54cdb4', '#1ab394'],
+            colors: ['#F9ED69', '#F08A5D', '#B83B5E'],
         });
 
         Morris.Donut({
@@ -40,13 +42,14 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     value: 20
                 }],
             resize: true,
-            colors: ['#87d6c6', '#54cdb4', '#1ab394'],
+            colors: ['#F33535', '#D8E9F0', '#33425B'],
         });
     }
 
     $scope.sumatoriaCitas = function () {
-        dashBoardRepository.getTotalCitas().then(function (datos) {
+        dashBoardRepository.getTotalCitas($scope.tarSelected).then(function (datos) {
             if (datos.data.length > 0) {
+                $('#morris-donut-citas').empty();
                 var agendadas = 0;
                 var confirmadas = 0;
                 var canceladas = 0;
@@ -60,19 +63,21 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 Morris.Donut({
                     element: 'morris-donut-citas',
-                    data: [{
+                    data: [
+                        {
                             label: "Agendadas",
                             value: agendadas
-                },
+                        },
                         {
                             label: "Confirmadas",
                             value: confirmadas
-                },
+                        },
                         {
                             label: "Canceladas",
                             value: canceladas
-                }],
-                    resize: true,
+                        }
+                    ],
+                    resize: false,
                     colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
                 }).on('click', function (i, row) {
                     location.href = '/reportecita?tipoCita=' + i;
@@ -132,7 +137,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveTars = function () {
-        dashBoardRepository.getTars().then(function (tars) {
+        dashBoardRepository.getTars($scope.zonaSelected).then(function (tars) {
             if (tars.data.length > 0) {
                 $scope.tars = tars.data;
 
@@ -141,4 +146,9 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
             alertFactory.error('No se pudo recuperar información de las citas');
         });
     }
+
+    $scope.getDashBoard = function () {
+        $scope.sumatoriaCitas();
+    }
+
 });

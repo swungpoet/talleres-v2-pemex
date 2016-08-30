@@ -1,21 +1,23 @@
 <link href="../../css/inspinia/morris/morris-0.4.3.min.css" rel="stylesheet">
 <div ng-init="init()">
     <div class="wrapper wrapper-content">
-        <form role="form" class="form-inline">
-            <div class="form-group">
+        <div class="row">
+            <div class="col-lg-5">
                 <label for="zona" class="">Zona</label>
-                <select class="form-control m-b" id="zona" ng-model="zona.idZona" ng-options="zona.idZona as zona.descripcionZona for zona in zonas" ng-change="">
-                    <option value="">TODAS</option>
+                <select class="form-control m-b" id="zona" ng-model="zonaSelected" ng-options="zona.idZona as zona.descripcionZona for zona in zonas" ng-change="devuelveTars()">
+                    <option value="">Seleccione una Zona</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="tar" class="">T.A.R</label>
-                <select class="form-control m-b" id="tar" ng-model="tar.idTAR" ng-options="tar.idTAR as tar.nombreTar for tar in tars" ng-change="">
-                    <option value="">TODAS</option>
+            <div class="col-lg-5">
+                <label align="center">T.A.R</label>
+                <select class="form-control m-b" id="tar" ng-model="tarSelected" ng-options="tar.idTAR as tar.nombreTar for tar in tars">
+                    <option value="">Seleccione una TAR</option>
                 </select>
             </div>
-            <button class="btn btn-primary" type="submit">Buscar</button>
-        </form>
+            <div class="col-lg-2">
+                <button class="btn btn-success" type="submit" ng-click="getDashBoard()">Buscar</button>
+            </div>
+        </div>
         <div class="hr-line-dashed"></div>
         <div class="row">
             <div class="col-lg-6">
