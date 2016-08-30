@@ -19,6 +19,29 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getZonas: function () {
+            return $http({
+                url: tableroUrl + 'zonas/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getTars: function (idZona) {
+            var objZona = {
+                idZona: idZona
+            };
+
+            return $http({
+                url: tableroUrl + 'tars/',
+                method: "GET",
+                data: objZona,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

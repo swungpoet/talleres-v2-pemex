@@ -1,15 +1,17 @@
 var DashBoardView = require('../views/ejemploVista'),
-	DashBoardModel = require('../models/dataAccess2');
+    DashBoardModel = require('../models/dataAccess2');
 
-var DashBoard = function(conf){
-	this.conf = conf || {};
+var DashBoard = function (conf) {
+    this.conf = conf || {};
 
-	this.view = new DashBoardView();
-	this.model = new DashBoardModel({ parameters : this.conf.parameters});
+    this.view = new DashBoardView();
+    this.model = new DashBoardModel({
+        parameters: this.conf.parameters
+    });
 
-	this.response = function(){
-		this[this.conf.funcionalidad](this.conf.req,this.conf.res,this.conf.next);
-	}
+    this.response = function () {
+        this[this.conf.funcionalidad](this.conf.req, this.conf.res, this.conf.next);
+    }
 }
 
 
@@ -36,6 +38,42 @@ DashBoard.prototype.get_sumatoriaCotizaciones = function (req, res, next) {
     var params = [];
 
     this.model.query('SEL_REPORTE_COTIZACIONES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Obtiene todas las zonas
+DashBoard.prototype.get_zonas = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [];
+
+    this.model.query('SEL_GAR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Obtiene todas las tars
+DashBoard.prototype.get_tars = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_TAR_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

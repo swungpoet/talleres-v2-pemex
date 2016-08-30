@@ -1,10 +1,10 @@
 registrationModule.controller('dashBoardController', function ($scope, alertFactory, $rootScope, localStorageService, $route, dashBoardRepository) {
 
     $scope.init = function () {
+        $scope.devuelveZonas();
+        $scope.devuelveTars();
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
-
-
 
 
         Morris.Donut({
@@ -117,6 +117,29 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
             alertFactory.error('No se pudo recuperar información de las citas');
         });
     }
+
+    $scope.devuelveZonas = function () {
+        dashBoardRepository.getZonas().then(function (zonas) {
+            if (zonas.data.length > 0) {
+                $scope.zonas = zonas.data;
+
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de las citas');
+        });
+    }
+
+    $scope.devuelveTars = function () {
+        dashBoardRepository.getTars().then(function (tars) {
+            if (tars.data.length > 0) {
+                $scope.tars = tars.data;
+
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de las citas');
+        });
+    }
+
 
     $("#morris-donut-citas").click(function () {
         location.href = '/reportecita';
