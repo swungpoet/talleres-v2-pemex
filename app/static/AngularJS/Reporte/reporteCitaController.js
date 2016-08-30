@@ -110,11 +110,11 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                     },
                     {
                         extend: 'excel',
-                        title: 'ExampleFile'
+                        title: 'CitasRegistradas'
                     },
                     {
                         extend: 'pdf',
-                        title: 'ExampleFile'
+                        title: 'CitasRegistradas'
                     },
 
                     {
