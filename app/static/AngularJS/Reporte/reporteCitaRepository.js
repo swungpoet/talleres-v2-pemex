@@ -10,6 +10,18 @@ registrationModule.factory('reporteCitaRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getHistorialCita: function (idEstatus) {
+            return $http({
+                url: reporteCitaUrl + 'citasHistorial/',
+                method: "GET",
+                params: {
+                    idEstatus: idEstatus
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
