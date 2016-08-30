@@ -10,6 +10,15 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getTotalCotizaciones: function () {
+            return $http({
+                url: tableroUrl + 'sumatoriaCotizaciones/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

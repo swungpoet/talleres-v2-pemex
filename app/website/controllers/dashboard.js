@@ -28,4 +28,19 @@ DashBoard.prototype.get_sumatoriaCitas = function (req, res, next) {
     });
 }
 
+//Obtiene la sumatoria de las cotizaciones
+DashBoard.prototype.get_sumatoriaCotizaciones = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [];
+
+    this.model.query('SEL_REPORTE_COTIZACIONES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = DashBoard;
