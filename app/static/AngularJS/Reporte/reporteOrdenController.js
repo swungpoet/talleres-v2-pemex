@@ -133,14 +133,16 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
         $scope.tipoOrden = urlObj.tipoOrden;
         if($scope.tipoOrden==0){
       		$scope.ordenGarantia();
-        }else if($scope.ordenCertificado==1){
-            $scope.citaAgendada();	
-        }else if($scope.ordenCustodia==2){
-            $scope.citaConfirmada();		
-        }else if($scope.ordenTerminada==3){
-            $scope.citaCancelada();
+        }else if($scope.tipoOrden==1){
+            $scope.ordenCertificado();	
+        }else if($scope.tipoOrden==2){
+            $scope.ordenCustodia();		
+        }else if($scope.tipoOrden==3){
+            $scope.ordenTerminada();
         }else if($scope.tipoOrden==4){
             $scope.ordenProceso();
+        }else{
+        	$scope.ordenProceso();
         }
     }
 
