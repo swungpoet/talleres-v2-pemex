@@ -4,6 +4,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     $scope.totalCitas = 0;
     $scope.totalCotizaciones = 0;
     $scope.totalOrdenes = 0;
+    $scope.totalOrdenesPorCobrar = 0;
 
     $scope.init = function () {
         $scope.devuelveZonas();
@@ -11,34 +12,19 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
         $scope.sumatoriaOrdenes();
-
-        Morris.Donut({
-            element: 'morris-donut-cobrar',
-            data: [{
-                    label: "Download Sales",
-                    value: 12
-                },
-                {
-                    label: "In-Store Sales",
-                    value: 30
-                },
-                {
-                    label: "Mail-Order Sales",
-                    value: 20
-                }],
-            resize: true,
-            colors: ['#F33535', '#D8E9F0', '#33425B'],
-        });
+        $scope.sumatoriaOrdenesPorCobrar(); 
     }
 
     $scope.sumatoriaCitas = function () {
         dashBoardRepository.getTotalCitas($scope.tarSelected).then(function (datos) {
             if (datos.data.length > 0) {
                 $('#morris-donut-citas').empty();
+                var solicitadas = 0;
                 var agendadas = 0;
                 var confirmadas = 0;
                 var canceladas = 0;
                 datos.data.forEach(function (sumatoria) {
+                    if(sumatoria.estatus == 'SOLICITADAS') solicitadas = sumatoria.total;
                         if (sumatoria.estatus == 'AGENDADA') agendadas = sumatoria.total;
                         if (sumatoria.estatus == 'CONFIRMADA') confirmadas = sumatoria.total;
                         if (sumatoria.estatus == 'CANCELADA') canceladas = sumatoria.total;
@@ -46,11 +32,15 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 );
 
-                $scope.totalCitas = agendadas + confirmadas + canceladas;
+                $scope.totalCitas = solicitadas + agendadas + confirmadas + canceladas;
 
                 Morris.Donut({
                     element: 'morris-donut-citas',
                     data: [
+                        {
+                            label: "Solicitadas",
+                            value: solicitadas
+                        },
                         {
                             label: "Agendadas",
                             value: agendadas
@@ -65,8 +55,9 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
+                    colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#A1F480'],
                 }).on('click', function (i, row) {
+                    alert(i);
                     location.href = '/reportecita?tipoCita=' + i;
                 });
             }
@@ -141,6 +132,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
         $scope.sumatoriaOrdenes();
+        $scope.sumatoriaOrdenesPorCobrar();
     }
 
     $scope.sumatoriaOrdenes = function () {
@@ -190,13 +182,58 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#EB76FF', '#FFA8EC'],
+                    colors: ['#FFC300', '#333333', '#666666', '#FAFAFA', '#65AFFF'],
                 }).on('click', function (i, row) {
 
                 });
             }
         }, function (error) {
-            alertFactory.error('No se pudo recuperar información de las citas');
+            alertFactory.error('No se pudo recuperar información de las ordenes');
+        });
+    }
+    
+    $scope.sumatoriaOrdenesPorCobrar = function () {
+        dashBoardRepository.getTotalOrdenesPorCobrar($scope.tarSelected).then(function (ordenesCobrar) {
+            if (ordenesCobrar.data.length > 0) {
+                $('#morris-donut-cobrar').empty();
+                var sinFactura = 0;
+                var revision = 0;
+                var esperaCopade = 0;
+
+                ordenesCobrar.data.forEach(function (sumatoria) {
+                        if (sumatoria.estatus == 'SIN FACTURA') sinFactura = sumatoria.total;
+                        if (sumatoria.estatus == 'EN REVISION') revision = sumatoria.total;
+                        if (sumatoria.estatus == 'ESPERA COPADE') esperaCopade = sumatoria.total;
+                    }
+
+                );
+
+                $scope.totalOrdenesPorCobrar = sinFactura + revision + esperaCopade;
+
+                Morris.Donut({
+                    element: 'morris-donut-cobrar',
+                    data: [
+                        {
+                            label: "SIN FACTURA",
+                            value: sinFactura
+                        },
+                        {
+                            label: "EN REVISION",
+                            value: revision
+                        },
+                        {
+                            label: "SIN COPADE",
+                            value: esperaCopade
+                        }
+                    ],
+                    resize: true,
+                    colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
+                }).on('click', function (i, row) {
+
+                });
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de las ordenes por cobrar');
         });
     }
 

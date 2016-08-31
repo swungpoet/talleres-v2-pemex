@@ -135,5 +135,26 @@ DashBoard.prototype.get_sumatoriaOrdenes = function (req, res, next) {
     });
 }
 
+//Obtiene la sumatoria de las ordenes por cobrar
+DashBoard.prototype.get_sumatoriaOrdenesPorCobrar = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idTar',
+            value: req.query.idTar,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_ORDENES_POR_COBRAR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 
 module.exports = DashBoard;

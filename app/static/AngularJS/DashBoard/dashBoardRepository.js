@@ -64,6 +64,18 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+         getTotalOrdenesPorCobrar: function (idTar) {
+            return $http({
+                url: tableroUrl + 'sumatoriaOrdenesPorCobrar',
+                method: "GET",
+                params: {
+                    idTar: idTar
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
