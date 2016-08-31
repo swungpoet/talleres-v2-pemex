@@ -37,11 +37,17 @@ DashBoard.prototype.post_sumatoriaCitas = function (req, res, next) {
 }
 
 //Obtiene la sumatoria de las cotizaciones
-DashBoard.prototype.get_sumatoriaCotizaciones = function (req, res, next) {
+DashBoard.prototype.post_sumatoriaCotizaciones = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [];
+    var params = [
+        {
+            name: 'idTar',
+            value: req.body.idTar,
+            type: self.model.types.INT
+        }
+    ];
 
     this.model.query('SEL_REPORTE_COTIZACIONES_SP', params, function (error, result) {
         self.view.expositor(res, {
@@ -107,5 +113,27 @@ DashBoard.prototype.get_citasHistorial = function (req, res, next) {
         });
     });
 }
+
+//Obtiene la sumatoria de las ordenes
+DashBoard.prototype.get_sumatoriaOrdenes = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idTar',
+            value: req.query.idTar,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_ORDENES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 
 module.exports = DashBoard;
