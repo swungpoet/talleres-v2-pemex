@@ -103,6 +103,11 @@ DashBoard.prototype.get_citasHistorial = function (req, res, next) {
             name: 'idEstatus',
             value: req.query.idEstatus,
             type: self.model.types.INT
+        },
+        {
+            name: 'idTaller',
+            value: req.query.idTaller,
+            type: self.model.types.INT
         }
     ];
 

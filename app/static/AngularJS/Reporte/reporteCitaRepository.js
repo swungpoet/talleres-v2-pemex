@@ -11,12 +11,13 @@ registrationModule.factory('reporteCitaRepository', function ($http) {
                 }
             });
         },
-        getHistorialCita: function (idEstatus) {
+        getHistorialCita: function (idEstatus,idTaller) {
             return $http({
                 url: reporteCitaUrl + 'citasHistorial/',
                 method: "GET",
                 params: {
-                    idEstatus: idEstatus
+                    idEstatus: idEstatus,
+                    idTaller:idTaller
                 },
                 headers: {
                     'Content-Type': 'application/json'

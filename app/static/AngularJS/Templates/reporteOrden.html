@@ -1,10 +1,8 @@
 <link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
 <div ng-init="init()">
-    <div class="headTitleTallerCita">
+<!--     <div class="headTitleTallerCita">
         <span class="title">Reporte de Ordenes<span class="subtitle">Administrador</span></span>
-    </div>
-    <br>
-    <br>
+    </div> -->
     <div class="ibox-content" ng-show="tipoOrden==undefined">
         <div class="alert alert-danger">
             <strong>Seleccione una Orden,</strong> para poder ver el Historial.
@@ -16,8 +14,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
 
-                							    <br>
-							    <FONT SIZE=5>&nbsp;&nbsp;&nbsp;Ordenes Solicitadas</FONT>
+					<span class="title">Reporte de Órdenes</span>
 							    <span class="col-md-9 pull-right">  
 							<div class="col-lg-2">
 								<div class="pointer" ng-click="citaAgendada()">
@@ -29,7 +26,7 @@
 							</div>
 							<div class="ibox-content">
 							    <h1 class="no-margins">{{ordenproceso}}</h1>
-							    <div class="stat-percent font-bold text-success">80% <i class="fa fa-level-up"></i></div>
+							    <div class="stat-percent font-bold text-success">{{porcentajeproceso | number:2}}% <i class="fa fa-level-up"></i></div>
 							    <small>Total Proceso</small>
 										</div>
 									</div>
@@ -45,7 +42,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordenterminado}}</h1>
-							            <div class="stat-percent font-bold text-info">60% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-info">{{porcentajeterminado | number:2}}% <i class="fa fa-level-up"></i></div>
 							            <small>Total Terminadas</small>
 							        </div>
 							    </div>
@@ -61,7 +58,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordencustodia}}</h1>
-							            <div class="stat-percent font-bold text-navy">18% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-navy">{{porcentajecustodia | number:2}}% <i class="fa fa-level-up"></i></div>
 							            <small>Total T.C.</small>
 							        </div>
 							    </div>
@@ -77,7 +74,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordencertificado}}</h1>
-							            <div class="stat-percent font-bold text-alert">18% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-alert">{{porcentajecertificado | number:2}}% <i class="fa fa-level-up"></i></div>
 							            <small>Total Certificado C.C.</small>
 							        </div>
 							    </div>
@@ -93,7 +90,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordengarantia}}</h1>
-							            <div class="stat-percent font-bold text-danger">8% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-danger">{{porcentajegarantia | number:2}}% <i class="fa fa-level-up"></i></div>
 							            <small>Total Garantía</small>
 							        </div>
 							    </div>

@@ -40,15 +40,15 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         }   
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
-            $scope.tipoCita = 2;
-   				reporteCitaRepository.getHistorialCita(22).then(function (citacancela) {
+            $scope.tipoCita = 3;
+   				reporteCitaRepository.getHistorialCita(22,null).then(function (citacancela) {
    				$('.dataTableCancelada').DataTable().destroy();
                 $scope.cancelacion = citacancela.data;
                 waitDrawDocument("dataTableCancelada");
                 if (citacancela.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
+                    alertFactory.success('Exito al obtener citas canceladas');
                 } else {
-                    alertFactory.info('No se encontraron datos');
+                    alertFactory.info('No se encontraron citas canceladas');
                 }
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
@@ -56,15 +56,15 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         }
         //Muestra el historico de citas confirmadas
     $scope.citaConfirmada = function () {
-            $scope.tipoCita = 1;
-                reporteCitaRepository.getHistorialCita(2).then(function (citaconfirma) {
+            $scope.tipoCita = 2;
+                reporteCitaRepository.getHistorialCita(2,null).then(function (citaconfirma) {
                 $('.dataTableConfirmada').DataTable().destroy();
                 $scope.confirmacion = citaconfirma.data;
                 waitDrawDocument("dataTableConfirmada");
                 if (citaconfirma.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
+                    alertFactory.success('Exito al obtener citas confirmadas');
                 } else {
-                    alertFactory.info('No se encontraron datos');
+                    alertFactory.info('No se encontraron citas confirmadas');
                 }
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
@@ -72,15 +72,15 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         }
         //Muestra el historico de citas agendadas
     $scope.citaAgendada = function () {
-        $scope.tipoCita = 0;
-            reporteCitaRepository.getHistorialCita(1).then(function (citaagenda) {
+        $scope.tipoCita = 1;
+            reporteCitaRepository.getHistorialCita(1,null).then(function (citaagenda) {
             	$('.dataTableAgendada').DataTable().destroy();
                 $scope.agendacion = citaagenda.data;
                 waitDrawDocument("dataTableAgendada");
                 if (citaagenda.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
+                    alertFactory.success('Exito al obtener citas agendadas');
                 } else {
-                    alertFactory.info('No se encontraron datos');
+                    alertFactory.info('No se encontraron citas agendadas');
                 }
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
@@ -89,14 +89,14 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             //Muestra el historico de citas solicitadas
     $scope.citaSolicitada = function () {
             $scope.tipoCita = 0;
-                reporteCitaRepository.getHistorialCita(1).then(function (citasolicita) {
-                $('.dataTableAgendada').DataTable().destroy();
-                $scope.agendacion = citasolicita.data;
-                waitDrawDocument("dataTableAgendada");
-                if (citacancela.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
+                reporteCitaRepository.getHistorialCita(1,0).then(function (citasolicita) {
+                $('.dataTableSolicitar').DataTable().destroy();
+                $scope.solicitacion = citasolicita.data;
+                waitDrawDocument("dataTableSolicitar");
+                if (citasolicita.data.length > 0) {
+                    alertFactory.success('Exito al obtener citas solicitadas');
                 } else {
-                    alertFactory.info('No se encontraron datos');
+                    alertFactory.info('No se encontraron citas solicitadas');
                 }
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
@@ -114,11 +114,13 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         }
         $scope.tipoCita = urlObj.tipoCita;
         if($scope.tipoCita==0){
-      		$scope.citaAgendada();
+      		$scope.citaSolicitada();
         }else if($scope.tipoCita==1){
-			$scope.citaConfirmada();
+            $scope.citaAgendada();	
         }else if($scope.tipoCita==2){
-			$scope.citaCancelada();
+            $scope.citaConfirmada();		
+        }else if($scope.tipoCita==3){
+            $scope.citaCancelada();
         }
     }
 

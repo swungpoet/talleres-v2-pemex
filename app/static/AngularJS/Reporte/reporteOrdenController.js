@@ -17,6 +17,7 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
                 $scope.ordencustodia = $scope.registroOrdenes[2].total;
                 $scope.ordenterminado = $scope.registroOrdenes[3].total;
                 $scope.ordenproceso = $scope.registroOrdenes[4].total;
+                $scope.obtenPorcentaje();
                 if (ordenes.data.length > 0) {
                     alertFactory.success('Datos encontrados');
                 } else {
@@ -26,5 +27,15 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
                 alertFactory.error('Error al obtener los datos');
             });
         }
+
+        //obtiene el procentaje de las ordenes
+    $scope.obtenPorcentaje = function () {
+    var totalOrdenes = $scope.ordengarantia+$scope.ordencertificado+$scope.ordencustodia+$scope.ordenterminado+$scope.ordenproceso;
+    $scope.porcentajegarantia = ($scope.ordengarantia*100)/totalOrdenes;
+    $scope.porcentajecertificado = ($scope.ordencertificado*100)/totalOrdenes;
+    $scope.porcentajecustodia = ($scope.ordencustodia*100)/totalOrdenes;
+    $scope.porcentajeterminado = ($scope.ordenterminado*100)/totalOrdenes;
+    $scope.porcentajeproceso = ($scope.ordenproceso*100)/totalOrdenes;
+        }   
 
 });
