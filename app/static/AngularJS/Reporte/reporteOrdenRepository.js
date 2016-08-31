@@ -5,7 +5,7 @@ registrationModule.factory('reporteOrdenRepository', function ($http) {
         getNumOrdenes: function () {
             return $http({
                 url: reporteOrdenUrl + 'sumatoriaOrdenes/',
-                method: "POST",
+                method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 }

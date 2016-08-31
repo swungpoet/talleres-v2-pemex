@@ -16,9 +16,10 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
     $scope.getNumeroCitas = function () {
             reporteCitaRepository.getNumCita().then(function (citas) {
                 $scope.registroCitas = citas.data;
-                $scope.citasagendadas = $scope.registroCitas[0].total;
-                $scope.citasconfirmadas = $scope.registroCitas[1].total;
-                $scope.citascanceladas = $scope.registroCitas[2].total;
+                $scope.citasolicitadas = $scope.registroCitas[0].total;
+                $scope.citasagendadas = $scope.registroCitas[1].total;
+                $scope.citasconfirmadas = $scope.registroCitas[2].total;
+                $scope.citascanceladas = $scope.registroCitas[3].total;
                 if (citas.data.length > 0) {
                     alertFactory.success('Datos encontrados');
                 } else {
@@ -27,7 +28,7 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
             });
-        }
+        } 
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
             $scope.tipoCita = 2;
@@ -76,6 +77,22 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                 alertFactory.error('Error al obtener los datos');
             });
     }
+            //Muestra el historico de citas solicitadas
+    $scope.citaSolicitada = function () {
+            $scope.tipoCita = 0;
+                reporteCitaRepository.getHistorialCita(1).then(function (citasolicita) {
+                $('.dataTableAgendada').DataTable().destroy();
+                $scope.agendacion = citasolicita.data;
+                waitDrawDocument("dataTableAgendada");
+                if (citacancela.data.length > 0) {
+                    alertFactory.success('Datos encontrados');
+                } else {
+                    alertFactory.info('No se encontraron datos');
+                }
+            }, function (error) {
+                alertFactory.error('Error al obtener los datos');
+            });
+        }
 
     //Regresa la variable de la url
     $scope.obtieneDatoUrl = function () {

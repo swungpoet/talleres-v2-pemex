@@ -20,8 +20,24 @@
 
 							    <br>
 							    <FONT SIZE=5>&nbsp;&nbsp;&nbsp;Citas Solicitadas</FONT>
-							    <span class="col-md-8 pull-right">  
-							<div class="col-lg-4">
+							    <span class="col-md-9 pull-right"> 
+							<div class="col-lg-3">
+							  <div class="pointer" ng-click="citaSolicitada()">
+							    <div class="ibox float-e-margins">
+							        <div class="ibox-title">
+							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-retweet"></i></span>
+							            <br>
+							            <h5>Solicitadas</h5>
+							        </div>
+							        <div class="ibox-content">
+							            <h1 class="no-margins">{{citasolicitadas}}</h1>
+							            <div class="stat-percent font-bold text-navy">1% <i class="fa fa-level-up"></i></div>
+							            <small>Total Solicitadas</small>
+							        </div>
+							    </div>
+							    </div>
+							</div>     
+							<div class="col-lg-3">
 								<div class="pointer" ng-click="citaAgendada()">
 									<div class="ibox float-e-margins">
 										<div class="ibox-title">
@@ -36,7 +52,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-4">
+							<div class="col-lg-3">
 								<div class="pointer" ng-click="citaConfirmada()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
@@ -51,16 +67,16 @@
 							    </div>
 							   </div>
 							</div>
-							<div class="col-lg-4">
+							<div class="col-lg-3">
 							  <div class="pointer" ng-click="citaCancelada()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
-							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-remove"></i></span>
+							            <span class="label label-danger pull-right"><i class="glyphicon glyphicon-remove"></i></span>
 							            <h5>Canceladas</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{citascanceladas}}</h1>
-							            <div class="stat-percent font-bold text-navy">78% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-danger">78% <i class="fa fa-level-up"></i></div>
 							            <small>Total Canceladas</small>
 							        </div>
 							    </div>
