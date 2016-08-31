@@ -161,5 +161,26 @@ DashBoard.prototype.get_sumatoriaOrdenesPorCobrar = function (req, res, next) {
     });
 }
 
+//Obtiene todas las tars
+DashBoard.prototype.get_ordenesHistorial = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idEstatus',
+            value: req.query.idEstatus,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_ORDEN_DETALLE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 
 module.exports = DashBoard;

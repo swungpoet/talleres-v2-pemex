@@ -10,6 +10,18 @@ registrationModule.factory('reporteOrdenRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getHistorialOrden: function (idEstatus) {
+            return $http({
+                url: reporteCitaUrl + 'ordenesHistorial/',
+                method: "GET",
+                params: {
+                    idEstatus: idEstatus
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
 
     };

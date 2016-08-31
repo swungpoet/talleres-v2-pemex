@@ -3,11 +3,6 @@
 <!--     <div class="headTitleTallerCita">
         <span class="title">Reporte de Citas<span class="subtitle">Administrador</span></span>
     </div> -->
-    <div class="ibox-content" ng-show="tipoCita==undefined">
-        <div class="alert alert-danger">
-            <strong>Seleccione una Cita,</strong> para poder ver el Historial.
-        </div>
-    </div>
 	    <div class="wrapper wrapper-content">
 	        <div class="row">
 	            <div class="col-lg-12">
@@ -113,7 +108,7 @@
                                                         <td>{{solicitadas.trabajo}}</td>
                                                         <td>{{solicitadas.observacion}}</td>
                                                         <td>{{solicitadas.estatus}}</td>
-                                                        <td>{{solicitadas.horasRetraso}}</td>
+                                                        <td ng-class="{'rowVerde': solicitadas.horasRetraso <= 49, 'rowAmarillo': solicitadas.horasRetraso >= 50 && solicitadas.horasRetraso  <=100, 'rowRojo': solicitadas.horasRetraso >= 101}">{{solicitadas.horasRetraso}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -149,7 +144,7 @@
                                                         <td>{{agendadas.trabajo}}</td>
                                                         <td>{{agendadas.observacion}}</td>
                                                         <td>{{agendadas.estatus}}</td>
-                                                        <td>{{agendadas.horasRetraso}}</td>
+                                                        <td ng-class="{'rowVerde': agendadas.horasRetraso <= 49, 'rowAmarillo': agendadas.horasRetraso >= 50 && agendadas.horasRetraso  <=100, 'rowRojo': agendadas.horasRetraso >= 101}">{{agendadas.horasRetraso}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -185,7 +180,7 @@
                                                         <td>{{confirmadas.trabajo}}</td>
                                                         <td>{{confirmadas.observacion}}</td>
                                                         <td>{{confirmadas.estatus}}</td>
-                                                        <td>{{confirmadas.horasRetraso}}</td>
+                                                        <td ng-class="{'rowVerde': confirmadas.horasRetraso <= 49, 'rowAmarillo': confirmadas.horasRetraso >= 50 && confirmadas.horasRetraso  <=100, 'rowRojo': confirmadas.horasRetraso >= 101}">{{confirmadas.horasRetraso}} Horas</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
