@@ -11,7 +11,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
         $scope.sumatoriaOrdenes();
-        $scope.sumatoriaOrdenesPorCobrar(); 
+        $scope.sumatoriaOrdenesPorCobrar();
     }
 
     $scope.sumatoriaCitas = function () {
@@ -23,7 +23,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 var confirmadas = 0;
                 var canceladas = 0;
                 datos.data.forEach(function (sumatoria) {
-                    if(sumatoria.estatus == 'SOLICITADAS') solicitadas = sumatoria.total;
+                        if (sumatoria.estatus == 'SOLICITADAS') solicitadas = sumatoria.total;
                         if (sumatoria.estatus == 'AGENDADA') agendadas = sumatoria.total;
                         if (sumatoria.estatus == 'CONFIRMADA') confirmadas = sumatoria.total;
                         if (sumatoria.estatus == 'CANCELADA') canceladas = sumatoria.total;
@@ -56,7 +56,6 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#A1F480'],
                 }).on('click', function (i, row) {
-                    alert(i);
                     location.href = '/reportecita?tipoCita=' + i;
                 });
             }
@@ -160,37 +159,37 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     element: 'morris-donut-ordenes',
                     data: [
                         {
-                            label: "En proceso",
-                            value: proceso
-                        },
-                        {
-                            label: "Terminados",
-                            value: terminados
-                        },
-                        {
-                            label: "T. custodia",
-                            value: custodia
+                            label: "En garantía",
+                            value: garantia
                         },
                         {
                             label: "C. conformidad",
                             value: conformidad
                         },
                         {
-                            label: "En garantía",
-                            value: garantia
+                            label: "T. custodia",
+                            value: custodia
+                        },
+                        {
+                            label: "Terminados",
+                            value: terminados
+                        },
+                        {
+                            label: "En proceso",
+                            value: proceso
                         }
                     ],
                     resize: true,
-                    colors: ['#FFC300', '#333333', '#666666', '#FAFAFA', '#65AFFF'],
+                    colors: ['#65AFFF', '#333333', '#666666', '#FAFAFA', '#FFC300'],
                 }).on('click', function (i, row) {
-
+                    location.href = '/reporteorden?tipoOrden=' + i;
                 });
             }
         }, function (error) {
             alertFactory.error('No se pudo recuperar información de las ordenes');
         });
     }
-    
+
     $scope.sumatoriaOrdenesPorCobrar = function () {
         dashBoardRepository.getTotalOrdenesPorCobrar($scope.tarSelected).then(function (ordenesCobrar) {
             if (ordenesCobrar.data.length > 0) {
