@@ -121,6 +121,8 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             $scope.citaConfirmada();		
         }else if($scope.tipoCita==3){
             $scope.citaCancelada();
+        }else{
+        $scope.citaSolicitada();
         }
     }
 

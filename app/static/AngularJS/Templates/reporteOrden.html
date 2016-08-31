@@ -15,13 +15,13 @@
                 <div class="ibox-content">
 
 					<span class="title">Reporte de Órdenes</span>
-							    <span class="col-md-9 pull-right">  
+							    <span class="col-lg-9 pull-right">  
 							<div class="col-lg-2">
-								<div class="pointer" ng-click="citaAgendada()">
+								<div class="pointer" ng-click="ordenProceso()">
 									<div class="ibox float-e-margins">
 										<div class="ibox-title">
 							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-share-alt"></i></span>
-							    <br>
+							    
 							    <h5>En Proceso</h5>
 							</div>
 							<div class="ibox-content">
@@ -32,13 +32,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-2">
-								<div class="pointer" ng-click="citaConfirmada()">
+							<div class="col-lg-3">
+								<div class="pointer" ng-click="ordenTerminada()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-info pull-right"><i class="glyphicon glyphicon-ok"></i></span>
-							            <br>
-							            <h5>Terminadas</h5>
+							            
+							            <h5>Terminados</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordenterminado}}</h1>
@@ -48,13 +48,13 @@
 							    </div>
 							   </div>
 							</div>
-							<div class="col-lg-3">
-							  <div class="pointer" ng-click="citaCancelada()">
+							<div class="col-lg-2">
+							  <div class="pointer" ng-click="ordenCustodia()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-open-file"></i></span>
-							            <br>
-							            <h5>Transferencia Custodia</h5>
+							            
+							            <h5>T. Custodia</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordencustodia}}</h1>
@@ -65,12 +65,12 @@
 							    </div>
 							</div>
 							<div class="col-lg-3">
-							  <div class="pointer" ng-click="citaCancelada()">
+							  <div class="pointer" ng-click="ordenCertificado()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-alert pull-right"><i class="glyphicon glyphicon-file"></i></span>
-							            <br>
-							            <h5>Certificado Generado Callcenter</h5>
+							            
+							            <h5>C. Conformidad</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{ordencertificado}}</h1>
@@ -81,11 +81,11 @@
 							    </div>
 							</div>
 							<div class="col-lg-2">
-							  <div class="pointer" ng-click="citaCancelada()">
+							  <div class="pointer" ng-click="ordenGarantia()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-danger pull-right"><i class="glyphicon glyphicon-retweet"></i></span>
-							            <br>
+							            
 							            <h5>En Garantía</h5>
 							        </div>
 							        <div class="ibox-content">
@@ -98,8 +98,185 @@
 							</div>
 							</span>
 							<br>
-							<div class="ibox-content">
-							</div>
+
+                                <div class="ibox-content">
+                                    <div ng-show="tipoOrden==0">
+                                    <span class="subtitle"><strong>ORDENES EN GARANTÍA</strong></span>
+                                    <br><br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTableGarantia" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas sin Confirmación</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="garantias in garantia">
+                                                        <td>{{garantias.zona}}</td>
+                                                        <td>{{garantias.TAR}}</td>
+                                                        <td>{{garantias.razonSocial}}</td>
+                                                        <td>{{garantias.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{garantias.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{garantias.numEconomico}}</td>
+                                                        <td>{{garantias.trabajo}}</td>
+                                                        <td>{{garantias.observacion}}</td>
+                                                        <td>{{garantias.estatus}}</td>
+                                                        <td>{{garantias.horasRetraso}}</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-show="tipoOrden==1">
+                                    <span class="subtitle"><strong>ORDEN CERTIFICADO DE CONFORMIDAD</strong></span>
+                                    <br><br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTableCertificado" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas sin Confirmación</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="certificado in conformidad">
+                                                        <td>{{certificado.zona}}</td>
+                                                        <td>{{certificado.TAR}}</td>
+                                                        <td>{{certificado.razonSocial}}</td>
+                                                        <td>{{certificado.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{certificado.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{certificado.numEconomico}}</td>
+                                                        <td>{{certificado.trabajo}}</td>
+                                                        <td>{{certificado.observacion}}</td>
+                                                        <td>{{certificado.estatus}}</td>
+                                                        <td>{{certificado.horasRetraso}}</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-show="tipoOrden==2">
+                                    <span class="subtitle"><strong>ORDEN TRANSFERENCIA DE CUSTODIA</strong></span>
+                                    <br><br>     
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTableCustodia" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Confirmación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas de retraso de recepción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="transferencia in custodia">
+                                                        <td>{{transferencia.zona}}</td>
+                                                        <td>{{transferencia.TAR}}</td>
+                                                        <td>{{transferencia.razonSocial}}</td>
+                                                        <td>{{transferencia.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{transferencia.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{transferencia.numEconomico}}</td>
+                                                        <td>{{transferencia.trabajo}}</td>
+                                                        <td>{{transferencia.observacion}}</td>
+                                                        <td>{{transferencia.estatus}}</td>
+                                                        <td>{{transferencia.horasRetraso}} Horas</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-show="tipoOrden==3">
+                                    <span class="subtitle"><strong>ORDENES TERMINADAS</strong></span>
+                                    <br><br>     
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTableTerminada" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Cancelación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="terminadas in terminada">
+                                                        <td>{{terminadas.zona}}</td>
+                                                        <td>{{terminadas.TAR}}</td>
+                                                        <td>{{terminadas.razonSocial}}</td>
+                                                        <td>{{terminadas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{terminadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{terminadas.numEconomico}}</td>
+                                                        <td>{{terminadas.trabajo}}</td>
+                                                        <td>{{terminadas.observacion}}</td>
+                                                        <td>{{terminadas.estatus}}</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-show="tipoOrden==4">
+                                    <span class="subtitle"><strong>ORDENES EN PROCESO</strong></span>
+                                    <br><br>     
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTableProceso" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Cancelación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="procesos in proceso">
+                                                        <td>{{procesos.zona}}</td>
+                                                        <td>{{procesos.TAR}}</td>
+                                                        <td>{{procesos.razonSocial}}</td>
+                                                        <td>{{procesos.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{procesos.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{procesos.numEconomico}}</td>
+                                                        <td>{{procesos.trabajo}}</td>
+                                                        <td>{{procesos.observacion}}</td>
+                                                        <td>{{procesos.estatus}}</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                 </div>
             </div>
         </div>
