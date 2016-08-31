@@ -3,19 +3,17 @@
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-5">
-                <label for="zona" class="">Zona</label>
                 <select class="form-control m-b" id="zona" ng-model="zonaSelected" ng-options="zona.idZona as zona.descripcionZona for zona in zonas" ng-change="devuelveTars()">
                     <option value="">Seleccione una Zona</option>
                 </select>
             </div>
             <div class="col-lg-5">
-                <label align="center">T.A.R</label>
-                <select class="form-control m-b" id="tar" ng-model="tarSelected" ng-options="tar.idTAR as tar.nombreTar for tar in tars">
+                <select ng-disabled="zonaSelected == null" class="form-control m-b" id="tar" ng-model="tarSelected" ng-options="tar.idTAR as tar.nombreTar for tar in tars">
                     <option value="">Seleccione una TAR</option>
                 </select>
             </div>
             <div class="col-lg-2">
-                <button class="btn btn-success" type="submit" ng-click="getDashBoard()">Buscar</button>
+                <button ng-disabled="zonaSelected == null || tarSelected == null" style="vertical-align:bottom;" class="btn btn-warning" type="submit" ng-click="getDashBoard()"><span class="glyphicon glyphicon-search"></span></button>
             </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -23,8 +21,10 @@
             <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h3>Citas
-                        <div class="col-xs-offset-9 col-xs-3">Total: {{totalCitas | number}}</div></h3>
+                        <h5>Citas</h5>
+                        <div class="ibox-tools">
+                            <span class="label label-danger pull-right">Total: {{totalCitas | number}}</span>
+                        </div>
                     </div>
                     <div class="ibox-content">
                         <div id="morris-donut-citas"></div>
@@ -34,9 +34,10 @@
             <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h3>Cotizaciones
-                        <div class="col-xs-offset-8 col-xs-3">Total: {{totalCotizaciones | number}}</div>
-                        </h3>
+                        <h5>Cotizaciones</h5>
+                        <div class="ibox-tools">
+                            <span class="label label-danger pull-right">Total: {{totalCotizaciones | number}}</span>
+                        </div>
                     </div>
                     <div class="ibox-content">
                         <div id="morris-donut-cotizaciones"></div>
@@ -46,9 +47,10 @@
             <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h3>Ordenes de Servicio
-                        <div class="col-xs-offset-8 col-xs-3">Total: {{totalOrdenes | number}}</div>
-                        </h3>
+                        <h5>Ordenes de Servicio</h5>
+                        <div class="ibox-tools">
+                            <span class="label label-danger pull-right">Total: {{totalOrdenes | number}}</span>
+                        </div>
                     </div>
                     <div class="ibox-content">
                         <div id="morris-donut-ordenes"></div>
@@ -58,9 +60,10 @@
             <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h3>Ordenes Por Cobrar
-                        <div class="col-xs-offset-8 col-xs-3">Total: {{totalOrdenesPorCobrar | number}}</div>
-                        </h3>
+                        <h5>Ordenes Por Cobrar</h5>
+                        <div class="ibox-tools">
+                            <span class="label label-danger pull-right">Total: {{totalOrdenesPorCobrar | number}}</span>
+                        </div>
                     </div>
                     <div class="ibox-content">
                         <div id="morris-donut-cobrar"></div>

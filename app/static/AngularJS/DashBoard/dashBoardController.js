@@ -8,7 +8,6 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
     $scope.init = function () {
         $scope.devuelveZonas();
-        $scope.devuelveTars();
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
         $scope.sumatoriaOrdenes();

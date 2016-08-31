@@ -1050,7 +1050,7 @@ button.dim:active:before {
   background-color: #d1dade;
   color: #5e5e5e;
   font-family: 'Open Sans';
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
   padding: 3px 8px;
   text-shadow: none;
@@ -3817,7 +3817,7 @@ table.table-mail tr td {
 }
 .ibox-title h5 {
   display: inline-block;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0 0 7px;
   padding: 0;
   text-overflow: ellipsis;
