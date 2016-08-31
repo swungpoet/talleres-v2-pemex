@@ -5,7 +5,7 @@ registrationModule.factory('reporteCitaRepository', function ($http) {
         getNumCita: function () {
             return $http({
                 url: reporteCitaUrl + 'sumatoriaCitas/',
-                method: "GET",
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 }
