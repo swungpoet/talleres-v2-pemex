@@ -44,6 +44,9 @@ template {
 a {
   background-color: transparent;
 }
+.pointer{
+  cursor:pointer;
+}
 a:active,
 a:hover {
   outline: 0;

@@ -15,20 +15,65 @@
 	            <div class="col-lg-12">
 	                <div class="ibox float-e-margins">
 	                    <div class="ibox-content">
-                                    <span class="pull-right">
-					                <button class="btn btn-danger" type="button" ng-click="citaCancelada()" data-toggle="tooltip" tooltip-placement="left">Canceladas<br><div class="font-bold">{{citascanceladas}}</div></button>&nbsp;&nbsp;
-					                </span>
-                                    <span class="pull-right">
-					                <button class="btn btn-info" type="button" ng-click="citaConfirmada()" data-toggle="tooltip" tooltip-placement="left">Confirmadas<br><div class="font-bold">{{citasconfirmadas}}</div></button>&nbsp;&nbsp;
-					         	   </span>
-                                    <span class="pull-right">
-					                <button class="btn btn-success" type="button" ng-click="citaAgendada()" data-toggle="tooltip" tooltip-placement="left">Agendadas<br><div class="font-bold">{{citasagendadas}}</div></button>&nbsp;&nbsp;
-					          		</span>
-                                    <h1 class="no-margins">Citas Registradas</h1>    
-                                <br>
+
+							
+
+							    <br>
+							    <FONT SIZE=5>&nbsp;&nbsp;&nbsp;Citas Solicitadas</FONT>
+							    <span class="col-md-8 pull-right">  
+							<div class="col-lg-4">
+								<div class="pointer" ng-click="citaAgendada()">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-plus"></i></span>
+							    <h5>Agendadas</h5>
+							</div>
+							<div class="ibox-content">
+							    <h1 class="no-margins">{{citasagendadas}}</h1>
+							    <div class="stat-percent font-bold text-success">18% <i class="fa fa-level-up"></i></div>
+							    <small>Total Agendadas</small>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="pointer" ng-click="citaConfirmada()">
+							    <div class="ibox float-e-margins">
+							        <div class="ibox-title">
+							            <span class="label label-info pull-right"><i class="glyphicon glyphicon-ok"></i></span>
+							            <h5>Confirmadas</h5>
+							        </div>
+							        <div class="ibox-content">
+							            <h1 class="no-margins">{{citasconfirmadas}}</h1>
+							            <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+							            <small>Total Confirmadas</small>
+							        </div>
+							    </div>
+							   </div>
+							</div>
+							<div class="col-lg-4">
+							  <div class="pointer" ng-click="citaCancelada()">
+							    <div class="ibox float-e-margins">
+							        <div class="ibox-title">
+							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-remove"></i></span>
+							            <h5>Canceladas</h5>
+							        </div>
+							        <div class="ibox-content">
+							            <h1 class="no-margins">{{citascanceladas}}</h1>
+							            <div class="stat-percent font-bold text-navy">78% <i class="fa fa-level-up"></i></div>
+							            <small>Total Canceladas</small>
+							        </div>
+							    </div>
+							    </div>
+							</div>
+							</span>
+
+							
+
                                 <div class="ibox-content">
                                     <div ng-show="tipoCita==0">
-                                        CITAS AGENDADAS
+                                    <span class="subtitle"><strong>CITAS AGENDADAS</strong></span>
+                                    <br><br>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableAgendada" cg-busy="{promise:promise,message:message}">
                                                 <thead>
@@ -36,7 +81,7 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación</th>
+                                                        <th>Fecha Creación de Cita</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Numero Economico</th>
                                                         <th>Trabajo</th>
@@ -46,24 +91,25 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="agendadas in agendacion ">
+                                                    <tr ng-repeat="agendadas in agendacion">
                                                         <td>{{agendadas.zona}}</td>
                                                         <td>{{agendadas.TAR}}</td>
                                                         <td>{{agendadas.razonSocial}}</td>
-                                                        <td>{{agendadas.fechaCreacionCita}}</td>
-                                                        <td>{{agendadas.fechaCita}}</td>
+                                                        <td>{{agendadas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{agendadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{agendadas.numEconomico}}</td>
                                                         <td>{{agendadas.trabajo}}</td>
                                                         <td>{{agendadas.observacion}}</td>
                                                         <td>{{agendadas.estatus}}</td>
-                                                        <td>{{agendadas.horasTranscurridasSinConfirmacion}}</td>
+                                                        <td>{{agendadas.horasRetraso}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                     <div ng-show="tipoCita==1">
-                                        CITAS CONFIRMADAS
+                                    <span class="subtitle"><strong>CITAS CONFIRMADAS</strong></span>
+                                    <br><br>     
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableConfirmada" cg-busy="{promise:promise,message:message}">
                                                 <thead>
@@ -71,34 +117,35 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación</th>
+                                                        <th>Fecha Confirmación de Cita</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Numero Economico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas sin Confirmación</th>
+                                                        <th>Horas de retraso de recepción</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr ng-repeat="confirmadas in confirmacion">
                                                         <td>{{confirmadas.zona}}</td>
                                                         <td>{{confirmadas.TAR}}</td>
                                                         <td>{{confirmadas.razonSocial}}</td>
-                                                        <td>{{confirmadas.fechaCreacionCita}}</td>
-                                                        <td>{{confirmadas.fechaCita}}</td>
+                                                        <td>{{confirmadas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{confirmadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{confirmadas.numEconomico}}</td>
                                                         <td>{{confirmadas.trabajo}}</td>
                                                         <td>{{confirmadas.observacion}}</td>
                                                         <td>{{confirmadas.estatus}}</td>
-                                                        <td>{{confirmadas.horasTranscurridasSinConfirmacion}}</td>
+                                                        <td>{{confirmadas.horasRetraso}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                     <div ng-show="tipoCita==2">
-                                        CITAS CANCELADAS
+                                    <span class="subtitle"><strong>CITAS CANCELADAS</strong></span>
+                                    <br><br>     
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableCancelada" cg-busy="{promise:promise,message:message}">
                                                 <thead>
@@ -106,27 +153,25 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación</th>
+                                                        <th>Fecha Cancelación de Cita</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Numero Economico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas sin Confirmación</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <tr ng-repeat="canceldas in cancelacion">
                                                         <td>{{canceldas.zona}}</td>
                                                         <td>{{canceldas.TAR}}</td>
                                                         <td>{{canceldas.razonSocial}}</td>
-                                                        <td>{{canceldas.fechaCreacionCita}}</td>
-                                                        <td>{{canceldas.fechaCita}}</td>
+                                                        <td>{{canceldas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{canceldas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{canceldas.numEconomico}}</td>
                                                         <td>{{canceldas.trabajo}}</td>
                                                         <td>{{canceldas.observacion}}</td>
                                                         <td>{{canceldas.estatus}}</td>
-                                                        <td>{{canceldas.horasTranscurridasSinConfirmacion}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
