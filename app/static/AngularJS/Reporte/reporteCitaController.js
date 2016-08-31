@@ -20,6 +20,7 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                 $scope.citasagendadas = $scope.registroCitas[1].total;
                 $scope.citasconfirmadas = $scope.registroCitas[2].total;
                 $scope.citascanceladas = $scope.registroCitas[3].total;
+                $scope.obtenPorcentaje();
                 if (citas.data.length > 0) {
                     alertFactory.success('Datos encontrados');
                 } else {
@@ -29,6 +30,14 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                 alertFactory.error('Error al obtener los datos');
             });
         } 
+    //obtiene el procentaje de las citas
+    $scope.obtenPorcentaje = function () {
+    var totalCitas = $scope.citasolicitadas+$scope.citasagendadas+$scope.citasconfirmadas+$scope.citascanceladas;
+    $scope.porcentajesolicitado = ($scope.citasolicitadas*100)/totalCitas;
+    $scope.porcentajeagendado = ($scope.citasagendadas*100)/totalCitas;
+    $scope.porcentajeconfirmado = ($scope.citasconfirmadas*100)/totalCitas;
+    $scope.porcentajecancelada = ($scope.citascanceladas*100)/totalCitas;
+        }   
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
             $scope.tipoCita = 2;
@@ -149,5 +158,7 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             });
         }, 2500);
     }
+
+
 
 });
