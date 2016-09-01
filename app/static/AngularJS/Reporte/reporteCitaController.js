@@ -16,10 +16,19 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
     $scope.getNumeroCitas = function () {
             reporteCitaRepository.getNumCita().then(function (citas) {
                 $scope.registroCitas = citas.data;
-                $scope.citasolicitadas = $scope.registroCitas[0].total;
+                
+                 citas.data.forEach(function (sumatoria) {
+                        if (sumatoria.estatus == 'SOLICITADAS') $scope.citasolicitadas = sumatoria.total;
+                        if (sumatoria.estatus == 'AGENDADA') $scope.citasagendadas = sumatoria.total;
+                        if (sumatoria.estatus == 'CONFIRMADA') $scope.citasconfirmadas = sumatoria.total;
+                        if (sumatoria.estatus == 'CANCELADA') $scope.citascanceladas = sumatoria.total;
+                    }                
+                
+                /*$scope.citasolicitadas = $scope.registroCitas[0].total;
                 $scope.citasagendadas = $scope.registroCitas[1].total;
                 $scope.citasconfirmadas = $scope.registroCitas[2].total;
-                $scope.citascanceladas = $scope.registroCitas[3].total;
+                $scope.citascanceladas = $scope.registroCitas[3].total;*/
+                                    
                 $scope.obtenPorcentaje();
                 if (citas.data.length > 0) {
                     alertFactory.success('Datos encontrados');
