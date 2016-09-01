@@ -1,0 +1,51 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
+<div ng-init="init()">
+<!--     <div class="headTitleTallerCita">
+        <span class="title">Reporte de Citas<span class="subtitle">Administrador</span></span>
+    </div> -->
+	    <div class="wrapper wrapper-content">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="ibox float-e-margins">
+	                    <div class="ibox-content">
+
+							    <span class="title">Reporte de Cotizacion</span>
+							     <span class="col-md-7 pull-right"> 
+							<div class="col-lg-6">
+							  <div class="pointer" ng-click="citaSolicitada()">
+							    <div class="ibox float-e-margins">
+							        <div class="ibox-title">
+							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-list-alt"></i></span>
+							            <h5>Sin Cotización</h5>
+							        </div>
+							        <div class="ibox-content">
+							            <h1 class="no-margins">{{cotizacion}}</h1>
+							            <div class="stat-percent font-bold text-navy">{{porcentajecotizacion | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <small>Total Sin Cotizacion</small>
+							        </div>
+							    </div>
+							    </div>
+							</div>     
+							<div class="col-lg-6">
+								<div class="pointer" ng-click="citaAgendada()">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-check"></i></span>
+							    <h5>Pendientes de Aprovación</h5>
+							</div>
+							<div class="ibox-content">
+							    <h1 class="no-margins">{{cotizacionaprovacion}}</h1>
+							    <div class="stat-percent font-bold text-success">{{porcentajeaprovacion | number:2}}% <i class="fa fa-level-up"></i></div>
+							    <small>Total Pendientes de Aprovación</small>
+										</div>
+									</div>
+								</div>
+							</div>
+							</span>
+
+
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>

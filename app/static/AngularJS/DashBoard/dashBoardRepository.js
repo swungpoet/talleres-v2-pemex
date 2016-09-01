@@ -9,7 +9,7 @@ registrationModule.factory('dashBoardRepository', function ($http) {
 
             return $http({
                 url: tableroUrl + 'sumatoriaCitas/',
-                method: "POST",
+                method: "GET",
                 data: objTAR,
                 headers: {
                     'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ registrationModule.factory('dashBoardRepository', function ($http) {
 
             return $http({
                 url: tableroUrl + 'sumatoriaCotizaciones/',
-                method: "POST",
+                method: "GET",
                 data: objTAR,
                 headers: {
                     'Content-Type': 'application/json'

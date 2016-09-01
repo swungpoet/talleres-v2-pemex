@@ -70,7 +70,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="dashboardgeneral" ng-show="userData.idTipoUsuario == 1"><i class="fa fa-home"></i> <span class="nav-label">Home</span><span class="fa arrow"></span></a>
+                    <a href="dashboardgeneral" ng-show="userData.idTipoUsuario == 1"><i class="glyphicon glyphicon-home"></i> <span class="nav-label">Home</span><span class="fa arrow"></span></a>
 
                 </li>
                 <li>
@@ -93,7 +93,9 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/reporte">Reporte General</a></li>
                         <li><a href="/reportecita">Reporte Citas</a></li>
-                        <!-- <li><a href="/reporteorden">Reporte Órdenes</a></li>   -->
+                        <li><a href="/reporteorden">Reporte Órdenes</a></li>
+                        <li><a href="/reportecotizacion">Reporte Cotizaciones</a></li>
+                        <li><a href="/reporteporcobrar">Reporte Órdenes por Cobrar</a></li>     
                     </ul>
                 </li>
                 <li ng-show="userData.idTipoUsuario == 1">
@@ -303,6 +305,10 @@
     <script src="AngularJS/Reporte/reporteCitaController.js"></script>
     <script src="AngularJS/Reporte/reporteOrdenRepository.js"></script>
     <script src="AngularJS/Reporte/reporteOrdenController.js"></script>
+    <script src="AngularJS/Reporte/reporteCotizacionRepository.js"></script>
+    <script src="AngularJS/Reporte/reporteCotizacionController.js"></script>
+    <script src="AngularJS/Reporte/reportePorCobrarRepository.js"></script>
+    <script src="AngularJS/Reporte/reportePorCobrarController.js"></script>
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia/slimscroll/jquery.slimscroll.min.js"></script>

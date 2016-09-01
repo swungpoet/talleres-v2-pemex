@@ -16,7 +16,7 @@ var DashBoard = function (conf) {
 
 
 //Obtiene la sumatoria de las citas 
-DashBoard.prototype.post_sumatoriaCitas = function (req, res, next) {
+DashBoard.prototype.get_sumatoriaCitas = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
@@ -37,7 +37,7 @@ DashBoard.prototype.post_sumatoriaCitas = function (req, res, next) {
 }
 
 //Obtiene la sumatoria de las cotizaciones
-DashBoard.prototype.post_sumatoriaCotizaciones = function (req, res, next) {
+DashBoard.prototype.get_sumatoriaCotizaciones = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request

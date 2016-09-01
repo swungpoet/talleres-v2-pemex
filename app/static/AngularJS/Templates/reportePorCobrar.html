@@ -1,0 +1,65 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
+<div ng-init="init()">
+<!--     <div class="headTitleTallerCita">
+        <span class="title">Reporte de Citas<span class="subtitle">Administrador</span></span>
+    </div> -->
+	    <div class="wrapper wrapper-content">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="ibox float-e-margins">
+	                    <div class="ibox-content">
+	
+							    <span class="title">Reporte de Órdenes por Cobrar</span>
+							     <span class="col-md-8 pull-right"> 
+							<div class="col-lg-4">
+							  <div class="pointer" ng-click="citaSolicitada()">
+							    <div class="ibox float-e-margins">
+							        <div class="ibox-title">
+							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-duplicate"></i></span>
+							            <h5>Sin Factura</h5>
+							        </div>
+							        <div class="ibox-content">
+							            <h1 class="no-margins">{{cobrar}}</h1>
+							            <div class="stat-percent font-bold text-navy">{{porcentajesinfactura| number:2}}% <i class="fa fa-level-up"></i></div>
+							            <small>Total sin Factura</small>
+							        </div>
+							    </div>
+							    </div>
+							</div>     
+							<div class="col-lg-4">
+								<div class="pointer" ng-click="citaAgendada()">
+									<div class="ibox float-e-margins">
+										<div class="ibox-title">
+							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-search"></i></span>
+							    <h5>En revisión</h5>
+							</div>
+							<div class="ibox-content">
+							    <h1 class="no-margins">{{cobrar}}</h1>
+							    <div class="stat-percent font-bold text-success">{{porcentajerevision | number:2}}% <i class="fa fa-level-up"></i></div>
+							    <small>Total en revisión</small>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="pointer" ng-click="citaConfirmada()">
+							    <div class="ibox float-e-margins">
+							        <div class="ibox-title">
+							            <span class="label label-info pull-right"><i class="glyphicon glyphicon-time"></i></span>
+							            <h5>Espera de Copade</h5>
+							        </div>
+							        <div class="ibox-content">
+							            <h1 class="no-margins">{{cobrar}}</h1>
+							            <div class="stat-percent font-bold text-info">{{porcentajecopade | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <small>Total en espera de Copade</small>
+							        </div>
+							    </div>
+							   </div>
+							</div>
+							</span>
+
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
