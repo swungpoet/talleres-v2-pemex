@@ -106,34 +106,34 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación de Cita</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Numero Economico</th>
+                                                        <th>Fecha Trabajo en Garantía</th>
+                                                        <th>Numero Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas sin Confirmación</th>
+                                                        <th>Horas trabajo en garantía</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="garantias in garantia">
+                                                     <tr ng-repeat="garantias in garantia">
                                                         <td>{{garantias.zona}}</td>
                                                         <td>{{garantias.TAR}}</td>
                                                         <td>{{garantias.razonSocial}}</td>
-                                                        <td>{{garantias.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{garantias.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{garantias.fechaTrabajoGarantia | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{garantias.numEconomico}}</td>
                                                         <td>{{garantias.trabajo}}</td>
                                                         <td>{{garantias.observacion}}</td>
                                                         <td>{{garantias.estatus}}</td>
-                                                        <td>{{garantias.horasRetraso}}</td>
-                                                    </tr> -->
+                                                        <td ng-class="{'rowVerde': garantias.horasRetraso <= 49, 'rowAmarillo': garantias.horasRetraso >= 50 && garantias.horasRetraso  <=100, 'rowRojo': garantias.horasRetraso >= 101}">{{garantias.horasRetraso}}</td>
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                     <div ng-show="tipoOrden==1">
-                                    <span class="subtitle"><strong>ORDEN CERTIFICADO DE CONFORMIDAD</strong></span>
+                                    <span class="subtitle"><strong>ORDENES EN CERTIFICADO DE CONFORMIDAD CARGADO POR CALLCENTER</strong></span>
                                     <br><br>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableCertificado" cg-busy="{promise:promise,message:message}">
@@ -142,34 +142,34 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación de Cita</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Numero Economico</th>
+                                                        <th>Fecha Carga C. Conformidad</th>
+                                                        <th>Numero Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas sin Confirmación</th>
+                                                        <th>Horas Carga C. Conformidad</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="certificado in conformidad">
+                                                     <tr ng-repeat="certificado in conformidad">
                                                         <td>{{certificado.zona}}</td>
                                                         <td>{{certificado.TAR}}</td>
                                                         <td>{{certificado.razonSocial}}</td>
-                                                        <td>{{certificado.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{certificado.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{certificado.fechaCargaCertCall | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{certificado.numEconomico}}</td>
                                                         <td>{{certificado.trabajo}}</td>
                                                         <td>{{certificado.observacion}}</td>
                                                         <td>{{certificado.estatus}}</td>
-                                                        <td>{{certificado.horasRetraso}}</td>
-                                                    </tr> -->
+                                                        <td ng-class="{'rowVerde': certificado.horasRetraso <= 49, 'rowAmarillo': certificado.horasRetraso >= 50 && certificado.horasRetraso  <=100, 'rowRojo': certificado.horasRetraso >= 101}">{{certificado.horasRetraso}}</td>
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                     <div ng-show="tipoOrden==2">
-                                    <span class="subtitle"><strong>ORDEN TRANSFERENCIA DE CUSTODIA</strong></span>
+                                    <span class="subtitle"><strong>ORDENES EN TRANSFERENCIA DE CUSTODIA</strong></span>
                                     <br><br>     
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableCustodia" cg-busy="{promise:promise,message:message}">
@@ -178,28 +178,28 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Confirmación de Cita</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Numero Economico</th>
+                                                        <th>Fecha Transferencia Custodia</th>
+                                                        <th>Numero Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas de retraso de recepción</th>
+                                                        <th>Horas Transferencia Custodia</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="transferencia in custodia">
+                                                    <tr ng-repeat="transferencia in custodia">
                                                         <td>{{transferencia.zona}}</td>
                                                         <td>{{transferencia.TAR}}</td>
                                                         <td>{{transferencia.razonSocial}}</td>
-                                                        <td>{{transferencia.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{transferencia.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{transferencia.fechaTransfCustodia | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{transferencia.numEconomico}}</td>
                                                         <td>{{transferencia.trabajo}}</td>
                                                         <td>{{transferencia.observacion}}</td>
                                                         <td>{{transferencia.estatus}}</td>
-                                                        <td>{{transferencia.horasRetraso}} Horas</td>
-                                                    </tr> -->
+                                                        <td ng-class="{'rowVerde': transferencia.horasRetraso <= 49, 'rowAmarillo': transferencia.horasRetraso >= 50 && transferencia.horasRetraso  <=100, 'rowRojo': transferencia.horasRetraso >= 101}">{{transferencia.horasRetraso}}</td>
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
@@ -214,26 +214,28 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Cancelación de Cita</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Numero Economico</th>
+                                                        <th>Fecha Órden Terminada</th>
+                                                        <th>Numero Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
+                                                        <th>Horas Terminadas</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="terminadas in terminada">
+                                                    <tr ng-repeat="terminadas in terminada">
                                                         <td>{{terminadas.zona}}</td>
                                                         <td>{{terminadas.TAR}}</td>
                                                         <td>{{terminadas.razonSocial}}</td>
-                                                        <td>{{terminadas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{terminadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{terminadas.fechaFinTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{terminadas.numEconomico}}</td>
                                                         <td>{{terminadas.trabajo}}</td>
                                                         <td>{{terminadas.observacion}}</td>
                                                         <td>{{terminadas.estatus}}</td>
-                                                    </tr> -->
+                                                        <td ng-class="{'rowVerde': terminadas.horasRetraso <= 49, 'rowAmarillo': terminadas.horasRetraso >= 50 && terminadas.horasRetraso  <=100, 'rowRojo': terminadas.horasRetraso >= 101}">{{terminadas.horasRetraso}}</td>
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
@@ -248,26 +250,28 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Cancelación de Cita</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Numero Economico</th>
+                                                        <th>Fecha Órden en Proceso</th>
+                                                        <th>Numero Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
+                                                        <th>Horas en Órden en Proceso</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="procesos in proceso">
+                                                    <tr ng-repeat="procesos in proceso">
                                                         <td>{{procesos.zona}}</td>
                                                         <td>{{procesos.TAR}}</td>
                                                         <td>{{procesos.razonSocial}}</td>
-                                                        <td>{{procesos.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{procesos.fechaInicioTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.numEconomico}}</td>
                                                         <td>{{procesos.trabajo}}</td>
                                                         <td>{{procesos.observacion}}</td>
                                                         <td>{{procesos.estatus}}</td>
-                                                    </tr> -->
+                                                        <td ng-class="{'rowVerde': procesos.horasRetraso <= 49, 'rowAmarillo': procesos.horasRetraso >= 50 && procesos.horasRetraso  <=100, 'rowRojo': procesos.horasRetraso >= 101}">{{procesos.horasRetraso}}</td>
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>

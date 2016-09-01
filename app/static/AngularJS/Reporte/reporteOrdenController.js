@@ -13,11 +13,15 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
     $scope.getNumeroOrdenes = function () {
             reporteOrdenRepository.getNumOrdenes().then(function (ordenes) {
                 $scope.registroOrdenes = ordenes.data;
-                $scope.ordengarantia = $scope.registroOrdenes[0].total;
-                $scope.ordencertificado = $scope.registroOrdenes[1].total;
-                $scope.ordencustodia = $scope.registroOrdenes[2].total;
-                $scope.ordenterminado = $scope.registroOrdenes[3].total;
-                $scope.ordenproceso = $scope.registroOrdenes[4].total;
+
+              ordenes.data.forEach(function (sumatoria) {
+                    if (sumatoria.estatus == 'C. CONFORMIDAD') $scope.ordencertificado = sumatoria.total;
+                    if (sumatoria.estatus == 'EN GARANTIA') $scope.ordengarantia = sumatoria.total;
+                    if (sumatoria.estatus == 'T. CUSTODIA') $scope.ordencustodia = sumatoria.total;
+                    if (sumatoria.estatus == 'TERMINADOS') $scope.ordenterminado = sumatoria.total;
+                    if (sumatoria.estatus == 'EN PROCESO') $scope.ordenproceso = sumatoria.total;
+                });
+
                 $scope.obtenPorcentaje();
                 if (ordenes.data.length > 0) {
                     alertFactory.success('Datos encontrados');
@@ -90,8 +94,8 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
             //Muestra el historico de ordenes certificado Conformidad
     $scope.ordenCertificado = function () {
             $scope.tipoOrden = 1;
-                reporteOrdenRepository.getHistorialOrden().then(function (ordenconformidad) {
-                $('.dataTableCertificado').DataTable(17).destroy();
+                reporteOrdenRepository.getHistorialOrden(19).then(function (ordenconformidad) {
+                $('.dataTableCertificado').DataTable().destroy();
                 $scope.conformidad = ordenconformidad.data;
                 waitDrawDocument("dataTableCertificado");
                 if (ordenconformidad.data.length > 0) {

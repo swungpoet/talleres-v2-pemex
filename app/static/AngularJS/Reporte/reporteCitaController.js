@@ -23,10 +23,6 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                     if (sumatoria.estatus == 'CONFIRMADA') $scope.citasconfirmadas = sumatoria.total;
                     if (sumatoria.estatus == 'CANCELADA') $scope.citascanceladas = sumatoria.total;
                 });
-                /*$scope.citasolicitadas = $scope.registroCitas[0].total;
-                $scope.citasagendadas = $scope.registroCitas[1].total;
-                $scope.citasconfirmadas = $scope.registroCitas[2].total;
-                $scope.citascanceladas = $scope.registroCitas[3].total;*/
 
                 $scope.obtenPorcentaje();
                 if (citas.data.length > 0) {

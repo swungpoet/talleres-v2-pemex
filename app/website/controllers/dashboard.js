@@ -174,7 +174,7 @@ DashBoard.prototype.get_ordenesHistorial = function (req, res, next) {
         }
     ];
 
-    this.model.query('SEL_REPORTE_ORDEN_DETALLE_SP', params, function (error, result) {
+    this.model.query('SEL_REPORTE_ORDENES_DETALLE_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
