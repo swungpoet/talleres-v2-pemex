@@ -146,10 +146,6 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                         extend: 'excel',
                         title: 'CitasRegistradas'
                     },
-                    {
-                        extend: 'pdf',
-                        title: 'CitasRegistradas'
-                    },
 
                     {
                         extend: 'print',

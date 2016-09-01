@@ -166,10 +166,6 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
                         extend: 'excel',
                         title: 'OrdenesRegistradas'
                     },
-                    {
-                        extend: 'pdf',
-                        title: 'OrdenesRegistradas'
-                    },
 
                     {
                         extend: 'print',

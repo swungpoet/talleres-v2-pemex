@@ -195,7 +195,7 @@ DashBoard.prototype.get_cotizacionesHistorial = function (req, res, next) {
         }
     ];
 
-    this.model.query('SEL_REPORTE_COTIZACION_DETALLE_SP', params, function (error, result) {
+    this.model.query('SEL_REPORTE_COTIZACIONES_DETALLE_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

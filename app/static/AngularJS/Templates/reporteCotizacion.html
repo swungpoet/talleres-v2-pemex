@@ -16,7 +16,7 @@
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-list-alt"></i></span>
-							            <h5>Sin Cotización</h5>
+							            <h5>Espera de Cotización</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{sincotizacion}}</h1>
@@ -31,7 +31,7 @@
 									<div class="ibox float-e-margins">
 										<div class="ibox-title">
 							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-check"></i></span>
-							    <h5>Pendientes de Aprovación</h5>
+							    <h5>Pendientes de Aprobación</h5>
 							</div>
 							<div class="ibox-content">
 							    <h1 class="no-margins">{{cotizacionaprovacion}}</h1>
@@ -54,17 +54,17 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cotización Pendiente</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Numero Economico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas sin Confirmación</th>
+                                                        <th>Horas en Cotización Pendiente</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="pendientes in datapendiente">
+                                                   <tr ng-repeat="pendientes in datapendiente">
                                                         <td>{{pendientes.zona}}</td>
                                                         <td>{{pendientes.TAR}}</td>
                                                         <td>{{pendientes.razonSocial}}</td>
@@ -75,7 +75,7 @@
                                                         <td>{{pendientes.observacion}}</td>
                                                         <td>{{pendientes.estatus}}</td>
                                                         <td ng-class="{'rowVerde': pendientes.horasRetraso <= 49, 'rowAmarillo': pendientes.horasRetraso >= 50 && pendientes.horasRetraso  <=100, 'rowRojo': pendientes.horasRetraso >= 101}">{{pendientes.horasRetraso}}</td>
-                                                    </tr> -->
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
@@ -90,17 +90,17 @@
                                                         <th>Zona</th>
                                                         <th>Tar</th>
                                                         <th>Razón Social</th>
-                                                        <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Espera de Cotización</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Numero Economico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus</th>
-                                                        <th>Horas sin Confirmación</th>
+                                                        <th>Horas en espera de Cotización</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-<!--                                                     <tr ng-repeat="sincotizaciones in datasincotizacion">
+                                                     <tr ng-repeat="sincotizaciones in datasincotizacion">
                                                         <td>{{sincotizaciones.zona}}</td>
                                                         <td>{{sincotizaciones.TAR}}</td>
                                                         <td>{{sincotizaciones.razonSocial}}</td>
@@ -111,7 +111,7 @@
                                                         <td>{{sincotizaciones.observacion}}</td>
                                                         <td>{{sincotizaciones.estatus}}</td>
                                                         <td ng-class="{'rowVerde': sincotizaciones.horasRetraso <= 49, 'rowAmarillo': sincotizaciones.horasRetraso >= 50 && sincotizaciones.horasRetraso  <=100, 'rowRojo': sincotizaciones.horasRetraso >= 101}">{{sincotizaciones.horasRetraso}}</td>
-                                                    </tr> -->
+                                                    </tr> 
                                                 </tbody>
                                             </table>
                                         </div>
