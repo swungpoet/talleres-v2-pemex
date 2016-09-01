@@ -5,6 +5,7 @@
 // -- =============================================
 
 registrationModule.controller('reportePorCobrarController', function ($scope, alertFactory, $rootScope, localStorageService, reportePorCobrarRepository) {
+$scope.userData = localStorageService.get('userData');
 
     //Inicializa la pagina
     $scope.init = function () {

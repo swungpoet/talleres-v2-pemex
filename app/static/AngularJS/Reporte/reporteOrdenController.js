@@ -4,6 +4,7 @@
 // -- Description: Reporte Orden controller
 // -- =============================================
 registrationModule.controller('reporteOrdenController', function ($scope, alertFactory, $rootScope, localStorageService, reporteOrdenRepository) {
+$scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
      $scope.getNumeroOrdenes();

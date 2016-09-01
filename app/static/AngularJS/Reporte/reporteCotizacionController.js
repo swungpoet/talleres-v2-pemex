@@ -5,6 +5,7 @@
 // -- =============================================
 
 registrationModule.controller('reporteCotizacionController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCotizacionRepository) {
+$scope.userData = localStorageService.get('userData');
 
     //Inicializa la pagina
     $scope.init = function () {

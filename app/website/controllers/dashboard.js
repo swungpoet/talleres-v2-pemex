@@ -23,7 +23,12 @@ DashBoard.prototype.get_sumatoriaCitas = function (req, res, next) {
     var params = [
         {
             name: 'idTar',
-            value: req.body.idTar,
+            value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];

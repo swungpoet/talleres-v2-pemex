@@ -5,6 +5,7 @@
 // -- =============================================
 
 registrationModule.controller('reporteCitaController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCitaRepository) {
+$scope.userData = localStorageService.get('userData');
 
     //Inicializa la pagina
     $scope.init = function () {
@@ -14,7 +15,7 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
 
     //obtiene el total de las citas
     $scope.getNumeroCitas = function () {
-            reporteCitaRepository.getNumCita().then(function (citas) {
+            reporteCitaRepository.getNumCita(null,$scope.userData.idUsuario).then(function (citas) {
                 $scope.registroCitas = citas.data;
 
                 citas.data.forEach(function (sumatoria) {

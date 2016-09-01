@@ -121,7 +121,7 @@
                                                         <td>{{garantias.TAR}}</td>
                                                         <td>{{garantias.razonSocial}}</td>
                                                         <td>{{garantias.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                        <td>{{garantias.fechaTrabajoGarantia | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{garantias.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{garantias.numEconomico}}</td>
                                                         <td>{{garantias.trabajo}}</td>
                                                         <td>{{garantias.observacion}}</td>
@@ -157,7 +157,7 @@
                                                         <td>{{certificado.TAR}}</td>
                                                         <td>{{certificado.razonSocial}}</td>
                                                         <td>{{certificado.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                        <td>{{certificado.fechaCargaCertCall | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{certificado.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{certificado.numEconomico}}</td>
                                                         <td>{{certificado.trabajo}}</td>
                                                         <td>{{certificado.observacion}}</td>
@@ -193,7 +193,7 @@
                                                         <td>{{transferencia.TAR}}</td>
                                                         <td>{{transferencia.razonSocial}}</td>
                                                         <td>{{transferencia.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                        <td>{{transferencia.fechaTransfCustodia | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{transferencia.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{transferencia.numEconomico}}</td>
                                                         <td>{{transferencia.trabajo}}</td>
                                                         <td>{{transferencia.observacion}}</td>
@@ -252,6 +252,7 @@
                                                         <th>Razón Social</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Fecha Órden en Proceso</th>
+                                                        <th>Fecha Inicio Real del Trabajo</th>
                                                         <th>Numero Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -266,6 +267,7 @@
                                                         <td>{{procesos.razonSocial}}</td>
                                                         <td>{{procesos.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.fechaInicioTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{procesos.fechaInicioRealTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.numEconomico}}</td>
                                                         <td>{{procesos.trabajo}}</td>
                                                         <td>{{procesos.observacion}}</td>

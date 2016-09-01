@@ -2,10 +2,14 @@ var reporteCitaUrl = global_settings.urlCORS + '/api/dashboard/';
 
 registrationModule.factory('reporteCitaRepository', function ($http) {
     return {        
-        getNumCita: function () {
+        getNumCita: function (idTar,idUsuario) {
             return $http({
                 url: reporteCitaUrl + 'sumatoriaCitas/',
                 method: "GET",
+                params: {
+                    idTar:idTar,
+                    idUsuario: idUsuario
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
