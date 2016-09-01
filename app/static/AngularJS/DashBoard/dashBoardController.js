@@ -69,15 +69,14 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
             if (cotizaciones.data.length > 0) {
                 $('#morris-donut-cotizaciones').empty();
                 var pendientes = 0;
-                var autorizadas = 0;
-                var rechazadas = 0;
+                var sinCotizacion = 0;
+
                 cotizaciones.data.forEach(function (sumatoria) {
                     if (sumatoria.estatus == 'PENDIENTES') pendientes = sumatoria.total;
-                    if (sumatoria.estatus == 'AUTORIZADAS') autorizadas = sumatoria.total;
-                    if (sumatoria.estatus == 'RECHAZADAS') rechazadas = sumatoria.total;
+                    if (sumatoria.estatus == 'SIN COTIZACION') sinCotizacion = sumatoria.total;
                 });
 
-                $scope.totalCotizaciones = pendientes + autorizadas + rechazadas;
+                $scope.totalCotizaciones = pendientes + sinCotizacion;
 
                 Morris.Donut({
                     element: 'morris-donut-cotizaciones',
@@ -86,12 +85,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: pendientes
                 },
                         {
-                            label: "Autorizadas",
-                            value: autorizadas
-                },
-                        {
-                            label: "Rechazadas",
-                            value: rechazadas
+                            label: "Sin Cotización",
+                            value: sinCotizacion
                 }],
                     resize: true,
                     colors: ['#FE7187', '#CA4B7C', '#7A2E7A'],
@@ -182,7 +177,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#65AFFF', '#333333', '#666666', '#FAFAFA', '#FFC300'],
                 }).on('click', function (i, row) {
-                   /* location.href = '/reporteorden?tipoOrden=' + i;*/
+                    /* location.href = '/reporteorden?tipoOrden=' + i;*/
                 });
             }
         }, function (error) {
