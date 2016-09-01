@@ -200,8 +200,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 ordenesCobrar.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'SIN FACTURA') sinFactura = sumatoria.total;
-                        if (sumatoria.estatus == 'EN REVISION') revision = sumatoria.total;
-                        if (sumatoria.estatus == 'ESPERA COPADE') esperaCopade = sumatoria.total;
+                        if (sumatoria.estatus == 'SIN COPADE') esperaCopade = sumatoria.total;
+                        /*if (sumatoria.estatus == 'ESPERA COPADE') revision = sumatoria.total;*/
                     }
 
                 );
@@ -215,10 +215,10 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             label: "SIN FACTURA",
                             value: sinFactura
                         },
-                        {
+                        /*{
                             label: "EN REVISION",
                             value: revision
-                        },
+                        },*/
                         {
                             label: "SIN COPADE",
                             value: esperaCopade
