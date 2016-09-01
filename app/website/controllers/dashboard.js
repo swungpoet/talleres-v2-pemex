@@ -161,7 +161,7 @@ DashBoard.prototype.get_sumatoriaOrdenesPorCobrar = function (req, res, next) {
     });
 }
 
-//Obtiene todas las tars
+//Obtiene todas las ordens
 DashBoard.prototype.get_ordenesHistorial = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
@@ -175,6 +175,48 @@ DashBoard.prototype.get_ordenesHistorial = function (req, res, next) {
     ];
 
     this.model.query('SEL_REPORTE_ORDENES_DETALLE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Obtiene todas las cotizaciones
+DashBoard.prototype.get_cotizacionesHistorial = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idEstatus',
+            value: req.query.idEstatus,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_COTIZACION_DETALLE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Obtiene todas las ordenes por cobrar
+DashBoard.prototype.get_porCobrarHistorial = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idEstatus',
+            value: req.query.idEstatus,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_PORCOBRAR_DETALLE_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

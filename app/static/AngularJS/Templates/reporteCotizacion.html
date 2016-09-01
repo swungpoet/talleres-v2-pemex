@@ -12,14 +12,14 @@
 							    <span class="title">Reporte de Cotización</span>
 							     <span class="col-md-7 pull-right"> 
 							<div class="col-lg-6">
-							  <div class="pointer" ng-click="citaSolicitada()">
+							  <div class="pointer" ng-click="cotizacionSinCotizar()">
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-list-alt"></i></span>
 							            <h5>Sin Cotización</h5>
 							        </div>
 							        <div class="ibox-content">
-							            <h1 class="no-margins">{{cotizacion}}</h1>
+							            <h1 class="no-margins">{{sincotizacion}}</h1>
 							            <div class="stat-percent font-bold text-navy">{{porcentajecotizacion | number:2}}% <i class="fa fa-level-up"></i></div>
 							            <small>Total Sin Cotizacion</small>
 							        </div>
@@ -27,7 +27,7 @@
 							    </div>
 							</div>     
 							<div class="col-lg-6">
-								<div class="pointer" ng-click="citaAgendada()">
+								<div class="pointer" ng-click="cotizacionPendiente()">
 									<div class="ibox float-e-margins">
 										<div class="ibox-title">
 							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-check"></i></span>
@@ -43,6 +43,80 @@
 							</div>
 							</span>
 
+							<div class="ibox-content">
+							<div ng-show="tipoCotizacion==0">
+                                    <span class="subtitle"><strong>COTIZACION PENDIENTE</strong></span>
+                                    <br><br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTablePendiente" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas sin Confirmación</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="pendientes in datapendiente">
+                                                        <td>{{pendientes.zona}}</td>
+                                                        <td>{{pendientes.TAR}}</td>
+                                                        <td>{{pendientes.razonSocial}}</td>
+                                                        <td>{{pendientes.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{pendientes.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{pendientes.numEconomico}}</td>
+                                                        <td>{{pendientes.trabajo}}</td>
+                                                        <td>{{pendientes.observacion}}</td>
+                                                        <td>{{pendientes.estatus}}</td>
+                                                        <td ng-class="{'rowVerde': pendientes.horasRetraso <= 49, 'rowAmarillo': pendientes.horasRetraso >= 50 && pendientes.horasRetraso  <=100, 'rowRojo': pendientes.horasRetraso >= 101}">{{pendientes.horasRetraso}}</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div ng-show="tipoCotizacion==1">
+                                    <span class="subtitle"><strong>SIN COTIZACION</strong></span>
+                                    <br><br>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover dataTableSinCotizar" cg-busy="{promise:promise,message:message}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Zona</th>
+                                                        <th>Tar</th>
+                                                        <th>Razón Social</th>
+                                                        <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cita</th>
+                                                        <th>Numero Economico</th>
+                                                        <th>Trabajo</th>
+                                                        <th>Observación</th>
+                                                        <th>Estatus</th>
+                                                        <th>Horas sin Confirmación</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+<!--                                                     <tr ng-repeat="sincotizaciones in datasincotizacion">
+                                                        <td>{{sincotizaciones.zona}}</td>
+                                                        <td>{{sincotizaciones.TAR}}</td>
+                                                        <td>{{sincotizaciones.razonSocial}}</td>
+                                                        <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{sincotizaciones.numEconomico}}</td>
+                                                        <td>{{sincotizaciones.trabajo}}</td>
+                                                        <td>{{sincotizaciones.observacion}}</td>
+                                                        <td>{{sincotizaciones.estatus}}</td>
+                                                        <td ng-class="{'rowVerde': sincotizaciones.horasRetraso <= 49, 'rowAmarillo': sincotizaciones.horasRetraso >= 50 && sincotizaciones.horasRetraso  <=100, 'rowRojo': sincotizaciones.horasRetraso >= 101}">{{sincotizaciones.horasRetraso}}</td>
+                                                    </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+							</div>
 
 	                    </div>
 	                </div>

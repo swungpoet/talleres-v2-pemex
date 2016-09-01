@@ -10,6 +10,18 @@ registrationModule.factory('reporteCotizacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getHistorialCotizacion: function (idEstatus) {
+            return $http({
+                url: reporteCotizacionUrl + 'cotizacionesHistorial/',
+                method: "GET",
+                params: {
+                    idEstatus: idEstatus
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }       
 
     };
