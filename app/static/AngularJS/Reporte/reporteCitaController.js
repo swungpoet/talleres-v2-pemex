@@ -16,19 +16,18 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
     $scope.getNumeroCitas = function () {
             reporteCitaRepository.getNumCita().then(function (citas) {
                 $scope.registroCitas = citas.data;
-                
-                 citas.data.forEach(function (sumatoria) {
-                        if (sumatoria.estatus == 'SOLICITADAS') $scope.citasolicitadas = sumatoria.total;
-                        if (sumatoria.estatus == 'AGENDADA') $scope.citasagendadas = sumatoria.total;
-                        if (sumatoria.estatus == 'CONFIRMADA') $scope.citasconfirmadas = sumatoria.total;
-                        if (sumatoria.estatus == 'CANCELADA') $scope.citascanceladas = sumatoria.total;
-                    }                
-                
+
+                citas.data.forEach(function (sumatoria) {
+                    if (sumatoria.estatus == 'SOLICITADAS') $scope.citasolicitadas = sumatoria.total;
+                    if (sumatoria.estatus == 'AGENDADA') $scope.citasagendadas = sumatoria.total;
+                    if (sumatoria.estatus == 'CONFIRMADA') $scope.citasconfirmadas = sumatoria.total;
+                    if (sumatoria.estatus == 'CANCELADA') $scope.citascanceladas = sumatoria.total;
+                });
                 /*$scope.citasolicitadas = $scope.registroCitas[0].total;
                 $scope.citasagendadas = $scope.registroCitas[1].total;
                 $scope.citasconfirmadas = $scope.registroCitas[2].total;
                 $scope.citascanceladas = $scope.registroCitas[3].total;*/
-                                    
+
                 $scope.obtenPorcentaje();
                 if (citas.data.length > 0) {
                     alertFactory.success('Datos encontrados');
@@ -38,20 +37,20 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
             });
-        } 
-    //obtiene el procentaje de las citas
+        }
+        //obtiene el procentaje de las citas
     $scope.obtenPorcentaje = function () {
-    var totalCitas = $scope.citasolicitadas+$scope.citasagendadas+$scope.citasconfirmadas+$scope.citascanceladas;
-    $scope.porcentajesolicitado = ($scope.citasolicitadas*100)/totalCitas;
-    $scope.porcentajeagendado = ($scope.citasagendadas*100)/totalCitas;
-    $scope.porcentajeconfirmado = ($scope.citasconfirmadas*100)/totalCitas;
-    $scope.porcentajecancelada = ($scope.citascanceladas*100)/totalCitas;
-        }   
+            var totalCitas = $scope.citasolicitadas + $scope.citasagendadas + $scope.citasconfirmadas + $scope.citascanceladas;
+            $scope.porcentajesolicitado = ($scope.citasolicitadas * 100) / totalCitas;
+            $scope.porcentajeagendado = ($scope.citasagendadas * 100) / totalCitas;
+            $scope.porcentajeconfirmado = ($scope.citasconfirmadas * 100) / totalCitas;
+            $scope.porcentajecancelada = ($scope.citascanceladas * 100) / totalCitas;
+        }
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
             $scope.tipoCita = 3;
-   				reporteCitaRepository.getHistorialCita(22,null).then(function (citacancela) {
-   				$('.dataTableCancelada').DataTable().destroy();
+            reporteCitaRepository.getHistorialCita(22, null).then(function (citacancela) {
+                $('.dataTableCancelada').DataTable().destroy();
                 $scope.cancelacion = citacancela.data;
                 waitDrawDocument("dataTableCancelada");
                 if (citacancela.data.length > 0) {
@@ -66,7 +65,7 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         //Muestra el historico de citas confirmadas
     $scope.citaConfirmada = function () {
             $scope.tipoCita = 2;
-                reporteCitaRepository.getHistorialCita(2,null).then(function (citaconfirma) {
+            reporteCitaRepository.getHistorialCita(2, null).then(function (citaconfirma) {
                 $('.dataTableConfirmada').DataTable().destroy();
                 $scope.confirmacion = citaconfirma.data;
                 waitDrawDocument("dataTableConfirmada");
@@ -81,9 +80,9 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         }
         //Muestra el historico de citas agendadas
     $scope.citaAgendada = function () {
-        $scope.tipoCita = 1;
-            reporteCitaRepository.getHistorialCita(1,null).then(function (citaagenda) {
-            	$('.dataTableAgendada').DataTable().destroy();
+            $scope.tipoCita = 1;
+            reporteCitaRepository.getHistorialCita(1, null).then(function (citaagenda) {
+                $('.dataTableAgendada').DataTable().destroy();
                 $scope.agendacion = citaagenda.data;
                 waitDrawDocument("dataTableAgendada");
                 if (citaagenda.data.length > 0) {
@@ -94,23 +93,23 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
             });
-    }
-            //Muestra el historico de citas solicitadas
-    $scope.citaSolicitada = function () {
-            $scope.tipoCita = 0;
-                reporteCitaRepository.getHistorialCita(1,0).then(function (citasolicita) {
-                $('.dataTableSolicitar').DataTable().destroy();
-                $scope.solicitacion = citasolicita.data;
-                waitDrawDocument("dataTableSolicitar");
-                if (citasolicita.data.length > 0) {
-                    alertFactory.success('Exito al obtener citas solicitadas');
-                } else {
-                    alertFactory.info('No se encontraron citas solicitadas');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
-            });
         }
+        //Muestra el historico de citas solicitadas
+    $scope.citaSolicitada = function () {
+        $scope.tipoCita = 0;
+        reporteCitaRepository.getHistorialCita(1, 0).then(function (citasolicita) {
+            $('.dataTableSolicitar').DataTable().destroy();
+            $scope.solicitacion = citasolicita.data;
+            waitDrawDocument("dataTableSolicitar");
+            if (citasolicita.data.length > 0) {
+                alertFactory.success('Exito al obtener citas solicitadas');
+            } else {
+                alertFactory.info('No se encontraron citas solicitadas');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
 
     //Regresa la variable de la url
     $scope.obtieneDatoUrl = function () {
@@ -122,16 +121,16 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             urlObj[x[0]] = x[1]
         }
         $scope.tipoCita = urlObj.tipoCita;
-        if($scope.tipoCita==0){
-      		$scope.citaSolicitada();
-        }else if($scope.tipoCita==1){
-            $scope.citaAgendada();	
-        }else if($scope.tipoCita==2){
-            $scope.citaConfirmada();		
-        }else if($scope.tipoCita==3){
+        if ($scope.tipoCita == 0) {
+            $scope.citaSolicitada();
+        } else if ($scope.tipoCita == 1) {
+            $scope.citaAgendada();
+        } else if ($scope.tipoCita == 2) {
+            $scope.citaConfirmada();
+        } else if ($scope.tipoCita == 3) {
             $scope.citaCancelada();
-        }else{
-        $scope.citaSolicitada();
+        } else {
+            $scope.citaSolicitada();
         }
     }
 
