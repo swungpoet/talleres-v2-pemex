@@ -70,9 +70,9 @@
                     </div>
                 </li>
                 <li>
-                   <a href="dashboardgeneral"><i class="fa fa-home"></i> <span class="nav-label">Home</span><span class="fa arrow"></span></a>
+                    <a href="dashboardgeneral" ng-show="userData.idTipoUsuario == 1"><i class="fa fa-home"></i> <span class="nav-label">Home</span><span class="fa arrow"></span></a>
 
-               </li>
+                </li>
                 <li>
                     <a href="cita" ng-hide="userData.idTipoUsuario == 3" ng-click="showChat = 0"><i class="fa fa-car"></i> <span class="nav-label">Nueva Cita</span></a>
                 </li>
@@ -91,11 +91,11 @@
                 <li>
                     <a href="#" ng-click="showChat = 0" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idSubtipoUsuario == 3 || userData.idSubtipoUsuario == 4 || userData.idSubtipoUsuario == 10 || userData.idSubtipoUsuario == 11"><i class="fa fa-line-chart"></i> <span class="nav-label">Reporte</span><span class="label label-warning pull-right"></span></a>
                     <ul class="nav nav-second-level">
-                       <li><a href="/reporte">Reporte General</a></li>
-                       <li><a href="/reportecita">Reporte Citas</a></li>
-                       <li><a href="/reporteorden">Reporte Órdenes</a></li>   
-                                               
-                   </ul>
+                        <li><a href="/reporte">Reporte General</a></li>
+                        <li><a href="/reportecita">Reporte Citas</a></li>
+                        <li><a href="/reporteorden">Reporte Órdenes</a></li>
+
+                    </ul>
                 </li>
                 <li ng-show="userData.idTipoUsuario == 1">
                     <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Administración</span><span class="fa arrow"></span></a>
@@ -308,8 +308,8 @@
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia/slimscroll/jquery.slimscroll.min.js"></script>
     <!-- Morris -->
-   <script src="js/inspinia/morris/raphael-2.1.0.min.js"></script>
-   <script src="js/inspinia/morris/morris.js"></script>
+    <script src="js/inspinia/morris/raphael-2.1.0.min.js"></script>
+    <script src="js/inspinia/morris/morris.js"></script>
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia/inspinia.js"></script>
     <script src="js/inspinia/pace/pace.min.js"></script>
