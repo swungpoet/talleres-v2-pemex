@@ -11,12 +11,34 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/AngularJS\/Administracion\/administracionOrdenController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Administracion\/administracionOrdenController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Administracion\/min\/administracionOrdenController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/AngularJS\/alertFactory.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/AngularJS\/alertFactory.js",
 		"outputAbbreviatedPath": "\/AngularJS\/min\/alertFactory-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/bsSwitch.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/bsSwitch.js",
+		"outputAbbreviatedPath": "\/AngularJS\/min\/bsSwitch-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -226,6 +248,28 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/AngularJS\/Cotizacion\/min\/cotizacionController-min.js",
 		"outputAbbreviatedPath": "\/AngularJS\/Cotizacion\/min\/min\/cotizacionController-min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/DashBoard\/dashBoardController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/DashBoard\/dashBoardController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/DashBoard\/min\/dashBoardController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/DashBoard\/dashBoardRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/DashBoard\/dashBoardRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/DashBoard\/min\/dashBoardRepository-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -451,6 +495,50 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/AngularJS\/OrdenAnticipo\/ordenAnticipoController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/OrdenAnticipo\/ordenAnticipoController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/OrdenAnticipo\/min\/ordenAnticipoController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/OrdenAnticipo\/ordenAnticipoRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/OrdenAnticipo\/ordenAnticipoRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/OrdenAnticipo\/min\/ordenAnticipoRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Osur\/osurController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Osur\/osurController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Osur\/min\/osurController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Osur\/osurRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Osur\/osurRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Osur\/min\/osurRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/AngularJS\/Paquetes\/paquetesController.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -506,6 +594,116 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/AngularJS\/Reporte\/reporteCitaController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteCitaController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteCitaController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteCitaRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteCitaRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteCitaRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteCotizacionController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteCotizacionController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteCotizacionController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteCotizacionRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteCotizacionRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteCotizacionRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteOrdenController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteOrdenController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteOrdenController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteOrdenRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteOrdenRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteOrdenRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reportePorCobrarController.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reportePorCobrarController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reportePorCobrarController-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reportePorCobrarRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reportePorCobrarRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reportePorCobrarRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Reporte\/reporteRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Reporte\/reporteRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Reporte\/min\/reporteRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/AngularJS\/Servicio\/servicioController.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -528,27 +726,54 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/AngularJS\/Talleres\/talleresController.js": {
+	"\/AngularJS\/Talleres\/tallerController.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/AngularJS\/Talleres\/talleresController.js",
-		"outputAbbreviatedPath": "\/AngularJS\/Talleres\/min\/talleresController-min.js",
+		"inputAbbreviatedPath": "\/AngularJS\/Talleres\/tallerController.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Talleres\/min\/tallerController-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/AngularJS\/Talleres\/talleresRepository.js": {
+	"\/AngularJS\/Talleres\/tallerRepository.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/AngularJS\/Talleres\/talleresRepository.js",
-		"outputAbbreviatedPath": "\/AngularJS\/Talleres\/min\/talleresRepository-min.js",
+		"inputAbbreviatedPath": "\/AngularJS\/Talleres\/tallerRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/Talleres\/min\/tallerRepository-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
+		},
+	"\/AngularJS\/Templates\/accionTaller.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/accionTaller.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/administracionOrdenes.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/administracionOrdenes.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/administraciontaller.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/administraciontaller.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
 		},
 	"\/AngularJS\/Templates\/cita.html": {
 		"fileType": 8192,
@@ -658,6 +883,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/AngularJS\/Templates\/dashBoardGeneral.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/dashBoardGeneral.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/AngularJS\/Templates\/ejemplo.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -712,6 +946,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/AngularJS\/Templates\/ordenAnticipo.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/ordenAnticipo.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/AngularJS\/Templates\/ordenesporcobrar.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -739,6 +982,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/AngularJS\/Templates\/osur.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/osur.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/AngularJS\/Templates\/paquetes.html": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -753,6 +1005,51 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/AngularJS\/Templates\/paquetesItems.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/reporte.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/reporte.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/reporteCita.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/reporteCita.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/reporteCotizacion.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/reporteCotizacion.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/reporteOrden.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/reporteOrden.html",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/AngularJS\/Templates\/reportePorCobrar.html": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/Templates\/reportePorCobrar.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -877,6 +1174,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/AngularJS\/UploadFiles\/uploadRepository.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/AngularJS\/UploadFiles\/uploadRepository.js",
+		"outputAbbreviatedPath": "\/AngularJS\/UploadFiles\/min\/uploadRepository-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/AngularJS\/Usuarios\/usuariosController.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -991,6 +1299,24 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/css\/dashBoardTables.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/dashBoardTables.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/css\/dropZone\/dropzone.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/dropZone\/dropzone.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/css\/general.css": {
 		"fileType": 16,
 		"ignore": 1,
@@ -1005,6 +1331,15 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/css\/inspinia\/animate.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/css\/inspinia\/AutorizarRechazoItem\/awesome-bootstrap-checkbox.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/inspinia\/AutorizarRechazoItem\/awesome-bootstrap-checkbox.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -1316,6 +1651,17 @@
 		"initialSize": 7708,
 		"inputAbbreviatedPath": "\/css\/inspinia\/iCheck\/green@2x.png",
 		"outputAbbreviatedPath": "\/css\/inspinia\/iCheck\/green@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/css\/inspinia\/images\/backgroundDropzone.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4756,
+		"inputAbbreviatedPath": "\/css\/inspinia\/images\/backgroundDropzone.png",
+		"outputAbbreviatedPath": "\/css\/inspinia\/images\/backgroundDropzone.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -2011,6 +2357,17 @@
 		"initialSize": 418033,
 		"inputAbbreviatedPath": "\/image\/mapa.jpg",
 		"outputAbbreviatedPath": "\/image\/mapa.jpg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/image\/pemex_logo.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 80833,
+		"inputAbbreviatedPath": "\/image\/pemex_logo.png",
+		"outputAbbreviatedPath": "\/image\/pemex_logo.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -3144,6 +3501,39 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/js\/libs\/dropZone\/dropzone.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/libs\/dropZone\/dropzone.js",
+		"outputAbbreviatedPath": "\/js\/libs\/dropZone\/min\/dropzone-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/js\/libs\/dropZone\/ng-dropzone.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/libs\/dropZone\/ng-dropzone.js",
+		"outputAbbreviatedPath": "\/js\/libs\/dropZone\/min\/ng-dropzone-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/js\/libs\/dropZone\/ng-dropzone.min.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/js\/libs\/dropZone\/ng-dropzone.min.js",
+		"outputAbbreviatedPath": "\/js\/libs\/dropZone\/min\/ng-dropzone.min-min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/js\/libs\/jQuery\/jquery-2.1.4.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -3414,105 +3804,6 @@
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
-		},
-	"\/uploads\/Files\/10\/30\/Multimedia\/atrás.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 82110,
-		"inputAbbreviatedPath": "\/uploads\/Files\/10\/30\/Multimedia\/atrás.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/10\/30\/Multimedia\/atrás.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/10\/30\/Multimedia\/auto_delantera.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 9576,
-		"inputAbbreviatedPath": "\/uploads\/Files\/10\/30\/Multimedia\/auto_delantera.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/10\/30\/Multimedia\/auto_delantera.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/13\/176\/multimedia\/frente-jetta.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 65290,
-		"inputAbbreviatedPath": "\/uploads\/Files\/13\/176\/multimedia\/frente-jetta.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/13\/176\/multimedia\/frente-jetta.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/28\/multimedia\/taller2.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 84993,
-		"inputAbbreviatedPath": "\/uploads\/Files\/28\/multimedia\/taller2.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/28\/multimedia\/taller2.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/29\/27\/multimedia\/taller1.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 228631,
-		"inputAbbreviatedPath": "\/uploads\/Files\/29\/27\/multimedia\/taller1.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/29\/27\/multimedia\/taller1.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/29\/27\/multimedia\/taller2.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 84993,
-		"inputAbbreviatedPath": "\/uploads\/Files\/29\/27\/multimedia\/taller2.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/29\/27\/multimedia\/taller2.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/30\/28\/multimedia\/taller2.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 84993,
-		"inputAbbreviatedPath": "\/uploads\/Files\/30\/28\/multimedia\/taller2.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/30\/28\/multimedia\/taller2.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/32\/multimedia\/taller1.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 228631,
-		"inputAbbreviatedPath": "\/uploads\/Files\/32\/multimedia\/taller1.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/32\/multimedia\/taller1.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/uploads\/Files\/36\/41\/multimedia\/taller3.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 9993,
-		"inputAbbreviatedPath": "\/uploads\/Files\/36\/41\/multimedia\/taller3.jpg",
-		"outputAbbreviatedPath": "\/uploads\/Files\/36\/41\/multimedia\/taller3.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
 		}
 	},
 "hooks": [

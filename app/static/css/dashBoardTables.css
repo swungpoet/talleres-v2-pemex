@@ -1,35 +1,30 @@
 div.divTabla {
-    border-collapse: collapse;    
+    border-collapse: collapse;
     position: absolute;
     width: 42%;
     left: 0;
-    margin-top: 18%;   
+    margin-top: 18%;
     margin-left: 20px;
 }
-
 div.donutContainer {
     width: 50%;
     position: absolute;
     right: 0;
     margin-top: 4%;
 }
-
-div.contenedor{
-	height: 110px;
+div.contenedor {
+    height: 415px;
 }
-
-div.donut{
-	height:300px;
+div.donut {
+    height: 300px;
 }
-
-div.rowHead {    
-    color: black;    
+div.rowHead {
+    color: black;
     font-style: bold;
     border: 1px solid gray;
     text-align: center;
-} 
-
-div.rowBody {        
+}
+div.rowBody {
     font-size: 11px;
     text-align: center;
-} 
+}
