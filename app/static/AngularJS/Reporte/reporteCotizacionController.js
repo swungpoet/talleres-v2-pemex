@@ -5,41 +5,41 @@
 // -- =============================================
 
 registrationModule.controller('reporteCotizacionController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCotizacionRepository) {
-$scope.userData = localStorageService.get('userData');
+    $scope.userData = localStorageService.get('userData');
 
     //Inicializa la pagina
     $scope.init = function () {
-        $scope.obtieneDatoUrl();
-    	$scope.getNumeroCotizaciones();
-    }
-    //obtiene el total de las cotizaciones
+            $scope.obtieneDatoUrl();
+            $scope.getNumeroCotizaciones();
+        }
+        //obtiene el total de las cotizaciones
     $scope.getNumeroCotizaciones = function () {
-            reporteCotizacionRepository.getNumCotizacion().then(function (cotizaciones) {
-                $scope.registroCotizaciones = cotizaciones.data;
+        reporteCotizacionRepository.getNumCotizacion().then(function (cotizaciones) {
+            $scope.registroCotizaciones = cotizaciones.data;
 
-                cotizaciones.data.forEach(function (sumatoria) {
-                    if (sumatoria.estatus == 'PENDIENTES') $scope.cotizacionaprovacion = sumatoria.total;
-                    if (sumatoria.estatus == 'SIN COTIZACION') $scope.sincotizacion = sumatoria.total;
-                });
-                $scope.obtenPorcentaje();
-                if (cotizaciones.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
-                } else {
-                    alertFactory.info('No se encontraron datos');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
+            cotizaciones.data.forEach(function (sumatoria) {
+                if (sumatoria.estatus == 'PENDIENTES') $scope.cotizacionaprovacion = sumatoria.total;
+                if (sumatoria.estatus == 'SIN COTIZACION') $scope.sincotizacion = sumatoria.total;
             });
-        }
+            $scope.obtenPorcentaje();
+            if (cotizaciones.data.length > 0) {
+                alertFactory.success('Datos encontrados');
+            } else {
+                alertFactory.info('No se encontraron datos');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
 
-        //obtiene el procentaje de las cotizaciones
+    //obtiene el procentaje de las cotizaciones
     $scope.obtenPorcentaje = function () {
-            var totalCotizacion = $scope.cotizacionaprovacion + $scope.sincotizacion;
-            $scope.porcentajeaprovacion = ($scope.cotizacionaprovacion * 100) / totalCotizacion;
-            $scope.porcentajecotizacion = ($scope.sincotizacion * 100) / totalCotizacion;
-        }
+        var totalCotizacion = $scope.cotizacionaprovacion + $scope.sincotizacion;
+        $scope.porcentajeaprovacion = ($scope.cotizacionaprovacion * 100) / totalCotizacion;
+        $scope.porcentajecotizacion = ($scope.sincotizacion * 100) / totalCotizacion;
+    }
 
-      //Regresa la variable de la url
+    //Regresa la variable de la url
     $scope.obtieneDatoUrl = function () {
         var url = location.search.replace("?", "");
         var arrUrl = url.split("&");
@@ -52,7 +52,7 @@ $scope.userData = localStorageService.get('userData');
         if ($scope.tipoCotizacion == 0) {
             $scope.cotizacionPendiente();
         } else if ($scope.tipoCotizacion == 1) {
-           $scope.cotizacionSinCotizar();
+            $scope.cotizacionSinCotizar();
         } else {
             $scope.cotizacionSinCotizar();
         }
@@ -89,38 +89,40 @@ $scope.userData = localStorageService.get('userData');
                 ]
             });
         }, 2500);
-    } 
-            //Muestra el historico de citas canceldas
+    }
+
+    //Muestra el historico de sin cotizar
     $scope.cotizacionSinCotizar = function () {
-            $scope.tipoCotizacion = 1;
-            reporteCotizacionRepository.getHistorialCotizacion(2,null,$scope.userData.idUsuario).then(function (sincotizar) {
-                $('.dataTableSinCotizar').DataTable().destroy();
-                $scope.datasincotizacion = sincotizar.data;
-                waitDrawDocument("dataTableSinCotizar");
-                if (sincotizar.data.length > 0) {
-                    alertFactory.success('Exito al obtener citas canceladas');
-                } else {
-                    alertFactory.info('No se encontraron citas canceladas');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
-            });
-        }
-        //Muestra el historico de citas confirmadas
+        $scope.tipoCotizacion = 1;
+        reporteCotizacionRepository.getHistorialCotizacion(2, null, $scope.userData.idUsuario).then(function (sincotizar) {
+            $('.dataTableSinCotizar').DataTable().destroy();
+            $scope.datasincotizacion = sincotizar.data;
+            waitDrawDocument("dataTableSinCotizar");
+            if (sincotizar.data.length > 0) {
+                alertFactory.success('Exito al obtener las cotizaciones pendientes');
+            } else {
+                alertFactory.info('No se encontraron las cotizaciones pendientes');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
+
+    //Muestra el historico de cotizaciones pendientes
     $scope.cotizacionPendiente = function () {
-            $scope.tipoCotizacion = 0;
-            reporteCotizacionRepository.getHistorialCotizacion(8,null,$scope.userData.idUsuario).then(function (pendiente) {
-                $('.dataTablePendiente').DataTable().destroy();
-                $scope.datapendiente = pendiente.data;
-                waitDrawDocument("dataTablePendiente");
-                if (pendiente.data.length > 0) {
-                    alertFactory.success('Exito al obtener citas confirmadas');
-                } else {
-                    alertFactory.info('No se encontraron citas confirmadas');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
-            });
-        }   
+        $scope.tipoCotizacion = 0;
+        reporteCotizacionRepository.getHistorialCotizacion(8, null, $scope.userData.idUsuario).then(function (pendiente) {
+            $('.dataTablePendiente').DataTable().destroy();
+            $scope.datapendiente = pendiente.data;
+            waitDrawDocument("dataTablePendiente");
+            if (pendiente.data.length > 0) {
+                alertFactory.success('Exito al obtener cotizaciones pendientes de aprobar');
+            } else {
+                alertFactory.info('No se encontraron cotizaciones pendientes de aprobar');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
 
 });

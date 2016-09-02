@@ -42,15 +42,14 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                 }
             });
         },
-        getTars: function (idZona) {
-            var objZona = {
-                idZona: idZona
-            };
-
+        getTars: function (idZona, idUsuario) {
             return $http({
                 url: tableroUrl + 'tars',
-                method: "POST",
-                data: objZona,
+                method: "GET",
+                params: {
+                    idZona: idZona,
+                    idUsuario: idUsuario
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }

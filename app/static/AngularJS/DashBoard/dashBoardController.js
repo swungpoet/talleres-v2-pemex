@@ -112,7 +112,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveTars = function () {
-        dashBoardRepository.getTars($scope.zonaSelected).then(function (tars) {
+        dashBoardRepository.getTars($scope.zonaSelected, $scope.userData.idUsuario).then(function (tars) {
             if (tars.data.length > 0) {
                 $scope.tars = tars.data;
 
@@ -120,6 +120,11 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
         }, function (error) {
             alertFactory.error('No se pudo recuperar información de las citas');
         });
+
+        $scope.sumatoriaCitas();
+        $scope.sumatoriaCotizaciones();
+        $scope.sumatoriaOrdenes();
+        $scope.sumatoriaOrdenesPorCobrar();
     }
 
     $scope.getDashBoard = function () {
