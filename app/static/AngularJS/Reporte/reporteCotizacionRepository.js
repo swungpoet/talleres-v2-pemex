@@ -11,12 +11,14 @@ registrationModule.factory('reporteCotizacionRepository', function ($http) {
                 }
             });
         },
-        getHistorialCotizacion: function (idEstatus) {
+        getHistorialCotizacion: function (idEstatus,idTar,idUsuario) {
             return $http({
                 url: reporteCotizacionUrl + 'cotizacionesHistorial/',
                 method: "GET",
                 params: {
-                    idEstatus: idEstatus
+                    idEstatus: idEstatus,
+                    idTar:idTar,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'
