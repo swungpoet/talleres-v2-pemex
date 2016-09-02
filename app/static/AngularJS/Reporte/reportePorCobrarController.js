@@ -94,7 +94,7 @@ $scope.userData = localStorageService.get('userData');
             //Muestra el historico de citas canceldas
     $scope.ordensinCopade = function () {
             $scope.tipoPorCobrar = 1;
-            reportePorCobrarRepository.getHistorialPorCobrar().then(function (sincopade) {
+            reportePorCobrarRepository.getHistorialPorCobrar(12).then(function (sincopade) {
                 $('.dataTableSinCopade').DataTable().destroy();
                 $scope.datasincopade = sincopade.data;
                 waitDrawDocument("dataTableSinCopade");
@@ -110,7 +110,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas confirmadas
     $scope.ordensinFactura = function () {
             $scope.tipoPorCobrar = 0;
-            reportePorCobrarRepository.getHistorialPorCobrar().then(function (sinfactura) {
+            reportePorCobrarRepository.getHistorialPorCobrar(11).then(function (sinfactura) {
                 $('.dataTableSinFactura').DataTable().destroy();
                 $scope.datasinfactura = sinfactura.data;
                 waitDrawDocument("dataTableSinFactura");
