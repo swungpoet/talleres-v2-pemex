@@ -46,7 +46,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
             $scope.tipoCita = 3;
-            reporteCitaRepository.getHistorialCita(22, null).then(function (citacancela) {
+            reporteCitaRepository.getHistorialCita(22, null, $scope.userData.idUsuario).then(function (citacancela) {
                 $('.dataTableCancelada').DataTable().destroy();
                 $scope.cancelacion = citacancela.data;
                 waitDrawDocument("dataTableCancelada");
@@ -62,7 +62,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas confirmadas
     $scope.citaConfirmada = function () {
             $scope.tipoCita = 2;
-            reporteCitaRepository.getHistorialCita(2, null).then(function (citaconfirma) {
+            reporteCitaRepository.getHistorialCita(2, null, $scope.userData.idUsuario).then(function (citaconfirma) {
                 $('.dataTableConfirmada').DataTable().destroy();
                 $scope.confirmacion = citaconfirma.data;
                 waitDrawDocument("dataTableConfirmada");
@@ -78,7 +78,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas agendadas
     $scope.citaAgendada = function () {
             $scope.tipoCita = 1;
-            reporteCitaRepository.getHistorialCita(1, null).then(function (citaagenda) {
+            reporteCitaRepository.getHistorialCita(1, null, $scope.userData.idUsuario).then(function (citaagenda) {
                 $('.dataTableAgendada').DataTable().destroy();
                 $scope.agendacion = citaagenda.data;
                 waitDrawDocument("dataTableAgendada");
@@ -94,7 +94,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas solicitadas
     $scope.citaSolicitada = function () {
         $scope.tipoCita = 0;
-        reporteCitaRepository.getHistorialCita(1, 0).then(function (citasolicita) {
+        reporteCitaRepository.getHistorialCita(1, 0, $scope.userData.idUsuario).then(function (citasolicita) {
             $('.dataTableSolicitar').DataTable().destroy();
             $scope.solicitacion = citasolicita.data;
             waitDrawDocument("dataTableSolicitar");

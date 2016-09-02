@@ -47,7 +47,7 @@ $scope.userData = localStorageService.get('userData');
             //Muestra el historico de ordenes en Proceso
     $scope.ordenProceso = function () {
             $scope.tipoOrden = 4;
-   				reporteOrdenRepository.getHistorialOrden(5).then(function (ordenproces) {
+   				reporteOrdenRepository.getHistorialOrden(5,$scope.userData.idUsuario).then(function (ordenproces) {
    				$('.dataTableProceso').DataTable().destroy();
                 $scope.proceso = ordenproces.data;
                 waitDrawDocument("dataTableProceso");
@@ -63,7 +63,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de ordenes Terminadas
     $scope.ordenTerminada = function () {
             $scope.tipoOrden = 3;
-                reporteOrdenRepository.getHistorialOrden(7).then(function (ordentermina) {
+                reporteOrdenRepository.getHistorialOrden(7,$scope.userData.idUsuario).then(function (ordentermina) {
                 $('.dataTableTerminada').DataTable().destroy();
                 $scope.terminada = ordentermina.data;
                 waitDrawDocument("dataTableTerminada");
@@ -79,7 +79,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de ordenes Transferencia Custodia
     $scope.ordenCustodia = function () {
         $scope.tipoOrden = 2;
-            reporteOrdenRepository.getHistorialOrden(14).then(function (ordencustodia) {
+            reporteOrdenRepository.getHistorialOrden(14,$scope.userData.idUsuario).then(function (ordencustodia) {
             	$('.dataTableCustodia').DataTable().destroy();
                 $scope.custodia = ordencustodia.data;
                 waitDrawDocument("dataTableCustodia");
@@ -95,7 +95,7 @@ $scope.userData = localStorageService.get('userData');
             //Muestra el historico de ordenes certificado Conformidad
     $scope.ordenCertificado = function () {
             $scope.tipoOrden = 1;
-                reporteOrdenRepository.getHistorialOrden(19).then(function (ordenconformidad) {
+                reporteOrdenRepository.getHistorialOrden(19,$scope.userData.idUsuario).then(function (ordenconformidad) {
                 $('.dataTableCertificado').DataTable().destroy();
                 $scope.conformidad = ordenconformidad.data;
                 waitDrawDocument("dataTableCertificado");
@@ -112,7 +112,7 @@ $scope.userData = localStorageService.get('userData');
                 //Muestra el historico de ordnes en garantia
     $scope.ordenGarantia = function () {
         $scope.tipoOrden = 0;
-            reporteOrdenRepository.getHistorialOrden(23).then(function (ordengarantia) {
+            reporteOrdenRepository.getHistorialOrden(23,$scope.userData.idUsuario).then(function (ordengarantia) {
             	$('.dataTableGarantia').DataTable().destroy();
                 $scope.garantia = ordengarantia.data;
                 waitDrawDocument("dataTableGarantia");

@@ -11,12 +11,13 @@ registrationModule.factory('reportePorCobrarRepository', function ($http) {
                 }
             });
         },
-        getHistorialPorCobrar: function (idEstatus) {
+        getHistorialPorCobrar: function (idEstatus,idUsuario) {
             return $http({
                 url: reportePorCobrarUrl + 'porCobrarHistorial/',
                 method: "GET",
                 params: {
-                    idEstatus: idEstatus
+                    idEstatus: idEstatus,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

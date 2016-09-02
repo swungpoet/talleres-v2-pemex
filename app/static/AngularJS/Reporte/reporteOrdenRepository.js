@@ -11,12 +11,13 @@ registrationModule.factory('reporteOrdenRepository', function ($http) {
                 }
             });
         },
-        getHistorialOrden: function (idEstatus) {
+        getHistorialOrden: function (idEstatus,idUsuario) {
             return $http({
                 url: reporteCitaUrl + 'ordenesHistorial/',
                 method: "GET",
                 params: {
-                    idEstatus: idEstatus
+                    idEstatus: idEstatus,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

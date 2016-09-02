@@ -113,6 +113,11 @@ DashBoard.prototype.get_citasHistorial = function (req, res, next) {
             name: 'idTaller',
             value: req.query.idTaller,
             type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
         }
     ];
 
@@ -176,6 +181,11 @@ DashBoard.prototype.get_ordenesHistorial = function (req, res, next) {
             name: 'idEstatus',
             value: req.query.idEstatus,
             type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
         }
     ];
 
@@ -217,6 +227,11 @@ DashBoard.prototype.get_porCobrarHistorial = function (req, res, next) {
         {
             name: 'idEstatus',
             value: req.query.idEstatus,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];
