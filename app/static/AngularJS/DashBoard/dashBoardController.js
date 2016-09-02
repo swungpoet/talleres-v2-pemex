@@ -57,7 +57,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#A1F480'],
                 }).on('click', function (i, row) {
-                    location.href = '/reportecita?tipoCita=' + i;
+                    location.href = '/reportecita?tipoCita=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
             }
         }, function (error) {
