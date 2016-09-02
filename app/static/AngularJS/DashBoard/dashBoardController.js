@@ -25,7 +25,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 var canceladas = 0;
 
                 $scope.citas = datos.data;
-                $scope.totalHoras = 0;    
+                $scope.totalHoras = 0;
 
                 datos.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'SOLICITADAS') solicitadas = sumatoria.total;
@@ -34,7 +34,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         if (sumatoria.estatus == 'CANCELADA') canceladas = sumatoria.total;
 
                         $scope.totalHoras = $scope.totalHoras + sumatoria.promedio;
-                        
+
                     }
 
                 );
@@ -99,7 +99,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#FE7187', '#CA4B7C', '#7A2E7A'],
                 }).on('click', function (i, row) {
-                    location.href = '/reportecotizacion?tipoCotizacion=' + i;
+                    location.href = '/reportecotizacion?tipoCotizacion=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
             }
         }, function (error) {
@@ -190,7 +190,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#65AFFF', '#333333', '#666666', '#FAFAFA', '#FFC300'],
                 }).on('click', function (i, row) {
-                    location.href = '/reporteorden?tipoOrden=' + i;
+                    location.href = '/reporteorden?tipoOrden=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
             }
         }, function (error) {
@@ -235,7 +235,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
                 }).on('click', function (i, row) {
-                    location.href = '/reporteporcobrar?tipoPorCobrar=' + i;
+                    location.href = '/reporteporcobrar?tipoPorCobrar=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
             }
         }, function (error) {
