@@ -30,6 +30,11 @@ DashBoard.prototype.get_sumatoriaCitas = function (req, res, next) {
             name: 'idUsuario',
             value: req.query.idUsuario,
             type: self.model.types.INT
+        },
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
         }
     ];
 

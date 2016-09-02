@@ -16,7 +16,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaCitas = function () {
-        dashBoardRepository.getTotalCitas($scope.tarSelected, $scope.userData.idUsuario).then(function (datos) {
+        dashBoardRepository.getTotalCitas($scope.tarSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (datos) {
             if (datos.data.length > 0) {
                 $('#morris-donut-citas').empty();
                 var solicitadas = 0;

@@ -2,13 +2,14 @@ var tableroUrl = global_settings.urlCORS + '/api/dashboard/';
 
 registrationModule.factory('dashBoardRepository', function ($http) {
     return {
-        getTotalCitas: function (idTar, idUsuario) {
+        getTotalCitas: function (idTar, idUsuario, idZona) {
             return $http({
                 url: tableroUrl + 'sumatoriaCitas/',
                 method: "GET",
                 params: {
                     idTar: idTar,
-                    idUsuario: idUsuario
+                    idUsuario: idUsuario,
+                    idZona: idZona
                 },
                 headers: {
                     'Content-Type': 'application/json'
