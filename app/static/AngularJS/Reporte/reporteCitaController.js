@@ -5,24 +5,25 @@
 // -- =============================================
 
 registrationModule.controller('reporteCitaController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCitaRepository) {
-$scope.userData = localStorageService.get('userData');
+        $scope.userData = localStorageService.get('userData');
+        $scope.idTar = 0;
+        $scope.idZona = 0; 
 
     //Inicializa la pagina
-    $scope.init = function () {
+    $scope.init = function () {  
         $scope.obtieneDatoUrl();
-        $scope.getNumeroCitas();
     }
 
     //obtiene el total de las citas
     $scope.getNumeroCitas = function () {
-            reporteCitaRepository.getNumCita(null,$scope.userData.idUsuario).then(function (citas) {
+            reporteCitaRepository.getNumCita($scope.idTar, $scope.idZona,$scope.userData.idUsuario).then(function (citas) {
                 $scope.registroCitas = citas.data;
 
                 citas.data.forEach(function (sumatoria) {
-                    if (sumatoria.estatus == 'SOLICITADAS') $scope.citasolicitadas = sumatoria.total;
-                    if (sumatoria.estatus == 'AGENDADA') $scope.citasagendadas = sumatoria.total;
-                    if (sumatoria.estatus == 'CONFIRMADA') $scope.citasconfirmadas = sumatoria.total;
-                    if (sumatoria.estatus == 'CANCELADA') $scope.citascanceladas = sumatoria.total;
+                    if (sumatoria.estatus == 'Solicitadas') $scope.citasolicitadas = sumatoria.total;
+                    if (sumatoria.estatus == 'Agendadas') $scope.citasagendadas = sumatoria.total;
+                    if (sumatoria.estatus == 'Confirmadas') $scope.citasconfirmadas = sumatoria.total;
+                    if (sumatoria.estatus == 'Canceladas') $scope.citascanceladas = sumatoria.total;
                 });
 
                 $scope.obtenPorcentaje();
@@ -46,7 +47,8 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
             $scope.tipoCita = 3;
-            reporteCitaRepository.getHistorialCita(22, null, $scope.userData.idUsuario).then(function (citacancela) {
+
+            reporteCitaRepository.getHistorialCita(22, null, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citacancela) {
                 $('.dataTableCancelada').DataTable().destroy();
                 $scope.cancelacion = citacancela.data;
                 waitDrawDocument("dataTableCancelada");
@@ -62,7 +64,8 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas confirmadas
     $scope.citaConfirmada = function () {
             $scope.tipoCita = 2;
-            reporteCitaRepository.getHistorialCita(2, null, $scope.userData.idUsuario).then(function (citaconfirma) {
+
+            reporteCitaRepository.getHistorialCita(2, null, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citaconfirma) {
                 $('.dataTableConfirmada').DataTable().destroy();
                 $scope.confirmacion = citaconfirma.data;
                 waitDrawDocument("dataTableConfirmada");
@@ -78,7 +81,8 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas agendadas
     $scope.citaAgendada = function () {
             $scope.tipoCita = 1;
-            reporteCitaRepository.getHistorialCita(1, null, $scope.userData.idUsuario).then(function (citaagenda) {
+
+            reporteCitaRepository.getHistorialCita(1, null, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citaagenda) {
                 $('.dataTableAgendada').DataTable().destroy();
                 $scope.agendacion = citaagenda.data;
                 waitDrawDocument("dataTableAgendada");
@@ -94,7 +98,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas solicitadas
     $scope.citaSolicitada = function () {
         $scope.tipoCita = 0;
-        reporteCitaRepository.getHistorialCita(1, 0, $scope.userData.idUsuario).then(function (citasolicita) {
+        reporteCitaRepository.getHistorialCita(1, 0, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citasolicita) {
             $('.dataTableSolicitar').DataTable().destroy();
             $scope.solicitacion = citasolicita.data;
             waitDrawDocument("dataTableSolicitar");
@@ -117,17 +121,30 @@ $scope.userData = localStorageService.get('userData');
             var x = arrUrl[i].split("=");
             urlObj[x[0]] = x[1]
         }
-        $scope.tipoCita = urlObj.tipoCita;
+        $scope.tipoCita = urlObj.tipoCita;        
+        $scope.idTar = urlObj.idTar;
+        $scope.idZona = urlObj.idZona;
+        urlObj.idTar == 'null' ? $scope.idTar = 0 : $scope.idTar = urlObj.idTar; 
+        urlObj.idZona == 'null' ? $scope.idZona = 0 : $scope.idZona = urlObj.idZona;
+        if(url==''){
+        $scope.idTar = 0;
+        $scope.idZona = 0;
+        }
         if ($scope.tipoCita == 0) {
             $scope.citaSolicitada();
+            $scope.getNumeroCitas();
         } else if ($scope.tipoCita == 1) {
             $scope.citaAgendada();
+            $scope.getNumeroCitas();
         } else if ($scope.tipoCita == 2) {
             $scope.citaConfirmada();
+            $scope.getNumeroCitas();
         } else if ($scope.tipoCita == 3) {
             $scope.citaCancelada();
+            $scope.getNumeroCitas();
         } else {
             $scope.citaSolicitada();
+            $scope.getNumeroCitas();
         }
     }
 

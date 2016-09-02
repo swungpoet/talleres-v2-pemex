@@ -27,13 +27,13 @@ DashBoard.prototype.get_sumatoriaCitas = function (req, res, next) {
             type: self.model.types.INT
         },
         {
-            name: 'idUsuario',
-            value: req.query.idUsuario,
+            name: 'idZona',
+            value: req.query.idZona,
             type: self.model.types.INT
         },
         {
-            name: 'idZona',
-            value: req.query.idZona,
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];
@@ -53,8 +53,18 @@ DashBoard.prototype.get_sumatoriaCotizaciones = function (req, res, next) {
     //Obtención de valores de los parámetros del request
     var params = [
         {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
             name: 'idTar',
-            value: req.body.idTar,
+            value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];
@@ -133,6 +143,16 @@ DashBoard.prototype.get_citasHistorial = function (req, res, next) {
         {
             name: 'idUsuario',
             value: req.query.idUsuario,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
             type: self.model.types.INT
         }
     ];
@@ -220,13 +240,18 @@ DashBoard.prototype.get_cotizacionesHistorial = function (req, res, next) {
     //Obtención de valores de los parámetros del request
     var params = [
         {
-            name: 'idEstatus',
-            value: req.query.idEstatus,
+            name: 'idZona',
+            value: req.query.idZona,
             type: self.model.types.INT
         },
         {
             name: 'idTar',
             value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idEstatus',
+            value: req.query.idEstatus,
             type: self.model.types.INT
         },
         {

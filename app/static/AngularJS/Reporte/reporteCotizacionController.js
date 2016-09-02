@@ -5,16 +5,16 @@
 // -- =============================================
 
 registrationModule.controller('reporteCotizacionController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCotizacionRepository) {
-    $scope.userData = localStorageService.get('userData');
-
+        $scope.userData = localStorageService.get('userData');
+        $scope.idTar = 0;
+        $scope.idZona = 0; 
     //Inicializa la pagina
     $scope.init = function () {
             $scope.obtieneDatoUrl();
-            $scope.getNumeroCotizaciones();
         }
         //obtiene el total de las cotizaciones
     $scope.getNumeroCotizaciones = function () {
-        reporteCotizacionRepository.getNumCotizacion().then(function (cotizaciones) {
+        reporteCotizacionRepository.getNumCotizacion($scope.idZona,$scope.idTar,$scope.userData.idUsuario).then(function (cotizaciones) {
             $scope.registroCotizaciones = cotizaciones.data;
 
             cotizaciones.data.forEach(function (sumatoria) {
@@ -49,12 +49,23 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
             urlObj[x[0]] = x[1]
         }
         $scope.tipoCotizacion = urlObj.tipoCotizacion;
+        $scope.idTar = urlObj.idTar;
+        $scope.idZona = urlObj.idZona;
+        urlObj.idTar == 'null' ? $scope.idTar = 0 : $scope.idTar = urlObj.idTar; 
+        urlObj.idZona == 'null' ? $scope.idZona = 0 : $scope.idZona = urlObj.idZona;
+        if(url==''){
+        $scope.idTar = 0;
+        $scope.idZona = 0;
+        }
         if ($scope.tipoCotizacion == 0) {
-            $scope.cotizacionPendiente();
+            $scope.cotizacionPendiente($scope.idZona,$scope.idTar);
+             $scope.getNumeroCotizaciones($scope.idZona,$scope.idTar);
         } else if ($scope.tipoCotizacion == 1) {
-            $scope.cotizacionSinCotizar();
+            $scope.cotizacionSinCotizar($scope.idZona,$scope.idTar);
+             $scope.getNumeroCotizaciones($scope.idZona,$scope.idTar);
         } else {
-            $scope.cotizacionSinCotizar();
+            $scope.cotizacionSinCotizar($scope.idZona,$scope.idTar);
+             $scope.getNumeroCotizaciones($scope.idZona,$scope.idTar);
         }
     }
 
@@ -94,7 +105,7 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
     //Muestra el historico de sin cotizar
     $scope.cotizacionSinCotizar = function () {
         $scope.tipoCotizacion = 1;
-        reporteCotizacionRepository.getHistorialCotizacion(2, null, $scope.userData.idUsuario).then(function (sincotizar) {
+        reporteCotizacionRepository.getHistorialCotizacion($scope.idZona,$scope.idTar,2,$scope.userData.idUsuario).then(function (sincotizar) {
             $('.dataTableSinCotizar').DataTable().destroy();
             $scope.datasincotizacion = sincotizar.data;
             waitDrawDocument("dataTableSinCotizar");
@@ -111,7 +122,7 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
     //Muestra el historico de cotizaciones pendientes
     $scope.cotizacionPendiente = function () {
         $scope.tipoCotizacion = 0;
-        reporteCotizacionRepository.getHistorialCotizacion(8, null, $scope.userData.idUsuario).then(function (pendiente) {
+        reporteCotizacionRepository.getHistorialCotizacion($scope.idZona,$scope.idTar,8,$scope.userData.idUsuario).then(function (pendiente) {
             $('.dataTablePendiente').DataTable().destroy();
             $scope.datapendiente = pendiente.data;
             waitDrawDocument("dataTablePendiente");
