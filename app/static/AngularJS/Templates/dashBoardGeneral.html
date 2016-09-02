@@ -1,4 +1,5 @@
 <link href="../../css/inspinia/morris/morris-0.4.3.min.css" rel="stylesheet">
+<link href="../../css/dashBoardTables.css" rel="stylesheet">
 <div ng-init="init()">
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -15,7 +16,7 @@
         </div>
         <div class="hr-line-dashed"></div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 ">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Citas</h5>
@@ -23,9 +24,33 @@
                             <span class="label label-success pull-right">Total: {{totalCitas | number}}</span>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div id="morris-donut-citas"></div>
-                    </div>
+                    <div class="ibox-content ">
+                        <div class="row contenedor">
+                                <div class="col-sm-6 divTabla">
+                                                <div class="row rowHead">
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-4">Estatus</div>
+                                                    <div class="col-sm-2">Totales</div> 
+                                                    <div class="col-sm-4">Promedio hrs</div>
+                                                </div>
+                                                <div class="row rowBody" ng-repeat="x in citas">
+                                                    <div class="col-sm-2" style="background-color:{{x.color}};">&nbsp;</div>
+                                                    <div class="col-sm-4">{{x.estatus}}</div> 
+                                                    <div class="col-sm-2">{{x.total}}</div>
+                                                    <div class="col-sm-4">{{x.promedio}}</div> 
+                                                </div>
+                                                <div class="row rowHead"> 
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-4">Total</div>
+                                                    <div class="col-sm-2">{{totalCitas | number}}</div>
+                                                    <div class="col-sm-4">{{totalHoras | number}}</div>
+                                                </div>                                        
+                                </div>
+                                <div class="donutContainer">
+                                            <div id="morris-donut-citas" class="donut"></div>
+                                </div>
+                        </div>
+                    </div>    
                 </div>
             </div>
             <div class="col-lg-6">
@@ -37,7 +62,31 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div id="morris-donut-cotizaciones"></div>
+                        <div class="row contenedor">
+                                <div class="col-sm-6 divTabla">
+                                                <div class="row rowHead">
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-4">Estatus</div>
+                                                    <div class="col-sm-2">Totales</div> 
+                                                    <div class="col-sm-4">Promedio hrs</div>
+                                                </div>
+                                                <div class="row rowBody" ng-repeat="x in citas">
+                                                    <div class="col-sm-2" style="background-color:{{x.color}};">&nbsp;</div>
+                                                    <div class="col-sm-4">{{x.estatus}}</div> 
+                                                    <div class="col-sm-2">{{x.total}}</div>
+                                                    <div class="col-sm-4">{{x.promedio}}</div> 
+                                                </div>
+                                                <div class="row rowHead"> 
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-4">Total</div>
+                                                    <div class="col-sm-2">{{totalCitas | number}}</div>
+                                                    <div class="col-sm-4">{{totalHoras | number}}</div>
+                                                </div>                                        
+                                </div>
+                                <div class="donutContainer">
+                                            <div id="morris-donut-cotizaciones" class="donut"></div>
+                                </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -50,7 +99,9 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div id="morris-donut-ordenes"></div>
+                        
+                                            <div id="morris-donut-ordenes"></div>
+                        
                     </div>
                 </div>
             </div>
@@ -63,7 +114,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div id="morris-donut-cobrar"></div>
+                        <div id="morris-donut-cobrar"></div>                    
                     </div>
                 </div>
             </div>

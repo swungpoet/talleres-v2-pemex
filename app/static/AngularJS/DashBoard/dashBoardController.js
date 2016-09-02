@@ -23,11 +23,18 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 var agendadas = 0;
                 var confirmadas = 0;
                 var canceladas = 0;
+
+                $scope.citas = datos.data;
+                $scope.totalHoras = 0;    
+
                 datos.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'SOLICITADAS') solicitadas = sumatoria.total;
                         if (sumatoria.estatus == 'AGENDADA') agendadas = sumatoria.total;
                         if (sumatoria.estatus == 'CONFIRMADA') confirmadas = sumatoria.total;
                         if (sumatoria.estatus == 'CANCELADA') canceladas = sumatoria.total;
+
+                        $scope.totalHoras = $scope.totalHoras + sumatoria.promedio;
+                        
                     }
 
                 );
