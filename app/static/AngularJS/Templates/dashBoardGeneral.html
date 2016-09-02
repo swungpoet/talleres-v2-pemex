@@ -12,9 +12,6 @@
                     <option value="">Seleccione una TAR</option>
                 </select>
             </div>
-            <div class="col-lg-2">
-                <button ng-disabled="zonaSelected == null || tarSelected == null" style="vertical-align:bottom;" class="btn btn-warning" type="submit" ng-click="getDashBoard()"><span class="glyphicon glyphicon-search"></span></button>
-            </div>
         </div>
         <div class="hr-line-dashed"></div>
         <div class="row">
@@ -57,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6" ng-hide="userData.idTipoUsuario = 4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>Ordenes Por Cobrar</h5>

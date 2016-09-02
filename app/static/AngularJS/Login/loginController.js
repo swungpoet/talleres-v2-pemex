@@ -23,13 +23,14 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
                             });
                         }
                     }
-                    if ($scope.login.idTipoUsuario == 3) {
-                        location.href = '/tallercita';
-                    } else if ($scope.login.idTipoUsuario == 1) {
-                        location.href = '/dashboardgeneral';
-                    } else {
-                        location.href = '/cita';
-                    }
+                    location.href = '/dashboardgeneral';
+                    /*  if ($scope.login.idTipoUsuario == 3) {
+                          location.href = '/tallercita';
+                      } else if ($scope.login.idTipoUsuario == 1) {
+                          location.href = '/dashboardgeneral';
+                      } else {
+                          location.href = '/cita';
+                      }*/
                 } else {
                     alertFactory.info('Valide el usuario y/o contraseña');
                 }

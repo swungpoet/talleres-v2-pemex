@@ -29,10 +29,13 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                 }
             });
         },
-        getZonas: function () {
+        getZonas: function (idUsuario) {
             return $http({
                 url: tableroUrl + 'zonas/',
                 method: "GET",
+                params: {
+                    idUsuario: idUsuario
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }

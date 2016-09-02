@@ -5,6 +5,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     $scope.totalCotizaciones = 0;
     $scope.totalOrdenes = 0;
     $scope.totalOrdenesPorCobrar = 0;
+    $scope.userData = localStorageService.get('userData');
 
     $scope.init = function () {
         $scope.devuelveZonas();
@@ -100,7 +101,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveZonas = function () {
-        dashBoardRepository.getZonas().then(function (zonas) {
+        dashBoardRepository.getZonas($scope.userData.idUsuario).then(function (zonas) {
             if (zonas.data.length > 0) {
                 $scope.zonas = zonas.data;
 
