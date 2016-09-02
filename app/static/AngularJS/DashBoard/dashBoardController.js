@@ -15,7 +15,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaCitas = function () {
-        dashBoardRepository.getTotalCitas($scope.tarSelected).then(function (datos) {
+        dashBoardRepository.getTotalCitas($scope.tarSelected, $scope.userData.idUsuario).then(function (datos) {
             if (datos.data.length > 0) {
                 $('#morris-donut-citas').empty();
                 var solicitadas = 0;
@@ -65,7 +65,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaCotizaciones = function () {
-        dashBoardRepository.getTotalCotizaciones($scope.tarSelected).then(function (cotizaciones) {
+        dashBoardRepository.getTotalCotizaciones($scope.tarSelected, $scope.userData.idUsuario).then(function (cotizaciones) {
             if (cotizaciones.data.length > 0) {
                 $('#morris-donut-cotizaciones').empty();
                 var pendientes = 0;
@@ -91,7 +91,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#FE7187', '#CA4B7C', '#7A2E7A'],
                 }).on('click', function (i, row) {
-
+                    location.href = '/reportecotizacion?tipoCotizacion=' + i;
                 });
             }
         }, function (error) {
@@ -177,7 +177,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#65AFFF', '#333333', '#666666', '#FAFAFA', '#FFC300'],
                 }).on('click', function (i, row) {
-                    /* location.href = '/reporteorden?tipoOrden=' + i;*/
+                    location.href = '/reporteorden?tipoOrden=' + i;
                 });
             }
         }, function (error) {
@@ -222,7 +222,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     resize: true,
                     colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
                 }).on('click', function (i, row) {
-
+                    location.href = '/reporteporcobrar?tipoPorCobrar=' + i;
                 });
             }
         }, function (error) {

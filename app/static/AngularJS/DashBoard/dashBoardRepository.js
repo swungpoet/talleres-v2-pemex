@@ -2,9 +2,10 @@ var tableroUrl = global_settings.urlCORS + '/api/dashboard/';
 
 registrationModule.factory('dashBoardRepository', function ($http) {
     return {
-        getTotalCitas: function (idTar) {
+        getTotalCitas: function (idTar, idUsuario) {
             var objTAR = {
-                idTar: idTar
+                idTar: idTar,
+                idUsuario: idUsuario
             };
 
             return $http({
