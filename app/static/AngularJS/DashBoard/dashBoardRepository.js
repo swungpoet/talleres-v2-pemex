@@ -3,15 +3,13 @@ var tableroUrl = global_settings.urlCORS + '/api/dashboard/';
 registrationModule.factory('dashBoardRepository', function ($http) {
     return {
         getTotalCitas: function (idTar, idUsuario) {
-            var objTAR = {
-                idTar: idTar,
-                idUsuario: idUsuario
-            };
-
             return $http({
                 url: tableroUrl + 'sumatoriaCitas/',
                 method: "GET",
-                data: objTAR,
+                params: {
+                    idTar: idTar,
+                    idUsuario: idUsuario
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -66,7 +64,7 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                 }
             });
         },
-         getTotalOrdenesPorCobrar: function (idTar) {
+        getTotalOrdenesPorCobrar: function (idTar) {
             return $http({
                 url: tableroUrl + 'sumatoriaOrdenesPorCobrar',
                 method: "GET",
