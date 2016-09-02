@@ -5,41 +5,41 @@
 // -- =============================================
 
 registrationModule.controller('reportePorCobrarController', function ($scope, alertFactory, $rootScope, localStorageService, reportePorCobrarRepository) {
-$scope.userData = localStorageService.get('userData');
+    $scope.userData = localStorageService.get('userData');
 
     //Inicializa la pagina
     $scope.init = function () {
-        $scope.obtieneDatoUrl();
-    	$scope.getNumeroPorCobrar();
-    }
-    //obtiene el total de las ordenes por cobrar
+            $scope.obtieneDatoUrl();
+            $scope.getNumeroPorCobrar();
+        }
+        //obtiene el total de las ordenes por cobrar
     $scope.getNumeroPorCobrar = function () {
-            reportePorCobrarRepository.getNumPorCobrar().then(function (porcobrar) {
-                $scope.registroPorcobrar = porcobrar.data;
+        reportePorCobrarRepository.getNumPorCobrar().then(function (porcobrar) {
+            $scope.registroPorcobrar = porcobrar.data;
 
-                porcobrar.data.forEach(function (sumatoria) {
-                    if (sumatoria.estatus == 'SIN FACTURA') $scope.cobrarsinfactura = sumatoria.total;
-                    if (sumatoria.estatus == 'SIN COPADE') $scope.cobrarsincopade = sumatoria.total;
-                });
-                $scope.obtenPorcentaje();
-                if (porcobrar.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
-                } else {
-                    alertFactory.info('No se encontraron datos');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
+            porcobrar.data.forEach(function (sumatoria) {
+                if (sumatoria.estatus == 'SIN FACTURA') $scope.cobrarsinfactura = sumatoria.total;
+                if (sumatoria.estatus == 'SIN COPADE') $scope.cobrarsincopade = sumatoria.total;
             });
-        }
+            $scope.obtenPorcentaje();
+            if (porcobrar.data.length > 0) {
+                alertFactory.success('Datos encontrados');
+            } else {
+                alertFactory.info('No se encontraron datos');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
 
-                //obtiene el procentaje de las ordenes por cobrar
+    //obtiene el procentaje de las ordenes por cobrar
     $scope.obtenPorcentaje = function () {
-            var totalPorCobrar = $scope.cobrarsinfactura + $scope.cobrarsincopade;
-            $scope.porcentajesinfactura = ($scope.cobrarsinfactura * 100) / totalPorCobrar;
-            $scope.porcentajecopade = ($scope.cobrarsincopade * 100) / totalPorCobrar;
-        }
+        var totalPorCobrar = $scope.cobrarsinfactura + $scope.cobrarsincopade;
+        $scope.porcentajesinfactura = ($scope.cobrarsinfactura * 100) / totalPorCobrar;
+        $scope.porcentajecopade = ($scope.cobrarsincopade * 100) / totalPorCobrar;
+    }
 
-      //Regresa la variable de la url
+    //Regresa la variable de la url
     $scope.obtieneDatoUrl = function () {
         var url = location.search.replace("?", "");
         var arrUrl = url.split("&");
@@ -50,11 +50,11 @@ $scope.userData = localStorageService.get('userData');
         }
         $scope.tipoPorCobrar = urlObj.tipoPorCobrar;
         if ($scope.tipoPorCobrar == 0) {
-          $scope.ordensinFactura();
+            $scope.ordensinFactura();
         } else if ($scope.tipoPorCobrar == 1) {
-          $scope.ordensinCopade();
+            $scope.ordensinCopade();
         } else {
-          $scope.ordensinFactura();
+            $scope.ordensinFactura();
         }
     }
 
@@ -91,37 +91,38 @@ $scope.userData = localStorageService.get('userData');
         }, 2500);
     }
 
-            //Muestra el historico de citas canceldas
+    //Muestra el historico de ordenes sin copade
     $scope.ordensinCopade = function () {
-            $scope.tipoPorCobrar = 1;
-            reportePorCobrarRepository.getHistorialPorCobrar(12,$scope.userData.idUsuario).then(function (sincopade) {
-                $('.dataTableSinCopade').DataTable().destroy();
-                $scope.datasincopade = sincopade.data;
-                waitDrawDocument("dataTableSinCopade");
-                if (sincopade.data.length > 0) {
-                    alertFactory.success('Exito al obtener citas canceladas');
-                } else {
-                    alertFactory.info('No se encontraron citas canceladas');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
-            });
-        }
-        //Muestra el historico de citas confirmadas
+        $scope.tipoPorCobrar = 1;
+        reportePorCobrarRepository.getHistorialPorCobrar(12, $scope.userData.idUsuario).then(function (sincopade) {
+            $('.dataTableSinCopade').DataTable().destroy();
+            $scope.datasincopade = sincopade.data;
+            waitDrawDocument("dataTableSinCopade");
+            if (sincopade.data.length > 0) {
+                alertFactory.success('Exito al obtener las copades pendientes');
+            } else {
+                alertFactory.info('No se encontraron las copades pendientes');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
+
+    //Muestra el historico de ordenes sin factura
     $scope.ordensinFactura = function () {
-            $scope.tipoPorCobrar = 0;
-            reportePorCobrarRepository.getHistorialPorCobrar(11,$scope.userData.idUsuario).then(function (sinfactura) {
-                $('.dataTableSinFactura').DataTable().destroy();
-                $scope.datasinfactura = sinfactura.data;
-                waitDrawDocument("dataTableSinFactura");
-                if (sinfactura.data.length > 0) {
-                    alertFactory.success('Exito al obtener citas confirmadas');
-                } else {
-                    alertFactory.info('No se encontraron citas confirmadas');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
-            });
-        }    
+        $scope.tipoPorCobrar = 0;
+        reportePorCobrarRepository.getHistorialPorCobrar(11, $scope.userData.idUsuario).then(function (sinfactura) {
+            $('.dataTableSinFactura').DataTable().destroy();
+            $scope.datasinfactura = sinfactura.data;
+            waitDrawDocument("dataTableSinFactura");
+            if (sinfactura.data.length > 0) {
+                alertFactory.success('Exito al obtener las facturas pendientes');
+            } else {
+                alertFactory.info('No se encontraron las facturas pendientes');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
+    }
 
 });
