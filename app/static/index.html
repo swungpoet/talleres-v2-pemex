@@ -89,13 +89,13 @@
                     <a href="ordenesporcobrar" ng-click="showChat = 0" ng-hide="userData.idTipoUsuario == 3"><i class="fa fa-credit-card"></i> <span class="nav-label">Órdenes por Cobrar</span><span class="label label-warning pull-right"></span></a>
                 </li>
                 <li>
-                    <a href="#" ng-click="showChat = 0" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idSubtipoUsuario == 3 || userData.idSubtipoUsuario == 4 || userData.idSubtipoUsuario == 10 || userData.idSubtipoUsuario == 11"><i class="fa fa-line-chart"></i> <span class="nav-label">Reporte</span><span class="label label-warning pull-right"></span></a>
+                    <a href="#" ng-click="showChat = 0"><i class="fa fa-line-chart"></i> <span class="nav-label">Reporte</span><span class="label label-warning pull-right"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/reporte">Reporte General</a></li>
+                        <li><a href="/reporte" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3 || userData.idSubtipoUsuario == 3 || userData.idSubtipoUsuario == 4 || userData.idSubtipoUsuario == 10 || userData.idSubtipoUsuario == 11">Reporte General</a></li>
                         <li><a href="/reportecita">Reporte Citas</a></li>
                         <li><a href="/reporteorden">Reporte Órdenes</a></li>
                         <li><a href="/reportecotizacion">Reporte Cotizaciones</a></li>
-                        <li><a href="/reporteporcobrar">Reporte Órdenes por Cobrar</a></li>     
+                        <li ng-hide="userData.idTipoUsuario == 4"><a href="/reporteporcobrar">Reporte Órdenes por Cobrar</a></li>     
                     </ul>
                 </li>
                 <li ng-show="userData.idTipoUsuario == 1">

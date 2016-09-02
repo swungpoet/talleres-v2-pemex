@@ -93,7 +93,7 @@ $scope.userData = localStorageService.get('userData');
             //Muestra el historico de citas canceldas
     $scope.cotizacionSinCotizar = function () {
             $scope.tipoCotizacion = 1;
-            reporteCotizacionRepository.getHistorialCotizacion(2).then(function (sincotizar) {
+            reporteCotizacionRepository.getHistorialCotizacion(2,null,$scope.userData.idUsuario).then(function (sincotizar) {
                 $('.dataTableSinCotizar').DataTable().destroy();
                 $scope.datasincotizacion = sincotizar.data;
                 waitDrawDocument("dataTableSinCotizar");
@@ -109,7 +109,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de citas confirmadas
     $scope.cotizacionPendiente = function () {
             $scope.tipoCotizacion = 0;
-            reporteCotizacionRepository.getHistorialCotizacion(8).then(function (pendiente) {
+            reporteCotizacionRepository.getHistorialCotizacion(8,null,$scope.userData.idUsuario).then(function (pendiente) {
                 $('.dataTablePendiente').DataTable().destroy();
                 $scope.datapendiente = pendiente.data;
                 waitDrawDocument("dataTablePendiente");

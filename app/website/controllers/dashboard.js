@@ -72,15 +72,9 @@ DashBoard.prototype.get_zonas = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
-     var params = [
-        {
-            name: 'idUsuario',
-            value: req.query.idUsuario,
-            type: self.model.types.INT
-        }
-    ];
+    var params = [];
 
-    this.model.query('SEL_GAR_POR_USUARIO_SP', params, function (error, result) {
+    this.model.query('SEL_GAR_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
@@ -217,6 +211,16 @@ DashBoard.prototype.get_cotizacionesHistorial = function (req, res, next) {
         {
             name: 'idEstatus',
             value: req.query.idEstatus,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];
