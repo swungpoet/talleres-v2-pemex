@@ -16,9 +16,11 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                 }
             });
         },
-        getTotalCotizaciones: function (idTar) {
+        getTotalCotizaciones: function (idZona,idTar,idUsuario) {
             var objTAR = {
-                idTar: idTar
+                idZona:idZona,
+                idTar: idTar,
+                idUsuario:idUsuario
             };
 
             return $http({
@@ -55,24 +57,28 @@ registrationModule.factory('dashBoardRepository', function ($http) {
                 }
             });
         },
-        getTotalOrdenes: function (idTar) {
+        getTotalOrdenes: function (idZona,idTar,idUsuario) {
             return $http({
                 url: tableroUrl + 'sumatoriaOrdenes',
                 method: "GET",
                 params: {
-                    idTar: idTar
+                    idZona:idZona,
+                    idTar: idTar,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        getTotalOrdenesPorCobrar: function (idTar) {
+        getTotalOrdenesPorCobrar: function (idZona,idTar,idUsuario) {
             return $http({
                 url: tableroUrl + 'sumatoriaOrdenesPorCobrar',
                 method: "GET",
                 params: {
-                    idTar: idTar
+                    idZona:idZona,
+                    idTar: idTar,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'
