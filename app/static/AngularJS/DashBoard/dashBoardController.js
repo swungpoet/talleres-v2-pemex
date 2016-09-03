@@ -25,7 +25,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 var canceladas = 0;
 
                 $scope.citas = datos.data;
-                $scope.totalHoras = 0;
+                $scope.totalHorasCitas = 0;
 
                 datos.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'Solicitadas') solicitadas = sumatoria.total;
@@ -33,7 +33,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         if (sumatoria.estatus == 'Confirmadas') confirmadas = sumatoria.total;
                         if (sumatoria.estatus == 'Canceladas') canceladas = sumatoria.total;
 
-                        $scope.totalHoras = $scope.totalHoras + sumatoria.promedio;
+                        $scope.totalHorasCitas = $scope.totalHorasCitas + sumatoria.promedio;
 
                     }
 
@@ -73,15 +73,20 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaCotizaciones = function () {
-        dashBoardRepository.getTotalCotizaciones($scope.tarSelected, $scope.userData.idUsuario).then(function (cotizaciones) {
+        dashBoardRepository.getTotalCotizaciones($scope.tarSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (cotizaciones) {
             if (cotizaciones.data.length > 0) {
                 $('#morris-donut-cotizaciones').empty();
                 var pendientes = 0;
                 var sinCotizacion = 0;
 
+                $scope.cotizaciones = datos.data;
+                $scope.totalHorasCotizaciones = 0;
+
                 cotizaciones.data.forEach(function (sumatoria) {
-                    if (sumatoria.estatus == 'PENDIENTES') pendientes = sumatoria.total;
-                    if (sumatoria.estatus == 'SIN COTIZACION') sinCotizacion = sumatoria.total;
+                    if (sumatoria.estatus == 'Pendientes') pendientes = sumatoria.total;
+                    if (sumatoria.estatus == 'Sin Cotización') sinCotizacion = sumatoria.total;
+
+                    $scope.totalHorasCotizaciones = $scope.totalHorasCotizaciones + sumatoria.promedio;
                 });
 
                 $scope.totalCotizaciones = pendientes + sinCotizacion;
@@ -119,7 +124,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveTars = function () {
-        dashBoardRepository.getTars($scope.zonaSelected, $scope.userData.idUsuario).then(function (tars) {
+        dashBoardRepository.getTars($scope.zonaSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (tars) {
             if (tars.data.length > 0) {
                 $scope.tars = tars.data;
 
@@ -142,7 +147,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaOrdenes = function () {
-        dashBoardRepository.getTotalOrdenes($scope.tarSelected).then(function (ordenes) {
+        dashBoardRepository.getTotalOrdenes($scope.tarSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (ordenes) {
             if (ordenes.data.length > 0) {
                 $('#morris-donut-ordenes').empty();
                 var proceso = 0;
@@ -151,12 +156,17 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 var conformidad = 0;
                 var garantia = 0;
 
+                $scope.ordenesServicio = datos.data;
+                $scope.totalHorasOrdenesServicio = 0;
+
                 ordenes.data.forEach(function (sumatoria) {
-                        if (sumatoria.estatus == 'EN PROCESO') proceso = sumatoria.total;
-                        if (sumatoria.estatus == 'TERMINADOS') terminados = sumatoria.total;
-                        if (sumatoria.estatus == 'T. CUSTODIA') custodia = sumatoria.total;
-                        if (sumatoria.estatus == 'C. CONFORMIDAD') conformidad = sumatoria.total;
-                        if (sumatoria.estatus == 'EN GARANTIA') garantia = sumatoria.total;
+                        if (sumatoria.estatus == 'En Proceso') proceso = sumatoria.total;
+                        if (sumatoria.estatus == 'Terminados') terminados = sumatoria.total;
+                        if (sumatoria.estatus == 'T. Custodia') custodia = sumatoria.total;
+                        if (sumatoria.estatus == 'C. Conformidad') conformidad = sumatoria.total;
+                        if (sumatoria.estatus == 'En Garantía') garantia = sumatoria.total;
+
+                        $scope.totalHorasOrdenesServicio = $scope.totalHorasOrdenesServicio + sumatoria.promedio;
                     }
 
                 );
@@ -167,15 +177,15 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     element: 'morris-donut-ordenes',
                     data: [
                         {
-                            label: "En garantía",
+                            label: "En Garantía",
                             value: garantia
                         },
                         {
-                            label: "C. conformidad",
+                            label: "C. Conformidad",
                             value: conformidad
                         },
                         {
-                            label: "T. custodia",
+                            label: "T. Custodia",
                             value: custodia
                         },
                         {
@@ -183,7 +193,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: terminados
                         },
                         {
-                            label: "En proceso",
+                            label: "En Proceso",
                             value: proceso
                         }
                     ],
@@ -199,17 +209,21 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaOrdenesPorCobrar = function () {
-        dashBoardRepository.getTotalOrdenesPorCobrar($scope.tarSelected).then(function (ordenesCobrar) {
+        dashBoardRepository.getTotalOrdenesPorCobrar($scope.tarSelected), $scope.userData.idUsuario, $scope.zonaSelected.then(function (ordenesCobrar) {
             if (ordenesCobrar.data.length > 0) {
                 $('#morris-donut-cobrar').empty();
                 var sinFactura = 0;
                 var revision = 0;
                 var esperaCopade = 0;
 
+                $scope.ordenesCobrar = datos.data;
+                $scope.totalHorasOrdenesCobrar = 0;
+
                 ordenesCobrar.data.forEach(function (sumatoria) {
-                        if (sumatoria.estatus == 'SIN FACTURA') sinFactura = sumatoria.total;
-                        if (sumatoria.estatus == 'SIN COPADE') esperaCopade = sumatoria.total;
+                        if (sumatoria.estatus == 'Sin Factura') sinFactura = sumatoria.total;
+                        if (sumatoria.estatus == 'Sin Copade') esperaCopade = sumatoria.total;                        
                         /*if (sumatoria.estatus == 'ESPERA COPADE') revision = sumatoria.total;*/
+                        $scope.totalHorasOrdenesCobrar = $scope.totalHorasOrdenesCobrar + sumatoria.promedio;
                     }
 
                 );
@@ -220,7 +234,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     element: 'morris-donut-cobrar',
                     data: [
                         {
-                            label: "SIN FACTURA",
+                            label: "Sin Factura",
                             value: sinFactura
                         },
                         /*{
@@ -228,7 +242,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: revision
                         },*/
                         {
-                            label: "SIN COPADE",
+                            label: "Sin Copade",
                             value: esperaCopade
                         }
                     ],
