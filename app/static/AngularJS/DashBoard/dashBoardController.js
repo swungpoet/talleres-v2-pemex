@@ -88,7 +88,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                     $scope.totalHorasCotizaciones = $scope.totalHorasCotizaciones + sumatoria.promedio;
                 });
-                                
+
 
                 $scope.totalCotizaciones = pendientes + sinCotizacion;
 
@@ -160,6 +160,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.ordenesServicio = ordenes.data;
                 $scope.totalHorasOrdenesServicio = 0;
 
+                $scope.ordenesServicio.splice(5,2);
+
                 ordenes.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'En Proceso') proceso = sumatoria.total;
                         if (sumatoria.estatus == 'Terminados') terminados = sumatoria.total;
@@ -219,6 +221,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 $scope.ordenesCobrarD = ordenesCobrar.data;
                 $scope.totalHorasOrdenesCobrar = 0;
+
+                $scope.ordenesCobrarD.splice(0,5);
 
                 ordenesCobrar.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'Sin Factura') sinFactura = sumatoria.total;
