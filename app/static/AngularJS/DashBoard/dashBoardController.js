@@ -163,11 +163,11 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.ordenesServicio.splice(5,2);
 
                 ordenes.data.forEach(function (sumatoria) {
-                        if (sumatoria.estatus == 'En Proceso') proceso = sumatoria.total;
+                        if (sumatoria.estatus == 'En proceso de reparación') proceso = sumatoria.total;
                         if (sumatoria.estatus == 'Terminados') terminados = sumatoria.total;
                         if (sumatoria.estatus == 'T. Custodia') custodia = sumatoria.total;
                         if (sumatoria.estatus == 'C. Conformidad') conformidad = sumatoria.total;
-                        if (sumatoria.estatus == 'En Garantía') garantia = sumatoria.total;
+                        if (sumatoria.estatus == 'Con reclamación de cliente') garantia = sumatoria.total;
 
                         $scope.totalHorasOrdenesServicio = $scope.totalHorasOrdenesServicio + sumatoria.promedio;
                     }
@@ -180,7 +180,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     element: 'morris-donut-ordenes',
                     data: [
                         {
-                            label: "En Garantía",
+                            label: "Con reclamación de cliente",
                             value: garantia
                         },
                         {
@@ -196,7 +196,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: terminados
                         },
                         {
-                            label: "En Proceso",
+                            label: "En proceso de reparación",
                             value: proceso
                         }
                     ],
