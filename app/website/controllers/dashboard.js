@@ -172,8 +172,18 @@ DashBoard.prototype.get_sumatoriaOrdenes = function (req, res, next) {
     //Obtención de valores de los parámetros del request
     var params = [
         {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
             name: 'idTar',
             value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];
@@ -193,13 +203,23 @@ DashBoard.prototype.get_sumatoriaOrdenesPorCobrar = function (req, res, next) {
     //Obtención de valores de los parámetros del request
     var params = [
         {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
             name: 'idTar',
             value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
     ];
 
-    this.model.query('SEL_REPORTE_ORDENES_POR_COBRAR_SP', params, function (error, result) {
+    this.model.query('SEL_REPORTE_ORDENES_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
@@ -221,6 +241,16 @@ DashBoard.prototype.get_ordenesHistorial = function (req, res, next) {
         {
             name: 'idUsuario',
             value: req.query.idUsuario,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
             type: self.model.types.INT
         }
     ];
@@ -283,6 +313,16 @@ DashBoard.prototype.get_porCobrarHistorial = function (req, res, next) {
         {
             name: 'idUsuario',
             value: req.query.idUsuario,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
             type: self.model.types.INT
         }
     ];

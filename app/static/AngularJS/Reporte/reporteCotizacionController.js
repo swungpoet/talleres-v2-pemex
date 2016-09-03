@@ -18,8 +18,8 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
             $scope.registroCotizaciones = cotizaciones.data;
 
             cotizaciones.data.forEach(function (sumatoria) {
-                if (sumatoria.estatus == 'PENDIENTES') $scope.cotizacionaprovacion = sumatoria.total;
-                if (sumatoria.estatus == 'SIN COTIZACION') $scope.sincotizacion = sumatoria.total;
+                if (sumatoria.ID == 8) $scope.cotizacionaprovacion = sumatoria.total;
+                if (sumatoria.ID == 2) $scope.sincotizacion = sumatoria.total;
             });
             $scope.obtenPorcentaje();
             if (cotizaciones.data.length > 0) {
@@ -58,14 +58,14 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
         $scope.idZona = 0;
         }
         if ($scope.tipoCotizacion == 0) {
-            $scope.cotizacionPendiente($scope.idZona,$scope.idTar);
-             $scope.getNumeroCotizaciones($scope.idZona,$scope.idTar);
+            $scope.cotizacionPendiente();
+             $scope.getNumeroCotizaciones();
         } else if ($scope.tipoCotizacion == 1) {
-            $scope.cotizacionSinCotizar($scope.idZona,$scope.idTar);
-             $scope.getNumeroCotizaciones($scope.idZona,$scope.idTar);
+            $scope.cotizacionSinCotizar();
+             $scope.getNumeroCotizaciones();
         } else {
-            $scope.cotizacionSinCotizar($scope.idZona,$scope.idTar);
-             $scope.getNumeroCotizaciones($scope.idZona,$scope.idTar);
+            $scope.cotizacionSinCotizar();
+             $scope.getNumeroCotizaciones();
         }
     }
 

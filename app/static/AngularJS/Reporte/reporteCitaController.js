@@ -20,10 +20,10 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                 $scope.registroCitas = citas.data;
 
                 citas.data.forEach(function (sumatoria) {
-                    if (sumatoria.estatus == 'Solicitadas') $scope.citasolicitadas = sumatoria.total;
-                    if (sumatoria.estatus == 'Agendadas') $scope.citasagendadas = sumatoria.total;
-                    if (sumatoria.estatus == 'Confirmadas') $scope.citasconfirmadas = sumatoria.total;
-                    if (sumatoria.estatus == 'Canceladas') $scope.citascanceladas = sumatoria.total;
+                    if (sumatoria.ID == 1) $scope.citasolicitadas = sumatoria.total;
+                    if (sumatoria.ID == 2) $scope.citasagendadas = sumatoria.total;
+                    if (sumatoria.ID == 3) $scope.citasconfirmadas = sumatoria.total;
+                    if (sumatoria.ID == 4) $scope.citascanceladas = sumatoria.total;
                 });
 
                 $scope.obtenPorcentaje();

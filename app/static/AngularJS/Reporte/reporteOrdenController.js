@@ -4,23 +4,23 @@
 // -- Description: Reporte Orden controller
 // -- =============================================
 registrationModule.controller('reporteOrdenController', function ($scope, alertFactory, $rootScope, localStorageService, reporteOrdenRepository) {
-$scope.userData = localStorageService.get('userData');
-
+        $scope.userData = localStorageService.get('userData');
+        $scope.idTar = 0;
+        $scope.idZona = 0; 
     $scope.init = function () {
-     $scope.getNumeroOrdenes();
      $scope.obtieneDatoUrl();
     }
     //obtiene el total de las citas
     $scope.getNumeroOrdenes = function () {
-            reporteOrdenRepository.getNumOrdenes().then(function (ordenes) {
+            reporteOrdenRepository.getNumOrdenes($scope.idZona,$scope.idTar,$scope.userData.idUsuario).then(function (ordenes) {
                 $scope.registroOrdenes = ordenes.data;
 
               ordenes.data.forEach(function (sumatoria) {
-                    if (sumatoria.estatus == 'C. CONFORMIDAD') $scope.ordencertificado = sumatoria.total;
-                    if (sumatoria.estatus == 'EN GARANTIA') $scope.ordengarantia = sumatoria.total;
-                    if (sumatoria.estatus == 'T. CUSTODIA') $scope.ordencustodia = sumatoria.total;
-                    if (sumatoria.estatus == 'TERMINADOS') $scope.ordenterminado = sumatoria.total;
-                    if (sumatoria.estatus == 'EN PROCESO') $scope.ordenproceso = sumatoria.total;
+                    if (sumatoria.ID == 4) $scope.ordencertificado = sumatoria.total;
+                    if (sumatoria.ID == 5) $scope.ordengarantia = sumatoria.total;
+                    if (sumatoria.ID == 3) $scope.ordencustodia = sumatoria.total;
+                    if (sumatoria.ID == 2) $scope.ordenterminado = sumatoria.total;
+                    if (sumatoria.ID == 1) $scope.ordenproceso = sumatoria.total;
                 });
 
                 $scope.obtenPorcentaje();
@@ -47,7 +47,7 @@ $scope.userData = localStorageService.get('userData');
             //Muestra el historico de ordenes en Proceso
     $scope.ordenProceso = function () {
             $scope.tipoOrden = 4;
-   				reporteOrdenRepository.getHistorialOrden(5,$scope.userData.idUsuario).then(function (ordenproces) {
+   				reporteOrdenRepository.getHistorialOrden(5,$scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (ordenproces) {
    				$('.dataTableProceso').DataTable().destroy();
                 $scope.proceso = ordenproces.data;
                 waitDrawDocument("dataTableProceso");
@@ -63,7 +63,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de ordenes Terminadas
     $scope.ordenTerminada = function () {
             $scope.tipoOrden = 3;
-                reporteOrdenRepository.getHistorialOrden(7,$scope.userData.idUsuario).then(function (ordentermina) {
+                reporteOrdenRepository.getHistorialOrden(7,$scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (ordentermina) {
                 $('.dataTableTerminada').DataTable().destroy();
                 $scope.terminada = ordentermina.data;
                 waitDrawDocument("dataTableTerminada");
@@ -79,7 +79,7 @@ $scope.userData = localStorageService.get('userData');
         //Muestra el historico de ordenes Transferencia Custodia
     $scope.ordenCustodia = function () {
         $scope.tipoOrden = 2;
-            reporteOrdenRepository.getHistorialOrden(14,$scope.userData.idUsuario).then(function (ordencustodia) {
+            reporteOrdenRepository.getHistorialOrden(14,$scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (ordencustodia) {
             	$('.dataTableCustodia').DataTable().destroy();
                 $scope.custodia = ordencustodia.data;
                 waitDrawDocument("dataTableCustodia");
@@ -95,7 +95,7 @@ $scope.userData = localStorageService.get('userData');
             //Muestra el historico de ordenes certificado Conformidad
     $scope.ordenCertificado = function () {
             $scope.tipoOrden = 1;
-                reporteOrdenRepository.getHistorialOrden(19,$scope.userData.idUsuario).then(function (ordenconformidad) {
+                reporteOrdenRepository.getHistorialOrden(19,$scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (ordenconformidad) {
                 $('.dataTableCertificado').DataTable().destroy();
                 $scope.conformidad = ordenconformidad.data;
                 waitDrawDocument("dataTableCertificado");
@@ -112,7 +112,7 @@ $scope.userData = localStorageService.get('userData');
                 //Muestra el historico de ordnes en garantia
     $scope.ordenGarantia = function () {
         $scope.tipoOrden = 0;
-            reporteOrdenRepository.getHistorialOrden(23,$scope.userData.idUsuario).then(function (ordengarantia) {
+            reporteOrdenRepository.getHistorialOrden(23,$scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (ordengarantia) {
             	$('.dataTableGarantia').DataTable().destroy();
                 $scope.garantia = ordengarantia.data;
                 waitDrawDocument("dataTableGarantia");
@@ -136,18 +136,33 @@ $scope.userData = localStorageService.get('userData');
             urlObj[x[0]] = x[1]
         }
         $scope.tipoOrden = urlObj.tipoOrden;
+        $scope.idTar = urlObj.idTar;
+        $scope.idZona = urlObj.idZona;
+        urlObj.idTar == 'null' ? $scope.idTar = 0 : $scope.idTar = urlObj.idTar; 
+        urlObj.idZona == 'null' ? $scope.idZona = 0 : $scope.idZona = urlObj.idZona;
+        if(url==''){
+        $scope.idTar = 0;
+        $scope.idZona = 0;
+        }
         if($scope.tipoOrden==0){
       		$scope.ordenGarantia();
+                 $scope.getNumeroOrdenes();
         }else if($scope.tipoOrden==1){
-            $scope.ordenCertificado();	
+            $scope.ordenCertificado();
+                 $scope.getNumeroOrdenes();	
         }else if($scope.tipoOrden==2){
             $scope.ordenCustodia();		
+                 $scope.getNumeroOrdenes();
         }else if($scope.tipoOrden==3){
             $scope.ordenTerminada();
+                 $scope.getNumeroOrdenes();
         }else if($scope.tipoOrden==4){
             $scope.ordenProceso();
+                 $scope.getNumeroOrdenes();
+                      $scope.getNumeroOrdenes();
         }else{
         	$scope.ordenProceso();
+                 $scope.getNumeroOrdenes();
         }
     }
 

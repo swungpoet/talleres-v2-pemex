@@ -6,20 +6,20 @@
 
 registrationModule.controller('reportePorCobrarController', function ($scope, alertFactory, $rootScope, localStorageService, reportePorCobrarRepository) {
     $scope.userData = localStorageService.get('userData');
-
+        $scope.idTar = 0;
+        $scope.idZona = 0; 
     //Inicializa la pagina
     $scope.init = function () {
             $scope.obtieneDatoUrl();
-            $scope.getNumeroPorCobrar();
         }
         //obtiene el total de las ordenes por cobrar
     $scope.getNumeroPorCobrar = function () {
-        reportePorCobrarRepository.getNumPorCobrar().then(function (porcobrar) {
+        reportePorCobrarRepository.getNumPorCobrar($scope.idZona,$scope.idTar,$scope.userData.idUsuario).then(function (porcobrar) {
             $scope.registroPorcobrar = porcobrar.data;
 
             porcobrar.data.forEach(function (sumatoria) {
-                if (sumatoria.estatus == 'SIN FACTURA') $scope.cobrarsinfactura = sumatoria.total;
-                if (sumatoria.estatus == 'SIN COPADE') $scope.cobrarsincopade = sumatoria.total;
+                if (sumatoria.ID == 6) $scope.cobrarsinfactura = sumatoria.total;
+                if (sumatoria.ID == 7) $scope.cobrarsincopade = sumatoria.total;
             });
             $scope.obtenPorcentaje();
             if (porcobrar.data.length > 0) {
@@ -49,12 +49,23 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
             urlObj[x[0]] = x[1]
         }
         $scope.tipoPorCobrar = urlObj.tipoPorCobrar;
+        $scope.idTar = urlObj.idTar;
+        $scope.idZona = urlObj.idZona;
+        urlObj.idTar == 'null' ? $scope.idTar = 0 : $scope.idTar = urlObj.idTar; 
+        urlObj.idZona == 'null' ? $scope.idZona = 0 : $scope.idZona = urlObj.idZona;
+        if(url==''){
+        $scope.idTar = 0;
+        $scope.idZona = 0;
+        }
         if ($scope.tipoPorCobrar == 0) {
             $scope.ordensinFactura();
+            $scope.getNumeroPorCobrar();
         } else if ($scope.tipoPorCobrar == 1) {
             $scope.ordensinCopade();
+            $scope.getNumeroPorCobrar();
         } else {
             $scope.ordensinFactura();
+            $scope.getNumeroPorCobrar();
         }
     }
 
@@ -94,7 +105,7 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
     //Muestra el historico de ordenes sin copade
     $scope.ordensinCopade = function () {
         $scope.tipoPorCobrar = 1;
-        reportePorCobrarRepository.getHistorialPorCobrar(12, $scope.userData.idUsuario).then(function (sincopade) {
+        reportePorCobrarRepository.getHistorialPorCobrar(12, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sincopade) {
             $('.dataTableSinCopade').DataTable().destroy();
             $scope.datasincopade = sincopade.data;
             waitDrawDocument("dataTableSinCopade");
@@ -111,7 +122,7 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
     //Muestra el historico de ordenes sin factura
     $scope.ordensinFactura = function () {
         $scope.tipoPorCobrar = 0;
-        reportePorCobrarRepository.getHistorialPorCobrar(11, $scope.userData.idUsuario).then(function (sinfactura) {
+        reportePorCobrarRepository.getHistorialPorCobrar(11, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sinfactura) {
             $('.dataTableSinFactura').DataTable().destroy();
             $scope.datasinfactura = sinfactura.data;
             waitDrawDocument("dataTableSinFactura");
