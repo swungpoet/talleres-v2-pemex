@@ -73,21 +73,22 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaCotizaciones = function () {
-        dashBoardRepository.getTotalCotizaciones($scope.tarSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (cotizaciones) {
+        dashBoardRepository.getTotalCotizaciones($scope.zonaSelected, $scope.tarSelected, $scope.userData.idUsuario).then(function (cotizaciones) {
             if (cotizaciones.data.length > 0) {
                 $('#morris-donut-cotizaciones').empty();
                 var pendientes = 0;
                 var sinCotizacion = 0;
 
-                $scope.cotizaciones = datos.data;
+                $scope.cotizacionesD = cotizaciones.data;
                 $scope.totalHorasCotizaciones = 0;
 
                 cotizaciones.data.forEach(function (sumatoria) {
                     if (sumatoria.estatus == 'Pendientes') pendientes = sumatoria.total;
-                    if (sumatoria.estatus == 'Sin Cotización') sinCotizacion = sumatoria.total;
+                    if (sumatoria.estatus == 'Espera Cotización') sinCotizacion = sumatoria.total;
 
                     $scope.totalHorasCotizaciones = $scope.totalHorasCotizaciones + sumatoria.promedio;
                 });
+                                
 
                 $scope.totalCotizaciones = pendientes + sinCotizacion;
 
@@ -98,7 +99,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: pendientes
                 },
                         {
-                            label: "Sin Cotización",
+                            label: "Espera Cotización",
                             value: sinCotizacion
                 }],
                     resize: true,
@@ -147,7 +148,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaOrdenes = function () {
-        dashBoardRepository.getTotalOrdenes($scope.tarSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (ordenes) {
+        dashBoardRepository.getTotalOrdenes($scope.zonaSelected, $scope.tarSelected, $scope.userData.idUsuario).then(function (ordenes) {
             if (ordenes.data.length > 0) {
                 $('#morris-donut-ordenes').empty();
                 var proceso = 0;
@@ -156,7 +157,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 var conformidad = 0;
                 var garantia = 0;
 
-                $scope.ordenesServicio = datos.data;
+                $scope.ordenesServicio = ordenes.data;
                 $scope.totalHorasOrdenesServicio = 0;
 
                 ordenes.data.forEach(function (sumatoria) {
@@ -209,14 +210,14 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.sumatoriaOrdenesPorCobrar = function () {
-        dashBoardRepository.getTotalOrdenesPorCobrar($scope.tarSelected), $scope.userData.idUsuario, $scope.zonaSelected.then(function (ordenesCobrar) {
+        dashBoardRepository.getTotalOrdenesPorCobrar($scope.zonaSelected, $scope.tarSelected, $scope.userData.idUsuario).then(function (ordenesCobrar) {
             if (ordenesCobrar.data.length > 0) {
                 $('#morris-donut-cobrar').empty();
                 var sinFactura = 0;
                 var revision = 0;
                 var esperaCopade = 0;
 
-                $scope.ordenesCobrar = datos.data;
+                $scope.ordenesCobrarD = ordenesCobrar.data;
                 $scope.totalHorasOrdenesCobrar = 0;
 
                 ordenesCobrar.data.forEach(function (sumatoria) {

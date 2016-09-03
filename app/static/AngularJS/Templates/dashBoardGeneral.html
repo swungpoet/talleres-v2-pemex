@@ -70,7 +70,7 @@
                                     <div class="col-sm-2">Totales</div>
                                     <div class="col-sm-4">Promedio hrs</div>
                                 </div>
-                                <div class="row rowBody" ng-repeat="x in cotizaciones">
+                                <div class="row rowBody" ng-repeat="x in cotizacionesD">
                                     <div class="col-sm-2" style="background-color:{{x.color}};">&nbsp;</div>
                                     <div class="col-sm-4">{{x.estatus}}</div>
                                     <div class="col-sm-2">{{x.total}}</div>
@@ -79,7 +79,7 @@
                                 <div class="row rowHead">
                                     <div class="col-sm-2"></div>
                                     <div class="col-sm-4">Total</div>
-                                    <div class="col-sm-2">{{totalCitas | number}}</div>
+                                    <div class="col-sm-2">{{totalCotizaciones | number}}</div>
                                     <div class="col-sm-4">{{totalHorasCotizaciones | number}}</div>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                                 <div class="row rowHead">
                                     <div class="col-sm-2"></div>
                                     <div class="col-sm-4">Total</div>
-                                    <div class="col-sm-2">{{totalCitas | number}}</div>
+                                    <div class="col-sm-2">{{totalOrdenes | number}}</div>
                                     <div class="col-sm-4">{{totalHorasOrdenesServicio | number}}</div>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                                     <div class="col-sm-2">Totales</div>
                                     <div class="col-sm-4">Promedio hrs</div>
                                 </div>
-                                <div class="row rowBody" ng-repeat="x in ordenesCobrar">
+                                <div class="row rowBody" ng-repeat="x in ordenesCobrarD">
                                     <div class="col-sm-2" style="background-color:{{x.color}};">&nbsp;</div>
                                     <div class="col-sm-4">{{x.estatus}}</div>
                                     <div class="col-sm-2">{{x.total}}</div>
@@ -155,7 +155,7 @@
                                 <div class="row rowHead">
                                     <div class="col-sm-2"></div>
                                     <div class="col-sm-4">Total</div>
-                                    <div class="col-sm-2">{{totalCitas | number}}</div>
+                                    <div class="col-sm-2">{{totalOrdenesPorCobrar | number}}</div>
                                     <div class="col-sm-4">{{totalHorasOrdenesCobrar | number}}</div>
                                 </div>
                             </div>
