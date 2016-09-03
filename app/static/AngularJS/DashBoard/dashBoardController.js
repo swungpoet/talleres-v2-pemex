@@ -201,7 +201,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#65AFFF', '#333333', '#666666', '#FAFAFA', '#FFC300'],
+                    colors: ['#65AFFF', '#333333', '#666666', '#E1D052', '#FFC300'],
                 }).on('click', function (i, row) {
                     location.href = '/reporteorden?tipoOrden=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
