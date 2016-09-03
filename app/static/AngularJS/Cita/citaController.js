@@ -609,20 +609,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
-                        title: 'ExampleFile'
+                        title: 'Citas'
                     },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
-
                     {
                         extend: 'print',
                         customize: function (win) {

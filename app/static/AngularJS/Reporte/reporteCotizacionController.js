@@ -76,16 +76,9 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
                         title: 'CotizacionesRegistradas'
                     },
-
                     {
                         extend: 'print',
                         customize: function (win) {

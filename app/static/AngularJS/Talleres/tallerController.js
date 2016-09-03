@@ -60,17 +60,7 @@ registrationModule.controller('tallerController', function ($scope, alertFactory
                     dom: '<"html5buttons"B>lTfgitp',
                     buttons: [
                         {
-                            extend: 'copy'
-                                    },
-                        {
-                            extend: 'csv'
-                                    },
-                        {
                             extend: 'excel',
-                            title: 'ReporteTalleres'
-                                    },
-                        {
-                            extend: 'pdf',
                             title: 'ReporteTalleres'
                                     },
 
