@@ -16,12 +16,12 @@
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-list-alt"></i></span>
-							            <h5>Espera de Cotización</h5>
+							            <h5>Sin Validación</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{sincotizacion}}</h1>
 							            <div class="stat-percent font-bold text-navy">{{porcentajecotizacion | number:2}}% <i class="fa fa-level-up"></i></div>
-							            <small>Total Sin Cotizacion</small>
+							            <small>Total</small>
 							        </div>
 							    </div>
 							    </div>
@@ -31,12 +31,12 @@
 									<div class="ibox float-e-margins">
 										<div class="ibox-title">
 							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-check"></i></span>
-							    <h5>Pendientes de Aprobación</h5>
+							    <h5>Sin Autorización</h5>
 							</div>
 							<div class="ibox-content">
 							    <h1 class="no-margins">{{cotizacionaprovacion}}</h1>
 							    <div class="stat-percent font-bold text-success">{{porcentajeaprovacion | number:2}}% <i class="fa fa-level-up"></i></div>
-							    <small>Total Pendientes de Aprovación</small>
+							    <small>Total</small>
 										</div>
 									</div>
 								</div>
@@ -45,7 +45,7 @@
 
 							<div class="ibox-content">
 							<div ng-show="tipoCotizacion==0">
-                                    <span class="subtitle"><strong>COTIZACION PENDIENTE</strong></span>
+                                    <span class="subtitle"><strong>Falta Autorización de Diagnóstico</strong></span>
                                     <br><br>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTablePendiente" cg-busy="{promise:promise,message:message}">
@@ -55,12 +55,12 @@
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Fecha Autorización de Diagnostico Modificado</th> 
+                                                        <th>Fecha de Cotización</th> 
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus Órden Servicio</th>
-                                                        <th>Horas en Espera de Autorizacion</th>
+                                                        <th>Horas sin Autorización</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div ng-show="tipoCotizacion==1">
-                                    <span class="subtitle"><strong>SIN COTIZACIONES</strong></span>
+                                    <span class="subtitle"><strong>Falta Validación de Diagnóstico</strong></span>
                                     <br><br>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableSinCotizar" cg-busy="{promise:promise,message:message}">
@@ -91,12 +91,12 @@
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Fecha Validación o Modificacion de Diagnostico</th>
+                                                         <th>Fecha de Recepción</th> 
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus Órden Servicio</th>
-                                                        <th>Horas en Espera de Cotización</th>
+                                                         <th>Horas sin Validación</th> 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -105,12 +105,12 @@
                                                         <td>{{sincotizaciones.TAR}}</td>
                                                         <td>{{sincotizaciones.razonSocial}}</td>
                                                         <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                        <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                         <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td> 
                                                         <td>{{sincotizaciones.numEconomico}}</td>
                                                         <td>{{sincotizaciones.trabajo}}</td>
                                                         <td>{{sincotizaciones.observacion}}</td>
                                                         <td>{{sincotizaciones.estatus}}</td>
-                                                        <td ng-class="{'rowVerde': sincotizaciones.horasRetraso <= 49, 'rowAmarillo': sincotizaciones.horasRetraso >= 50 && sincotizaciones.horasRetraso  <=100, 'rowRojo': sincotizaciones.horasRetraso >= 101}">{{sincotizaciones.horasRetraso}}</td>
+                                                         <td ng-class="{'rowVerde': sincotizaciones.horasRetraso <= 49, 'rowAmarillo': sincotizaciones.horasRetraso >= 50 && sincotizaciones.horasRetraso  <=100, 'rowRojo': sincotizaciones.horasRetraso >= 101}">{{sincotizaciones.horasRetraso}}</td> 
                                                     </tr> 
                                                 </tbody>
                                             </table>
