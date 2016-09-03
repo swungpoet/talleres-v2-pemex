@@ -173,12 +173,6 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
                         title: 'OrdenesRegistradas'
                     },

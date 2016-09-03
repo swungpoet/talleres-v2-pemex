@@ -76,16 +76,9 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
                         title: 'OrdenesPorCobrarRegistradas'
                     },
-
                     {
                         extend: 'print',
                         customize: function (win) {

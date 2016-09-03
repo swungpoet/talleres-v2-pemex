@@ -120,20 +120,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
                         title: 'OrdenServicio'
                     },
-                    {
-                        extend: 'pdf',
-                        title: 'OrdenServicio'
-                    },
-
                     {
                         extend: 'print',
                         customize: function (win) {

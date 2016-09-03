@@ -19,20 +19,9 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
                                 dom: '<"html5buttons"B>lTfgitp',
                                 buttons: [
                                     {
-                                        extend: 'copy'
-                                    },
-                                    {
-                                        extend: 'csv'
-                                    },
-                                    {
                                         extend: 'excel',
                                         title: 'ReporteGeneral'
                                     },
-                                    {
-                                        extend: 'pdf',
-                                        title: 'ReporteGeneral'
-                                    },
-
                                     {
                                         extend: 'print',
                                         customize: function (win) {

@@ -55,20 +55,9 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
-                        title: 'ExampleFile'
+                        title: 'ÓrdenAnticipo'
                     },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
-
                     {
                         extend: 'print',
                         customize: function (win) {

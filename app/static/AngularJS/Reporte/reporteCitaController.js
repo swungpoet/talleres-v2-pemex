@@ -155,16 +155,9 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
                         extend: 'excel',
                         title: 'CitasRegistradas'
                     },
-
                     {
                         extend: 'print',
                         customize: function (win) {
