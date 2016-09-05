@@ -256,7 +256,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#591FCE', '#0C9CEE', '#3DBDC2'],
+                    colors: ['#64AE27', '#B7CC1B', '#B7CC1B'],
                 }).on('click', function (i, row) {
                     location.href = '/reporteporcobrar?tipoPorCobrar=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
