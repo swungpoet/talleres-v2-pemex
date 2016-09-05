@@ -103,7 +103,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: sinCotizacion
                 }],
                     resize: true,
-                    colors: ['#FE7187', '#CA4B7C', '#7A2E7A'],
+                    colors: ['#FF889A', '#CA4B7C', '#7A2E7A'],
                 }).on('click', function (i, row) {
                     location.href = '/reportecotizacion?tipoCotizacion=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
