@@ -72,6 +72,16 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
     //espera que el documento se pinte para llenar el dataTable
     var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
+
+            //FAL ordenamiento de columnas 05092016
+            var indicePorOrdenar = 0;
+            
+            if (dataTable == 'dataTablePendiente') {
+                indicePorOrdenar = 9;
+            } else if (dataTable == 'dataTableSinCotizar') {
+                indicePorOrdenar = 9;
+            } 
+
             $('.' + dataTable).DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [

@@ -106,8 +106,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Reclamación</th>
                                                         <th>Fecha Cita</th>
+                                                        <th>Fecha Reclamación</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -120,8 +120,8 @@
                                                         <td>{{garantias.zona}}</td>
                                                         <td>{{garantias.TAR}}</td>
                                                         <td>{{garantias.razonSocial}}</td>
-                                                        <td>{{garantias.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{garantias.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{garantias.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{garantias.numEconomico}}</td>
                                                         <td>{{garantias.trabajo}}</td>
                                                         <td>{{garantias.observacion}}</td>
@@ -142,8 +142,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th> 
-                                                        <th>Fecha Generación de Certificado</th>
                                                         <th>Fecha Cita</th>
+                                                        <th>Fecha Generación de Certificado</th>                
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -156,8 +156,8 @@
                                                         <td>{{certificado.zona}}</td>
                                                         <td>{{certificado.TAR}}</td>
                                                         <td>{{certificado.razonSocial}}</td>
-                                                        <td>{{certificado.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{certificado.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{certificado.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{certificado.numEconomico}}</td>
                                                         <td>{{certificado.trabajo}}</td>
                                                         <td>{{certificado.observacion}}</td>
@@ -178,8 +178,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th> 
-                                                        <th>Fecha de Salida Unidad</th>
                                                         <th>Fecha Cita</th>
+                                                        <th>Fecha de Salida Unidad</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -192,8 +192,8 @@
                                                         <td>{{transferencia.zona}}</td>
                                                         <td>{{transferencia.TAR}}</td>
                                                         <td>{{transferencia.razonSocial}}</td>
-                                                        <td>{{transferencia.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{transferencia.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{transferencia.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{transferencia.numEconomico}}</td>
                                                         <td>{{transferencia.trabajo}}</td>
                                                         <td>{{transferencia.observacion}}</td>
@@ -214,8 +214,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Terminación Trabajo</th>
                                                         <th>Fecha Cita</th>
+                                                        <th>Fecha Terminación Trabajo</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -228,8 +228,8 @@
                                                         <td>{{terminadas.zona}}</td>
                                                         <td>{{terminadas.TAR}}</td>
                                                         <td>{{terminadas.razonSocial}}</td>
-                                                        <td>{{terminadas.fechaFinTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{terminadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{terminadas.fechaFinTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{terminadas.numEconomico}}</td>
                                                         <td>{{terminadas.trabajo}}</td>
                                                         <td>{{terminadas.observacion}}</td>
@@ -250,9 +250,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        
-                                                        <th>Fecha Aprobación</th>
                                                         <th>Fecha Cita</th>
+                                                        <th>Fecha Aprobación</th>
                                                         <th>Fecha Inicio de Reparación</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
@@ -266,14 +265,14 @@
                                                         <td>{{procesos.zona}}</td>
                                                         <td>{{procesos.TAR}}</td>
                                                         <td>{{procesos.razonSocial}}</td>
-                                                        
-                                                        <td>{{procesos.fechaInicioTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{procesos.fechaInicioTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.fechaInicioRealTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{procesos.numEconomico}}</td>
                                                         <td>{{procesos.trabajo}}</td>
                                                         <td>{{procesos.observacion}}</td>
                                                         <td>{{procesos.estatus}}</td>
+                                                        
                                                         <td ng-class="{'rowVerde': procesos.horasRetraso <= 49, 'rowAmarillo': procesos.horasRetraso >= 50 && procesos.horasRetraso  <=100, 'rowRojo': procesos.horasRetraso >= 101}">{{procesos.horasRetraso}}</td>
                                                     </tr> 
                                                 </tbody>

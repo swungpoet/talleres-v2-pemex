@@ -72,6 +72,16 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
     //espera que el documento se pinte para llenar el dataTable
     var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
+            //FAL ordenamiento de columnas 05092016
+            var indicePorOrdenar = 0;
+            if (dataTable == 'dataTableSinFactura') {
+                indicePorOrdenar = 9;
+            } else if (dataTable == 'dataTableSinCopade') {
+                indicePorOrdenar = 9;
+            } else {
+                indicePorOrdenar = 4;
+            }
+
             $('.' + dataTable).DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [

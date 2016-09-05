@@ -169,6 +169,27 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
         //espera que el documento se pinte para llenar el dataTable
     var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
+            //FAL ordenamiento de columnas 05092016
+            var indicePorOrdenar = 0;
+            if (dataTable == 'dataTableGarantia') {
+                indicePorOrdenar = 9;
+            } else if (dataTable == 'dataTableCertificado') {
+                indicePorOrdenar = 9;
+            } else if (dataTable == 'dataTableCustodia') {
+                indicePorOrdenar = 9;
+            } 
+
+            else if (dataTable == 'dataTableTerminada') {
+                indicePorOrdenar = 9;
+            }
+                else if (dataTable == 'dataTableProceso') {
+                indicePorOrdenar = 11;
+            }
+            else {
+                indicePorOrdenar = 9;
+            }
+
+
             $('.' + dataTable).DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
