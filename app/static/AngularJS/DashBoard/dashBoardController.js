@@ -125,15 +125,19 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveTars = function () {
-        dashBoardRepository.getTars($scope.zonaSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (tars) {
-            if (tars.data.length > 0) {
-                $scope.tars = tars.data;
+        if($scope.zonaSelected != null){
+            dashBoardRepository.getTars($scope.zonaSelected).then(function (tars) {
+                if (tars.data.length > 0) {
+                    $scope.tars = tars.data;
 
-            }
-        }, function (error) {
-            alertFactory.error('No se pudo recuperar información de las citas');
-        });
-
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo recuperar información de las citas');
+            });   
+        }
+        else{
+            $scope.tarSelected = null;
+        }
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
         $scope.sumatoriaOrdenes();
