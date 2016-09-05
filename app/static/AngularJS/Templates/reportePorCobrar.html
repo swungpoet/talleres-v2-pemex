@@ -16,12 +16,12 @@
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-primary pull-right"><i class="glyphicon glyphicon-duplicate"></i></span>
-							            <h5>Espera de Factura</h5>
+							            <h5>Sin Factura</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{cobrarsinfactura}}</h1>
 							            <div class="stat-percent font-bold text-navy">{{porcentajesinfactura| number:2}}% <i class="fa fa-level-up"></i></div>
-							            <small>Total sin Factura</small>
+							            <small>Total</small>
 							        </div>
 							    </div>
 							    </div>
@@ -46,12 +46,12 @@
 							    <div class="ibox float-e-margins">
 							        <div class="ibox-title">
 							            <span class="label label-info pull-right"><i class="glyphicon glyphicon-time"></i></span>
-							            <h5>Espera de Copade</h5>
+							            <h5>Sin Facturar</h5>
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{cobrarsincopade}}</h1>
 							            <div class="stat-percent font-bold text-info">{{porcentajecopade | number:2}}% <i class="fa fa-level-up"></i></div>
-							            <small>Total en espera de Copade</small>
+							            <small>Total</small>
 							        </div>
 							    </div>
 							   </div>
@@ -60,7 +60,7 @@
 
 							<div class="ibox-content">
 							<div ng-show="tipoPorCobrar==0">
-                                    <span class="subtitle"><strong>ORDENES SIN FACTURA</strong></span>
+                                    <span class="subtitle"><strong>Falta Factura de Proveedor</strong></span>
                                     <br><br>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableSinFactura" cg-busy="{promise:promise,message:message}">
@@ -70,7 +70,7 @@
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Fecha Factura Taller</th>
+                                                        <th>Fecha Aceptación de Trabajo</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
                                     <div ng-show="tipoPorCobrar==1">
-                                    <span class="subtitle"><strong>ORDENES SIN COPADE</strong></span>
+                                    <span class="subtitle"><strong>Falta por Facturar</strong></span>
                                     <br><br>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableSinCopade" cg-busy="{promise:promise,message:message}">
@@ -106,12 +106,12 @@
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
                                                         <th>Fecha Cita</th>
-                                                        <th>Fecha COPADE</th>
+                                                        <th>Fecha Factura Proveedor</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus Órden Servicio</th>
-                                                        <th>Horas en Espera de Copade</th>
+                                                        <th>Horas sin Facturar</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
