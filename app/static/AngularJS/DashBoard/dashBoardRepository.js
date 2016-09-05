@@ -17,16 +17,14 @@ registrationModule.factory('dashBoardRepository', function ($http) {
             });
         },
         getTotalCotizaciones: function (idZona,idTar,idUsuario) {
-            var objTAR = {
-                idZona:idZona,
-                idTar: idTar,
-                idUsuario:idUsuario
-            };
-
             return $http({
                 url: tableroUrl + 'sumatoriaCotizaciones/',
                 method: "GET",
-                data: objTAR,
+                params: {
+                    idZona:idZona,
+                    idTar: idTar,
+                    idUsuario:idUsuario
+                   },
                 headers: {
                     'Content-Type': 'application/json'
                 }

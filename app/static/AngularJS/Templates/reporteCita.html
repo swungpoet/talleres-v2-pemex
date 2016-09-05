@@ -22,7 +22,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{citasolicitadas}}</h1>
-							            <div class="stat-percent font-bold text-navy">{{porcentajesolicitado | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-navy">{{porcentajesolicitado | number:2}}% </div>
 							            <small>Total</small>
 							        </div>
 							    </div>
@@ -33,11 +33,11 @@
 									<div class="ibox float-e-margins">
 										<div class="ibox-title">
 							    <span class="label label-success pull-right"><i class="glyphicon glyphicon-plus"></i></span>
-							    <h5>Sin Fecha</h5>
+							    <h5>Sin Confirmar</h5>
 							</div>
 							<div class="ibox-content">
 							    <h1 class="no-margins">{{citasagendadas}}</h1>
-							    <div class="stat-percent font-bold text-success">{{porcentajeagendado | number:2}}% <i class="fa fa-level-up"></i></div>
+							    <div class="stat-percent font-bold text-success">{{porcentajeagendado | number:2}}% </div>
 							    <small>Total</small>
 										</div>
 									</div>
@@ -52,7 +52,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{citasconfirmadas}}</h1>
-							            <div class="stat-percent font-bold text-info">{{porcentajeconfirmado | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-info">{{porcentajeconfirmado | number:2}}% </div>
 							            <small>Total</small>
 							        </div>
 							    </div>
@@ -67,7 +67,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{citascanceladas}}</h1>
-							            <div class="stat-percent font-bold text-danger">{{porcentajecancelada | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-danger">{{porcentajecancelada | number:2}}% </div>
 							            <small>Total</small>
 							        </div>
 							    </div>
@@ -88,8 +88,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
                                                         <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -102,8 +102,8 @@
                                                         <td>{{solicitadas.zona}}</td>
                                                         <td>{{solicitadas.TAR}}</td>
                                                         <td>{{solicitadas.razonSocial}}</td>
-                                                        <td>{{solicitadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{solicitadas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{solicitadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{solicitadas.numEconomico}}</td>
                                                         <td>{{solicitadas.trabajo}}</td>
                                                         <td>{{solicitadas.observacion}}</td>
@@ -124,8 +124,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
                                                         <th>Fecha Creación de Cita</th>
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -138,8 +138,8 @@
                                                         <td>{{agendadas.zona}}</td>
                                                         <td>{{agendadas.TAR}}</td>
                                                         <td>{{agendadas.razonSocial}}</td>
-                                                        <td>{{agendadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{agendadas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                         <td>{{agendadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{agendadas.numEconomico}}</td>
                                                         <td>{{agendadas.trabajo}}</td>
                                                         <td>{{agendadas.observacion}}</td>
@@ -160,8 +160,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
 
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -174,8 +174,8 @@
                                                         <td>{{confirmadas.zona}}</td>
                                                         <td>{{confirmadas.TAR}}</td>
                                                         <td>{{confirmadas.razonSocial}}</td>
-                                                        <td>{{confirmadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
 
+                                                        <td>{{confirmadas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{confirmadas.numEconomico}}</td>
                                                         <td>{{confirmadas.trabajo}}</td>
                                                         <td>{{confirmadas.observacion}}</td>
@@ -195,9 +195,9 @@
                                                     <tr>
                                                         <th>Zona</th>
                                                         <th>TAR</th>
-                                                        <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
+                                                        <th>Nombre Taller</th>  
                                                         <th>Fecha Cancelación de Cita</th>
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -209,8 +209,8 @@
                                                         <td>{{canceldas.zona}}</td>
                                                         <td>{{canceldas.TAR}}</td>
                                                         <td>{{canceldas.razonSocial}}</td>
-                                                        <td>{{canceldas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{canceldas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{canceldas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{canceldas.numEconomico}}</td>
                                                         <td>{{canceldas.trabajo}}</td>
                                                         <td>{{canceldas.observacion}}</td>

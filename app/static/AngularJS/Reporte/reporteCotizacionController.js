@@ -19,7 +19,7 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
 
             cotizaciones.data.forEach(function (sumatoria) {
                 if (sumatoria.ID == 8) $scope.cotizacionaprovacion = sumatoria.total;
-                if (sumatoria.ID == 2) $scope.sincotizacion = sumatoria.total;
+                if (sumatoria.ID == 15) $scope.sincotizacion = sumatoria.total;
             });
             $scope.obtenPorcentaje();
             if (cotizaciones.data.length > 0) {
@@ -98,7 +98,7 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
     //Muestra el historico de sin cotizar
     $scope.cotizacionSinCotizar = function () {
         $scope.tipoCotizacion = 1;
-        reporteCotizacionRepository.getHistorialCotizacion($scope.idZona,$scope.idTar,2,$scope.userData.idUsuario).then(function (sincotizar) {
+        reporteCotizacionRepository.getHistorialCotizacion($scope.idZona,$scope.idTar,15,$scope.userData.idUsuario).then(function (sincotizar) {
             $('.dataTableSinCotizar').DataTable().destroy();
             $scope.datasincotizacion = sincotizar.data;
             waitDrawDocument("dataTableSinCotizar");

@@ -20,7 +20,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{sincotizacion}}</h1>
-							            <div class="stat-percent font-bold text-navy">{{porcentajecotizacion | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-navy">{{porcentajecotizacion | number:2}}% </div>
 							            <small>Total</small>
 							        </div>
 							    </div>
@@ -35,7 +35,7 @@
 							</div>
 							<div class="ibox-content">
 							    <h1 class="no-margins">{{cotizacionaprovacion}}</h1>
-							    <div class="stat-percent font-bold text-success">{{porcentajeaprovacion | number:2}}% <i class="fa fa-level-up"></i></div>
+							    <div class="stat-percent font-bold text-success">{{porcentajeaprovacion | number:2}}% </div>
 							    <small>Total</small>
 										</div>
 									</div>
@@ -54,8 +54,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
                                                         <th>Fecha de Cotización</th> 
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -68,8 +68,8 @@
                                                         <td>{{pendientes.zona}}</td>
                                                         <td>{{pendientes.TAR}}</td>
                                                         <td>{{pendientes.razonSocial}}</td>
-                                                        <td>{{pendientes.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{pendientes.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{pendientes.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{pendientes.numEconomico}}</td>
                                                         <td>{{pendientes.trabajo}}</td>
                                                         <td>{{pendientes.observacion}}</td>
@@ -90,8 +90,8 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
                                                          <th>Fecha de Recepción</th> 
+                                                         <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -104,8 +104,8 @@
                                                         <td>{{sincotizaciones.zona}}</td>
                                                         <td>{{sincotizaciones.TAR}}</td>
                                                         <td>{{sincotizaciones.razonSocial}}</td>
-                                                        <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                         <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td> 
+                                                        <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td> 
+                                                         <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{sincotizaciones.numEconomico}}</td>
                                                         <td>{{sincotizaciones.trabajo}}</td>
                                                         <td>{{sincotizaciones.observacion}}</td>

@@ -20,7 +20,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{cobrarsinfactura}}</h1>
-							            <div class="stat-percent font-bold text-navy">{{porcentajesinfactura| number:2}}% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-navy">{{porcentajesinfactura| number:2}}% </div>
 							            <small>Total</small>
 							        </div>
 							    </div>
@@ -50,7 +50,7 @@
 							        </div>
 							        <div class="ibox-content">
 							            <h1 class="no-margins">{{cobrarsincopade}}</h1>
-							            <div class="stat-percent font-bold text-info">{{porcentajecopade | number:2}}% <i class="fa fa-level-up"></i></div>
+							            <div class="stat-percent font-bold text-info">{{porcentajecopade | number:2}}% </div>
 							            <small>Total</small>
 							        </div>
 							    </div>
@@ -69,8 +69,9 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
+                                                        
                                                         <th>Fecha Aceptación de Trabajo</th>
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -83,8 +84,9 @@
                                                         <td>{{sinfacturas.zona}}</td>
                                                         <td>{{sinfacturas.TAR}}</td>
                                                         <td>{{sinfacturas.razonSocial}}</td>
-                                                        <td>{{sinfacturas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        
                                                         <td>{{sinfacturas.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{sinfacturas.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{sinfacturas.numEconomico}}</td>
                                                         <td>{{sinfacturas.trabajo}}</td>
                                                         <td>{{sinfacturas.observacion}}</td>
@@ -105,8 +107,9 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha Cita</th>
+                                                        
                                                         <th>Fecha Factura Proveedor</th>
+                                                        <th>Fecha Cita</th>
                                                         <th>Número Económico</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -119,8 +122,9 @@
                                                         <td>{{sincopades.zona}}</td>
                                                         <td>{{sincopades.TAR}}</td>
                                                         <td>{{sincopades.razonSocial}}</td>
-                                                        <td>{{sincopades.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        
                                                         <td>{{sincopades.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{sincopades.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{sincopades.numEconomico}}</td>
                                                         <td>{{sincopades.trabajo}}</td>
                                                         <td>{{sincopades.observacion}}</td>
