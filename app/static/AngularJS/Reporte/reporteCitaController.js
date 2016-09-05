@@ -5,18 +5,18 @@
 // -- =============================================
 
 registrationModule.controller('reporteCitaController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCitaRepository) {
-        $scope.userData = localStorageService.get('userData');
-        $scope.idTar = 0;
-        $scope.idZona = 0; 
+    $scope.userData = localStorageService.get('userData');
+    $scope.idTar = 0;
+    $scope.idZona = 0;
 
     //Inicializa la pagina
-    $scope.init = function () {  
+    $scope.init = function () {
         $scope.obtieneDatoUrl();
     }
 
     //obtiene el total de las citas
     $scope.getNumeroCitas = function () {
-            reporteCitaRepository.getNumCita($scope.idTar, $scope.idZona,$scope.userData.idUsuario).then(function (citas) {
+            reporteCitaRepository.getNumCita($scope.idTar, $scope.idZona, $scope.userData.idUsuario).then(function (citas) {
                 $scope.registroCitas = citas.data;
 
                 citas.data.forEach(function (sumatoria) {
@@ -121,14 +121,14 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
             var x = arrUrl[i].split("=");
             urlObj[x[0]] = x[1]
         }
-        $scope.tipoCita = urlObj.tipoCita;        
+        $scope.tipoCita = urlObj.tipoCita;
         $scope.idTar = urlObj.idTar;
         $scope.idZona = urlObj.idZona;
-        urlObj.idTar == 'null' ? $scope.idTar = 0 : $scope.idTar = urlObj.idTar; 
+        urlObj.idTar == 'null' ? $scope.idTar = 0 : $scope.idTar = urlObj.idTar;
         urlObj.idZona == 'null' ? $scope.idZona = 0 : $scope.idZona = urlObj.idZona;
-        if(url==''){
-        $scope.idTar = 0;
-        $scope.idZona = 0;
+        if (url == '') {
+            $scope.idTar = 0;
+            $scope.idZona = 0;
         }
         if ($scope.tipoCita == 0) {
             $scope.citaSolicitada();
@@ -151,7 +151,19 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
     //espera que el documento se pinte para llenar el dataTable
     var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
+            var indicePorOrdenar = 0;
+            if (dataTable == 'dataTableSolicitar') {
+                indicePorOrdenar = 9;
+            } else if (dataTable == 'dataTableAgendada') {
+                indicePorOrdenar = 9;
+            } else if (dataTable == 'dataTableConfirmada') {
+                indicePorOrdenar = 8;
+            } else {
+                indicePorOrdenar = 4;
+            }
+
             $('.' + dataTable).DataTable({
+                order: [[indicePorOrdenar, 'desc']],
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {

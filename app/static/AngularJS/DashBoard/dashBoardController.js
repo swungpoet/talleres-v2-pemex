@@ -103,7 +103,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: sinCotizacion
                 }],
                     resize: true,
-                    colors: ['#FE7187', '#CA4B7C', '#7A2E7A'],
+                    colors: ['#FF889A', '#CA4B7C', '#7A2E7A'],
                 }).on('click', function (i, row) {
                     location.href = '/reportecotizacion?tipoCotizacion=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
@@ -125,15 +125,19 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveTars = function () {
-        dashBoardRepository.getTars($scope.zonaSelected, $scope.userData.idUsuario, $scope.zonaSelected).then(function (tars) {
-            if (tars.data.length > 0) {
-                $scope.tars = tars.data;
+        if($scope.zonaSelected != null){
+            dashBoardRepository.getTars($scope.zonaSelected).then(function (tars) {
+                if (tars.data.length > 0) {
+                    $scope.tars = tars.data;
 
-            }
-        }, function (error) {
-            alertFactory.error('No se pudo recuperar información de las citas');
-        });
-
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo recuperar información de las citas');
+            });   
+        }
+        else{
+            $scope.tarSelected = null;
+        }
         $scope.sumatoriaCitas();
         $scope.sumatoriaCotizaciones();
         $scope.sumatoriaOrdenes();
