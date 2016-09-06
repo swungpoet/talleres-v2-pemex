@@ -255,7 +255,7 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
       
     var nombreArchivos = [];
     nombreArchivos = req.body.archivos;  
-    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, fechaRecepcionCopade = req.body.fechaRecepcionCopade;  
+    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, numeroCopade, fechaRecepcionCopade = req.body.fechaRecepcionCopade;  
     var objCopade = [];
     var paramValuesCopade = [];
 
@@ -270,11 +270,13 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
                 parser.parseString(data, function (err, lector) {          
                     subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];          
                     numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];          
-                    ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0];                    
+                    ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0]; 
+                    numeroCopade = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:ENTRADA'][0];                   
                     objCopade = {            
                         subTotal: subTotal,
                         numeroEstimacion: numeroEstimacion,
                         ordenSurtimiento: ordenSurtimiento,
+                        numeroCopade:numeroCopade,
                         nombreCopade: file,
                         fechaRecepcionCopade: fechaRecepcionCopade          
                     };                    
@@ -364,6 +366,11 @@ Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
         {
             name: 'fechaRecepcionCopade',
             value: req.body[0].fechaRecepcionCopade,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'numeroCopade',
+            value: req.body[0].numeroCopade,
             type: self.model.types.STRING
         }
     ];
