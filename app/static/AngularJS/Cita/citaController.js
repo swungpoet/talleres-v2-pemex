@@ -56,7 +56,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         getTrasladoUnidad();
         $scope.idTipoCita = 1;
         $scope.userData = localStorageService.get('userData');
-
+        
         $('.clockpicker').clockpicker();
         // When the window has finished loading google map
         google.maps.event.addDomListener(window, 'load', init);
@@ -377,6 +377,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                             });
                         }
                     }
+                    else{
+                        alertFactory.error("El autotanque tiene una orden de servicio pendiente, si desea agendar una nueva cita comuníquese al Centro de Control.")
+                    }
                 }, function (error) {
                     alertFactory.error("Error al insertar la cita");
                 });
@@ -599,7 +602,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         forceParse: false,
         calendarWeeks: true,
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
+        startDate: new Date()
     });
 
     //espera que el documento se pinte para llenar el dataTable
@@ -1017,4 +1021,18 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         return file.status === 'error';
     }
 
+    //validación de fechas y horarios
+    $scope.validaHoraCita = function(){
+        var currentDate = new Date();
+        if($scope.datosCita.horaCita != null && $scope.datosCita.fechaCita){
+            var horaArray = $scope.datosCita.horaCita.split(':');
+            var fechaArray = $scope.datosCita.fechaCita.toString().split('/');
+            
+            var fechaComparacion = new Date(fechaArray[2],fechaArray[0]-1, fechaArray[1],horaArray[0]-1,horaArray[1]);
+            if(!(fechaComparacion >= currentDate)){
+                $scope.datosCita.horaCita = null;
+                alertFactory.info("Debe agendar citas con 1 hora de anticipación como mínimo.")
+            } 
+        }
+    }
 });
