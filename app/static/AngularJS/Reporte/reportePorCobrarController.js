@@ -75,11 +75,11 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
             //FAL ordenamiento de columnas 05092016
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableSinFactura') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 9;
             } else if (dataTable == 'dataTableSinCopade') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 9;
             } else {
-                indicePorOrdenar = 5;
+                indicePorOrdenar = 9;
             }
 
             $('.' + dataTable).DataTable({
