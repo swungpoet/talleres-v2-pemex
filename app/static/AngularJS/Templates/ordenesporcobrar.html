@@ -9,7 +9,7 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <tabset>
-                            <tab heading="Órdenes por Cobrar" index="0">
+<!--                             <tab heading="Órdenes por Cobrar" index="0">
                                 <br>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTableOrdenesVerificadas" cg-busy="{promise:promise,message:message, minDuration: minDuration,delay:delay}">
@@ -45,18 +45,13 @@
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(ordenverificada, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
-                                                    <!--  <button ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" id="btnEnviar" data-toggle="tooltip" tooltip="Cargar Adenda, COPADE" tooltip-placement="left" ng-click="subir(ordenverificada.idTrabajo)">
-                                                    <span class="fa fa-paperclip" aria-hidden="true" data-toggle="modal"></span>
-                                                    </button> -->                                         
-                                                    <!--  <a id="downloadFactura" type="button" data-toggle="tooltip" tooltip="Generar Factura.txt" tooltip-placement="left" class="btn btn-primary" role="button" ng-click="generaTXT(ordenverificada.idTrabajo, ordenverificada.numeroTrabajo)"><span class="fa fa-file-text-o"></span></a> -->
-
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </tab> 
-                            <tab heading="Cargar COPADES" index="1" ng-show="userData.idTipoUsuario == 1">
+                            </tab> --> 
+                            <tab heading="Cargar COPADES" index="0" ng-show="userData.idTipoUsuario == 1">
                                <div ng-show="userData.idTipoUsuario == 1">
                                    <br>
                                 <div class="ibox-content" ng-show="fechaRecepcionCopade==''">
@@ -101,7 +96,7 @@
                                </div>
                                </div>
                            </tab>
-                            <tab heading="PreFactura Generada" index="2" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4">
+                            <tab heading="PreFactura Generada" index="1" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4">
                                 <br>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTablePreFacturas" cg-busy="{ promise:promise,message:message } ">
