@@ -172,21 +172,21 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
             //FAL ordenamiento de columnas 05092016
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableGarantia') {
-                indicePorOrdenar = 9;
+                indicePorOrdenar = 10;
             } else if (dataTable == 'dataTableCertificado') {
-                indicePorOrdenar = 9;
+                indicePorOrdenar = 10;
             } else if (dataTable == 'dataTableCustodia') {
-                indicePorOrdenar = 9;
+                indicePorOrdenar = 10;
             } 
 
             else if (dataTable == 'dataTableTerminada') {
-                indicePorOrdenar = 9;
+                indicePorOrdenar = 10;
             }
                 else if (dataTable == 'dataTableProceso') {
-                indicePorOrdenar = 11;
+                indicePorOrdenar = 12;
             }
             else {
-                indicePorOrdenar = 9;
+                indicePorOrdenar = 10;
             }
 
 
