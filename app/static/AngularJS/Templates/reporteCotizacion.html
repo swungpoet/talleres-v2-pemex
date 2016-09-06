@@ -54,9 +54,10 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                        <th>Fecha de Cotización</th> 
                                                         <th>Fecha Cita</th>
+                                                        <th>Fecha de Cotización</th>
                                                         <th>Número Económico</th>
+                                                        <th>Tipo Cita</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus Órden Servicio</th>
@@ -68,12 +69,14 @@
                                                         <td>{{pendientes.zona}}</td>
                                                         <td>{{pendientes.TAR}}</td>
                                                         <td>{{pendientes.razonSocial}}</td>
-                                                        <td>{{pendientes.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{pendientes.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                        <td>{{pendientes.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{pendientes.numEconomico}}</td>
+                                                        <td>{{pendientes.tipoCita}}</td>
                                                         <td>{{pendientes.trabajo}}</td>
                                                         <td>{{pendientes.observacion}}</td>
                                                         <td>{{pendientes.estatus}}</td>
+                                                        
                                                         <td ng-class="{'rowVerde': pendientes.horasRetraso <= 49, 'rowAmarillo': pendientes.horasRetraso >= 50 && pendientes.horasRetraso  <=100, 'rowRojo': pendientes.horasRetraso >= 101}">{{pendientes.horasRetraso}}</td>
                                                     </tr> 
                                                 </tbody>
@@ -90,9 +93,10 @@
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
-                                                         <th>Fecha de Recepción</th> 
                                                          <th>Fecha Cita</th>
+                                                         <th>Fecha de Recepción</th> 
                                                         <th>Número Económico</th>
+                                                        <th>Tipo Cita</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
                                                         <th>Estatus Órden Servicio</th>
@@ -104,9 +108,10 @@
                                                         <td>{{sincotizaciones.zona}}</td>
                                                         <td>{{sincotizaciones.TAR}}</td>
                                                         <td>{{sincotizaciones.razonSocial}}</td>
+                                                        <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td> 
-                                                         <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{sincotizaciones.numEconomico}}</td>
+                                                        <td>{{sincotizaciones.tipoCita}}</td>
                                                         <td>{{sincotizaciones.trabajo}}</td>
                                                         <td>{{sincotizaciones.observacion}}</td>
                                                         <td>{{sincotizaciones.estatus}}</td>
