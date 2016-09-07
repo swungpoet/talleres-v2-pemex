@@ -37,6 +37,21 @@ registrationModule.factory('cotizacionConsultaRepository', function ($http) {
                 url: searchUrl + 'detail/' + idCotizacion,
                 method: "POST"
             });*/
+        },
+        cancelaOrden: function (idTrabajo,idCotizacion) {
+            var msgObj = {
+                idTrabajo: idTrabajo,
+                idCotizacion:idCotizacion
+            }
+            return $http({
+                url: searchUrl + 'cancelacionOrden',
+                method: "POST",
+                data: msgObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
+
     };
 });

@@ -1,3 +1,4 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Aprobaciones<span class="subtitle">Call Center / Taller</span></span>
@@ -45,6 +46,9 @@
                                         <td>
                                             <button class="btn btn-success" type="button" id="btnEnviar" tooltip="Ver Cotizacion" ng-click="Autorizacion(cotizacion.idCita, cotizacion.idCotizacion, cotizacion.idUnidad, cotizacion.numeroCotizacion, cotizacion.idTrabajo, cotizacion.idTaller)">
                                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true" data-toggle="modal"></span>
+                                            </button>
+                                            <button class="btn btn-danger btnTerminarTrabajo" type="button" tooltip="Cancelar Aprobación" ng-click="cancelarAprobacion(cotizacion.idTrabajo,cotizacion.idCotizacion)">
+                                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" data-toggle="modal"></span>
                                             </button>
                                         </td>
                                     </tr>
