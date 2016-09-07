@@ -129,6 +129,41 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
     $scope.Nueva = function () {
         location.href = "/cotizacionnueva";
     }
+   //Cancelamnos la orden cambiamos el estatus de trabajo a orden cancelada
+        $scope.cancelarOrden = function (idTrabajo,idCotizacion) {
+       cotizacionConsultaRepository.cancelaOrden(idTrabajo,idCotizacion).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.ordenCancelada = result.data;
+                alertFactory.success('Orden Cancelada Correctamente');
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo resolver la cancelación');
+        });
+    }
+    //Abre la modal para la cancelación de la orden
+    $scope.cancelarAprobacion = function (idTrabajo,idCotizacion) {
+        $('.btnTerminarTrabajo').ready(function () {
+            swal({
+                    title: "¿Esta seguro que desea cancelar la cotización?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#65BD10",
+                    confirmButtonText: "Si",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $scope.cancelarOrden(idTrabajo,idCotizacion);
+                        swal("Trabajo terminado!", "La órden se ha cancelado");
+                        location.href = '/cotizacionconsulta';
+                    } else {
+                        swal("No cancelada");
+                    }
+                });
+        });
+    }
 
 });
 

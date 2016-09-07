@@ -1073,4 +1073,34 @@ Cotizacion.prototype.get_datosOsur = function (req, res, next) {
     });
 }
 
+
+Cotizacion.prototype.post_cancelacionOrden = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+    var params = [{
+        name: 'idTrabajo',
+        value: req.body.idTrabajo,
+        type: self.model.types.DECIMAL
+                        },
+                        {
+        name: 'idCotizacion',
+        value: req.body.idCotizacion,
+        type: self.model.types.DECIMAL
+                        }];
+
+    this.model.post('UPD_CANCELACION_ORDEN_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Cotizacion;
