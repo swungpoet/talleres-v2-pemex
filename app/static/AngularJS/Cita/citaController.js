@@ -178,7 +178,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             autoclose: true,
             todayHighlight: true
         });
-        if ($route.current.params.confCita != undefined) {
+        /*if ($route.current.params.confCita != undefined) {
             var idConfCita = Number($route.current.params.confCita);
             var fecha = $route.current.params.fecha;
             if (idConfCita != 0) {
@@ -192,11 +192,11 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                     }
                 });
             }
-        } else {
-            var date = new Date();
-            $scope.fecha = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
-            $scope.busquedaCita($scope.fecha);
-        }
+        } else {*/
+            /*var date = new Date();
+            $scope.fecha = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();*/
+            $scope.busquedaCita('');
+        //}
     }
 
     //obtiene la unidad mediante el dato buscado
@@ -257,19 +257,24 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //Búsqueda de citas
     $scope.busquedaCita = function (fecha) {
-        var fechaCita = '';
-        var dateHoy = new Date();
-        var fechaHoy = ('0' + dateHoy.getDate()).slice(-2) + '/' + ('0' + (dateHoy.getMonth() + 1)).slice(-2) + '/' + dateHoy.getFullYear();
-        var date = fecha.toString();
-        var dia = date.substring(0, 2);
-        var mes = date.substring(3, 5);
-        var anio = date.substring(6, date.length);
-        if (fechaHoy == date) {
-            fechaCita = anio + '' + mes + '' + dia;
-        } else {
-            fechaCita = anio + '' + dia + '' + mes;
+        if(fecha != ''){
+            var fechaCita = '';
+            var dateHoy = new Date();
+            var fechaHoy = ('0' + dateHoy.getDate()).slice(-2) + '/' + ('0' + (dateHoy.getMonth() + 1)).slice(-2) + '/' + dateHoy.getFullYear();
+            var date = fecha.toString();
+            var dia = date.substring(0, 2);
+            var mes = date.substring(3, 5);
+            var anio = date.substring(6, date.length);
+            if (fechaHoy == date) {
+                fechaCita = anio + '' + mes + '' + dia;
+            } else {
+                fechaCita = anio + '' + dia + '' + mes;
+            }   
+            getCitaTaller(fechaCita, 0, $scope.userData.idUsuario); 
         }
-        getCitaTaller(fechaCita, 0, $scope.userData.idUsuario);
+        else{
+            getCitaTaller(null, 0, $scope.userData.idUsuario);   
+        }
     }
 
     //Se obtienen las citas de la fecha seleccionada
@@ -701,7 +706,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             .then(function (trabajo) {
                 idTrabajoNew = trabajo.data[0].idTrabajo;
                 cargarArchivos(idTrabajoNew, 1);
-                $scope.busquedaCita($scope.fecha);
+                //$scope.busquedaCita($scope.fecha);
+                $scope.busquedaCita('');
             }, function (error) {
                 alertFactory.error("Error al insertar el trabajo");
             });
@@ -1003,7 +1009,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
              if($scope.idTrabajoNew != null){
                 $scope.dzMethods.processQueue();   
              }
-             $scope.busquedaCita($scope.fecha);
+             //$scope.busquedaCita($scope.fecha);
+            $scope.busquedaCita('');
          }, function (error) {
              alertFactory.error("Error al insertar el trabajo");
          });
