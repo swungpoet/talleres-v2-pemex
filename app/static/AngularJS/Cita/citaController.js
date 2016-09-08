@@ -178,25 +178,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             autoclose: true,
             todayHighlight: true
         });
-        /*if ($route.current.params.confCita != undefined) {
-            var idConfCita = Number($route.current.params.confCita);
-            var fecha = $route.current.params.fecha;
-            if (idConfCita != 0) {
-                citaRepository.validaConfirmacionCita(idConfCita).then(function (exists) {
-                    if (exists.data[0].existe == 1) {
-                        alertFactory.info("La cita ya ha sido confirmada");
-                        getCitaTaller(fecha, idConfCita);
-                    } else {
-                        alertFactory.success("Cita confirmada");
-                        getCitaTaller(fecha, idConfCita);
-                    }
-                });
-            }
-        } else {*/
-            /*var date = new Date();
-            $scope.fecha = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();*/
-            $scope.busquedaCita('');
-        //}
+        $scope.busquedaCita('');
     }
 
     //obtiene la unidad mediante el dato buscado
@@ -674,45 +656,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         $('#evidencia').appendTo('body').modal('show');
     }
 
-    //Se realiza la carga de archivos
-    var cargarArchivos = function (idTrabajoNew, idDocEspecial) {
-        //Se obtienen los datos de los archivos a subir
-        $scope.userData = localStorageService.get('userData');
-        formArchivos = document.getElementById("uploader");
-        contentForm = (formArchivos.contentWindow || formArchivos.contentDocument);
-        if (contentForm.document) {
-            btnSubmit = contentForm.document.getElementById("submit2");
-            elements = contentForm.document.getElementById("uploadForm").elements;
-            idTrabajoEdit = contentForm.document.getElementById("idTrabajo");
-            idTipoEvidencia = contentForm.document.getElementById("idTipoEvidencia");
-            vTrabajo = contentForm.document.getElementById("vTrabajo");
-            idUsuario = contentForm.document.getElementById("idUsuario");
-            idCategoria = contentForm.document.getElementById("idCategoria");
-            idNombreEspecial = contentForm.document.getElementById("idNombreEspecial");
-            idTrabajoEdit.value = idTrabajoNew;
-            idCategoria.value = 2;
-            idNombreEspecial.value = idDocEspecial;
-            idTipoEvidencia.value = 1;
-            idUsuario.value = $scope.userData.idUsuario;
-            vTrabajo.value = "1";
-            //Submit del botón del Form para subir los archivos        
-            btnSubmit.click();
-        }
-    }
-
-    //Cargar comprobante de recepción
-    $scope.recepcion = function () {
-        trabajoRepository.insertTrabajo($scope.idCitaUpld, $scope.userData.idUsuario, $scope.idUnidadUpl)
-            .then(function (trabajo) {
-                idTrabajoNew = trabajo.data[0].idTrabajo;
-                cargarArchivos(idTrabajoNew, 1);
-                //$scope.busquedaCita($scope.fecha);
-                $scope.busquedaCita('');
-            }, function (error) {
-                alertFactory.error("Error al insertar el trabajo");
-            });
-    }
-
     //obtiene el tipo de cita
     var getTipoCita = function () {
         citaRepository.getTipoCita().then(function (citas) {
@@ -986,6 +929,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                     setTimeout(function(){
                         $scope.dzMethods.removeAllFiles(true);
                         $('#evidencia').appendTo('body').modal('hide');
+                        $scope.busquedaCita('');
                     },1000)
                 }
             }
@@ -1009,8 +953,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
              if($scope.idTrabajoNew != null){
                 $scope.dzMethods.processQueue();   
              }
-             //$scope.busquedaCita($scope.fecha);
-            $scope.busquedaCita('');
          }, function (error) {
              alertFactory.error("Error al insertar el trabajo");
          });
