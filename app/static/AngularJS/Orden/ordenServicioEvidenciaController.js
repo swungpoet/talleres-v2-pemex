@@ -60,7 +60,7 @@ registrationModule.controller('ordenServicioEvidenciaController', function ($sco
             formData.append('idTrabajo', $scope.idTrabajo);
             formData.append('idCotizacion', 0);
             formData.append('idCategoria', 2);
-            formData.append('idNombreEspecial', 7);//evidenciaTrabajo
+            formData.append('idNombreEspecial', 0);//evidenciaTrabajo
         }
         ,
         'completemultiple': function (file, xhr) {
