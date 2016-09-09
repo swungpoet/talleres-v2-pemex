@@ -416,7 +416,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                         }, 1000);
                         $scope.anticipo = 0;
-                        ordenAnticipoRepository.putAnticipo($scope.idTrabajo, 'pemex', 'andrade', 'referencia', 57, $scope.tasaIva, $scope.sumaPrecioTotal, $scope.sumaIvaTotal, $scope.sumaGranTotal).then(function (result) {
+                        ordenAnticipoRepository.putAnticipo($scope.idCotizacion, 'pemex','referencia', 57, $scope.tasaIva, $scope.sumaPrecioTotal, $scope.sumaIvaTotal, $scope.sumaGranTotal).then(function (result) {
                             if (result.data.length > 0) {
                                 $scope.init();
                                 alertFactory.success('Anticipo solicitado correctamente');
@@ -609,5 +609,23 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             function (error) {
                 alertFactory.error('No se pudo obtener el monto de la órden');
             });
+    }
+    $scope.items = [{
+      name: "Action"
+    }, {
+      name: "Another action"
+    }, {
+      name: "Something else here"
+    }];
+    
+    $scope.cotis = [{numCoti: '23213123', monto: '10000.00'},
+                    {numCoti: '23213123', monto: '10000.00'},
+                    {numCoti: '23213123', monto: '10000.00'},
+                    {numCoti: '23213123', monto: '10000.00'},
+                    {numCoti: '23213123', monto: '10000.00'},
+                    {numCoti: '23213123', monto: '10000.00'}]
+
+    $scope.shouldDisplayPopover = function() {
+      return $scope.displayPopover;
     }
 });

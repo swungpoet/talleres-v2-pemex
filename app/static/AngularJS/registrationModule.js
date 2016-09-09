@@ -6,7 +6,7 @@
 // -- Fecha: 
 // -- =============================================
 var registrationModule = angular.module("registrationModule", ["ngRoute", "LocalStorageModule",
-        "ui.bootstrap", "angularUtils.directives.dirPagination", "cgBusy", "frapontillo.bootstrap-switch","thatisuday.dropzone"])
+        "ui.bootstrap", "angularUtils.directives.dirPagination", "cgBusy", "frapontillo.bootstrap-switch","thatisuday.dropzone","nsPopover"])
     .config(function ($routeProvider, $locationProvider) {
 
         /*change the routes*/
@@ -163,4 +163,25 @@ angular.module('frapontillo.bootstrap-switch', []);
 
 registrationModule.run(function($rootScope) {
     $rootScope.vIpServer = global_settings.urlCORS;
+});
+
+registrationModule.directive('viewportWidth', function () {
+    return {
+        link: function (scope, elm, attrs) {
+            function getViewport() {
+                var e = window,
+                    a = 'inner';
+                if (!('innerWidth' in window)) {
+                    a = 'client';
+                    e = document.documentElement || document.body;
+                }
+                return {
+                    width: e[a + 'Width'],
+                    height: e[a + 'Height']
+                };
+            }
+
+            elm.css('maxWidth', getViewport().width + 'px');
+        }
+    };
 });

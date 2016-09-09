@@ -28,11 +28,10 @@ registrationModule.factory('ordenAnticipoRepository', function ($http) {
                 }
             })
         },
-        putAnticipo: function (idTrabajo, ordenPemex, ordenAndrade, referencia, idProveedor, tasaIva, subTotal, iva, total) {
+        putAnticipo: function (idCotizacion, ordenPemex, referencia, idProveedor, tasaIva, subTotal, iva, total) {
             var anticipoObj = {
-                idTrabajo: idTrabajo,
+                idCotizacion: idCotizacion,
                 ordenPemex: ordenPemex,
-                ordenAndrade: ordenAndrade,
                 referencia: referencia,
                 idProveedor: idProveedor,
                 tasaIva: tasaIva,
@@ -48,6 +47,18 @@ registrationModule.factory('ordenAnticipoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getCotizacionesOrden: function (idTrabajo) {
+            return $http({
+                url: ordenAnticipoUrl + 'cotizacionesorden/',
+                method: "GET",
+                params: {
+                    idTrabajo : idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });

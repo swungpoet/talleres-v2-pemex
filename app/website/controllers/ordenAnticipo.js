@@ -66,18 +66,13 @@ OrdenAnticipo.prototype.post_registraAnticipo = function (req, res, next) {
     //Asigno a params el valor de mis variables    
     var params = [
         {
-            name: 'idTrabajo',
-            value: req.body.idTrabajo,
+            name: 'idCotizacion',
+            value: req.body.idCotizacion,
             type: self.model.types.INT
         },
         {
             name: 'ordenPemex',
             value: req.body.ordenPemex,
-            type: self.model.types.STRING
-        },
-        {
-            name: 'ordenAndrade',
-            value: req.body.ordenAndrade,
             type: self.model.types.STRING
         },
         {
@@ -119,6 +114,27 @@ OrdenAnticipo.prototype.post_registraAnticipo = function (req, res, next) {
         object.result = result;
 
         self.view.expositor(res, object);
+    });
+}
+
+//obtiene las cotizaciones de la orden
+OrdenAnticipo.prototype.get_cotizacionesorden = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idTrabajo',
+                   value: req.query.idTrabajo,
+                   type: self.model.types.INT}]; 
+
+    this.model.query('SEL_ORDEN_ANTICIPO_PENDIENTE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
     });
 }
 
