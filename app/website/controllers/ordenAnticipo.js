@@ -69,41 +69,6 @@ OrdenAnticipo.prototype.post_registraAnticipo = function (req, res, next) {
             name: 'idCotizacion',
             value: req.body.idCotizacion,
             type: self.model.types.INT
-        },
-        {
-            name: 'ordenPemex',
-            value: req.body.ordenPemex,
-            type: self.model.types.STRING
-        },
-        {
-            name: 'referencia',
-            value: req.body.referencia,
-            type: self.model.types.STRING
-        },
-        {
-            name: 'idProveedor',
-            value: req.body.idProveedor,
-            type: self.model.types.INT
-        },
-        {
-            name: 'tasaIva',
-            value: req.body.tasaIva,
-            type: self.model.types.INT
-        },
-        {
-            name: 'subTotal',
-            value: req.body.subTotal,
-            type: self.model.types.DECIMAL
-        },
-        {
-            name: 'iva',
-            value: req.body.iva,
-            type: self.model.types.DECIMAL
-        },
-        {
-            name: 'total',
-            value: req.body.total,
-            type: self.model.types.DECIMAL
         }
     ];
 
@@ -130,7 +95,7 @@ OrdenAnticipo.prototype.get_cotizacionesorden = function (req, res, next) {
                    value: req.query.idTrabajo,
                    type: self.model.types.INT}]; 
 
-    this.model.query('SEL_ORDEN_ANTICIPO_PENDIENTE_SP', params, function (error, result) {
+    this.model.query('SEL_OBTIENE_COTIZACIONES_ORDEN_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

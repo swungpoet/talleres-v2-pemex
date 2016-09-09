@@ -202,7 +202,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             $scope.anticipo = 1;
             $scope.tituloModal = 'Solicitud de Anticipo';
             $scope.textoBoton = 'Solicitar';
-            $scope.getMontoOrdenTrabajo(objOrden.idCita);
+            //$scope.getMontoOrdenTrabajo(objOrden.idCita);
         } else {
             $scope.anticipo = 0;
             $scope.tituloModal = 'Carga Archivo';
@@ -416,13 +416,13 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                         }, 1000);
                         $scope.anticipo = 0;
-                        ordenAnticipoRepository.putAnticipo($scope.idCotizacion, 'pemex','referencia', 57, $scope.tasaIva, $scope.sumaPrecioTotal, $scope.sumaIvaTotal, $scope.sumaGranTotal).then(function (result) {
-                            if (result.data.length > 0) {
-                                $scope.init();
-                                alertFactory.success('Anticipo solicitado correctamente');
-                            }
-                        }, function (error) {
-                            alertFactory.error('No se pudo solicitar el anticipo');
+                        ordenAnticipoRepository.putAnticipo($scope.idCotizacionAnticipo).then(function(ordenAnticipo){
+                            alertFactory.success("Anticipo registrado");
+                            /*if(ordenAnticipo.data.length > 0){
+                                
+                            }*/
+                        }, function(error){
+                            alertFactory.error("Error al insertar el anticipo");
                         });
                     } else {
                         setTimeout(function () {
@@ -573,7 +573,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //Obtiene el monto de la órden de servicio
-    $scope.getMontoOrdenTrabajo = function (idCita) {
+    /*$scope.getMontoOrdenTrabajo = function (idCita) {
         $scope.sumaIvaTotal = 0;
         $scope.sumaPrecioTotal = 0;
         $scope.sumaGranTotal = 0;
@@ -609,7 +609,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             function (error) {
                 alertFactory.error('No se pudo obtener el monto de la órden');
             });
-    }
+    }*/
+    
     $scope.items = [{
       name: "Action"
     }, {
@@ -617,15 +618,24 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }, {
       name: "Something else here"
     }];
-    
-    $scope.cotis = [{numCoti: '23213123', monto: '10000.00'},
-                    {numCoti: '23213123', monto: '10000.00'},
-                    {numCoti: '23213123', monto: '10000.00'},
-                    {numCoti: '23213123', monto: '10000.00'},
-                    {numCoti: '23213123', monto: '10000.00'},
-                    {numCoti: '23213123', monto: '10000.00'}]
 
     $scope.shouldDisplayPopover = function() {
       return $scope.displayPopover;
+    }
+    
+    $scope.getCotizacionesOrden = function(idTrabajo){
+        ordenAnticipoRepository.getCotizacionesOrden(idTrabajo).then(function(ordenAnticipo){
+            if(ordenAnticipo.data.length > 0){
+                alertFactory.success("Cotizaciones cargadas");
+                $scope.cotizacionesOrden = ordenAnticipo.data;   
+            }
+        }, function(error){
+            alertFactory.error("Error al obtener las cotizaciones de la orden");
+        })
+    }
+    
+    //obtiene el idCotizacion
+    $scope.getIdCotizacion = function(idCotizacion){
+        $scope.idCotizacionAnticipo = idCotizacion;
     }
 });

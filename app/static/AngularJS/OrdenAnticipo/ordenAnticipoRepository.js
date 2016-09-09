@@ -28,21 +28,11 @@ registrationModule.factory('ordenAnticipoRepository', function ($http) {
                 }
             })
         },
-        putAnticipo: function (idCotizacion, ordenPemex, referencia, idProveedor, tasaIva, subTotal, iva, total) {
-            var anticipoObj = {
-                idCotizacion: idCotizacion,
-                ordenPemex: ordenPemex,
-                referencia: referencia,
-                idProveedor: idProveedor,
-                tasaIva: tasaIva,
-                subTotal: subTotal,
-                iva: iva,
-                total: total
-            };
+        putAnticipo: function (idCotizacion) {
             return $http({
                 url: ordenAnticipoUrl + 'registraAnticipo',
                 method: "POST",
-                data: anticipoObj,
+                data: {idCotizacion: idCotizacion},
                 headers: {
                     'Content-Type': 'application/json'
                 }
