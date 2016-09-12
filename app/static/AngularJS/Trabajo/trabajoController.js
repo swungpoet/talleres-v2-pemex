@@ -192,7 +192,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     });
 
     //muestra el modal para la carga de archivos
-    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo, idCotizacion) {
+        $scope.idCotizacionFactura = idCotizacion;
         $scope.idTrabajo = objOrden.idTrabajo;
         $scope.idCotizacion = 0;
         $scope.idCategoria = 2;
@@ -418,9 +419,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         $scope.anticipo = 0;
                         ordenAnticipoRepository.putAnticipo($scope.idCotizacionAnticipo).then(function(ordenAnticipo){
                             alertFactory.success("Anticipo registrado");
-                            /*if(ordenAnticipo.data.length > 0){
-                                
-                            }*/
                         }, function(error){
                             alertFactory.error("Error al insertar el anticipo");
                         });
@@ -431,6 +429,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         }, 1000);
                         $scope.getAdmonOrdenes();
                     }
+                 //  $scope.guardaDatosFactura($scope.idTrabajo,$scope.idCotizacionFactura);  
                 }
             }
         },
@@ -638,4 +637,19 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     $scope.getIdCotizacion = function(idCotizacion){
         $scope.idCotizacionAnticipo = idCotizacion;
     }
+
+        //guardamos datos de la factura
+    $scope.guardaDatosFactura = function (idTrabajo,idCotizacion) {
+            trabajoRepository.getGuardaFactura(idTrabajo,idCotizacion,$scope.userData.idUsuario).then(function (result) {
+            if (result.data.length > 0) {
+                alertFactory.success("Registro Exitoso");
+            } else {
+                alertFactory.info('No existe la factura.xml');
+            }
+        }, function (error) {
+            alertFactory.error("Error al generar la prefactura");
+        });
+    }
+
+
 });

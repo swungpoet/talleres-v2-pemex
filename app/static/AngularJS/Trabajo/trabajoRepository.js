@@ -1,4 +1,5 @@
 var trabajoUrl = global_settings.urlCORS + '/api/trabajo/';
+var ordenUrl = global_settings.urlCORS + '/api/orden/';
 
 registrationModule.factory('trabajoRepository', function ($http) {
     return {
@@ -183,6 +184,21 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 url: trabajoUrl + 'updatestatusVerificado/',
                 method: "POST",
                 data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getGuardaFactura: function (idTrabajo,idCotizacion,idUsuario) {
+            var objTrabajo = {
+                idTrabajo:idTrabajo,
+                idCotizacion: idCotizacion,
+                idUsuario:idUsuario
+            };
+            return $http({
+                url: ordenUrl + 'generaFactura',
+                method: "GET",
+                params: objTrabajo,
                 headers: {
                     'Content-Type': 'application/json'
                 }
