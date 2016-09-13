@@ -77,9 +77,9 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
             var indicePorOrdenar = 0;
             
             if (dataTable == 'dataTablePendiente') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 11;
             } else if (dataTable == 'dataTableSinCotizar') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 11;
             } 
 
             $('.' + dataTable).DataTable({

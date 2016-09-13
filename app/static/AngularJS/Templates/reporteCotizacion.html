@@ -51,12 +51,14 @@
                                             <table class="table table-striped table-bordered table-hover dataTablePendiente" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Número de cotización</th>
+                                                        <th>Número Económico</th>
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
                                                         <th>Fecha Cita</th>
                                                         <th>Fecha de Cotización</th>
-                                                        <th>Número Económico</th>
+                                                        
                                                         <th>Tipo Cita</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -66,12 +68,13 @@
                                                 </thead>
                                                 <tbody>
                                                    <tr ng-repeat="pendientes in datapendiente">
+                                                        <td>{{pendientes.numeroCotizacion}}</td>
+                                                        <td>{{pendientes.numEconomico}}</td>
                                                         <td>{{pendientes.zona}}</td>
                                                         <td>{{pendientes.TAR}}</td>
                                                         <td>{{pendientes.razonSocial}}</td>
                                                         <td>{{pendientes.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{pendientes.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                        <td>{{pendientes.numEconomico}}</td>
                                                         <td>{{pendientes.tipoCita}}</td>
                                                         <td>{{pendientes.trabajo}}</td>
                                                         <td>{{pendientes.observacion}}</td>
@@ -90,12 +93,14 @@
                                             <table class="table table-striped table-bordered table-hover dataTableSinCotizar" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Número de cotización</th>
+                                                        <th>Número Económico</th>
                                                         <th>Zona</th>
                                                         <th>TAR</th>
                                                         <th>Nombre Taller</th>
                                                          <th>Fecha Cita</th>
                                                          <th>Fecha de Recepción</th> 
-                                                        <th>Número Económico</th>
+                                                        
                                                         <th>Tipo Cita</th>
                                                         <th>Trabajo</th>
                                                         <th>Observación</th>
@@ -105,12 +110,13 @@
                                                 </thead>
                                                 <tbody>
                                                      <tr ng-repeat="sincotizaciones in datasincotizacion">
+                                                         <td>{{pendientes.numeroCotizacion}}</td>
+                                                        <td>{{pendientes.numEconomico}}</td>
                                                         <td>{{sincotizaciones.zona}}</td>
                                                         <td>{{sincotizaciones.TAR}}</td>
                                                         <td>{{sincotizaciones.razonSocial}}</td>
                                                         <td>{{sincotizaciones.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                                         <td>{{sincotizaciones.fechaEstatus | date:'dd-MM-yyyy HH:mm'}}</td> 
-                                                        <td>{{sincotizaciones.numEconomico}}</td>
                                                         <td>{{sincotizaciones.tipoCita}}</td>
                                                         <td>{{sincotizaciones.trabajo}}</td>
                                                         <td>{{sincotizaciones.observacion}}</td>
