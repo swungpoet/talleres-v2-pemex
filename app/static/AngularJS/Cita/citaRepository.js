@@ -221,6 +221,18 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getPreOrden: function (idCita) {
+            return $http({
+                url: citaUrl + 'preOrden/',
+                method: "GET",
+                params: {
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
