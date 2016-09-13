@@ -172,18 +172,18 @@ registrationModule.controller('reporteOrdenController', function ($scope, alertF
             
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableGarantia') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 11;
             } else if (dataTable == 'dataTableCertificado') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 11;
             } else if (dataTable == 'dataTableCustodia') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 11;
             } 
 
             else if (dataTable == 'dataTableTerminada') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 11;
             }
                 else if (dataTable == 'dataTableProceso') {
-                indicePorOrdenar = 11;
+                indicePorOrdenar = 12;
             }
             else {
                 indicePorOrdenar = 11;
