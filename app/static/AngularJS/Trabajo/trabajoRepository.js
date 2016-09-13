@@ -216,6 +216,26 @@ registrationModule.factory('trabajoRepository', function ($http) {
                    'Content-Type': 'application/json'
                }
            });
+        },
+        insertaFactura: function (idCotizacion,numFactura,UUID,fechaFactura,total,subtotal,idUsuario,xmlFactura) {
+            var objTrabajo = {
+                idCotizacion:idCotizacion,
+                numFactura:numFactura,
+                UUID:UUID,
+                fechaFactura:fechaFactura,
+                total:total,
+                subtotal:subtotal,
+                idUsuario:idUsuario,
+                xmlFactura:xmlFactura
+            };
+            return $http({
+                url: trabajoUrl + 'insertaFactura',
+                method: "POST",
+                params: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
 
     };
