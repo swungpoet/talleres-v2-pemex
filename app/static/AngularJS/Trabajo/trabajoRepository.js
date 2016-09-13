@@ -1,4 +1,5 @@
 var trabajoUrl = global_settings.urlCORS + '/api/trabajo/';
+var ordenUrl = global_settings.urlCORS + '/api/orden/';
 
 registrationModule.factory('trabajoRepository', function ($http) {
     return {
@@ -187,6 +188,34 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getGuardaFactura: function (idTrabajo,idCotizacion,idUsuario) {
+            var objTrabajo = {
+                idTrabajo:idTrabajo,
+                idCotizacion: idCotizacion,
+                idUsuario:idUsuario
+            };
+            return $http({
+                url: ordenUrl + 'generaFactura',
+                method: "GET",
+                params: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        removeFactura: function (idTrabajo) {
+           var objTrabajo = {
+               idTrabajo:idTrabajo
+           };
+           return $http({
+               url: ordenUrl + 'removeFactura',
+               method: "GET",
+               params: objTrabajo,
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           });
         }
 
     };
