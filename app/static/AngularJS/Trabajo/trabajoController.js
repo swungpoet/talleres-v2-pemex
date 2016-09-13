@@ -410,7 +410,27 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
                     if ($scope.ejecutaMetodo == 1) {
-                        upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                        if($scope.idNombreEspecial == 3) {
+                            trabajoRepository.getGuardaFactura($scope.idTrabajo,10,$scope.userData.idUsuario).then(function (result) {
+                           if (result.data.length > 0) {
+                                alertFactory.success("Proceso Correcto");
+                                if(($scope.valorFactura - 1)  <= $scope.valorCotizacion <= ($scope.valorFactura + 1)){
+                                   upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial); 
+                                }else{
+                                   $scope.eliminaFactura($scope.idTrabajo); 
+                                       setTimeout(function () {
+                                       $scope.dzMethods.removeAllFiles();
+                                       $('#modalCargaArchivos').appendTo('body').modal('hide');
+                                   }, 1000);
+                                       alertFactory.info("El rango debe establecerse + - 1");
+                                        }
+                           }
+                       }, function (error) {
+                           alertFactory.error("Error al cargar la prefactura");
+                       });
+                       }else{
+                          upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial); 
+                       }                        
                     } else if ($scope.anticipo == 1) {
                         setTimeout(function () {
                             $scope.dzMethods.removeAllFiles();
@@ -428,8 +448,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                         }, 1000);
                         $scope.getAdmonOrdenes();
-                    }
-                 //  $scope.guardaDatosFactura($scope.idTrabajo,$scope.idCotizacionFactura);  
+                    }                 
                 }
             }
         },
@@ -652,7 +671,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
         //guardamos datos de la factura
-    $scope.guardaDatosFactura = function (idTrabajo,idCotizacion) {
+    /*$scope.guardaDatosFactura = function (idTrabajo,idCotizacion) {
             trabajoRepository.getGuardaFactura(idTrabajo,idCotizacion,$scope.userData.idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("Registro Exitoso");
@@ -662,7 +681,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         }, function (error) {
             alertFactory.error("Error al generar la prefactura");
         });
-    }
+    }*/
 
+    $scope.eliminaFactura = function (idTrabajo) {
+      trabajoRepository.removeFactura(idTrabajo).then(function(orden){
+           if(orden.data.length > 0){
+               $scope.cotizacionesOrden = orden.data;  
+                alertFactory.info("Cargue nuevamente la Factura"); 
+           }
+       }, function(error){
+           alertFactory.error("Error al procesar la informacion");
+       })
+   }
 
 });

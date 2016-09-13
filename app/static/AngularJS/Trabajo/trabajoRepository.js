@@ -203,6 +203,19 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        removeFactura: function (idTrabajo) {
+           var objTrabajo = {
+               idTrabajo:idTrabajo
+           };
+           return $http({
+               url: ordenUrl + 'removeFactura',
+               method: "GET",
+               params: objTrabajo,
+               headers: {
+                   'Content-Type': 'application/json'
+               }
+           });
         }
 
     };
