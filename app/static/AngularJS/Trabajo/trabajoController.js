@@ -632,6 +632,19 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             alertFactory.error("Error al obtener las cotizaciones de la orden");
         })
     }
+
+    //LQMA 13092016
+    $scope.getCotizacionesOrdenAprobado = function(idTrabajo){
+        ordenAnticipoRepository.getCotizacionesOrdenAprobado(idTrabajo).then(function(ordenAnticipo){
+            if(ordenAnticipo.data.length > 0){
+                alertFactory.success("Cotizaciones cargadas");
+                $scope.cotizacionesOrden = ordenAnticipo.data;   
+            }
+        }, function(error){
+            alertFactory.error("Error al obtener las cotizaciones de la orden");
+        })
+    }    
+
     
     //obtiene el idCotizacion
     $scope.getIdCotizacion = function(idCotizacion){

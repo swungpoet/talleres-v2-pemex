@@ -183,7 +183,42 @@
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
-                                                    <button ng-if="trabajo.estatus == 'Cerrado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,3,1,0,trabajo.idCotizacion)" data-toggle="tooltip" tooltip="Cargar factura" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span> </button>
+                                                    <!--button ng-if="trabajo.estatus == 'Cerrado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,3,1,0,trabajo.idCotizacion)" data-toggle="tooltip" tooltip="Cargar factura" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span> </button-->
+
+                                                    <button type="button" ng-click="getCotizacionesOrdenAprobado(trabajo.idTrabajo)"
+                                                            ns-popover
+                                                            ns-popover-template="close"
+                                                            ns-popover-trigger="click"
+                                                            ns-popover-theme="ns-popover-tooltip-theme"
+                                                            ns-popover-timeout="1000"
+                                                            ns-popover-hide-on-inside-click="false"
+                                                            ns-popover-hide-on-outside-click="true"
+                                                            ns-popover-hide-on-button-click="true"
+                                                            ns-popover-placement="left"
+                                                            class="btn btn-success"
+                                                            ><span class="glyphicon glyphicon-upload"></span>
+                                                    </button>
+                                                    <script type="text/ng-template" id="close">
+                                                        <div class="triangle"></div>
+                                                        <div class="ns-popover-tooltip">
+                                                            <table class="table table-striped table-bordered table-hover">
+                                                               <thead>
+                                                                    <th>Fecha de la Orden</th>
+                                                                    <th>Número de la Orden</th>
+                                                                    <th>Número de Cotización</th>
+                                                                    <th>Subtotal</th>                                                                    <th>Solicitar</th>
+                                                               </thead>                                         <tbody>
+                                                                   <tr ng-repeat="cotizacion in cotizacionesOrden">
+                                                                       <td>{{cotizacion.fechaOrden}}</td>
+                                                                       <td>{{cotizacion.numeroTrabajo}}</td>
+                                                                       <td>{{cotizacion.numeroCotizacion}}</td>
+                                                                       <td>{{cotizacion.subTotal | currency}}</td>
+                                                                       <td><button ng-disabled="cotizacion.existeAnticipo > 0" type="button" class="btn btn-success" ng-click="adjuntar(trabajo, 7, 0, 1); getIdCotizacion(cotizacion.idCotizacion)"><span class="glyphicon glyphicon-upload"></span></button></td>
+                                                                   </tr>
+                                                               </tbody>            
+                                                            </table>
+                                                        </div>
+                                                    </script>
                                                 </td>
                                             </tr>
                                         </tbody>
