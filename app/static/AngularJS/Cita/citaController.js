@@ -422,22 +422,22 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         }
         localStorageService.set('cita', cita);
         location.href = '/cotizacionnueva';
-        
-        
-       /* var objEditCotizacion = {
-            idCotizacion: idCotizacion,
-            idTaller: idTaller,
-            idTrabajo: idTrabajo
-        };
 
-        if (localStorageService.get('cita') != null) {
-            localStorageService.remove('cita');
-        }
-        if (localStorageService.get('orden') != null) {
-            localStorageService.remove('orden');
-        }
-        localStorageService.set('objEditCotizacion', objEditCotizacion);
-        location.href = '/cotizacionnueva';*/
+
+        /* var objEditCotizacion = {
+             idCotizacion: idCotizacion,
+             idTaller: idTaller,
+             idTrabajo: idTrabajo
+         };
+
+         if (localStorageService.get('cita') != null) {
+             localStorageService.remove('cita');
+         }
+         if (localStorageService.get('orden') != null) {
+             localStorageService.remove('orden');
+         }
+         localStorageService.set('objEditCotizacion', objEditCotizacion);
+         location.href = '/cotizacionnueva';*/
     }
 
     //despliega el div de las tablas
@@ -1016,6 +1016,18 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             }
         }, function (error) {
             alertFactory.error('No se pudieron obtener las cotizaciones para esta cita');
+        });
+    }
+
+    //Elimina Pre-Cotizacion
+    $scope.deletePreCotizacion = function (idCita, idCotizacion) {
+        citaRepository.eliminaPreCotizacion(idCita, idCotizacion).then(function (result) {
+            if (result.data.length > 0) {
+                alertFactory.success('Cotización eliminada correctamente');
+                $scope.busquedaCita('');
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo eliminar la cotización');
         });
     }
 });

@@ -233,6 +233,20 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        eliminaPreCotizacion: function (idCita, idCotizacion) {
+            var objPreCotizacion = {
+                idCita: idCita,
+                idCotizacion: idCotizacion
+            }
+            return $http({
+                url: citaUrl + 'eliminaPreCotizacion',
+                method: "POST",
+                data: objPreCotizacion,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
