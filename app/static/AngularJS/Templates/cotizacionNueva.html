@@ -1,8 +1,25 @@
 <link rel="stylesheet" type="text/css" href="../../css/cotizacion.css">
 <link type="text/css" href="../../css/inspinia/ladda/ladda-themeless.min.css" rel="stylesheet">
 <div ng-init="init()" class="animated bounceInRight">
+    <br>
     <div class="headTitle">
-        <span class="title"> Cotización<span class="subtitle">Taller</span> </span>
+        <div class="row">
+            <div class="col-xs-6">
+                <span class="title"> Cotización<span class="subtitle">Taller</span> </span>
+            </div>
+            <div class="col-xs-6">
+                <div align="right">
+                    <label>Descripción de la Orden:</label>
+                    <span>{{trabajo}}</span>
+                    <br/>
+                    <label>Número Economico: </label>
+                    <span>{{numEconomico}}</span>
+                    <br/>
+                    <label>Marca-Modelo: </label>
+                    <span>{{modeloMarca}}</span>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="contenedor" class="contenedor">
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -11,7 +28,50 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-content">
                             <br/>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <select class="form-control m-b" name="gar" ng-model="idZona" ng-options="gar.idZona as gar.descripcionZona  for gar in tipoGar" ng-change="obtieneZona()">
+                                        <option value="">Seleccione el tipo de cotización</option>
+                                        <!--default option -->
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input class="form-control" type="text" ng-model="datoTaller" placeholder=" Buscar taller">
+                                </div>
+                                <div class="col-xs-0">
+                                    <button type="button" class="btn btn-primary" ng-click="lookUpTaller(datoTaller)" data-toggle="tooltip" tooltip="Buscar taller" tooltip-placement="right"><span class="glyphicon glyphicon-search"></span></button>
+                                </div>
+                            </div>
                             <br/>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="table-responsive" ng-hide="userData.idTipoUsuario == 4">
+                                        <table class="table table-striped table-bordered table-hover dataTableTaller" cg-busy="{promise:promise,message:message}">
+                                            <thead>
+                                                <th>Taller</th>
+                                                <th>Dirección</th>
+                                                <th>Seleccionar</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="taller in talleres">
+                                                    <td>{{taller.razonSocial}}</td>
+                                                    <td>{{taller.direccion}}</td>
+                                                    <td>
+                                                        <input type="radio" name="optTaller" ng-click="getTaller(taller.idTaller)" />
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="edita == 1 && datosCita.direccion != null">
+                                                    <td>{{datosCita.razonSocial}}</td>
+                                                    <td>{{datosCita.direccion}}</td>
+                                                    <td>
+                                                        <input type="radio" name="optTaller" ng-click="getTaller(datosCita.idTaller)" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-xs-4">
                                     <input type="text" placeholder="Introduzca servicio, paquete o refacción" ng-model="partida" class="form-control">
@@ -80,7 +140,7 @@
                                     <td>{{piezas.numeroParte}}</td>
                                     <td>{{piezas.item}}</td>
                                     <td>{{piezas.cantidad}}</td>
-                                   
+
                                     <td ng-show="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">{{piezas.precio | currency}}
                                         <button class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-hide="userData.idTipoUsuario == 3">
                                             <span class="glyphicon glyphicon-edit"></span>
@@ -147,7 +207,7 @@
         </button>
     </div>
 </div>
-<div class="wrapper wrapper-content animated fadeIn datosUnidad">
+<!--<div class="wrapper wrapper-content animated fadeIn datosUnidad">
     <label>Descripción de la Orden:</label>
     <span>{{trabajo}}</span>
     <br/>
@@ -156,7 +216,7 @@
     <br/>
     <label>Marca-Modelo: </label>
     <span>{{modeloMarca}}</span>
-</div>
+</div>-->
 
 <div id="editaPrecio" class="modal inmodal fade" role="dialog">
     <div class="modal-dialog modal-md">
