@@ -6,12 +6,14 @@ var idTipoArchivo;
 var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
-var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 var nameFile = '';
 var idTrabajo = 0;
 var idNombreEspecial = 0;
 var consecutivoArchivo = 0;
+var carpetaCotizacion = 0;
+var nombreFacturaCotizacion = '';
 
 var Cotizacion = function (conf) {
     this.conf = conf || {};
@@ -124,6 +126,11 @@ Cotizacion.prototype.post_cotizacionMaestro = function (req, res, next) {
         {
             name: 'idUnidad',
             value: req.body.idUnidad,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoCotizacion',
+            value: req.body.idTipoCotizacion,
             type: self.model.types.DECIMAL
         }];
 
@@ -473,6 +480,11 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             var idCotizacion = req.body.idCotizacion.constructor !== Array ? req.body.idCotizacion : req.body.idCotizacion[0];
             var idCategoria = (req.body.idCategoria).constructor != Array ? req.body.idCategoria : req.body.idCategoria[0];
             idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
+
+            var idCotizacionArr = idCotizacion.split('|');
+            carpetaCotizacion = idCotizacionArr[0];
+            nombreFacturaCotizacion = idCotizacionArr[1];
+
             if (idCategoria == 2) {
                 if (idCotizacion == 0) {
                     if (!fs.existsSync(dirname + idTrabajo))
@@ -495,7 +507,15 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/adendaCopade');
                     if (!fs.existsSync(dirname + idTrabajo + '/documentos/preFactura'))
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/preFactura');
+                } else {
+                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion)) {
+                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion)
+                    }
+                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/factura')) {
+                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/factura')
+                    }
                 }
+
                 if (idNombreEspecial == 1) {
                     nameFile = 'ComprobanteRecepcion';
                     cb(null, dirname + idTrabajo + '/documentos/comprobanteRecepcion');
@@ -503,8 +523,8 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     nameFile = 'TransferenciaCustodia';
                     cb(null, dirname + idTrabajo + '/documentos/transferenciaCustodia');
                 } else if (idNombreEspecial == 3) {
-                    nameFile = 'Factura';
-                    cb(null, dirname + idTrabajo + '/documentos/factura');
+                    nameFile = 'Factura_' + nombreFacturaCotizacion;
+                    cb(null, dirname + idTrabajo + '/' + carpetaCotizacion + '/factura');
                 } else if (idNombreEspecial == 4) {
                     var extFile = obtenerExtArchivo(file.originalname);
                     if (extFile === '.xml' || extFile === '.XML') {
@@ -1084,14 +1104,14 @@ Cotizacion.prototype.post_cancelacionOrden = function (req, res, next) {
 
     //Asigno a params el valor de mis variables
     var params = [{
-        name: 'idTrabajo',
-        value: req.body.idTrabajo,
-        type: self.model.types.DECIMAL
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.DECIMAL
                         },
-                        {
-        name: 'idCotizacion',
-        value: req.body.idCotizacion,
-        type: self.model.types.DECIMAL
+        {
+            name: 'idCotizacion',
+            value: req.body.idCotizacion,
+            type: self.model.types.DECIMAL
                         }];
 
     this.model.post('UPD_CANCELACION_ORDEN_SP', params, function (error, result) {
