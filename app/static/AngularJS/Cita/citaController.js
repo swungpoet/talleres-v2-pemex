@@ -1030,4 +1030,32 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             alertFactory.error('No se pudo eliminar la cotización');
         });
     }
+
+    $scope.asignaTipoCotizacion = function (idCita) {
+        $('.btnNvaCotizar').ready(function () {
+            swal({
+                    title: "¿Qué tipo de cotización desea crear?",
+                    text: "",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#E6C200",
+                    cancelCotizacionButtonColor: "#1f90d8",
+                    confirmButtonText: "Servicio",
+                    cancelButtonText: "Refacciones",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        swal('Cotización: Servicio', '', 'success');
+                        localStorageService.set('tipoCotizacion', 1);
+                        $scope.nuevaCotizacion(idCita);
+                    } else {
+                        swal("Cotización: Refacciones", '', 'success');
+                        localStorageService.set('tipoCotizacion', 2);
+                        $scope.nuevaCotizacion(idCita);
+                    }
+                });
+        });
+    }
 });
