@@ -185,7 +185,7 @@
 
                                                     <!--button ng-if="trabajo.estatus == 'Cerrado'" ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,3,1,0)" data-toggle="tooltip" tooltip="Cargar factura" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span> </button-->
 
-                                                    <button type="button" ng-click="getCotizacionesOrdenAprobado(trabajo.idTrabajo)"
+                                                    <button type="button" ng-click="getCotizacionesOrdenAprobado(trabajo.idTrabajo,trabajo.idEstatus)"
                                                             ns-popover
                                                             ns-popover-template="close"
                                                             ns-popover-trigger="click"
@@ -206,16 +206,18 @@
                                                                     <th>Fecha de la Orden</th>
                                                                     <th>Número de la Orden</th>
                                                                     <th>Número de Cotización</th>
-                                                                    <!-- <th>Total</th> -->
-                                                                    <th>Subtotal</th>                                                                    <th>Solicitar</th>
-                                                               </thead>                                         <tbody>
-                                                                   <tr ng-repeat="cotizacion in cotizacionesOrden">
+                                                                    <th>Total</th>
+                                                                    <th>Subtotal</th>
+                                                                    <th>Solicitar</th>
+                                                               </thead> 
+                                                                <tbody>
+                                                                   <tr ng-repeat="cotizacion in cotizacionesOrden" >
                                                                        <td>{{cotizacion.fechaOrden}}</td>
                                                                        <td>{{cotizacion.numeroTrabajo}}</td>
                                                                        <td>{{cotizacion.numeroCotizacion}}</td>
-                                                                      <!--  <td>{{cotizacion.Total | currency}}</td> -->
+                                                                       <td>{{cotizacion.Total | currency}}</td>
                                                                        <td>{{cotizacion.subTotal | currency}}</td>
-                                                                       <td><button ng-disabled="cotizacion.existeAnticipo > 0" type="button" class="btn btn-success" ng-click="adjuntar(trabajo,3,1,0); getIdCotizacion(cotizacion.idCotizacion, cotizacion.Total)"><span class="glyphicon glyphicon-upload"></span></button></td>
+                                                                       <td><button ng-disabled="cotizacion.existe > 0" type="button" class="btn btn-success" ng-click="adjuntar(trabajo,3,1,0); getCotizacion(cotizacion.idCotizacion, cotizacion.Total, cotizacion.existe)"><span class="glyphicon glyphicon-upload"></span></button></td>
                                                                    </tr>
                                                                </tbody>            
                                                             </table>

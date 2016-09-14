@@ -414,4 +414,30 @@ Trabajo.prototype.post_insertaFactura = function(req, res, next){
     });
 }
 
+//LQMA 13092016
+//obtiene las cotizaciones de la orden que esta en  Pesaña Aprobados
+Trabajo.prototype.get_cotizacionesordenAprobados = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idTrabajo',
+                   value: req.query.idTrabajo,
+                   type: self.model.types.INT},
+                   {name: 'idEstatus',
+                   value: req.query.idEstatus,
+                   type: self.model.types.INT}]; 
+
+    this.model.query('SEL_OBTIENE_COTIZACIONES_APROBADO_ORDEN_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+
 module.exports = Trabajo;

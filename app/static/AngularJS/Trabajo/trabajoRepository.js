@@ -236,6 +236,19 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        }, //LQMA 13092016
+        getCotizacionesOrdenAprobado: function (idTrabajo,idEstatus) {
+            return $http({
+                url: trabajoUrl + 'cotizacionesordenAprobados/',
+                method: "GET",
+                params: {
+                    idTrabajo : idTrabajo,
+                    idEstatus:idEstatus
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
 
     };

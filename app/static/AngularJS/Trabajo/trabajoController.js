@@ -434,7 +434,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                        $scope.dzMethods.removeAllFiles();
                                        $('#modalCargaArchivos').appendTo('body').modal('hide');
                                    }, 1000);
-                                       alertFactory.info("El rango debe establecerse + - 1");
+                                       alertFactory.info("El valor total debe coincidir con el de la orden");
                                         }
                            }
                        }, function (error) {
@@ -664,9 +664,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         })
     }
 
-    //LQMA 13092016
-    $scope.getCotizacionesOrdenAprobado = function(idTrabajo){
-        ordenAnticipoRepository.getCotizacionesOrdenAprobado(idTrabajo).then(function(ordenAnticipo){
+    //LQMA 13092016 Obtiene el popopo que corresponde a su cotizacion por trabajo
+    $scope.getCotizacionesOrdenAprobado = function(idTrabajo,idEstatus){
+        trabajoRepository.getCotizacionesOrdenAprobado(idTrabajo,idEstatus).then(function(ordenAnticipo){
             if(ordenAnticipo.data.length > 0){
                 alertFactory.success("Cotizaciones cargadas");
                 $scope.cotizacionesOrden = ordenAnticipo.data;   
@@ -678,10 +678,15 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     
     //obtiene el idCotizacion
-    $scope.getIdCotizacion = function(idCotizacion, Total){
+    $scope.getIdCotizacion = function(idCotizacion){
         $scope.idCotizacionAnticipo = idCotizacion;
+    }
+
+        //obtiene el idCotizacion
+    $scope.getCotizacion = function(idCotizacion, Total, existe){
         $scope.idCotizacionFactura = idCotizacion;
         $scope.totalCotizacionBD = Total;
+        $scope.existeCotizacionFactura = existe;
     }
 
       //  guardamos datos de la factura
