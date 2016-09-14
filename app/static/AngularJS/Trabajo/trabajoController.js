@@ -192,8 +192,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     });
 
     //muestra el modal para la carga de archivos
-    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo, idCotizacion) {
-        $scope.idCotizacionFactura = idCotizacion;
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
         $scope.idTrabajo = objOrden.idTrabajo;
         $scope.idCotizacion = 0;
         $scope.idCategoria = 2;
@@ -411,10 +410,23 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 if (allSuccess) {
                     if ($scope.ejecutaMetodo == 1) {
                         if($scope.idNombreEspecial == 3) {
-                            trabajoRepository.getGuardaFactura($scope.idTrabajo,10,$scope.userData.idUsuario).then(function (result) {
+                            trabajoRepository.getGuardaFactura($scope.idTrabajo,$scope.idCotizacionFactura,$scope.userData.idUsuario).then(function (result) {
                            if (result.data.length > 0) {
-                                alertFactory.success("Proceso Correcto");
-                                if(($scope.valorFactura - 1)  <= $scope.valorCotizacion <= ($scope.valorFactura + 1)){
+                                $scope.lecturaFactura=result.data;
+                                $scope.totalxml = $scope.lecturaFactura[4].value;
+                               // alertFactory.success("Proceso Correcto");
+                                if((( $scope.totalxml - 1)  <= $scope.totalCotizacionBD) && ($scope.totalCotizacionBD <= ( $scope.totalxml + 1))){
+                                    result.data.forEach(function (sumatoria) {
+                                        if (sumatoria.name == 'idCotizacion') $scope.idCotizacionFac = sumatoria.value;
+                                        if (sumatoria.name == 'numFactura') $scope.numFacturaFac = sumatoria.value;
+                                        if (sumatoria.name == 'UUID') $scope.UUIDFac = sumatoria.value;
+                                        if (sumatoria.name == 'fechaFactura') $scope.fechaFacturaFac = sumatoria.value;
+                                        if (sumatoria.name == 'total') $scope.totalFac = sumatoria.value;
+                                        if (sumatoria.name == 'subtotal') $scope.subtotalFac = sumatoria.value;
+                                        if (sumatoria.name == 'idUsuario') $scope.idUsuarioFac = sumatoria.value;
+                                        if (sumatoria.name == 'xmlFactura') $scope.xmlFacturaFac = sumatoria.value;
+                                    });
+                                   $scope.guardaDatosFactura($scope.idCotizacionFac,$scope.numFacturaFac,$scope.UUIDFac,$scope.fechaFacturaFac,$scope.totalFac,$scope.subtotalFac,$scope.idUsuarioFac,$scope.xmlFacturaFac);
                                    upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial); 
                                 }else{
                                    $scope.eliminaFactura($scope.idTrabajo); 
@@ -422,7 +434,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                        $scope.dzMethods.removeAllFiles();
                                        $('#modalCargaArchivos').appendTo('body').modal('hide');
                                    }, 1000);
-                                       alertFactory.info("El rango debe establecerse + - 1");
+                                       alertFactory.info("El valor total debe coincidir con el de la orden");
                                         }
                            }
                        }, function (error) {
@@ -652,9 +664,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         })
     }
 
-    //LQMA 13092016
-    $scope.getCotizacionesOrdenAprobado = function(idTrabajo){
-        ordenAnticipoRepository.getCotizacionesOrdenAprobado(idTrabajo).then(function(ordenAnticipo){
+    //LQMA 13092016 Obtiene el popopo que corresponde a su cotizacion por trabajo
+    $scope.getCotizacionesOrdenAprobado = function(idTrabajo,idEstatus){
+        trabajoRepository.getCotizacionesOrdenAprobado(idTrabajo,idEstatus).then(function(ordenAnticipo){
             if(ordenAnticipo.data.length > 0){
                 alertFactory.success("Cotizaciones cargadas");
                 $scope.cotizacionesOrden = ordenAnticipo.data;   
@@ -670,19 +682,24 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $scope.idCotizacionAnticipo = idCotizacion;
     }
 
-        //guardamos datos de la factura
-    /*$scope.guardaDatosFactura = function (idTrabajo,idCotizacion) {
-            trabajoRepository.getGuardaFactura(idTrabajo,idCotizacion,$scope.userData.idUsuario).then(function (result) {
+        //obtiene el idCotizacion
+    $scope.getCotizacion = function(idCotizacion, Total, existe){
+        $scope.idCotizacionFactura = idCotizacion;
+        $scope.totalCotizacionBD = Total;
+        $scope.existeCotizacionFactura = existe;
+    }
+
+      //  guardamos datos de la factura
+    $scope.guardaDatosFactura = function (idCotizacion,numFactura,UUID,fechaFactura,total,subtotal,idUsuario,xmlFactura) {
+            trabajoRepository.insertaFactura(idCotizacion,numFactura,UUID,fechaFactura,total,subtotal,idUsuario,xmlFactura).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("Registro Exitoso");
-            } else {
-                alertFactory.info('No existe la factura.xml');
             }
         }, function (error) {
             alertFactory.error("Error al generar la prefactura");
         });
-    }*/
-
+    }
+      //eliminamos la factura de la ruta si no coincide el costo
     $scope.eliminaFactura = function (idTrabajo) {
       trabajoRepository.removeFactura(idTrabajo).then(function(orden){
            if(orden.data.length > 0){

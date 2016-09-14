@@ -72,7 +72,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="articulo in articulos">
+                                <tr ng-repeat="articulo in articulos" ng-class="{'rowGris': articulo.idEstatus==8}">
                                     <td>{{ articulo.numeroCotizacion }}</td>
                                     <td style="text-align:left;">{{ articulo.estatus }}</td>
                                     <td style="text-align:left;">

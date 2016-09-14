@@ -141,7 +141,7 @@ Taller.prototype.get_obtienetar = function (req, res, next) {
             type: self.model.types.INT
                 }];
 
-    this.model.query('SEL_TAR_SP', params, function (error, result) {
+    this.model.query('SEL_TAR_TALLER_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
