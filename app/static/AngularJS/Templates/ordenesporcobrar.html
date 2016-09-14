@@ -238,7 +238,7 @@ dataTableOrdenesPorCobrar -->
                                 <td>{{coincidencias.montoOrden | currency}}</td>
                                 <td>
                                     
-                                        <input  type="radio" name="name" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo)" data-toggle="tooltip" tooltip="" tooltip-placement="left">&nbsp;Elegir
+                                        <input  type="radio" name="name" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo, coincidencias.montoOrden)" data-toggle="tooltip" tooltip="" tooltip-placement="left">&nbsp;Elegir
                                     
                                 </td>
                                 
@@ -268,7 +268,7 @@ dataTableOrdenesPorCobrar -->
                                 <td>{{orden.montoOrden | currency}}</td>
                                 <td>
                                     
-                                        <input type="radio" name="name" ng-click="seleccionMejorCoincidencia(orden.idTrabajo)"  data-toggle="tooltip" tooltip-placement="left">&nbsp;Elegir
+                                        <input type="radio" name="name" ng-click="seleccionMejorCoincidencia(orden.idTrabajo, orden.montoOrden)"  data-toggle="tooltip" tooltip-placement="left">&nbsp;Elegir
                                      
                                 </td>
                             </tr>
