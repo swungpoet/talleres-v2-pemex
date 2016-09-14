@@ -433,7 +433,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                         $scope.guardaDatosFactura($scope.idCotizacionFac, $scope.numFacturaFac, $scope.UUIDFac, $scope.fechaFacturaFac, $scope.totalFac, $scope.subtotalFac, $scope.idUsuarioFac, $scope.xmlFacturaFac);
                                         upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
                                     } else {
-                                        $scope.eliminaFactura($scope.idTrabajo);
+                                        $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura);
                                         setTimeout(function () {
                                             $scope.dzMethods.removeAllFiles();
                                             $('#modalCargaArchivos').appendTo('body').modal('hide');
@@ -562,7 +562,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     $scope.verFactura = function (idTrabajo) {
         window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
         window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
-    }
+        }
 
     //visualiza la orden de servicio
     $scope.lookAt = function (trabajo, valBotonera) {
@@ -705,8 +705,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             });
         }
         //eliminamos la factura de la ruta si no coincide el costo
-    $scope.eliminaFactura = function (idTrabajo) {
-        trabajoRepository.removeFactura(idTrabajo).then(function (orden) {
+    $scope.eliminaFactura = function (idTrabajo, idCotizacion) {
+        trabajoRepository.removeFactura(idTrabajo, idCotizacion).then(function (orden) {
             if (orden.data.length > 0) {
                 $scope.cotizacionesOrden = orden.data;
                 alertFactory.info("Cargue nuevamente la Factura");

@@ -525,7 +525,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
         value: req.query.idUsuario,
         type: self.model.types.INT
         }];
-                var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
+                var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
                 var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
                 var paramsFactura=[];
@@ -648,8 +648,13 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
         name: 'idTrabajo',
         value: req.query.idTrabajo,
         type: self.model.types.INT
+        },
+        {
+        name: 'idCotizacion',
+        value: req.query.idCotizacion,
+        type: self.model.types.INT
         }];
-                var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
+                var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion+ '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
                 var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
 

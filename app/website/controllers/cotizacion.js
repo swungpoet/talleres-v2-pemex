@@ -6,8 +6,8 @@ var idTipoArchivo;
 var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
-var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 var nameFile = '';
 var idTrabajo = 0;
 var idNombreEspecial = 0;
@@ -508,11 +508,18 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     if (!fs.existsSync(dirname + idTrabajo + '/documentos/preFactura'))
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/preFactura');
                 } else {
+                    if (!fs.existsSync(dirname + idTrabajo)) {
+                    fs.mkdirSync(dirname + idTrabajo);
+                    }
                     if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion)) {
                         fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion)
                     }
-                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/factura')) {
-                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/factura')
+                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/multimedia')) {
+                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/multimedia')
+                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos')
+                    }
+                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')) {
+                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')
                     }
                 }
 
@@ -524,7 +531,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     cb(null, dirname + idTrabajo + '/documentos/transferenciaCustodia');
                 } else if (idNombreEspecial == 3) {
                     nameFile = 'Factura_' + nombreFacturaCotizacion;
-                    cb(null, dirname + idTrabajo + '/' + carpetaCotizacion + '/factura');
+                    cb(null, dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura');
                 } else if (idNombreEspecial == 4) {
                     var extFile = obtenerExtArchivo(file.originalname);
                     if (extFile === '.xml' || extFile === '.XML') {
