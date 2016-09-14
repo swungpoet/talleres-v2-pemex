@@ -303,47 +303,53 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
 
     //Selecciona una orden en Radio y obtiene idTrabajo
-    $scope.seleccionMejorCoincidencia = function (idTrabajo) {
+    $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado) {
         $scope.idDeTrabajo = idTrabajo;
+        $scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
     }
 
     //Asociamos un idtrabajo con DatosCopade
     $scope.asociarCopade = function () {
-        if ($scope.idDeTrabajo != '') {
-            $('.btnTerminarTrabajo').ready(function () {
-                swal({
-                        title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
-                        text: "Se cambiará el estatus a 'Cobrado'",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#65BD10",
-                        confirmButtonText: "Si",
-                        cancelButtonText: "No",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
-                            ordenPorCobrarRepository.putMueveCopade($scope.idDeTrabajo, $scope.idDatosDeCopade).then(function (resp) {
-                                if (resp.data > 0) {
-                                    alertFactory.success('La copade se copio correctamente');
-                                }
-                            }, function (error) {
-                                alertFactory.error('La copade no se pudo depositar en su carpeta');
-                            });
-                            $scope.cleanDatos();
-                            swal("Trabajo terminado!", "La copade se ha asociada", "success");
-                            location.href = '/ordenesporcobrar';
-                        } else {
-                            swal("Copade no asociada", "", "error");
-                            $scope.cleanDatos();
-                            $('#finalizarTrabajoModal').modal('hide');
-                        }
-                    });
-            });
-        } else {
-            alertFactory.error("Debe seleccionar una orden de servicio");
+        if(validaMontoCapadeOrden($scope.montoOrdenSeleccionado)){
+            if ($scope.idDeTrabajo != '') {
+                $('.btnTerminarTrabajo').ready(function () {
+                    swal({
+                            title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
+                            text: "Se cambiará el estatus a 'Cobrado'",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#65BD10",
+                            confirmButtonText: "Si",
+                            cancelButtonText: "No",
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
+                                ordenPorCobrarRepository.putMueveCopade($scope.idDeTrabajo, $scope.idDatosDeCopade).then(function (resp) {
+                                    if (resp.data > 0) {
+                                        alertFactory.success('La copade se copio correctamente');
+                                    }
+                                }, function (error) {
+                                    alertFactory.error('La copade no se pudo depositar en su carpeta');
+                                });
+                                $scope.cleanDatos();
+                                swal("Trabajo terminado!", "La copade se ha asociada", "success");
+                                location.href = '/ordenesporcobrar';
+                            } else {
+                                swal("Copade no asociada", "", "error");
+                                $scope.cleanDatos();
+                                $('#finalizarTrabajoModal').modal('hide');
+                            }
+                        });
+                });
+            } else {
+                alertFactory.error("Debe seleccionar una orden de servicio");
+            }   
+        }
+        else{
+            alertFactory.error("El monto de la orden seleccionada rebasa el rango especificado de (+- $1.00 MXN), seleccione una orden que se adecúe con el monto de la COPADE");
         }
     }
 
@@ -398,4 +404,14 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
+    //valida (+-)1 del monto de la copa contrar la orden seleccionada
+    var validaMontoCapadeOrden = function(montoOrdenSeleccionado){
+        if($scope.monto != null && $scope.monto != '' && $scope.monto > 0){
+            var resultado = montoOrdenSeleccionado >= $scope.monto ? (montoOrdenSeleccionado - $scope.monto) : ($scope.monto - montoOrdenSeleccionado);
+            if(resultado >= 0 && resultado <= 1)
+                return true;
+            else
+                return false;
+        }
+    }
 });
