@@ -504,7 +504,6 @@ Orden.prototype.get_ordenesverificadas = function (req, res, next) {
     });
 }
 
-
 Orden.prototype.get_generaFactura = function (req, res, next) {
     //Objeto que almacena la respuesta
     var object = {};
@@ -526,9 +525,10 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
         value: req.query.idUsuario,
         type: self.model.types.INT
         }];
-                var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
+                var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
                 var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
+                var paramsFactura=[];
 
                 var existeFacturaXML = files.some(checkExistsXML);
                 if (existeFacturaXML) {
@@ -561,7 +561,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                         console.log('UUID: ' + uuid);
                                         console.log('=========================')
 
-                                        var paramsFactura = [{
+                                        paramsFactura = [{
                                                 name: 'idCotizacion',
                                                 value: req.query.idCotizacion,
                                                 type: self.model.types.INT
@@ -602,17 +602,27 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                                 type: self.model.types.STRING
                                                  }
                                         ];
-                                        getDatosFactura2(res, self, 'INS_COTIZACION_FACTURA_SP', paramsFactura);
+                                        /*getDatosFactura2(res, self, 'INS_COTIZACION_FACTURA_SP', paramsFactura);*/
+                                        getDatosFactura2(res, self, paramsFactura);
+
                                     });
                                 });
                             }
                         }
                     });
+
                 } else {
                     res.end('');
                 }
 };
 
+function getDatosFactura2(res, self, paramsFactura) {
+              var object = {};
+                 object.result = paramsFactura;
+                 self.view.expositor(res, object);
+        }
+
+/*
 function getDatosFactura2(res, self, stored, paramsFactura) {
     //Objeto que almacena la respuesta
     var object = {};
@@ -626,8 +636,47 @@ function getDatosFactura2(res, self, stored, paramsFactura) {
             });
         }
     });
+};*/
+
+Orden.prototype.get_removeFactura = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    var paramsTipoOrden = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.INT
+        },
+        {
+        name: 'idCotizacion',
+        value: req.query.idCotizacion,
+        type: self.model.types.INT
+        }];
+                var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion+ '/documentos/factura';
+                var files = fs.readdirSync(directorioFactura);
+                var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
+
+                var existeFacturaXML = files.some(checkExistsXML);
+                if (existeFacturaXML) {
+                    files.forEach(function (file) {
+                        var extension = obtenerExtArchivo(file);
+                        if (extension == '.xml' || extension == '.XML' || extension == '.pdf' || extension == '.PDF') {
+                              fs.unlink(directorioFactura + '/' + file, function(err, result){
+                                    if(err) return 
+                               });  
+                        }
+                    });
+                        self.model.query('SEL_COTIZACION_FACTURA_SP', paramsTipoOrden, function (error, result) {
+                            self.view.expositor(res, {
+                                error: error,
+                                result: result
+                            });
+                        });
+                } else {
+                    res.end('');
+                }
 };
-
-
 
 module.exports = Orden;

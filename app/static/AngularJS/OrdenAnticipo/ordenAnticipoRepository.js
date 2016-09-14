@@ -49,18 +49,6 @@ registrationModule.factory('ordenAnticipoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
-        }, //LQMA 13092016
-        getCotizacionesOrdenAprobado: function (idTrabajo) {
-            return $http({
-                url: ordenAnticipoUrl + 'cotizacionesordenAprobados/',
-                method: "GET",
-                params: {
-                    idTrabajo : idTrabajo
-                },
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
         }
     };
 });

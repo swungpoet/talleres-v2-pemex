@@ -354,4 +354,90 @@ Trabajo.prototype.post_updatestatusVerificado = function(req, res, next){
     });
 }
 
+//inserta el trabajo de la cita
+Trabajo.prototype.post_insertaFactura = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    var params = {};
+    
+    //Asigno a params el valor de mis variables
+    var params = [{
+                name: 'idCotizacion',
+                value: req.query.idCotizacion,
+                type: self.model.types.INT
+                },
+                {
+                name: 'numFactura',
+                value: req.query.numFactura,
+                type: self.model.types.STRING
+                },
+                {
+                name: 'UUID',
+                value: req.query.UUID,
+                type: self.model.types.STRING
+                },
+                {
+                name: 'fechaFactura',
+                value: req.query.fechaFactura,
+                type: self.model.types.STRING
+                },
+                {
+                name: 'total',
+                value: req.query.total,
+                type: self.model.types.DECIMAL
+                },
+                {
+                name: 'subtotal',
+                value: req.query.subtotal,
+                type: self.model.types.DECIMAL
+                },
+                {
+                name: 'idUsuario',
+                value: req.query.idUsuario,
+                type: self.model.types.INT
+                },
+                {
+                name: 'xmlFactura',
+                value: req.query.xmlFactura,
+                type: self.model.types.STRING
+                 }];
+    
+    this.model.post('INS_COTIZACION_FACTURA_SP',params, function (error, result) {
+    //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+//LQMA 13092016
+//obtiene las cotizaciones de la orden que esta en  Pesaña Aprobados
+Trabajo.prototype.get_cotizacionesordenAprobados = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{name: 'idTrabajo',
+                   value: req.query.idTrabajo,
+                   type: self.model.types.INT},
+                   {name: 'idEstatus',
+                   value: req.query.idEstatus,
+                   type: self.model.types.INT}]; 
+
+    this.model.query('SEL_OBTIENE_COTIZACIONES_APROBADO_ORDEN_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+
 module.exports = Trabajo;

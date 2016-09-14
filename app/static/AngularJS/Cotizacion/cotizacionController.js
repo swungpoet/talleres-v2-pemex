@@ -5,7 +5,7 @@
 // -- Modificó: Mario Mejía
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo,uploadRepository) {
+registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository) {
     $scope.arrayItem = [];
     $scope.arrayCambios = [];
     var valor = '';
@@ -55,7 +55,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.init = function () {
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
-        $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT",20);
+        $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT", 20);
         // Collapse ibox function
         $('.collapse-link').click(function () {
             var ibox = $(this).closest('div.ibox');
@@ -70,8 +70,17 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             }, 50);
         });
         exist = false;
-        //Objeto de la pagina de tallerCita 
-        if (localStorageService.get('cita') != null) {
+
+        //Nueva cotización
+        if (localStorageService.get('tipoCotizacion') != null) {
+            $scope.citaDatos = localStorageService.get('cita');
+            $scope.tipoCotizacion = parseInt(localStorageService.get('tipoCotizacion'));
+            $scope.estado = 1;
+            $scope.editar = 0;
+            datosCita();
+            $scope.idTaller = $scope.citaDatos.idTaller;
+            localStorageService.remove('tipoCotizacion');
+        } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
             $scope.estado = 1;
             $scope.editar = 0;
@@ -79,7 +88,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.idTaller = $scope.citaDatos.idTaller;
             busquedaServicioDetalle($scope.citaDatos.idCita);
         }
-        
+
         //Se valida si la cotización es para editar
         if (localStorageService.get('objEditCotizacion') != null) {
             $scope.editCotizacion = localStorageService.get('objEditCotizacion'); //objeto de la pagina autorizacion
@@ -88,7 +97,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.estado = 2;
             $scope.idTaller = $scope.editCotizacion.idTaller;
             $scope.editarCotizacion($scope.editCotizacion.idCotizacion,
-            $scope.editCotizacion.idTaller, $scope.userData.idUsuario);
+                $scope.editCotizacion.idTaller, $scope.userData.idUsuario);
             $scope.idCotizacion = $scope.editCotizacion.idCotizacion;
             $scope.idTrabajo = $scope.editCotizacion.idTrabajo;
         }
@@ -263,7 +272,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         cotizacionRepository.insertCotizacionMaestro($scope.citaDatos.idCita,
                 $scope.userData.idUsuario,
                 $scope.observaciones,
-                idUnidad)
+                idUnidad,
+                $scope.tipoCotizacion)
             .then(function (resultado) {
                 alertFactory.success('Guardando Cotización Maestro');
                 $scope.idCotizacion = resultado.data[0].idCotizacion;
@@ -278,15 +288,15 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             item.idNivelAutorizacion)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
-                            if(($scope.arrayItem.length - i) === 1){
+                            if (($scope.arrayItem.length - i) === 1) {
                                 alertFactory.success('Cotización creada');
                                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
-                                if($scope.dzMethods.getAllFiles().length == 0){
-                                    setTimeout(function(){
-                                        location.href = "/cotizacionconsulta";  
-                                    },1000);
-                                }else{
-                                    $scope.dzMethods.processQueue();   
+                                if ($scope.dzMethods.getAllFiles().length == 0) {
+                                    setTimeout(function () {
+                                        location.href = "/cotizacionconsulta";
+                                    }, 1000);
+                                } else {
+                                    $scope.dzMethods.processQueue();
                                 }
                                 btnEnviaCotizacionLoading.ladda('stop');
                             }
@@ -392,15 +402,15 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     item.idEstatus,
                     1)
                 .then(function (result) {
-                    if(($scope.arrayItem.length - i) === 1){
+                    if (($scope.arrayItem.length - i) === 1) {
                         alertFactory.success('Cotización Actualizada');
                         cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
-                        if($scope.dzMethods.getAllFiles().length == 0){
-                            setTimeout(function(){
-                                location.href = "/cotizacionconsulta";  
-                            },1000);
-                        }else{
-                            $scope.dzMethods.processQueue();   
+                        if ($scope.dzMethods.getAllFiles().length == 0) {
+                            setTimeout(function () {
+                                location.href = "/cotizacionconsulta";
+                            }, 1000);
+                        } else {
+                            $scope.dzMethods.processQueue();
                         }
                         btnCotizacionUpdLoading.ladda('stop');
                     }
@@ -458,7 +468,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         cotizacionRepository.insertCotizacionMaestro($scope.orden.idCita,
                 $scope.orden.idUsuario,
                 $scope.observaciones,
-                $scope.orden.idUnidad)
+                $scope.orden.idUnidad,
+                $scope.tipoCotizacion)
             .then(function (resultado) {
                 alertFactory.success('Guardando Cotización Maestro');
                 $scope.idCotizacion = resultado.data[0].idCotizacion;
@@ -473,15 +484,15 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             item.idNivelAutorizacion)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
-                            if(($scope.arrayItem.length - i) === 1){
+                            if (($scope.arrayItem.length - i) === 1) {
                                 alertFactory.success('Cotización creada');
                                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
-                                if($scope.dzMethods.getAllFiles().length == 0){
-                                    setTimeout(function(){
-                                        location.href = "/cotizacionconsulta";  
-                                    },1000);
-                                }else{
-                                    $scope.dzMethods.processQueue();   
+                                if ($scope.dzMethods.getAllFiles().length == 0) {
+                                    setTimeout(function () {
+                                        location.href = "/cotizacionconsulta";
+                                    }, 1000);
+                                } else {
+                                    $scope.dzMethods.processQueue();
                                 }
                                 btnNuevaCotizacionLoading.ladda('stop');
                             }
@@ -492,7 +503,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 });
             }, function (error) {
                 alertFactory.error('Error');
-                
+
             });
     });
 
@@ -698,25 +709,24 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             exist = false;
         }
     };
-    
-     //call backs of drop zone
+
+    //call backs of drop zone
     $scope.dzCallbacks = {
         'addedfile': function (file) {
             $scope.newFile = file;
         },
-        'sending': function(file, xhr, formData){
+        'sending': function (file, xhr, formData) {
             formData.append('idTrabajo', $scope.idTrabajo);
             formData.append('idCotizacion', $scope.idCotizacion);
             formData.append('idCategoria', 1);
             formData.append('idNombreEspecial', 0);
-        }
-        ,
+        },
         'completemultiple': function (file, xhr) {
             var checkErrorFile = file.some(checkExistsError);
-            if(!checkErrorFile){
+            if (!checkErrorFile) {
                 var allSuccess = file.every(checkAllSuccess);
-                if(allSuccess){
-                    setTimeout(function(){
+                if (allSuccess) {
+                    setTimeout(function () {
                         $scope.dzMethods.removeAllFiles(true);
                         location.href = '/cotizacionconsulta';
                     }, 1000);
@@ -724,23 +734,22 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             }
         },
         'error': function (file, xhr) {
-            if(!file.accepted){
+            if (!file.accepted) {
                 $scope.dzMethods.removeFile(file);
-            }
-            else{
+            } else {
                 $scope.dzMethods.removeAllFiles(true);
-                alertFactory.info("No se pudieron subir los archivos");   
+                alertFactory.info("No se pudieron subir los archivos");
             }
         },
     };
-    
+
     $scope.dzMethods = {};
-    
+
     //valida si todos son success
     function checkAllSuccess(file, index, array) {
         return file.status === 'success';
     }
-    
+
     //valida si existe algún error
     function checkExistsError(file) {
         return file.status === 'error';

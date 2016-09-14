@@ -554,4 +554,55 @@ Cita.prototype.get_trasladoUnidad = function (req, res, next) {
     });
 }
 
+//Obtiene la preOrden de Servicio (pre-Cotizacion)
+Cita.prototype.get_preOrden = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{
+        name: 'idCita',
+        value: req.query.idCita,
+        type: self.model.types.DECIMAL
+    }];
+
+    this.model.query('SEL_PRECOTIZACIONES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Elimina una Pre-Cotización
+Cita.prototype.post_eliminaPreCotizacion = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+    var params = [
+        {
+            name: 'idCita',
+            value: req.body.idCita,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idCotizacion',
+            value: req.body.idCotizacion,
+            type: self.model.types.DECIMAL
+        }
+    ];
+
+    this.model.post('DEL_PRECOTIZACIONES_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Cita;

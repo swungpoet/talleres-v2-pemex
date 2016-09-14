@@ -51,6 +51,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTablePendiente" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Cotización</th>
                                                         <th>Número de cotización</th>
                                                         <th>Número Económico</th>
                                                         <th>Zona</th>
@@ -68,6 +69,7 @@
                                                 </thead>
                                                 <tbody>
                                                    <tr ng-repeat="pendientes in datapendiente">
+                                                        <td>{{pendientes.idCotizacion}}</td>
                                                         <td>{{pendientes.numeroCotizacion}}</td>
                                                         <td>{{pendientes.numEconomico}}</td>
                                                         <td>{{pendientes.zona}}</td>
@@ -93,6 +95,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTableSinCotizar" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Cotización</th>
                                                         <th>Número de cotización</th>
                                                         <th>Número Económico</th>
                                                         <th>Zona</th>
@@ -110,8 +113,9 @@
                                                 </thead>
                                                 <tbody>
                                                      <tr ng-repeat="sincotizaciones in datasincotizacion">
-                                                         <td>{{pendientes.numeroCotizacion}}</td>
-                                                        <td>{{pendientes.numEconomico}}</td>
+                                                        <td>{{sincotizaciones.idCotizacion}}</td>
+                                                        <td>{{sincotizaciones.numeroCotizacion}}</td>
+                                                        <td>{{sincotizaciones.numEconomico}}</td>
                                                         <td>{{sincotizaciones.zona}}</td>
                                                         <td>{{sincotizaciones.TAR}}</td>
                                                         <td>{{sincotizaciones.razonSocial}}</td>

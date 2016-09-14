@@ -192,10 +192,13 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     });
 
     //muestra el modal para la carga de archivos
-    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo, idCotizacion) {
-        $scope.idCotizacionFactura = idCotizacion;
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
         $scope.idTrabajo = objOrden.idTrabajo;
-        $scope.idCotizacion = 0;
+        
+        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
+            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
+            $scope.idCotizacion = 0;
+        
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
         $scope.ejecutaMetodo = ejecutaMetodo;
@@ -410,16 +413,49 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
                     if ($scope.ejecutaMetodo == 1) {
-                        upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                        if ($scope.idNombreEspecial == 3) {
+                            trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario).then(function (result) {
+                                if (result.data.length > 0) {
+                                    $scope.lecturaFactura = result.data;
+                                    $scope.totalxml = $scope.lecturaFactura[4].value;
+                                    // alertFactory.success("Proceso Correcto");
+                                    if ((($scope.totalxml - 1) <= $scope.totalCotizacionBD) && ($scope.totalCotizacionBD <= ($scope.totalxml + 1))) {
+                                        result.data.forEach(function (sumatoria) {
+                                            if (sumatoria.name == 'idCotizacion') $scope.idCotizacionFac = sumatoria.value;
+                                            if (sumatoria.name == 'numFactura') $scope.numFacturaFac = sumatoria.value;
+                                            if (sumatoria.name == 'UUID') $scope.UUIDFac = sumatoria.value;
+                                            if (sumatoria.name == 'fechaFactura') $scope.fechaFacturaFac = sumatoria.value;
+                                            if (sumatoria.name == 'total') $scope.totalFac = sumatoria.value;
+                                            if (sumatoria.name == 'subtotal') $scope.subtotalFac = sumatoria.value;
+                                            if (sumatoria.name == 'idUsuario') $scope.idUsuarioFac = sumatoria.value;
+                                            if (sumatoria.name == 'xmlFactura') $scope.xmlFacturaFac = sumatoria.value;
+                                        });
+                                        $scope.guardaDatosFactura($scope.idCotizacionFac, $scope.numFacturaFac, $scope.UUIDFac, $scope.fechaFacturaFac, $scope.totalFac, $scope.subtotalFac, $scope.idUsuarioFac, $scope.xmlFacturaFac);
+                                        upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                                    } else {
+                                        $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura);
+                                        setTimeout(function () {
+                                            $scope.dzMethods.removeAllFiles();
+                                            $('#modalCargaArchivos').appendTo('body').modal('hide');
+                                        }, 1000);
+                                        alertFactory.info("El valor total debe coincidir con el de la orden");
+                                    }
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al cargar la prefactura");
+                            });
+                        } else {
+                            upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                        }
                     } else if ($scope.anticipo == 1) {
                         setTimeout(function () {
                             $scope.dzMethods.removeAllFiles();
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                         }, 1000);
                         $scope.anticipo = 0;
-                        ordenAnticipoRepository.putAnticipo($scope.idCotizacionAnticipo).then(function(ordenAnticipo){
+                        ordenAnticipoRepository.putAnticipo($scope.idCotizacionAnticipo).then(function (ordenAnticipo) {
                             alertFactory.success("Anticipo registrado");
-                        }, function(error){
+                        }, function (error) {
                             alertFactory.error("Error al insertar el anticipo");
                         });
                     } else {
@@ -429,7 +465,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         }, 1000);
                         $scope.getAdmonOrdenes();
                     }
-                 //  $scope.guardaDatosFactura($scope.idTrabajo,$scope.idCotizacionFactura);  
                 }
             }
         },
@@ -527,7 +562,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     $scope.verFactura = function (idTrabajo) {
         window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
         window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
-    }
+        }
 
     //visualiza la orden de servicio
     $scope.lookAt = function (trabajo, valBotonera) {
@@ -609,60 +644,76 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 alertFactory.error('No se pudo obtener el monto de la órden');
             });
     }*/
-    
+
     $scope.items = [{
-      name: "Action"
+        name: "Action"
     }, {
-      name: "Another action"
+        name: "Another action"
     }, {
-      name: "Something else here"
+        name: "Something else here"
     }];
 
-    $scope.shouldDisplayPopover = function() {
-      return $scope.displayPopover;
+    $scope.shouldDisplayPopover = function () {
+        return $scope.displayPopover;
     }
-    
-    $scope.getCotizacionesOrden = function(idTrabajo){
-        ordenAnticipoRepository.getCotizacionesOrden(idTrabajo).then(function(ordenAnticipo){
-            if(ordenAnticipo.data.length > 0){
+
+    $scope.getCotizacionesOrden = function (idTrabajo) {
+        ordenAnticipoRepository.getCotizacionesOrden(idTrabajo).then(function (ordenAnticipo) {
+            if (ordenAnticipo.data.length > 0) {
                 alertFactory.success("Cotizaciones cargadas");
-                $scope.cotizacionesOrden = ordenAnticipo.data;   
+                $scope.cotizacionesOrden = ordenAnticipo.data;
             }
-        }, function(error){
+        }, function (error) {
             alertFactory.error("Error al obtener las cotizaciones de la orden");
         })
     }
 
-    //LQMA 13092016
-    $scope.getCotizacionesOrdenAprobado = function(idTrabajo){
-        ordenAnticipoRepository.getCotizacionesOrdenAprobado(idTrabajo).then(function(ordenAnticipo){
-            if(ordenAnticipo.data.length > 0){
+    //LQMA 13092016 Obtiene el popopo que corresponde a su cotizacion por trabajo
+    $scope.getCotizacionesOrdenAprobado = function (idTrabajo, idEstatus) {
+        trabajoRepository.getCotizacionesOrdenAprobado(idTrabajo, idEstatus).then(function (ordenAnticipo) {
+            if (ordenAnticipo.data.length > 0) {
                 alertFactory.success("Cotizaciones cargadas");
-                $scope.cotizacionesOrden = ordenAnticipo.data;   
+                $scope.cotizacionesOrden = ordenAnticipo.data;
             }
-        }, function(error){
+        }, function (error) {
             alertFactory.error("Error al obtener las cotizaciones de la orden");
         })
-    }    
+    }
 
-    
+
     //obtiene el idCotizacion
-    $scope.getIdCotizacion = function(idCotizacion){
+    $scope.getIdCotizacion = function (idCotizacion) {
         $scope.idCotizacionAnticipo = idCotizacion;
     }
 
-        //guardamos datos de la factura
-    $scope.guardaDatosFactura = function (idTrabajo,idCotizacion) {
-            trabajoRepository.getGuardaFactura(idTrabajo,idCotizacion,$scope.userData.idUsuario).then(function (result) {
-            if (result.data.length > 0) {
-                alertFactory.success("Registro Exitoso");
-            } else {
-                alertFactory.info('No existe la factura.xml');
-            }
-        }, function (error) {
-            alertFactory.error("Error al generar la prefactura");
-        });
+    //obtiene el idCotizacion
+    $scope.getCotizacion = function (idCotizacion, Total, existe, numeroCotizacion) {
+        $scope.idCotizacionFactura = idCotizacion;
+        $scope.totalCotizacionBD = Total;
+        $scope.existeCotizacionFactura = existe;
+        $scope.numeroCotizacion = numeroCotizacion;
     }
 
+    //  guardamos datos de la factura
+    $scope.guardaDatosFactura = function (idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura) {
+            trabajoRepository.insertaFactura(idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura).then(function (result) {
+                if (result.data.length > 0) {
+                    alertFactory.success("Registro Exitoso");
+                }
+            }, function (error) {
+                alertFactory.error("Error al generar la prefactura");
+            });
+        }
+        //eliminamos la factura de la ruta si no coincide el costo
+    $scope.eliminaFactura = function (idTrabajo, idCotizacion) {
+        trabajoRepository.removeFactura(idTrabajo, idCotizacion).then(function (orden) {
+            if (orden.data.length > 0) {
+                $scope.cotizacionesOrden = orden.data;
+                alertFactory.info("Cargue nuevamente la Factura");
+            }
+        }, function (error) {
+            alertFactory.error("Error al procesar la informacion");
+        })
+    }
 
 });
