@@ -46,7 +46,7 @@
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td ng-hide="userData.idTipoUsuario == 4">{{trabajo.fechaServicio}}
                                                     <br>
-                                                    <button class="btn btn-success" type="button" ng-click="cargaFecha(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Fecha Inicio real de trabajos" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span></button>
+                                                    <button ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="cargaFecha(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Fecha Inicio real de trabajos" tooltip-placement="up"><span class="glyphicon glyphicon-calendar"></span></button>
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
@@ -56,7 +56,7 @@
                                                     
                                                     <!--<button ng-hide="userData.idTipoUsuario == 4" ng-disabled="trabajo.tieneAnticipo" class="btn btn-success" type="button" ng-click="adjuntar(trabajo, 7, 0, 1)" data-toggle="tooltip" tooltip="Cargar Comprobante (Remisión, Prefactura)" tooltip-placement="left"><span class="glyphicon glyphicon-level-up"></span></button>-->
                                                     
-                                                    <button type="button" ng-click="getCotizacionesOrden(trabajo.idTrabajo)"
+                                                    <button ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 4" type="button" ng-click="getCotizacionesOrden(trabajo.idTrabajo)"
                                                             ns-popover
                                                             ns-popover-template="close"
                                                             ns-popover-trigger="click"
