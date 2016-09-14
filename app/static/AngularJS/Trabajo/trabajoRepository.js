@@ -204,9 +204,10 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        removeFactura: function (idTrabajo) {
+        removeFactura: function (idTrabajo, idCotizacion) {
            var objTrabajo = {
-               idTrabajo:idTrabajo
+               idTrabajo:idTrabajo,
+               idCotizacion:idCotizacion
            };
            return $http({
                url: ordenUrl + 'removeFactura',
