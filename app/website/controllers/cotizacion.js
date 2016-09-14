@@ -1123,4 +1123,17 @@ Cotizacion.prototype.post_cancelacionOrden = function (req, res, next) {
     });
 }
 
+//Obtiene los tipos de cotizaciones
+Cotizacion.prototype.get_tipoCotizaciones = function (req, res, next) {
+    var self = this;
+    var params = [];
+
+    this.model.query('SEL_TIPO_COTIZACION_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Cotizacion;
