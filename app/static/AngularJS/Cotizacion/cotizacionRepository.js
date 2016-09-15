@@ -142,7 +142,15 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        obtieneTipoCotizaciones: function () {
+            return $http({
+                url: searchUrl + 'tipoCotizaciones',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
-
     };
 });
