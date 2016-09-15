@@ -559,10 +559,22 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         });
     }
 
-    $scope.verFactura = function (idTrabajo) {
-        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
-        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
-        }
+    //visualizacion de facturas ADOLFO 15092016
+    $scope.verFactura = function (idCotizacion,idTrabajo,numeroCotizacion) {
+       trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
+           if (resp.data == 1) {
+                     window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' +idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
+                    window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' +idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
+               }else if (resp.data == 2){
+                      window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo +'/documentos/factura/Factura.xml', '_blank', 'Factura');
+                    window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo +'/documentos/factura/Factura.pdf', '_blank', 'Factura');
+               } else{
+                    alertFactory.info("No se encontraron Facturas");
+               }
+               }, function (error) {
+               alertFactory.error('Factura no se pudo obtener');
+           });
+       }
 
     //visualiza la orden de servicio
     $scope.lookAt = function (trabajo, valBotonera) {
@@ -575,35 +587,43 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             location.href = '/ordenservicio?state=1';
         }
         //Cambiamos el estatus a Orden verificada
-    $scope.verificaOrden = function (idTrabajo) {
-        $('.btnVerificarOrden').ready(function () {
-            swal({
-                    title: "¿Está seguro de verificar la Orden?",
-                    text: "Pasara a Orden por Cobrar",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#67BF11",
-                    confirmButtonText: "Si",
-                    cancelButtonText: "No",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
-                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                                alertFactory.success("Trabajo verificado");
-                                swal("Orden Verificada Correctamente!");
-                                location.href = '/ordenesporcobrar';
-                            }
-                        }, function (error) {
-                            alertFactory.error("Error al verificar la orden");
-                        });
-                    } else {
-                        swal("Cancelacion de Orden");
-                    }
-                });
-        });
+    $scope.verificaOrden = function (idTrabajo, sinProveedor) {
+        //LQMA 14092016
+         if(sinProveedor > 0)
+         {
+            swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
+         }
+         else
+         {
+            $('.btnVerificarOrden').ready(function () {
+                swal({
+                        title: "¿Está seguro de verificar la Orden?",
+                        text: "Pasara a Orden por Cobrar",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#67BF11",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
+                                if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                    alertFactory.success("Trabajo verificado");
+                                    swal("Orden Verificada Correctamente!");
+                                    location.href = '/ordenesporcobrar';
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al verificar la orden");
+                            });
+                        } else {
+                            swal("Cancelacion de Orden");
+                        }
+                    });
+            });
+         }
     }
 
     //Obtiene el monto de la órden de servicio
