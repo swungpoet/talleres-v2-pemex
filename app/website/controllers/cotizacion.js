@@ -1143,4 +1143,23 @@ Cotizacion.prototype.get_tipoCotizaciones = function (req, res, next) {
     });
 }
 
+//Obtiene los talleres disponibles 
+Cita.prototype.get_taller = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{
+        name: 'datoTaller',
+        value: req.query.datoTaller,
+        type: self.model.types.STRING
+    }];
+
+    this.model.query('SEL_TALLER_COTIZACION_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Cotizacion;
