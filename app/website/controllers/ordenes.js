@@ -679,4 +679,48 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
                 }
 };
 
+//En cuentra la ubicacion de la factura donde se guardo
+Orden.prototype.post_encuentraFactura = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var idCotizacion = req.body.idCotizacion;
+    var idTrabajo = req.body.idTrabajo;
+    var numeroCotizacion = req.body.numeroCotizacion;
+
+    var nombreXmlMinuscula = 'Factura.xml';
+    var nombreXmlMayuscula = 'Factura.XML';
+    var nombrePdfMinuscula = 'Factura.pdf';
+    var nombrePdfMayuscula = 'Factura.PDF';
+
+    var nombreXmlMinusculas = 'Factura_' + numeroCotizacion + '.xml';
+    var nombreXmlMayusculas = 'Factura_' + numeroCotizacion + '.XML';
+    var nombrePdfMinusculas = 'Factura_' + numeroCotizacion + '.pdf';
+    var nombrePdfMayusculas = 'Factura_' + numeroCotizacion + '.PDF';
+
+    var rutaAnterior = dirname + idTrabajo +'/documentos/factura/';
+     var rutaActual = dirname + idTrabajo + '/' +idCotizacion+'/documentos/factura/';
+
+    if (fs.existsSync(rutaActual + nombreXmlMinusculas || rutaActual + nombreXmlMayusculas || rutaActual + nombrePdfMinusculas || rutaActual + nombrePdfMayusculas)) {
+    //Callback
+    object.error = null;
+    object.result = 1;
+    }else if (fs.existsSync(rutaAnterior + nombreXmlMinuscula || rutaAnterior + nombreXmlMayuscula || rutaAnterior + nombrePdfMinuscula || rutaAnterior + nombrePdfMayuscula)) {
+    //Callback
+    object.error = null;
+    object.result = 2;
+    }else{
+   //Callback
+    object.error = null;
+    object.result = 3;
+    }
+                self.view.expositor(res, object);
+
+
+}
+
 module.exports = Orden;
