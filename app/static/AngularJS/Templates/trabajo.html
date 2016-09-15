@@ -198,7 +198,7 @@
                                                                     <th>Solicitar</th>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr ng-repeat="cotizacion in cotizacionesOrden">
+                                                                    <tr ng-repeat="cotizacion in cotizacionesOrden" ng-class="{'danger': cotizacion.idProveedor =='0'}">
                                                                         <td>{{cotizacion.fechaOrden}}</td>
                                                                         <td>{{cotizacion.numeroTrabajo}}</td>
                                                                         <td>{{cotizacion.numeroCotizacion}}</td>
