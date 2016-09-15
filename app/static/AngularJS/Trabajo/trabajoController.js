@@ -559,10 +559,22 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         });
     }
 
-    $scope.verFactura = function (idTrabajo) {
-        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
-        window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
-        }
+    //visualizacion de facturas ADOLFO 15092016
+    $scope.verFactura = function (idCotizacion,idTrabajo,numeroCotizacion) {
+       trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
+           if (resp.data == 1) {
+                     window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' +idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
+                    window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' +idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
+               }else if (resp.data == 2){
+                      window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo +'/documentos/factura/Factura.xml', '_blank', 'Factura');
+                    window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo +'/documentos/factura/Factura.pdf', '_blank', 'Factura');
+               } else{
+                    alertFactory.info("No se encontraron Facturas");
+               }
+               }, function (error) {
+               alertFactory.error('Factura no se pudo obtener');
+           });
+       }
 
     //visualiza la orden de servicio
     $scope.lookAt = function (trabajo, valBotonera) {

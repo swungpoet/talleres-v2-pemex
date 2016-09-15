@@ -250,8 +250,22 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
-        }
-
+        },
+        encuentraFactura: function (idCotizacion, idTrabajo, numeroCotizacion) {     
+           var objArchivo = {
+               idCotizacion: idCotizacion,
+               idTrabajo: idTrabajo,
+               numeroCotizacion:numeroCotizacion
+           };      
+           return $http({        
+               url: ordenUrl + 'encuentraFactura',
+                       method: "POST",
+                       data: objArchivo,
+                       headers: {          
+                   'Content-Type': 'application/json'        
+               }      
+           });    
+       }
     };
 });
 
