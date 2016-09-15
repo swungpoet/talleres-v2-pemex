@@ -30,8 +30,8 @@
                             <br/>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <select class="form-control m-b" name="gar" ng-model="idZona" ng-options="gar.idZona as gar.descripcionZona  for gar in tipoGar" ng-change="obtieneZona()">
-                                        <option value="">Seleccione el tipo de cotización</option>
+                                    <select class="form-control m-b" name="gar" ng-model="idZona" ng-change="obtieneZona()">
+                                        <option ng-repeat="tipoCotizacion in tipoCotizaciones" value="{{tipoCotizacion.idTipoCotizacion}}">{{tipoCotizacion.cotizacion}}</option>
                                         <!--default option -->
                                     </select>
                                 </div>

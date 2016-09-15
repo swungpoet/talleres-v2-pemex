@@ -109,6 +109,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.idTrabajo = $scope.orden.idTrabajo;
             datosUnidad(null, $scope.orden.idTrabajo);
         }
+
+        $scope.get_tipoCotizaciones();
     }
 
     //Busqueda de item (servicio/pieza/refacción)
@@ -755,4 +757,13 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         return file.status === 'error';
     }
 
+    $scope.get_tipoCotizaciones = function () {
+        cotizacionRepository.obtieneTipoCotizaciones().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.tipoCotizaciones = result.data;
+            }
+        }, function (error) {
+            alertFactory.error('No se puedieron obtener los tipos de cotizaciones');
+        });
+    }
 });
