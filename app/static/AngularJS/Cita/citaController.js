@@ -939,7 +939,6 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             if (!checkErrorFile) {
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
-                    $scope.updateEstatusTrabajo();
                     setTimeout(function () {
                         $scope.dzMethods.removeAllFiles(true);
                         $('#evidencia').appendTo('body').modal('hide');
