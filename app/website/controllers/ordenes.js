@@ -255,7 +255,9 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
       
     var nombreArchivos = [];
     nombreArchivos = req.body.archivos;  
-    var subTotal, numeroEconomico, numeroEstimacion, ordenSurtimiento, numeroCopade, fechaRecepcionCopade = req.body.fechaRecepcionCopade, xmlCopade;  
+    var fechaRecepcionCopade = req.body.fechaRecepcionCopade; 
+    var subTotal,total,moneda,cantidad,descripcion,importeConcepto,unidad,valorUnitario,totalImpuestosRetenidos,totalImpuestosTrasladados,impuesto,importeTraslado,tasa;
+    var contrato,ordenSurtimiento,numeroEstimacion,numeroAcreedor,gestor,finiquito,posicionap,numeroCopade,ejercicio,xmlCopade;
     var objCopade = [];
     var paramValuesCopade = [];
 
@@ -267,19 +269,56 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
                   
             fs.readFile(dirCopades + file, 'utf8', function (err, data) {        
                 parser.parseString(data, function (err, lector) {          
-                    subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];          
-                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0];          
+                    subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];    
+                    total = lector['PreFactura']['Comprobante'][0].$['total']; 
+                    moneda = lector['PreFactura']['Comprobante'][0].$['moneda']; 
+                    cantidad = lector['PreFactura']['Comprobante'][0]['Conceptos'][0]['Concepto'][0].$['cantidad']; 
+                    descripcion = lector['PreFactura']['Comprobante'][0]['Conceptos'][0]['Concepto'][0].$['descripcion']; 
+                    importeConcepto = lector['PreFactura']['Comprobante'][0]['Conceptos'][0]['Concepto'][0].$['importe']; 
+                    unidad = lector['PreFactura']['Comprobante'][0]['Conceptos'][0]['Concepto'][0].$['unidad']; 
+                    valorUnitario = lector['PreFactura']['Comprobante'][0]['Conceptos'][0]['Concepto'][0].$['valorUnitario']; 
+                    totalImpuestosRetenidos = lector['PreFactura']['Comprobante'][0]['Impuestos'][0].$['totalImpuestosRetenidos']
+                    totalImpuestosTrasladados = lector['PreFactura']['Comprobante'][0]['Impuestos'][0].$['totalImpuestosTrasladados']
+                    impuesto = lector['PreFactura']['Comprobante'][0]['Impuestos'][0]['Traslados'][0]['Traslado'][0].$['impuesto']; 
+                    importeTraslado = lector['PreFactura']['Comprobante'][0]['Impuestos'][0]['Traslados'][0]['Traslado'][0].$['importe']; 
+                    tasa = lector['PreFactura']['Comprobante'][0]['Impuestos'][0]['Traslados'][0]['Traslado'][0].$['tasa']; 
+
+                    contrato = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:CONTRATO'][0];          
                     ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0]; 
-                    numeroCopade = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:ENTRADA'][0];   
+                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0]; 
+                    numeroAcreedor = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ACREEDOR'][0];          
+                    gestor = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:C_GESTOR'][0]; 
+                    finiquito = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:FINIQUITO'][0]; 
+                    posicionap = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:POSICIONAP'][0];          
+                    numeroCopade = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:ENTRADA'][0]; 
+                    ejercicio = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:EJERCICIO'][0]; 
                     xmlCopade = data; 
                                    
                     objCopade = {            
                         subTotal: subTotal,
-                        numeroEstimacion: numeroEstimacion,
+                        total:total,
+                        moneda:moneda,
+                        cantidad:cantidad,
+                        descripcion:descripcion,
+                        importeConcepto:importeConcepto,
+                        unidad:unidad,
+                        valorUnitario:valorUnitario,
+                        totalImpuestosRetenidos:totalImpuestosRetenidos,
+                        totalImpuestosTrasladados:totalImpuestosTrasladados,
+                        impuesto:impuesto,
+                        importeTraslado:importeTraslado,
+                        tasa:tasa,
+                        contrato:contrato,
                         ordenSurtimiento: ordenSurtimiento,
+                        numeroEstimacion: numeroEstimacion,
+                        numeroAcreedor:numeroAcreedor,
+                        gestor:gestor,
+                        finiquito:finiquito,
+                        posicionap:posicionap,
                         numeroCopade:numeroCopade,
-                        xmlCopade: xmlCopade,
-                        fechaRecepcionCopade: fechaRecepcionCopade          
+                        ejercicio:ejercicio,
+                        fechaRecepcionCopade: fechaRecepcionCopade,
+                        xmlCopade: xmlCopade          
                     };                    
 
                     paramValuesCopade.push(objCopade);       
@@ -350,8 +389,68 @@ Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
             type: self.model.types.DECIMAL
         },
         {
-            name: 'numeroEstimacion',
-            value: req.body[0].numeroEstimacion,
+            name: 'total',
+            value: req.body[0].total,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'moneda',
+            value: req.body[0].moneda,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'cantidad',
+            value: req.body[0].cantidad,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'descripcion',
+            value: req.body[0].descripcion,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'importeConcepto',
+            value: req.body[0].importeConcepto,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'unidad',
+            value: req.body[0].unidad,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'valorUnitario',
+            value: req.body[0].valorUnitario,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'totalImpuestosRetenidos',
+            value: req.body[0].totalImpuestosRetenidos,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'totalImpuestosTrasladados',
+            value: req.body[0].totalImpuestosTrasladados,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'impuesto',
+            value: req.body[0].impuesto,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'importeTraslado',
+            value: req.body[0].importeTraslado,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'tasa',
+            value: req.body[0].tasa,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'contrato',
+            value: req.body[0].contrato,
             type: self.model.types.STRING
         },
         {
@@ -360,8 +459,38 @@ Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
             type: self.model.types.STRING
         },
         {
-            name: 'xmlCopade',
-            value: req.body[0].xmlCopade,
+            name: 'numeroEstimacion',
+            value: req.body[0].numeroEstimacion,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'numeroAcreedor',
+            value: req.body[0].numeroAcreedor,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'gestor',
+            value: req.body[0].gestor,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'finiquito',
+            value: req.body[0].finiquito,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'posicionap',
+            value: req.body[0].posicionap,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'numeroCopade',
+            value: req.body[0].numeroCopade,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'ejercicio',
+            value: req.body[0].ejercicio,
             type: self.model.types.STRING
         },
         {
@@ -370,11 +499,11 @@ Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
             type: self.model.types.STRING
         },
         {
-            name: 'numeroCopade',
-            value: req.body[0].numeroCopade,
+            name: 'xmlCopade',
+            value: req.body[0].xmlCopade,
             type: self.model.types.STRING
         }
-    ];
+    ]; 
 
     this.model.post('INS_DATOS_COPADE_SP', params, function (error, result) {
         //Callback
