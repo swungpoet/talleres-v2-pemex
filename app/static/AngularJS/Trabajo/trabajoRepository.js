@@ -190,11 +190,12 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        getGuardaFactura: function (idTrabajo,idCotizacion,idUsuario) {
+        getGuardaFactura: function (idTrabajo,idCotizacion,idUsuario,idEstatus) { //LQMA add 19092016, se agrego idEstatus
             var objTrabajo = {
                 idTrabajo:idTrabajo,
                 idCotizacion: idCotizacion,
-                idUsuario:idUsuario
+                idUsuario:idUsuario,
+                idEstatus:idEstatus  //LQMA add 19092016, para comparar si se lee el archivo temporal
             };
             return $http({
                 url: ordenUrl + 'generaFactura',
