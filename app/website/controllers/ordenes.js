@@ -525,6 +525,10 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
         value: req.query.idUsuario,
         type: self.model.types.INT
         }];
+
+                //LQMA add 19092016, si idEstatus = 12, se lee el archivo temporal
+                var idEstatus = req.query.idEstatus;
+
                 var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
                 var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
@@ -536,6 +540,13 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                         var extension = obtenerExtArchivo(file);
                         if (extension == '.xml' || extension == '.XML') {
                             if (file.includes('Factura')) {
+
+                                /*    
+                                //LQMA ADD 19092016 leer del archivo temporal para validar 
+                                if(idEstatus == 12) 
+                                    if(file.indexOf)
+                                       temporal.indexOf('temp') > 0?archivo.replace('.XML','temp.XML'):archivo.replace('.xml','temp.xml')*/    
+
                                 var parser = new xml2js.Parser();
                                 fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
                                     parser.parseString(data, function (err, result) {
