@@ -205,7 +205,7 @@
                                                                         <td>{{cotizacion.Total | currency}}</td>
                                                                         <td>{{cotizacion.subTotal | currency}}</td>
                                                                         <td>
-                                                                            <button ng-disabled="cotizacion.existe > 0" type="button" class="btn btn-success" ng-click="getCotizacion(cotizacion.idCotizacion, cotizacion.Total, cotizacion.existe, cotizacion.numeroCotizacion); adjuntar(trabajo,3,1,0)"><span class="glyphicon glyphicon-upload"></span></button>
+                                                                            <button ng-disabled="cotizacion.existe > 0" type="button" class="btn btn-success" ng-click="getCotizacion(cotizacion.idCotizacion, cotizacion.Total, cotizacion.existe, cotizacion.numeroCotizacion, cotizacion.estatusTrabajo); adjuntar(trabajo,3,1,0)"><span class="glyphicon glyphicon-upload"></span></button>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -289,7 +289,7 @@
                                                                             <td>{{cotizacion.Total | currency}}</td>
                                                                             <td>{{cotizacion.subTotal | currency}}</td>
                                                                             <td>
-                                                                                    <button ng-disabled="cotizacion.existe > 0" type="button" class="btn btn-success" ng-click="getCotizacion(cotizacion.idCotizacion, cotizacion.Total, cotizacion.existe,cotizacion.numeroCotizacion); adjuntar(trabajo,3,0,0)"><span class="glyphicon glyphicon-upload"></span></button>
+                                                                                    <button ng-disabled="cotizacion.existe > 0" type="button" class="btn btn-success" ng-click="getCotizacion(cotizacion.idCotizacion, cotizacion.Total, cotizacion.existe,cotizacion.numeroCotizacion, cotizacion.estatusTrabajo); adjuntar(trabajo,3,1,0)"><span class="glyphicon glyphicon-upload"></span></button>
                                                                                     <button class="btn btn-success" type="button" ng-click="verFactura(cotizacion.idCotizacion,cotizacion.idTrabajo,cotizacion.numeroCotizacion)" data-toggle="tooltip" tooltip="Ver  Factura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                             </td>
                                                                         </tr>
