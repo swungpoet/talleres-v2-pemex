@@ -509,7 +509,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/preFactura');
                 } else {
                     if (!fs.existsSync(dirname + idTrabajo)) {
-                    fs.mkdirSync(dirname + idTrabajo);
+                        fs.mkdirSync(dirname + idTrabajo);
                     }
                     if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion)) {
                         fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion)
@@ -1144,15 +1144,27 @@ Cotizacion.prototype.get_tipoCotizaciones = function (req, res, next) {
 }
 
 //Obtiene los talleres disponibles 
-Cita.prototype.get_taller = function (req, res, next) {
+Cotizacion.prototype.get_tallerCotizacion = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{
-        name: 'datoTaller',
-        value: req.query.datoTaller,
-        type: self.model.types.STRING
-    }];
+    var params = [
+        {
+            name: 'datoTaller',
+            value: req.query.datoTaller,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'isPrecotizacion',
+            value: req.query.isPrecotizacion,
+            type: self.model.type.DECIMAL
+        },
+        {
+            name: 'idCita',
+            value: req.query.idCita,
+            type: self.model.type.DECIMAL
+        }
+    ];
 
     this.model.query('SEL_TALLER_COTIZACION_SP', params, function (error, result) {
         self.view.expositor(res, {

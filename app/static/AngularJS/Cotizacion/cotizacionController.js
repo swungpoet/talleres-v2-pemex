@@ -271,46 +271,52 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 idUnidad = $scope.objCita.idUnidad;
             }
         }
-        cotizacionRepository.insertCotizacionMaestro($scope.citaDatos.idCita,
-                $scope.userData.idUsuario,
-                $scope.observaciones,
-                idUnidad,
-                $scope.tipoCotizacion)
-            .then(function (resultado) {
-                alertFactory.success('Guardando Cotización Maestro');
-                $scope.idCotizacion = resultado.data[0].idCotizacion;
-                $scope.idTrabajo = resultado.data[0].idTrabajo;
-                $scope.arrayItem.forEach(function (item, i) {
-                    cotizacionRepository.insertCotizacionDetalle($scope.idCotizacion,
-                            item.idTipoElemento,
-                            item.idItem,
-                            item.precio,
-                            item.cantidad,
-                            item.idEstatus,
-                            item.idNivelAutorizacion)
-                        .then(function (result) {
-                            alertFactory.success('Guardando Cotización Detalle');
-                            if (($scope.arrayItem.length - i) === 1) {
-                                alertFactory.success('Cotización creada');
-                                cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
-                                if ($scope.dzMethods.getAllFiles().length == 0) {
-                                    setTimeout(function () {
-                                        location.href = "/cotizacionconsulta";
-                                    }, 1000);
-                                } else {
-                                    $scope.dzMethods.processQueue();
+
+        if ($scope.selectedTipo == undefined || $scope.selectedTipo == null) {
+            alertFactory.error('Debe seleccionar un tipo de cotización');
+        } else {
+            cotizacionRepository.insertCotizacionMaestro($scope.citaDatos.idCita,
+                    $scope.userData.idUsuario,
+                    $scope.observaciones,
+                    idUnidad,
+                    $scope.tipoCotizacion)
+                .then(function (resultado) {
+                    alertFactory.success('Guardando Cotización Maestro');
+                    $scope.idCotizacion = resultado.data[0].idCotizacion;
+                    $scope.idTrabajo = resultado.data[0].idTrabajo;
+                    $scope.arrayItem.forEach(function (item, i) {
+                        cotizacionRepository.insertCotizacionDetalle($scope.idCotizacion,
+                                item.idTipoElemento,
+                                item.idItem,
+                                item.precio,
+                                item.cantidad,
+                                item.idEstatus,
+                                item.idNivelAutorizacion)
+                            .then(function (result) {
+                                alertFactory.success('Guardando Cotización Detalle');
+                                if (($scope.arrayItem.length - i) === 1) {
+                                    alertFactory.success('Cotización creada');
+                                    cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
+                                    if ($scope.dzMethods.getAllFiles().length == 0) {
+                                        setTimeout(function () {
+                                            location.href = "/cotizacionconsulta";
+                                        }, 1000);
+                                    } else {
+                                        $scope.dzMethods.processQueue();
+                                    }
+                                    btnEnviaCotizacionLoading.ladda('stop');
                                 }
+                            }, function (error) {
+                                alertFactory.error('Error');
                                 btnEnviaCotizacionLoading.ladda('stop');
-                            }
-                        }, function (error) {
-                            alertFactory.error('Error');
-                            btnEnviaCotizacionLoading.ladda('stop');
-                        });
+                            });
+                    });
+                }, function (error) {
+                    alertFactory.error('Error');
+                    btnEnviaCotizacionLoading.ladda('stop');
                 });
-            }, function (error) {
-                alertFactory.error('Error');
-                btnEnviaCotizacionLoading.ladda('stop');
-            });
+        }
+
     });
 
     //Termina de guardar la información de los archivos
@@ -771,7 +777,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.lookUpTaller = function (datoTaller) {
         if (datoTaller !== '' && datoTaller !== undefined) {
             $('.dataTableTaller').DataTable().destroy();
-            $scope.promise = citaRepository.getTaller(datoTaller).then(function (taller) {
+            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, isPreCotizacion, idCita).then(function (taller) {
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {
@@ -786,6 +792,35 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         } else {
             alertFactory.info('Llene el campo de búsqueda');
         }
-        inicializaListas();
+    }
+
+    //espera que el documento se pinte para llenar el dataTable
+    var waitDrawDocument = function (dataTable) {
+        setTimeout(function () {
+            $('.' + dataTable).DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        title: 'Citas'
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        }, 2500);
+    }
+
+    $scope.asignaTipo = function (tipo) {
+        $scope.selectedTipo = tipo.idTipoCotizacion;
     }
 });

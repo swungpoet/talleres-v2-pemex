@@ -151,6 +151,20 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        obtieneTallerCotizaciones: function (datoTaller, isPreCotizacion, idCita) {
+            return $http({
+                url: searchUrl + 'tallerCotizacion',
+                method: "GET",
+                params: {
+                    datoTaller: datoTaller,
+                    isPrecotizacion: isPreCotizacion,
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
