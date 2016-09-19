@@ -345,7 +345,7 @@ Trabajo.prototype.post_updatestatusVerificado = function(req, res, next){
     var params = [{name: 'idEstatus', value: req.body.idEstatus, type: self.model.types.INT},
                   {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
     
-    this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
+    this.model.post('UPD_ORDEN_VERIFICADA_SP', params, function (error, result) {
         //Callback
         self.view.expositor(res, {
             error: error,

@@ -431,9 +431,19 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                             if (sumatoria.name == 'xmlFactura') $scope.xmlFacturaFac = sumatoria.value;
                                         });
                                         $scope.guardaDatosFactura($scope.idCotizacionFac, $scope.numFacturaFac, $scope.UUIDFac, $scope.fechaFacturaFac, $scope.totalFac, $scope.subtotalFac, $scope.idUsuarioFac, $scope.xmlFacturaFac);
-                                        upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                                            if($scope.idEstatusTrabajo==11){
+                                                upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                                            }else{
+                                                    setTimeout(function () {
+                                                        $scope.dzMethods.removeAllFiles();
+                                                        $('#modalCargaArchivos').appendTo('body').modal('hide');
+                                                    }, 1000);
+                                                    alertFactory.info("Factura Cargada Correctamente");
+                                                }
                                     } else {
-                                        $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura);
+                                            if($scope.idEstatusTrabajo==11){
+                                                $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura);
+                                                }
                                         setTimeout(function () {
                                             $scope.dzMethods.removeAllFiles();
                                             $('#modalCargaArchivos').appendTo('body').modal('hide');
@@ -610,7 +620,11 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     function (isConfirm) {
                         if (isConfirm) {
                             trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
-                                if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                if (ordenVerificada.data[0].FaltaFactura > 0) {
+                                    alertFactory.info("Falta la carga de la Factura");
+                                    swal("Intente mas tarde!");
+                                   // location.href = '/ordenesporcobrar';
+                                }else{
                                     alertFactory.success("Trabajo verificado");
                                     swal("Orden Verificada Correctamente!");
                                     location.href = '/ordenesporcobrar';
@@ -707,11 +721,12 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //obtiene el idCotizacion
-    $scope.getCotizacion = function (idCotizacion, Total, existe, numeroCotizacion) {
+    $scope.getCotizacion = function (idCotizacion, Total, existe, numeroCotizacion, idEstatus) {
         $scope.idCotizacionFactura = idCotizacion;
         $scope.totalCotizacionBD = Total;
         $scope.existeCotizacionFactura = existe;
         $scope.numeroCotizacion = numeroCotizacion;
+        $scope.idEstatusTrabajo = idEstatus;
     }
 
     //  guardamos datos de la factura

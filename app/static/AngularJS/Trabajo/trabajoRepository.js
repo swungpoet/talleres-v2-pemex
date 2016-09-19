@@ -183,7 +183,8 @@ registrationModule.factory('trabajoRepository', function ($http) {
             return $http({
                 url: trabajoUrl + 'updatestatusVerificado/',
                 method: "POST",
-                data: {idEstatus: idEstatus,idTrabajo: idTrabajo},
+                data: {idEstatus: idEstatus,
+                       idTrabajo: idTrabajo},
                 headers: {
                     'Content-Type': 'application/json'
                 }
