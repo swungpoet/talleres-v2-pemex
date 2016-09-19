@@ -17,13 +17,14 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 }
             });
         },
-        insertCotizacionMaestro: function (idCita, idUsuario, observaciones, idUnidad, idTipoCotizacion) {
+        insertCotizacionMaestro: function (idCita, idUsuario, observaciones, idUnidad, idTipoCotizacion, idTaller) {
             var msgObj = {
                 idCita: idCita,
                 idUsuario: idUsuario,
                 observaciones: observaciones,
                 idUnidad: idUnidad,
-                idTipoCotizacion: idTipoCotizacion
+                idTipoCotizacion: idTipoCotizacion,
+                idTaller: idTaller,
             }
             return $http({
                 url: searchUrl + 'cotizacionMaestro',

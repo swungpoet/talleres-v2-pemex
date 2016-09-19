@@ -132,6 +132,11 @@ Cotizacion.prototype.post_cotizacionMaestro = function (req, res, next) {
             name: 'idTipoCotizacion',
             value: req.body.idTipoCotizacion,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTaller',
+            value: req.body.idTaller,
+            type: self.model.types.DECIMAL
         }];
 
 
@@ -481,9 +486,17 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
             var idCategoria = (req.body.idCategoria).constructor != Array ? req.body.idCategoria : req.body.idCategoria[0];
             idNombreEspecial = (req.body.idNombreEspecial).constructor != Array ? req.body.idNombreEspecial : req.body.idNombreEspecial[0];
 
+            //LQMA  add 15092016 --idEstatus , define si crea el archivo de forma temporal
+            var idEstatus = (req.body.idEstatus).constructor != Array ? req.body.idEstatus : req.body.idEstatus[0];
+
             var idCotizacionArr = idCotizacion.split('|');
             carpetaCotizacion = idCotizacionArr[0];
             nombreFacturaCotizacion = idCotizacionArr[1];
+
+            //LQMA add 15092016 -- cuando sea estatus 12, se guarda el archivo como temporal, y despues de pasar la validacion se
+            //remplaza el original
+            if(idEstatus == 12)
+                    nombreFacturaCotizacion = 'temp';
 
             if (idCategoria == 2) {
                 if (idCotizacion == 0) {
@@ -1157,12 +1170,12 @@ Cotizacion.prototype.get_tallerCotizacion = function (req, res, next) {
         {
             name: 'isPrecotizacion',
             value: req.query.isPrecotizacion,
-            type: self.model.type.DECIMAL
+            type: self.model.types.DECIMAL
         },
         {
             name: 'idCita',
             value: req.query.idCita,
-            type: self.model.type.DECIMAL
+            type: self.model.types.DECIMAL
         }
     ];
 
