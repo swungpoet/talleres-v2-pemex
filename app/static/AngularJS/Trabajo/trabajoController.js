@@ -406,6 +406,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             formData.append('idCotizacion', $scope.idCotizacion);
             formData.append('idCategoria', $scope.idCategoria);
             formData.append('idNombreEspecial', $scope.idNombreEspecial);
+            //LQMA  add 15092016  --idEstatus , define si crea el archivo de forma temporal
+            formData.append('idEstatus', $scope.idEstatusPorCerrar);
         },
         'completemultiple': function (file, xhr) {
             var checkErrorFile = file.some(checkExistsError);
