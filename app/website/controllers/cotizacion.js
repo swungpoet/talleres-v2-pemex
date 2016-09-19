@@ -132,6 +132,11 @@ Cotizacion.prototype.post_cotizacionMaestro = function (req, res, next) {
             name: 'idTipoCotizacion',
             value: req.body.idTipoCotizacion,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTaller',
+            value: req.body.idTaller,
+            type: self.model.types.DECIMAL
         }];
 
 
@@ -1157,12 +1162,12 @@ Cotizacion.prototype.get_tallerCotizacion = function (req, res, next) {
         {
             name: 'isPrecotizacion',
             value: req.query.isPrecotizacion,
-            type: self.model.type.DECIMAL
+            type: self.model.types.DECIMAL
         },
         {
             name: 'idCita',
             value: req.query.idCita,
-            type: self.model.type.DECIMAL
+            type: self.model.types.DECIMAL
         }
     ];
 

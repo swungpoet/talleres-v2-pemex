@@ -273,13 +273,16 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         }
 
         if ($scope.selectedTipo == undefined || $scope.selectedTipo == null) {
-            alertFactory.error('Debe seleccionar un tipo de cotización');
+            alertFactory.info('Debe seleccionar un tipo de cotización');
+        } else if ($scope.selectedTaller == null) {
+            alertFactory.info('Debe seleccionar un taller');
         } else {
             cotizacionRepository.insertCotizacionMaestro($scope.citaDatos.idCita,
                     $scope.userData.idUsuario,
                     $scope.observaciones,
                     idUnidad,
-                    $scope.tipoCotizacion)
+                    $scope.tipoCotizacion,
+                    $scope.selectedTaller)
                 .then(function (resultado) {
                     alertFactory.success('Guardando Cotización Maestro');
                     $scope.idCotizacion = resultado.data[0].idCotizacion;
@@ -777,7 +780,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.lookUpTaller = function (datoTaller) {
         if (datoTaller !== '' && datoTaller !== undefined) {
             $('.dataTableTaller').DataTable().destroy();
-            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, isPreCotizacion, idCita).then(function (taller) {
+            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, 2, $scope.citaDatos.idCita).then(function (taller) {
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {
@@ -820,7 +823,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         }, 2500);
     }
 
-    $scope.asignaTipo = function (tipo) {
-        $scope.selectedTipo = tipo.idTipoCotizacion;
+    //Obtiene el taller seleccionado
+    $scope.getTaller = function (idTaller) {
+        $scope.selectedTaller = idTaller;
     }
 });
