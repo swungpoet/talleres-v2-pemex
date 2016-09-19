@@ -5,7 +5,7 @@
 // -- Modificó: Mario Mejía
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository) {
+registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository) {
     $scope.arrayItem = [];
     $scope.arrayCambios = [];
     var valor = '';
@@ -765,5 +765,27 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         }, function (error) {
             alertFactory.error('No se puedieron obtener los tipos de cotizaciones');
         });
+    }
+
+    //obtiene los talleres con su especialidad
+    $scope.lookUpTaller = function (datoTaller) {
+        if (datoTaller !== '' && datoTaller !== undefined) {
+            $('.dataTableTaller').DataTable().destroy();
+            $scope.promise = citaRepository.getTaller(datoTaller).then(function (taller) {
+                $scope.talleres = taller.data;
+                //  $scope.arrayCambios = $scope.talleres.slice();
+                if (taller.data.length > 0) {
+                    waitDrawDocument("dataTableTaller");
+                    alertFactory.success('Datos encontrados');
+                } else {
+                    alertFactory.info('No se encontraron datos');
+                }
+            }, function (error) {
+                alertFactory.error('Error al obtener los datos');
+            });
+        } else {
+            alertFactory.info('Llene el campo de búsqueda');
+        }
+        inicializaListas();
     }
 });
