@@ -495,8 +495,8 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
 
             //LQMA add 15092016 -- cuando sea estatus 12, se guarda el archivo como temporal, y despues de pasar la validacion se
             //remplaza el original
-            if(idEstatus == 12)
-                    nombreFacturaCotizacion = 'temp';
+             if(idNombreEspecial == 3)
+                    nombreFacturaCotizacion = nombreFacturaCotizacion + 'temp';
 
             if (idCategoria == 2) {
                 if (idCotizacion == 0) {
