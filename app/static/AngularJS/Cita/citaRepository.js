@@ -247,6 +247,19 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        enviaAprobacion: function (idCita) {
+            var aprobacionObj = {
+                idCita: idCita
+            }
+            return $http({
+                url: citaUrl + 'enviaAprobacion',
+                method: "POST",
+                data: aprobacionObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

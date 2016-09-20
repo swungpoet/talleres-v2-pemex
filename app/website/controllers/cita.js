@@ -605,4 +605,26 @@ Cita.prototype.post_eliminaPreCotizacion = function (req, res, next) {
     });
 }
 
+//Actualiza el estatus de las cotizaciones para aprobación
+Cita.prototype.post_enviaAprobacion = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Asigno a params el valor de mis variables
+    var params = [
+        {
+            name: 'idCita',
+            value: req.body.idCita,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.post('UPD_ENVIA_APROBACION_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Cita;
