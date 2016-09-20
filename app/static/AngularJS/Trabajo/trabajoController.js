@@ -624,13 +624,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     function (isConfirm) {
                         if (isConfirm) {
                             trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
-                                if (ordenVerificada.data[0].FaltaFactura > 0) {
-                                    alertFactory.info("Falta la carga de la Factura");
-                                    swal("Intente mas tarde!");
-                                   // location.href = '/ordenesporcobrar';
-                                }else{
-                                    alertFactory.success("Trabajo verificado");
-                                    swal("Orden Verificada Correctamente!");
+                                if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                    swal("Proceso Realizado!");
                                     location.href = '/ordenesporcobrar';
                                 }
                             }, function (error) {
