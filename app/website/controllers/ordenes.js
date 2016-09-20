@@ -822,10 +822,15 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
         name: 'idCotizacion',
         value: req.query.idCotizacion,
         type: self.model.types.INT
+        },
+        {
+        name: 'idOpcion',
+        value: req.query.idOpcion,
+        type: self.model.types.INT
         }];
 
                 //LQMA add 20092016 
-                var idOpcion = req.query.idOpcion //1:borrar temporales; 2:borrar originales
+                var idOpcion = req.query.idOpcion; //1:borrar temporales; 2:borrar originales
 
                 var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion+ '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
@@ -836,18 +841,17 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
                     files.forEach(function (file) {
                         var extension = obtenerExtArchivo(file);
                         if (extension == '.xml' || extension == '.XML' || extension == '.pdf' || extension == '.PDF') {
-                            
-                            if(idOpcion == 1) //LQMA add 20092016 borra temporaleas
+                            console.log(idOpcion);
+                            if(idOpcion == 1){ //LQMA add 20092016 borra temporaleas
                                 if(file.indexOf('temp') >= 0) // LQMA 20092016 ADD para que solo borre los temporales
                                     fs.unlink(directorioFactura + '/' + file, function(err, result){
                                         if(err) return 
                                     });
-                            else
+                            }else
                                 if(file.indexOf('temp') == -1) // LQMA 20092016 ADD para que borre originales
                                     fs.unlink(directorioFactura + '/' + file, function(err, result){
                                         if(err) return 
                                     });
-
                         }
                     });
                         self.model.query('SEL_COTIZACION_FACTURA_SP', paramsTipoOrden, function (error, result) {

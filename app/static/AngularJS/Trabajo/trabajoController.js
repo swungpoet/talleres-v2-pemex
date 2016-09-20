@@ -442,7 +442,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                                         $scope.dzMethods.removeAllFiles();
                                                         $('#modalCargaArchivos').appendTo('body').modal('hide');
                                                     }, 1000);
-                                                    alertFactory.info("Factura Cargada Correctamente");
+                                                    alertFactory.success("Factura Cargada Correctamente");
                                                 }
                                             //LQMA ADD 20092016, borra solo temporales: idOpcion = 2
                                             $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,2);
@@ -452,15 +452,15 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
 
                                     } else {
-                                            if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
+                                            //if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
                                                 //LQMA ADD 20092016, borra solo temporales: idOpcion = 1
                                                 $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,1); 
-                                                }
+                                             //   }
                                         setTimeout(function () {
                                             $scope.dzMethods.removeAllFiles();
                                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                                         }, 1000);
-                                        alertFactory.info("El valor total debe coincidir con el de la orden");
+                                        alertFactory.info("El monto de la orden seleccionada rebasa el rango especificado de (+- $1.00 MXN), seleccione una orden que se adecúe con el monto de la Factura");
                                     }
                                 }
                             }, function (error) {
@@ -747,11 +747,11 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             });
         }
         //eliminamos la factura de la ruta si no coincide el costo
-    $scope.eliminaFactura = function (idTrabajo, idCotizacion) {
-        trabajoRepository.removeFactura(idTrabajo, idCotizacion).then(function (orden) {
+    $scope.eliminaFactura = function (idTrabajo, idCotizacion,idOpcion) {
+        trabajoRepository.removeFactura(idTrabajo, idCotizacion,idOpcion).then(function (orden) {
             if (orden.data.length > 0) {
                 $scope.cotizacionesOrden = orden.data;
-                alertFactory.info("Cargue nuevamente la Factura");
+                //alertFactory.info("");
             }
         }, function (error) {
             alertFactory.error("Error al procesar la informacion");
