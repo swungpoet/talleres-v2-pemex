@@ -206,10 +206,11 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        removeFactura: function (idTrabajo, idCotizacion) {
+        removeFactura: function (idTrabajo, idCotizacion,idOpcion) {//LQMA ADD 20092016 -- idOpcion 1:borra temporales, 2:borra originales para renombrar archivos
            var objTrabajo = {
                idTrabajo:idTrabajo,
-               idCotizacion:idCotizacion
+               idCotizacion:idCotizacion,
+               idOpcion:idOpcion //LQMA ADD 20092016 -- idOpcion 1:borra temporales, 2:borra originales para renombrar archivos
            };
            return $http({
                url: ordenUrl + 'removeFactura',
@@ -261,6 +262,20 @@ registrationModule.factory('trabajoRepository', function ($http) {
            };      
            return $http({        
                url: ordenUrl + 'encuentraFactura',
+                       method: "POST",
+                       data: objArchivo,
+                       headers: {          
+                   'Content-Type': 'application/json'        
+               }      
+           });    
+        }, //LQMA ADD 20092016, renombra la factura temporal
+        renombraFacturaTemporal (idTrabajo, idCotizacion) {
+           var objArchivo = {
+               idCotizacion: idCotizacion,
+               idTrabajo: idTrabajo
+           };      
+           return $http({        
+               url: ordenUrl + 'renombraFacturaTemporal',
                        method: "POST",
                        data: objArchivo,
                        headers: {          

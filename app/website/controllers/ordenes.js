@@ -578,6 +578,32 @@ Orden.prototype.post_cambiaNombreCopade = function (req, res, next) {
 
 }
 
+//LQMA ADD 20092016 , renombra archivo tempora a original, quitando "temp"
+Orden.prototype.post_renombraFacturaTemporal = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    
+    var idCotizacion = req.body.idCotizacion;
+    var idTrabajo = req.body.idTrabajo;
+
+    var directorioFactura = dirname + idTrabajo +'/'+ idCotizacion + '/documentos/factura';
+
+    var files = fs.readdirSync(directorioFactura);
+
+    files.forEach(function (file) {            
+                fs.renameSync(directorioFactura + '/' + file, directorioFactura + '/' + file.replace('temp',''));
+    });
+    //Callback
+    object.error = null;
+    object.result = 1;
+
+    self.view.expositor(res, object);
+}
+
 //Quita la copade de la carpeta 'copades' y la pone en su respectiva orden de servicio 'idTrabajo/documentos/adendaCopade'
 Orden.prototype.post_mueveCopade = function (req, res, next) {
     //Objeto que almacena la respuesta
@@ -657,6 +683,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
 
                 //LQMA add 19092016, si idEstatus = 12, se lee el archivo temporal
                 var idEstatus = req.query.idEstatus;
+                var aux = 0;
 
                 var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
@@ -670,11 +697,9 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                         if (extension == '.xml' || extension == '.XML') {
                             if (file.includes('Factura')) {
 
-                                /*    
                                 //LQMA ADD 19092016 leer del archivo temporal para validar 
-                                if(idEstatus == 12) 
-                                    if(file.indexOf)
-                                       temporal.indexOf('temp') > 0?archivo.replace('.XML','temp.XML'):archivo.replace('.xml','temp.xml')*/    
+                                //if(idEstatus == 12) 
+                                       file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
 
                                 var parser = new xml2js.Parser();
                                 fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
@@ -742,8 +767,12 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                                 type: self.model.types.STRING
                                                  }
                                         ];
-                                        /*getDatosFactura2(res, self, 'INS_COTIZACION_FACTURA_SP', paramsFactura);*/
-                                        getDatosFactura2(res, self, paramsFactura);
+
+                                        //LQMA add 19092016    
+                                        if(aux == 0)
+                                           getDatosFactura2(res, self, paramsFactura);
+
+                                        aux = aux + 1;//LQMA add 19092016
 
                                     });
                                 });
@@ -794,6 +823,10 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
         value: req.query.idCotizacion,
         type: self.model.types.INT
         }];
+
+                //LQMA add 20092016 
+                var idOpcion = req.query.idOpcion //1:borrar temporales; 2:borrar originales
+
                 var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion+ '/documentos/factura';
                 var files = fs.readdirSync(directorioFactura);
                 var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
@@ -803,9 +836,18 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
                     files.forEach(function (file) {
                         var extension = obtenerExtArchivo(file);
                         if (extension == '.xml' || extension == '.XML' || extension == '.pdf' || extension == '.PDF') {
-                              fs.unlink(directorioFactura + '/' + file, function(err, result){
-                                    if(err) return 
-                               });  
+                            
+                            if(idOpcion == 1) //LQMA add 20092016 borra temporaleas
+                                if(file.indexOf('temp') >= 0) // LQMA 20092016 ADD para que solo borre los temporales
+                                    fs.unlink(directorioFactura + '/' + file, function(err, result){
+                                        if(err) return 
+                                    });
+                            else
+                                if(file.indexOf('temp') == -1) // LQMA 20092016 ADD para que borre originales
+                                    fs.unlink(directorioFactura + '/' + file, function(err, result){
+                                        if(err) return 
+                                    });
+
                         }
                     });
                         self.model.query('SEL_COTIZACION_FACTURA_SP', paramsTipoOrden, function (error, result) {

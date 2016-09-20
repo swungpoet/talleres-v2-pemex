@@ -444,9 +444,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                                     }, 1000);
                                                     alertFactory.info("Factura Cargada Correctamente");
                                                 }
+                                            //LQMA ADD 20092016, borra solo temporales: idOpcion = 2
+                                            $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,2);
+                                            setTimeout(function () {
+                                                 $scope.renombraFacturaTemporal($scope.idTrabajo, $scope.idCotizacionFactura);
+                                             },500);
+
+
                                     } else {
-                                            if($scope.idEstatusTrabajo==11){
-                                                $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura);
+                                            if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
+                                                //LQMA ADD 20092016, borra solo temporales: idOpcion = 1
+                                                $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,1); 
                                                 }
                                         setTimeout(function () {
                                             $scope.dzMethods.removeAllFiles();
@@ -747,6 +755,18 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }
         }, function (error) {
             alertFactory.error("Error al procesar la informacion");
+        })
+    }
+
+    //LQMA add 20092016 renombra factura
+    $scope.renombraFacturaTemporal = function (idTrabajo, idCotizacion) {
+        trabajoRepository.renombraFacturaTemporal(idTrabajo, idCotizacion).then(function (orden) {
+            if (orden.data.length > 0) {
+                $scope.cotizacionesOrden = orden.data;
+                //alertFactory.info("Cargue nuevamente la Factura");
+            }
+        }, function (error) {
+            alertFactory.error("Error al procesar la informacion Temporal");
         })
     }
 
