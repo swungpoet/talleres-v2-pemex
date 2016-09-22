@@ -86,6 +86,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.editar = 0;
             datosCita();
             $scope.idTaller = $scope.citaDatos.idTaller;
+            localStorageService.get('isPreCotizacion') != undefined || localStorageService.get('isPreCotizacion') != null ? $scope.isPrecotizacion = localStorageService.get('isPreCotizacion') : $scope.isPrecotizacion = 2;
             busquedaServicioDetalle($scope.citaDatos.idCita);
         }
 
@@ -780,7 +781,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.lookUpTaller = function (datoTaller) {
         if (datoTaller !== '' && datoTaller !== undefined) {
             $('.dataTableTaller').DataTable().destroy();
-            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, 2, $scope.citaDatos.idCita).then(function (taller) {
+            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, $scope.isPrecotizacion, $scope.citaDatos.idCita).then(function (taller) {
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {

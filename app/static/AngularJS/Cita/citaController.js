@@ -421,6 +421,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             localStorageService.remove('orden');
         }
         localStorageService.set('cita', cita);
+        localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
         location.href = '/cotizacionnueva';
 
 
