@@ -421,6 +421,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             localStorageService.remove('orden');
         }
         localStorageService.set('cita', cita);
+        localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
         location.href = '/cotizacionnueva';
 
 
@@ -695,7 +696,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //realiza la actualización de partidas de la cita
     $scope.updateCita = function () {
-        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
+        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.horaCita !== null && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             if ($scope.userData.idTipoUsuario != 4 && $scope.datosCita.idTaller == undefined) {
                 alertFactory.info("Seleccione un Taller");
             } else {
