@@ -13,7 +13,7 @@ registrationModule.controller('reporteUnidadController', function ($scope, alert
     
     //Obtiene todas las citas no canceladas generadas para cierta unidad
     $scope.getHistorialUnidad = function(numeroEconomico){
-        if(numeroEconomico != null ||  numeroEconomico != ''){
+        if(numeroEconomico != ''){
             //carga de citas
             $('.dataTableCita').DataTable().destroy();
             reporteUnidadRepository.getCitasUnidad(numeroEconomico).then(function(citasUnidad){
