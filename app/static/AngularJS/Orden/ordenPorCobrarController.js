@@ -279,6 +279,12 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             if (p.idDatosCopade == idDatosCopade) {
                 $scope.folio = $scope.copades[i].ordenSurtimiento;
                 $scope.monto = $scope.copades[i].subTotal;
+                $scope.numeroCopade = $scope.copades[i].numeroCopade;
+                $scope.numeroCopade == null ? $scope.numeroCopade = 'S/N COPADE' : $scope.copades[i].numeroCopade;
+                $scope.fechacarga = $scope.copades[i].fechaCarga;
+                $scope.fecharecepcion = $scope.copades[i].fechaRecepcionCopade;
+                $scope.numeroestimacion = $scope.copades[i].numeroEstimacion;
+
                 $scope.idDatosDeCopade = $scope.copades[i].idDatosCopade;
                 ordenPorCobrarRepository.getMejorCoincidencia($scope.folio, $scope.monto).then(function (result) {
                     $scope.coincidencia = result.data;
