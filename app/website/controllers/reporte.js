@@ -90,6 +90,81 @@ Reporte.prototype.get_conformidadpdf = function(req, res, next) {
         });
 }
 
+//Obtiene todas las citas no canceladas generadas para cierta unidad
+Reporte.prototype.get_citasunidad = function(req, res, next){
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'numeroEconomico',
+            value: req.query.numeroEconomico,
+            type: self.model.types.STRING
+        }
+    ];
+
+    this.model.query('SEL_HISTORIAL_CITAS_UNIDAD_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Obtiene todas las cotizaciones que no están canceladas generadas para cierta unidad
+Reporte.prototype.get_cotizacionesunidad = function(req, res, next){
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'numeroEconomico',
+            value: req.query.numeroEconomico,
+            type: self.model.types.STRING
+        }
+    ];
+
+    this.model.query('SEL_HISTORIAL_COTIZACIONES_UNIDAD_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//Obtiene todas las órdenes que no están canceladas generadas para cierta unidad
+Reporte.prototype.get_ordenesunidad = function(req, res, next){
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'numeroEconomico',
+            value: req.query.numeroEconomico,
+            type: self.model.types.STRING
+        }
+    ];
+
+    this.model.query('SEL_HISTORIAL_ORDENES_UNIDAD_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Reporte;
 
 function generateConfomidadReporte(data,res) {
