@@ -36,10 +36,10 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     var contentForm = '';
     var btnSubmit = '';
     var elements = '';
-            $scope.selectedTipo = {
-            idTipoCotizacion: 0,
-            cotizacion: ""
-        }
+    $scope.selectedTipo = {
+        idTipoCotizacion: 0,
+        cotizacion: ""
+    }
 
     var getExample = function () {
         exampleRepo.getEjemplo().then(function (exampleData) {
@@ -91,7 +91,9 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.editar = 0;
             datosCita();
             $scope.idTaller = $scope.citaDatos.idTaller;
-            localStorageService.get('isPreCotizacion') != undefined || localStorageService.get('isPreCotizacion') != null ? $scope.isPrecotizacion = localStorageService.get('isPreCotizacion') : $scope.isPrecotizacion = 2;
+            if (localStorageService.get('isPreCotizacion') != undefined || localStorageService.get('isPreCotizacion') != null) {
+                localStorageService.get('isPreCotizacion') == true ? $scope.isPrecotizacion = 1 : $scope.isPrecotizacion = 2;
+            }
             busquedaServicioDetalle($scope.citaDatos.idCita);
         }
 
@@ -835,7 +837,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         $scope.selectedTaller = idTaller;
         $scope.datosCita.idTaller = idTaller;
     }
-    
+
     var getidCita = function (idCita) {
         citaRepository.getidCita(idCita).then(function (result) {
             if (result.data.length > 0) {
