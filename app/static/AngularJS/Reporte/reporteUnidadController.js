@@ -63,9 +63,9 @@ registrationModule.controller('reporteUnidadController', function ($scope, alert
             alertFactory.info("Ingresar el número económico de la unidad");
         }
         $scope.numeroEconomico = '';
-        $scope.citasUnidad = [];
-        $scope.cotizacionesUnidad = [];
-        $scope.ordenesUnidad = [];
+        //$scope.citasUnidad = [];
+        //$scope.cotizacionesUnidad = [];
+        //$scope.ordenesUnidad = [];
     }
     
     //espera que el documento se pinte para llenar el dataTable

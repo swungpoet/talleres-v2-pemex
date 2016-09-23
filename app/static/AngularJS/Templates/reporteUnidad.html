@@ -37,6 +37,7 @@
                                                 <th>TAR</th>
                                                 <th>NombreTaller</th>
                                                 <th>Trabajo</th>
+                                                <th>Fecha Creación Cita</th>
                                                 <th>Fecha de cita</th>
                                                 <th>Fecha Confirmación Cita</th>
                                                 <th>Fecha Entrada Unidad</th>
@@ -52,6 +53,7 @@
                                                <td>{{cita.TAR}}</td>
                                                <td>{{cita.razonSocial}}</td>
                                                <td>{{cita.trabajo}}</td>
+                                               <td>{{cita.fechaCreacion | date:"dd-MM-yy HH:mm"}}</td>
                                                <td>{{cita.fechaCita | date:"dd-MM-yy HH:mm"}}</td>
                                                <td>{{cita.fechaConfirmacion | date:"dd-MM-yy HH:mm"}}</td>
                                                <td>{{cita.fechaLlegada | date:"dd-MM-yy HH:mm"}}</td>
