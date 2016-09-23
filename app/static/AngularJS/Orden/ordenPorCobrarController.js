@@ -65,38 +65,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         ordenPorCobrarRepository.getPreFacturas().then(function (result) {
             if (result.data.length > 0) {
                 $scope.facturas = result.data;
-                setTimeout(function () {
-                    $('.dataTablePreFacturas').DataTable({
-                        buttons: [
-                            {
-                                extend: 'copy'
-                                    },
-                            {
-                                extend: 'csv'
-                                    },
-                            {
-                                extend: 'excel',
-                                title: 'ExampleFile'
-                                    },
-                            {
-                                extend: 'pdf',
-                                title: 'ExampleFile'
-                                    },
-
-                            {
-                                extend: 'print',
-                                customize: function (win) {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-
-                                    $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                                }
-                            }
-                        ]
-                    });
-                }, 1000);
+                waitDrawDocument("dataTablePreFacturas");
             } else {
                 alertFactory.info('No se encontraron trabajos por cobrar');
             }
@@ -229,38 +198,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         ordenPorCobrarRepository.getCopades().then(function (result) {
             if (result.data.length > 0) {
                 $scope.copades = result.data;
-                setTimeout(function () {
-                    $('.dataTableCopades').DataTable({
-                        buttons: [
-                            {
-                                extend: 'copy'
-                                   },
-                            {
-                                extend: 'csv'
-                                   },
-                            {
-                                extend: 'excel',
-                                title: 'ExampleFile'
-                                   },
-                            {
-                                extend: 'pdf',
-                                title: 'ExampleFile'
-                                   },
-
-                            {
-                                extend: 'print',
-                                customize: function (win) {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-
-                                    $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                                }
-                           }
-                       ]
-                    });
-                }, 1000);
+                    waitDrawDocument("dataTableCopades");
             } else {
                 alertFactory.info('No se encontró ninguna COPADE');
             }
@@ -370,38 +308,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         ordenPorCobrarRepository.getOrdenesVerificadas().then(function (result) {
             if (result.data.length > 0) {
                 $scope.verificadas = result.data;
-                setTimeout(function () {
-                    $('.dataTableOrdenesVerificadas').DataTable({
-                        buttons: [
-                            {
-                                extend: 'copy'
-                                   },
-                            {
-                                extend: 'csv'
-                                   },
-                            {
-                                extend: 'excel',
-                                title: 'ExampleFile'
-                                   },
-                            {
-                                extend: 'pdf',
-                                title: 'ExampleFile'
-                                   },
-
-                            {
-                                extend: 'print',
-                                customize: function (win) {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-
-                                    $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                                }
-                           }
-                       ]
-                    });
-                }, 1000);
+                waitDrawDocument("dataTableOrdenesVerificadas");
             } else {
                 alertFactory.info('No se encontró ninguna Orden Verificada');
             }
@@ -421,3 +328,29 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }
     }
 });
+
+   //espera que el documento se pinte para llenar el dataTable
+    var waitDrawDocument = function (dataTable) {
+        setTimeout(function () {
+            $('.' + dataTable).DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        title: 'OrdenporCobrar'
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        }, 2500);
+    }
