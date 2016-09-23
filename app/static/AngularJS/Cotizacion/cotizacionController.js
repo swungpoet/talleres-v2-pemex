@@ -827,5 +827,37 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     //Obtiene el taller seleccionado
     $scope.getTaller = function (idTaller) {
         $scope.selectedTaller = idTaller;
+        $scope.datosCita.idTaller = idTaller;
+    }
+    
+    var getidCita = function (idCita) {
+        citaRepository.getidCita(idCita).then(function (result) {
+            if (result.data.length > 0) {
+                var citaDato = result.data;
+                $scope.idCitaToUpdate = citaDato[0].idCita;
+                $scope.datosCita.razonSocial = citaDato[0].razonSocial;
+                $scope.datosCita.direccion = citaDato[0].direccion;
+                $scope.datosCita.idTaller = citaDato[0].tallerid;
+                $scope.datosCita.idEstadoAutotanque = citaDato[0].idEstadoAutotanque;
+                $scope.datosCita.idTrasladoUnidad = citaDato[0].idTrasladoUnidad;
+                $scope.datosCita.tipoCita = citaDato[0].NumCita;
+                $scope.datosCita.fechaCita = citaDato[0].fechaCita;
+                $scope.datosCita.horaCita = citaDato[0].horaCita;
+                $scope.datosCita.trabajoCita = citaDato[0].trabajo;
+                $scope.datosCita.observacionCita = citaDato[0].observacion;
+                localStorageService.set('citaTipo', $scope.datosCita.tipoCita);
+                $scope.datosCita.tipoCita = parseInt(localStorageService.get('citaTipo'));
+                localStorageService.remove('citaTipo');
+                localStorageService.set('idtallerselected', $scope.datosCita.idTaller);
+                $scope.datosCita.idTaller = localStorageService.get('idtallerselected');
+                localStorageService.remove('idtallerselected');
+
+                alertFactory.success("Datos encontado");
+            } else {
+                alertFactory.info("No se encontraron datos");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar datos");
+        });
     }
 });

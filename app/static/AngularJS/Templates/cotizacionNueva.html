@@ -44,7 +44,7 @@
                             </div>
                             <br/>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <div class="table-responsive" ng-hide="userData.idTipoUsuario == 4">
                                         <table class="table table-striped table-bordered table-hover dataTableTaller" cg-busy="{promise:promise,message:message}">
                                             <thead>
@@ -60,11 +60,11 @@
                                                         <input type="radio" name="optTaller" ng-click="getTaller(taller.idTaller)" />
                                                     </td>
                                                 </tr>
-                                                <tr ng-show="edita == 1 && datosCita.direccion != null">
-                                                    <td>{{datosCita.razonSocial}}</td>
-                                                    <td>{{datosCita.direccion}}</td>
+                                                <tr ng-show="citaDatos.direccion != null">
+                                                    <td>{{citaDatos.razonSocial}}</td>
+                                                    <td>{{citaDatos.direccion}}</td>
                                                     <td>
-                                                        <input type="radio" name="optTaller" ng-click="getTaller(datosCita.idTaller)" />
+                                                        <input type="radio" name="optTaller" ng-click="getTaller(citaDatos.idTaller)" />
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -72,6 +72,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-xs-4">
                                     <input type="text" placeholder="Introduzca servicio, paquete o refacción" ng-model="partida" class="form-control">
@@ -81,7 +82,6 @@
                                 </div>
                             </div>
 
-                            <br/>
                             <br/>
                             <div class="table-responsive">
                                 <table class="table table-bordered dataTableItem">
