@@ -85,16 +85,23 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             datosCita();
             $scope.idTaller = $scope.citaDatos.idTaller;
             localStorageService.remove('tipoCotizacion');
+            localStorageService.remove('idCotizacionEdit');
         } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
+            $scope.idCotizacionEdit = localStorageService.get('idCotizacionEdit');
             $scope.estado = 1;
             $scope.editar = 0;
             datosCita();
             $scope.idTaller = $scope.citaDatos.idTaller;
             if (localStorageService.get('isPreCotizacion') != undefined || localStorageService.get('isPreCotizacion') != null) {
-                localStorageService.get('isPreCotizacion') == true ? $scope.isPrecotizacion = 1 : $scope.isPrecotizacion = 2;
+                if (localStorageService.get('isPreCotizacion') == true) {
+                    $scope.isPrecotizacion = 1;
+                    busquedaServicioDetalle($scope.citaDatos.idCita);
+                } else {
+                    $scope.isPrecotizacion = 2;
+                    $scope.editarCotizacion($scope.idCotizacionEdit, $scope.citaDatos.idTaller, $rootScope.userData.idUsuario);
+                }
             }
-            busquedaServicioDetalle($scope.citaDatos.idCita);
         }
 
         //Se valida si la cotización es para editar
@@ -136,18 +143,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                             dom: '<"html5buttons"B>lTfgitp',
                             buttons: [
                                 {
-                                    extend: 'copy'
-                                    },
-                                {
-                                    extend: 'csv'
-                                    },
-                                {
                                     extend: 'excel',
-                                    title: 'ExampleFile'
-                                    },
-                                {
-                                    extend: 'pdf',
-                                    title: 'ExampleFile'
+                                    title: 'CotizacionNueva'
                                     },
 
                                 {
@@ -338,8 +335,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
 
     //Carga los datos de la cotizacion a editar
     $scope.editarCotizacion = function (idCotizacion, idTaller, idUsuario) {
-        cotizacionRepository.editarCotizacion($scope.editCotizacion.idCotizacion,
-                $scope.editCotizacion.idTaller, idUsuario)
+        cotizacionRepository.editarCotizacion(idCotizacion, idTaller, idUsuario)
             .then(function (result) {
                 $scope.preArticulos = [];
 
