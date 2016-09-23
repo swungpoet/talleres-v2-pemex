@@ -59,7 +59,7 @@
                                                <td>{{cita.fechaLlegada | date:"dd-MM-yy HH:mm"}}</td>
                                                <td>{{cita.descripcionLarga}}</td>
                                                <td>
-                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver la cita" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver la cita" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                </td>
                                             </tr>
                                         </tbody>
@@ -101,7 +101,7 @@
                                                 <td>{{cotizacion.fechaAutorizacionCot | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>{{cotizacion.descripcionLarga}}</td>
                                                 <td>
-                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver la cotización" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver la cotización" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -160,7 +160,7 @@
                                                 <td>{{orden.fechaGarantia | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>{{orden.descripcionLarga}}</td>
                                                 <td>
-                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                 </td>  
                                             </tr>
                                         </tbody>
@@ -174,170 +174,3 @@
         </div>
     </div>
 </div>
-<!--<div class="modal inmodal" id="finalizarTrabajoModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated flipInY">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Terminar trabajo</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <textarea placeholder="Observaciones" class="form-control" rows="4" ng-model="observacionTrabajo"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Salir</button>
-                <button type="button" class="btn btn-danger btnTerminarTrabajo">Terminar trabajo</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="modalCargaArchivos" class="modal inmodal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content animated flipInY">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{tituloModal}}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive m-t">
-                    <div id="dropeZoneFiles" class="dropzone" options="dzOptionsFactura" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
-                </div>
-                <div class="modal-footer">
-                    <button id="btnUploadFiles" type="button" class="btn btn-success" ng-click="dzMethods.processQueue();">{{textoBoton}}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="datosEntradaCertificadoModal" class="modal inmodal fade" role="dialog">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content animated flipInY">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Datos de entrada del Certificado de conformidad</h4>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive m-t">
-                    <form role="form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Número de reporte" class="form-control" ng-model="certificadoParams.noReporte">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Region" class="form-control" ng-model="certificadoParams.gerencia">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="TAD" class="form-control" ng-model="certificadoParams.tad">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Solpe" class="form-control" ng-model="certificadoParams.solpe">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Orden de surtimiento" class="form-control" ng-model="certificadoParams.ordenSurtimiento">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Monto OS" ng-model="certificadoParams.montoOS" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Nombre del emisor" class="form-control" ng-model="certificadoParams.nombreEmisor">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Nombre del proveedor" class="form-control" ng-model="certificadoParams.nombreProveedor">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" placeholder="Puesto del proveedor" class="form-control" ng-model="certificadoParams.puestoProveedor">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" ng-click="generaCertificadoConformidadPDF()">Generar certificado</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal inmodal" id="finalizarTrabajoModal2" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated flipInY">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Rechazar trabajo</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <textarea placeholder="Observaciones" class="form-control" rows="4" ng-model="observacionRechazo"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Salir</button>
-                <button type="button" class="btn btn-danger btnTerminarTrabajo2">Rechzar trabajo</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal inmodal" id="cargafechainIciorealTrabajo" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated flipInY">
-            <div class="modal-header">
-                <h4 class="modal-title">Capturar Fecha Inicio Real de Trabajos</h4>
-            </div>
-            <br>
-            <form role="form">
-                <div class="col-xs-10">
-                    <div class="form-group" id="fechaTrabajo">
-                        <div class="input-group date">
-                            <input type="text" placeholder="Introduzca la fecha inicio del trabajo" class="form-control" value="" ng-model="fecha">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="col-xs-10">
-                    <div class="input-group clockpicker" data-autoclose="true">
-                        <input type="text" placeholder="Introduzca la hora inicio del trabajo" class="form-control" value="" ng-model="hora">
-                        <span class="input-group-addon">
-                                    <span class="fa fa-clock-o"></span>
-                        </span>
-                    </div>
-                </div>
-            </form>
-            <br>
-            <br>
-            <br>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanfecha()">Salir</button>
-                <button type="button" class="btn btn-success" ng-click="guardaFecha()">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>-->
-
-<!--<div id="modalCargaComprobante" class="modal inmodal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-
-         Modal content
-        <div class="modal-content animated flipInY">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Solicitud de Anticipo</h4>
-
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive m-t">
-                    
-                    <div id="dropeZoneFiles2" class="dropzone" options="dzOptionsPreFactura" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
-                </div>
-                <div class="modal-footer">
-                    <button id="btnUploadFiles" type="button" class="btn btn-success" ng-click="dzMethods.processQueue();">Solicitar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
