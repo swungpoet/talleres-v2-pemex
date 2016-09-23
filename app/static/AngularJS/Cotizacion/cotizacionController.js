@@ -289,7 +289,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     $scope.userData.idUsuario,
                     $scope.observaciones,
                     idUnidad,
-                    $scope.tipoCotizacion,
+                    $scope.selectedTipo.idTipoCotizacion,
                     $scope.selectedTaller)
                 .then(function (resultado) {
                     alertFactory.success('Guardando Cotización Maestro');
@@ -835,7 +835,6 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     //Obtiene el taller seleccionado
     $scope.getTaller = function (idTaller) {
         $scope.selectedTaller = idTaller;
-        $scope.datosCita.idTaller = idTaller;
     }
 
     var getidCita = function (idCita) {
