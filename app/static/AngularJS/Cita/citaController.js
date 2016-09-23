@@ -1000,7 +1000,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //Recupera la preOrden de Servicio de una Cita
     $scope.getPreCotizacion = function (idCita) {
-        alert(idCita);
+        //alert(idCita);
         citaRepository.getPreOrden(idCita).then(function (preCotizaciones) {
             if (preCotizaciones.data.length > 0) {
                 $scope.preCotizaciones = preCotizaciones.data;

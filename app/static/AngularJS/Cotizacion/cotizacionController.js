@@ -452,6 +452,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.numEconomico = $scope.citaDatos.numEconomico;
             $scope.modeloMarca = $scope.citaDatos.modeloMarca;
             $scope.trabajo = $scope.citaDatos.trabajo;
+            $scope.citaDatos.idTipoCita == 4 ? $scope.selectedTipo = 2 : $scope.selectedTipo = 1;
         }
     }
 
