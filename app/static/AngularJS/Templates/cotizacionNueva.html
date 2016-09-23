@@ -30,9 +30,12 @@
                             <br/>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <select class="form-control m-b" name="tar" ng-model="selectedTipo" ng-options="tipo.cotizacion for tipo in tipoCotizaciones">
+                                    <!--<select class="form-control m-b" name="tar" ng-model="selectedTipo" ng-options="tipo.cotizacion for tipo in tipoCotizaciones">
                                         <option value="">Seleccione el tipo de cotización</option>
-                                        <!--default option -->
+                                    </select> -->
+                                        <select class="form-control m-b" name="tar" ng-model="selectedTipo.idTipoCotizacion" ng-options="tipo.idTipoCotizacion as tipo.cotizacion for tipo in tipoCotizaciones">
+                                        <option value="">Seleccione el tipo de cotización</option>
+
                                     </select>
                                 </div>
                                 <div class="col-xs-6">

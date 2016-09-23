@@ -36,6 +36,10 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     var contentForm = '';
     var btnSubmit = '';
     var elements = '';
+            $scope.selectedTipo = {
+            idTipoCotizacion: 0,
+            cotizacion: ""
+        }
 
     var getExample = function () {
         exampleRepo.getEjemplo().then(function (exampleData) {
@@ -53,6 +57,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         });
     }
     $scope.init = function () {
+
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT", 20);
@@ -70,7 +75,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             }, 50);
         });
         exist = false;
-
+        $scope.get_tipoCotizaciones();
         //Nueva cotización
         if (localStorageService.get('tipoCotizacion') != null) {
             $scope.citaDatos = localStorageService.get('cita');
@@ -111,7 +116,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             datosUnidad(null, $scope.orden.idTrabajo);
         }
 
-        $scope.get_tipoCotizaciones();
+
     }
 
     //Busqueda de item (servicio/pieza/refacción)
@@ -452,7 +457,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             $scope.numEconomico = $scope.citaDatos.numEconomico;
             $scope.modeloMarca = $scope.citaDatos.modeloMarca;
             $scope.trabajo = $scope.citaDatos.trabajo;
-            $scope.citaDatos.idTipoCita == 4 ? $scope.selectedTipo = 2 : $scope.selectedTipo = 1;
+            $scope.citaDatos.idTipoCita == 4 ? $scope.selectedTipo.idTipoCotizacion = 2 : $scope.selectedTipo.idTipoCotizacion = 1;
         }
     }
 
