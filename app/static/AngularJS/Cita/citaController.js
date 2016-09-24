@@ -1066,7 +1066,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     $scope.enviaAprobacion = function (cita) {
         citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
             if (result.data[0].respuesta != 0) {
-                alertFactory.success('OK');
+                alertFactory.success('Cotizaciones enviadas a aprobación');
+                location.href = '/cotizacionconsulta';
             } else {
                 alertFactory.info('Falta cargar el comprobante de recepción');
             }
