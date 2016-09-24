@@ -79,6 +79,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         //Nueva cotización
         if (localStorageService.get('tipoCotizacion') != null) {
             $scope.citaDatos = localStorageService.get('cita');
+            localStorageService.remove('cita');
             $scope.tipoCotizacion = parseInt(localStorageService.get('tipoCotizacion'));
             $scope.estado = 1;
             $scope.editar = 0;
@@ -88,6 +89,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             localStorageService.remove('cotizacionEdit');
         } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
+            localStorageService.remove('cita');
             $scope.cotizacionEdit = localStorageService.get('objEditCotizacion');
             $scope.estado = 1;
             $scope.editar = 0;
