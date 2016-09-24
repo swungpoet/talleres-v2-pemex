@@ -88,7 +88,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             localStorageService.remove('cotizacionEdit');
         } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
-            $scope.cotizacionEdit = localStorageService.get('cotizacionEdit');
+            $scope.cotizacionEdit = localStorageService.get('objEditCotizacion');
             $scope.estado = 1;
             $scope.editar = 0;
             datosCita();
@@ -101,6 +101,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                     $scope.isPrecotizacion = 2;
                     $scope.editarCotizacion($scope.cotizacionEdit.idCotizacion, $scope.cotizacionEdit.idTaller, $rootScope.userData.idUsuario);
                     $scope.getDatosTallerByCotizacion($scope.cotizacionEdit.idTaller);
+                    $scope.selectedTipo.idTipoCotizacion = $scope.cotizacionEdit.idTipoCotizacion;
                 }
             }
         }
@@ -108,6 +109,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         //Se valida si la cotización es para editar
         if (localStorageService.get('objEditCotizacion') != null) {
             $scope.editCotizacion = localStorageService.get('objEditCotizacion'); //objeto de la pagina autorizacion
+            localStorageService.remove('objEditCotizacion');
             datosUnidad($scope.editCotizacion.idCotizacion, null);
             $scope.editar = 1;
             $scope.estado = 2;
@@ -385,59 +387,69 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     });
     btnCotizacionUpdLoading.click(function () {
         btnCotizacionUpdLoading.ladda('start');
-        eliminarElementos();
-        $scope.arrayCambios.forEach(function (item, i) {
-            cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
-                    item.idTipoElemento,
-                    item.idItem,
-                    item.precio,
-                    item.cantidad,
-                    $scope.observaciones,
-                    item.idEstatus,
-                    0)
-                .then(function (result) {
-                    if (result.data[0].idCotizacion > 0)
-                        alertFactory.success('Cotización Actualizada ');
-                }, function (error) {
-                    alertFactory.error('Error');
-                    btnCotizacionUpdLoading.ladda('stop');
-                    alertFactory.error('Error');
-
-                });
-        }, function (error) {
-            alertFactory.error('Error');
-            btnCotizacionUpdLoading.ladda('stop');
-        });
-        $scope.arrayItem.forEach(function (item, i) {
-            cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
-                    item.idTipoElemento,
-                    item.idItem,
-                    item.precio,
-                    item.cantidad,
-                    $scope.observaciones,
-                    item.idEstatus,
-                    1)
-                .then(function (result) {
-                    if (($scope.arrayItem.length - i) === 1) {
-                        alertFactory.success('Cotización Actualizada');
-                        cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
-                        if ($scope.dzMethods.getAllFiles().length == 0) {
-                            setTimeout(function () {
-                                location.href = "/cotizacionconsulta";
-                            }, 1000);
-                        } else {
-                            $scope.dzMethods.processQueue();
-                        }
+        if ($scope.selectedTipo == undefined || $scope.selectedTipo == null) {
+            alertFactory.info('Debe seleccionar un tipo de cotización');
+        } else if ($scope.selectedTaller == null) {
+            alertFactory.info('Debe seleccionar un taller');
+        } else {
+            eliminarElementos();
+            $scope.arrayCambios.forEach(function (item, i) {
+                cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
+                        item.idTipoElemento,
+                        item.idItem,
+                        item.precio,
+                        item.cantidad,
+                        $scope.observaciones,
+                        item.idEstatus,
+                        0,
+                        $scope.selectedTaller,
+                        $scope.selectedTipo.idTipoCotizacion)
+                    .then(function (result) {
+                        if (result.data[0].idCotizacion > 0)
+                            alertFactory.success('Cotización Actualizada ');
+                    }, function (error) {
+                        alertFactory.error('Error');
                         btnCotizacionUpdLoading.ladda('stop');
-                    }
-                }, function (error) {
-                    alertFactory.error('Error');
-                    btnCotizacionUpdLoading.ladda('stop');
-                });
-        }, function (error) {
-            alertFactory.error('Error');
-            btnCotizacionUpdLoading.ladda('stop');
-        });
+                        alertFactory.error('Error');
+
+                    });
+            }, function (error) {
+                alertFactory.error('Error');
+                btnCotizacionUpdLoading.ladda('stop');
+            });
+            $scope.arrayItem.forEach(function (item, i) {
+                cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
+                        item.idTipoElemento,
+                        item.idItem,
+                        item.precio,
+                        item.cantidad,
+                        $scope.observaciones,
+                        item.idEstatus,
+                        1,
+                        $scope.selectedTaller,
+                        $scope.selectedTipo.idTipoCotizacion)
+                    .then(function (result) {
+                        if (($scope.arrayItem.length - i) === 1) {
+                            alertFactory.success('Cotización Actualizada');
+                            cotizacionMailRepository.postMail($scope.editCotizacion.idCotizacion, $scope.editCotizacion.idTaller, 1, '');
+                            if ($scope.dzMethods.getAllFiles().length == 0) {
+                                setTimeout(function () {
+                                    location.href = "/tallercita";
+                                }, 1000);
+                            } else {
+                                $scope.dzMethods.processQueue();
+                            }
+                            btnCotizacionUpdLoading.ladda('stop');
+                        }
+                    }, function (error) {
+                        alertFactory.error('Error');
+                        btnCotizacionUpdLoading.ladda('stop');
+                    });
+            }, function (error) {
+                alertFactory.error('Error');
+                btnCotizacionUpdLoading.ladda('stop');
+            });   
+        }
     });
 
     //Se obtienen datos de la unidad a editar

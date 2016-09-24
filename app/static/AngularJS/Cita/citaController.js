@@ -413,8 +413,26 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         //$scope.labelItems = 0;
     }
 
+
     //Redirige a pagina para nueva cotización
-    $scope.nuevaCotizacion = function (cita, cotizacionEdit) {
+    $scope.nuevaCotizacion = function (cita, preCotizacion) {
+        if (preCotizacion == undefined) {
+            localStorageService.set('cita', cita);
+            localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
+            //localStorageService.set('cotizacionEdit', preCotizacion);
+        } else {
+            var objEditCotizacion = {
+                idCotizacion: preCotizacion.idCotizacion,
+                idTaller: preCotizacion.idTaller,
+                idTrabajo: preCotizacion.idTrabajo,
+                idTipoCotizacion: preCotizacion.idTipoCotizacion
+            };
+            localStorageService.set('objEditCotizacion', objEditCotizacion);
+        }
+        location.href = '/cotizacionnueva';
+    }
+
+    /*$scope.nuevaCotizacion = function (cita, cotizacionEdit) {
         if (localStorageService.get('objEditCotizacion') != null) {
             localStorageService.remove('objEditCotizacion');
         }
@@ -423,25 +441,9 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         }
         localStorageService.set('cita', cita);
         localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
-        localStorageService.set('cotizacionEdit', cotizacionEdit);
+        
         location.href = '/cotizacionnueva';
-
-
-        /* var objEditCotizacion = {
-             idCotizacion: idCotizacion,
-             idTaller: idTaller,
-             idTrabajo: idTrabajo
-         };
-
-         if (localStorageService.get('cita') != null) {
-             localStorageService.remove('cita');
-         }
-         if (localStorageService.get('orden') != null) {
-             localStorageService.remove('orden');
-         }
-         localStorageService.set('objEditCotizacion', objEditCotizacion);
-         location.href = '/cotizacionnueva';*/
-    }
+    }*/
 
     //despliega el div de las tablas
     $scope.slideDown = function () {

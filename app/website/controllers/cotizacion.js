@@ -736,6 +736,16 @@ Cotizacion.prototype.post_updateCotizacion = function (req, res, next) {
             name: 'idTipo',
             value: req.body.idTipo,
             type: self.model.types.DECIMAL
+                        },
+        {
+            name: 'idTaller',
+            value: req.body.idTaller,
+            type: self.model.types.DECIMAL
+                        },
+        {
+            name: 'idTipoCotizacion',
+            value: req.body.idTipoCotizacion,
+            type: self.model.types.DECIMAL
                         }];
 
     this.model.post('UPD_COTIZACION_SP', params, function (error, result) {
