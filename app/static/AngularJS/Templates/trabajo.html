@@ -231,10 +231,12 @@
                                         <table class="table table-striped table-bordered table-hover dataTableOrdenporVerificar" cg-busy="{promise:promise,message:message}">
                                             <thead>
                                                 <tr>
+                                                    <th>Consecutivo</th>
                                                     <th>Número de la Orden</th>
                                                     <th>Número Económico</th>
-                                                    <th>Taller</th>
                                                     <th>TAR</th>
+                                                    <th>Taller</th>
+                                                    
                                                     <th>Orden de Surtimiento</th>
                                                     <th>Monto de la Orden</th>
                                                     <th>Descripción de la Orden</th>
@@ -242,15 +244,16 @@
                                                     <th>Archivos Factura</th>
                                                     <th>Editar Costos</th>
                                                     <th>Verificar Orden</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="trabajo in admonOrdenes ">
+                                                    <td>{{trabajo.idCita}}</td>
                                                     <td>{{trabajo.numeroTrabajo}}</td>
                                                     <td>{{trabajo.numEconomico}}</td>
-                                                    <td>{{trabajo.razonSocial}}</td>
                                                     <td>{{trabajo.TAR}}</td>
+                                                    <td>{{trabajo.razonSocial}}</td>
+                                                    
                                                     <td>{{trabajo.folio}}</td>
                                                     <td>{{trabajo.montoOrden | currency}}</td>
                                                     <td>{{trabajo.trabajo}}</td>
