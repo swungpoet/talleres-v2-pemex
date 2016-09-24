@@ -414,7 +414,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     }
 
     //Redirige a pagina para nueva cotización
-    $scope.nuevaCotizacion = function (cita, idCotizacionEdit) {
+    $scope.nuevaCotizacion = function (cita, cotizacionEdit) {
         if (localStorageService.get('objEditCotizacion') != null) {
             localStorageService.remove('objEditCotizacion');
         }
@@ -423,7 +423,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         }
         localStorageService.set('cita', cita);
         localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
-        localStorageService.set('idCotizacionEdit', idCotizacionEdit);
+        localStorageService.set('cotizacionEdit', cotizacionEdit);
         location.href = '/cotizacionnueva';
 
 

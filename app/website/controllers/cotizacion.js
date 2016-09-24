@@ -1188,4 +1188,29 @@ Cotizacion.prototype.get_tallerCotizacion = function (req, res, next) {
     });
 }
 
+//Se los datos del taller por una cotización
+Cotizacion.prototype.get_datosTallerByCotizacion = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+    var params = [{
+        name: 'idTaller',
+        value: req.query.idTaller,
+        type: self.model.types.DECIMAL
+    }];
+
+    this.model.query('SEL_TALLER_BY_ID_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Cotizacion;

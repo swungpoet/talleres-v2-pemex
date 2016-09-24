@@ -166,6 +166,18 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getDatosTallerByCotizacion: function (idTaller) {
+            return $http({
+                url: searchUrl + 'datosTallerByCotizacion',
+                method: "GET",
+                params: {
+                    idTaller: idTaller
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
