@@ -459,7 +459,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                         setTimeout(function () {
                                             $scope.dzMethods.removeAllFiles();
                                             $('#modalCargaArchivos').appendTo('body').modal('hide');
-                                        }, 1000);
+                                        }, 1500);
                                         alertFactory.info("El monto de la orden seleccionada rebasa el rango especificado de (+- $1.00 MXN), seleccione una orden que se adecúe con el monto de la Factura");
                                     }
                                 }
