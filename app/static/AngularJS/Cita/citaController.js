@@ -1066,16 +1066,34 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         });
     }
 
+    //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion = function (cita) {
-        citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
-            if (result.data[0].respuesta != 0) {
-                alertFactory.success('Cotizaciones enviadas a aprobación');
-                location.href = '/cotizacionconsulta';
-            } else {
-                alertFactory.info('Falta cargar el comprobante de recepción');
+        //verifica si la unidad ya llegó al taller
+        if(cita.idEstatus == 15){
+            var existePrecotizacion = $scope.preCotizaciones.some(checkExistsPrecotizacion);
+            if (!existePrecotizacion) {
+                console.log("no existe");
+                citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
+                    if (result.data[0].respuesta != 0) {
+                        alertFactory.success('Cotizaciones enviadas a aprobación');
+                        location.href = '/cotizacionconsulta';
+                    } 
+                }, function (error) {
+                    alertFactory.error('No se pudieron enviar las cotizaciones  a Aprobación');
+                });
             }
-        }, function (error) {
-            alertFactory.error('No se pudieron enviar a aprobación las cotizaciones');
-        });
+            else{
+                alertFactory.info("Falta asignar la cotización");
+            }
+        }
+        else{
+            alertFactory.info("No se podrán enviar las cotizaciones a Aprobación, la unidad aún no llega al taller");
+        }
+    }
+
+    
+    //valida si existe alguna precotización
+    function checkExistsPrecotizacion(precotizacion) {
+        return precotizacion.idCotizacion == null;
     }
 });
