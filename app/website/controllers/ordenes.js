@@ -257,7 +257,7 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
     nombreArchivos = req.body.archivos;  
     var fechaRecepcionCopade = req.body.fechaRecepcionCopade; 
     var subTotal,total,moneda,cantidad,descripcion,importeConcepto,unidad,valorUnitario,totalImpuestosRetenidos,totalImpuestosTrasladados,impuesto,importeTraslado,tasa;
-    var contrato,ordenSurtimiento,numeroEstimacion,numeroAcreedor,gestor,finiquito,posicionap,numeroCopade,ejercicio,xmlCopade;
+    var contrato,ordenSurtimiento,numeroEstimacion,numeroAcreedor,gestor,finiquito,posicionap,numeroCopade,ejercicio,xmlCopade,i;
     var objCopade = [];
     var paramValuesCopade = [];
 
@@ -321,14 +321,15 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
                         xmlCopade: xmlCopade          
                     };                    
 
-                    paramValuesCopade.push(objCopade);       
-                    if ((nombreArchivos.length - i) == 1) {            
+                    paramValuesCopade.push(objCopade);   
+                        
+                      // if ((nombreArchivos.length - i) == 1) {            
                         object.error = err;            
                         object.result = paramValuesCopade;            
                         self.view.expositor(res, object);
                         nombreArchivos = [];
                         paramValuesCopade = [];          
-                    } 
+                       //} 
                 });      
             });    
         }  
