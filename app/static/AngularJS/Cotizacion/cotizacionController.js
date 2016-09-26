@@ -106,7 +106,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             datosCita();
             $scope.idTaller = $scope.citaDatos.idTaller;
             if (localStorageService.get('isPreCotizacion') != undefined || localStorageService.get('isPreCotizacion') != null) {
-                if (localStorageService.get('isPreCotizacion') == true) {
+                if (localStorageService.get('isPreCotizacion') == 'true') {
                     $scope.isPrecotizacion = 1;
                     busquedaServicioDetalle($scope.citaDatos.idCita);
                 } else {
@@ -478,12 +478,10 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
 
     //Se obtienen datos de la cita para generar la cotización
     var datosCita = function () {
-        if (localStorageService.get('cita') != null) {
-            $scope.numEconomico = $scope.citaDatos.numEconomico;
-            $scope.modeloMarca = $scope.citaDatos.modeloMarca;
-            $scope.trabajo = $scope.citaDatos.trabajo;
-            $scope.citaDatos.idTipoCita == 4 ? $scope.selectedTipo.idTipoCotizacion = 2 : $scope.selectedTipo.idTipoCotizacion = 1;
-        }
+        $scope.numEconomico = $scope.citaDatos.numEconomico;
+        $scope.modeloMarca = $scope.citaDatos.modeloMarca;
+        $scope.trabajo = $scope.citaDatos.trabajo;
+        $scope.citaDatos.idTipoCita == 4 ? $scope.selectedTipo.idTipoCotizacion = 2 : $scope.selectedTipo.idTipoCotizacion = 1;
     }
 
     //Cargar datos de la cotizacion desde la cita

@@ -419,7 +419,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         if (nvaCotizacion == 1) {
             localStorageService.set('cita', cita);
             localStorageService.set('isNuevaCotizacion', nvaCotizacion);
-        } else if (preCotizacion == undefined) {
+        } else if ($scope.isPreCotizacion == true) {
             localStorageService.set('cita', cita);
             localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
             //localStorageService.set('cotizacionEdit', preCotizacion);
