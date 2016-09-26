@@ -28,7 +28,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.modeloMarca = '';
     $scope.trabajo = '';
     $scope.idCita = '';
-    $scope.idTaller = '';
+    $scope.idTaller = null;
     $scope.userData = localStorageService.get('userData');
     $scope.filesName = [];
     var names = [];
@@ -39,6 +39,18 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.selectedTipo = {
         idTipoCotizacion: 0,
         cotizacion: ""
+    };
+    $scope.citaDatos = {
+        razonSocial: "",
+        direccion: "",
+        idTaller: "",
+        tipoCita: undefined,
+        fechaCita: "",
+        horaCita: "",
+        trabajoCita: "",
+        observacionCita: "",
+        idEstadoAutotanque: "",
+        idTrasladoUnidad: ""
     }
 
     var getExample = function () {
@@ -77,15 +89,13 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         exist = false;
         $scope.get_tipoCotizaciones();
         //Nueva cotización
-        if (localStorageService.get('tipoCotizacion') != null) {
+        if (localStorageService.get('isNuevaCotizacion') != null) {
             $scope.citaDatos = localStorageService.get('cita');
             localStorageService.remove('cita');
-            $scope.tipoCotizacion = parseInt(localStorageService.get('tipoCotizacion'));
+            localStorageService.remove('isNuevaCotizacion');
             $scope.estado = 1;
             $scope.editar = 0;
             datosCita();
-            $scope.idTaller = $scope.citaDatos.idTaller;
-            localStorageService.remove('tipoCotizacion');
             localStorageService.remove('cotizacionEdit');
         } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
@@ -120,6 +130,8 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 $scope.editCotizacion.idTaller, $scope.userData.idUsuario);
             $scope.idCotizacion = $scope.editCotizacion.idCotizacion;
             $scope.idTrabajo = $scope.editCotizacion.idTrabajo;
+            $scope.getDatosTallerByCotizacion($scope.editCotizacion.idTaller);
+            $scope.selectedTipo.idTipoCotizacion = $scope.editCotizacion.idTipoCotizacion;
         }
         //Objeto de la pagina de orden servicio
         if (localStorageService.get('orden') != null) {
@@ -312,7 +324,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                                     cotizacionMailRepository.postMail($scope.idCotizacion, $scope.citaDatos.idTaller, 1, '');
                                     if ($scope.dzMethods.getAllFiles().length == 0) {
                                         setTimeout(function () {
-                                            location.href = "/cotizacionconsulta";
+                                            location.href = "/tallercita";
                                         }, 1000);
                                     } else {
                                         $scope.dzMethods.processQueue();
@@ -335,7 +347,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     //Termina de guardar la información de los archivos
     $scope.FinishSave = function () {
         alertFactory.success('Guardando Archivos');
-        location.href = '/cotizacionconsulta';
+        location.href = '/tallercita';
     }
 
     //Carga los datos de la cotizacion a editar
@@ -450,7 +462,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             }, function (error) {
                 alertFactory.error('Error');
                 btnCotizacionUpdLoading.ladda('stop');
-            });   
+            });
         }
     });
 
@@ -520,7 +532,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                                 cotizacionMailRepository.postMail($scope.idCotizacion, $scope.orden.idTaller, 1, '');
                                 if ($scope.dzMethods.getAllFiles().length == 0) {
                                     setTimeout(function () {
-                                        location.href = "/cotizacionconsulta";
+                                        location.href = "/tallercita";
                                     }, 1000);
                                 } else {
                                     $scope.dzMethods.processQueue();
@@ -759,7 +771,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
                 if (allSuccess) {
                     setTimeout(function () {
                         $scope.dzMethods.removeAllFiles(true);
-                        location.href = '/cotizacionconsulta';
+                        location.href = '/tallercita';
                     }, 1000);
                 }
             }
@@ -852,6 +864,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     $scope.getDatosTallerByCotizacion = function (idTaller) {
         cotizacionRepository.getDatosTallerByCotizacion(idTaller).then(function (result) {
             if (result.data.length > 0) {
+                $scope.idTaller = idTaller;
                 $scope.citaDatos.idTaller = idTaller;
                 $scope.citaDatos.direccion = result.data[0].direccion;
                 $scope.citaDatos.razonSocial = result.data[0].razonSocial;

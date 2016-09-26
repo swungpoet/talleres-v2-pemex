@@ -415,8 +415,11 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
 
     //Redirige a pagina para nueva cotización
-    $scope.nuevaCotizacion = function (cita, preCotizacion) {
-        if (preCotizacion == undefined) {
+    $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
+        if (nvaCotizacion == 1) {
+            localStorageService.set('cita', cita);
+            localStorageService.set('isNuevaCotizacion', nvaCotizacion);
+        } else if (preCotizacion == undefined) {
             localStorageService.set('cita', cita);
             localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
             //localStorageService.set('cotizacionEdit', preCotizacion);

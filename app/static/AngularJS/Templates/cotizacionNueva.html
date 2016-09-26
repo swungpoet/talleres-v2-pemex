@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-xs-4">
                                     <!--<select class="form-control m-b" name="tar" ng-model="selectedTipo" ng-options="tipo.cotizacion for tipo in tipoCotizaciones">
-                                        <option value="">Seleccione el tipo de cotización</option>
+                                        <option value="">Seleccione el tipo de cotizaciÃ³n</option>
                                     </select> -->
                                         <select class="form-control m-b" name="tar" ng-model="selectedTipo.idTipoCotizacion" ng-options="tipo.idTipoCotizacion as tipo.cotizacion for tipo in tipoCotizaciones">
                                         <option value="">Seleccione el tipo de cotización</option>
@@ -63,7 +63,7 @@
                                                         <input type="radio" name="optTaller" ng-click="getTaller(taller.idTaller)" />
                                                     </td>
                                                 </tr>
-                                                <tr ng-show="citaDatos.direccion != null">
+                                                <tr ng-show="idTaller != null">
                                                     <td>{{citaDatos.razonSocial}}</td>
                                                     <td>{{citaDatos.direccion}}</td>
                                                     <td>
@@ -211,10 +211,10 @@
     </div>
 </div>
 <!--<div class="wrapper wrapper-content animated fadeIn datosUnidad">
-    <label>Descripción de la Orden:</label>
+    <label>DescripciÃ³n de la Orden:</label>
     <span>{{trabajo}}</span>
     <br/>
-    <label>Número Economico: </label>
+    <label>NÃºmero Economico: </label>
     <span>{{numEconomico}}</span>
     <br/>
     <label>Marca-Modelo: </label>

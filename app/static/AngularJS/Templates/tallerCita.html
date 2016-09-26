@@ -33,7 +33,7 @@
                                         <th>Fecha</th>
                                         <th>Taller</th>
                                         <th>Dirección Taller</th>
-                                        <th>Número Económico</th>
+                                        <th>NÃºmero Económico</th>
                                         <th>TAR</th>
                                         <th>Marca - Modelo</th>
                                         <th>Descripción de la Orden</th>
@@ -69,7 +69,7 @@
                                                 <div class="triangle"></div>
                                                 <div class="ns-popover-tooltip">
                                                     <div align="right" ng-hide="isPreCotizacion">
-                                                        <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Nueva Cotización" id="btnNvaCotizar" tooltip-placement="left" ng-click="asignaTipoCotizacion(cita)"><i class="glyphicon glyphicon-plus"></i>
+                                                        <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Nueva Cotización" id="btnNvaCotizar" tooltip-placement="left" ng-click="nuevaCotizacion(cita, preCotizacion, 1)"><i class="glyphicon glyphicon-plus"></i>
                                                         </button>
                                                     </div>
                                                     <br>
@@ -84,7 +84,7 @@
                                                                 <td>{{preCotizacion.numeroCotizacion}}</td>
                                                                 <td>{{preCotizacion.tipoCotizacion}}</td>
                                                                 <td>
-                                                                    <button type="button" class="btn btn-success" ng-click="nuevaCotizacion(cita, preCotizacion)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                                    <button type="button" class="btn btn-success" ng-click="nuevaCotizacion(cita, preCotizacion, 0)"><span class="glyphicon glyphicon-pencil"></span></button>
                                                                     <button type="button" class="btn btn-danger" ng-click="deletePreCotizacion(preCotizacion.idCita, preCotizacion.idCotizacion)"><span class="glyphicon glyphicon-remove"></span></button>
                                                                 </td>
                                                             </tr>
