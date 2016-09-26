@@ -56,7 +56,7 @@
                                         <td ng-class="{'rowRojo': cita.idEstatus==22}">{{ cita.estatus }}</td>
                                         <td>{{ cita.nombreCompleto }} </td>
                                         <td>
-                                            <button ng-hide="cita.idEstatus == 22 || cita.idEstatus == 1 || userData.idTipoUsuario == 4" ng-disabled="cita.idTrabajo != null" class="btn btn-success" type="button" data-toggle="tooltip" tooltip="Cargar Comprobante de Recepción" id="btnCotizar" tooltip-placement="top" ng-click="formatoRecepcion(cita)">
+                                            <button ng-hide="cita.idEstatus == 22 || cita.idEstatus == 1 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" data-toggle="tooltip" tooltip="Cargar Comprobante de Recepción" id="btnCotizar" tooltip-placement="top" ng-click="formatoRecepcion(cita)">
                                                 <span class="glyphicon glyphicon-cloud-upload"></span>
                                             </button>
                                             <!--<button ng-hide="cita.idEstatus == 22 || cita.idEstatus == 1 || userData.idTipoUsuario == 4" class="btn btn-info" type="button" data-toggle="tooltip" tooltip="Cotizar" id="btnCotizar" tooltip-placement="top" ng-click="nuevaCotizacion(cita)">
@@ -69,7 +69,7 @@
                                                 <div class="triangle"></div>
                                                 <div class="ns-popover-tooltip">
                                                     <div align="right" ng-hide="isPreCotizacion">
-                                                        <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Nueva Cotización" id="btnNvaCotizar" tooltip-placement="left" ng-click="asignaTipoCotizacion(cita)"><i class="glyphicon glyphicon-plus"></i>
+                                                        <button class="btn btn-informa" type="button" data-toggle="tooltip" tooltip="Nueva Cotización" id="btnNvaCotizar" tooltip-placement="left" ng-click="nuevaCotizacion(cita, preCotizacion, 1)"><i class="glyphicon glyphicon-plus"></i>
                                                         </button>
                                                     </div>
                                                     <br>
@@ -84,7 +84,7 @@
                                                                 <td>{{preCotizacion.numeroCotizacion}}</td>
                                                                 <td>{{preCotizacion.tipoCotizacion}}</td>
                                                                 <td>
-                                                                    <button type="button" class="btn btn-success" ng-click="nuevaCotizacion(cita, preCotizacion)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                                    <button type="button" class="btn btn-success" ng-click="nuevaCotizacion(cita, preCotizacion, 0)"><span class="glyphicon glyphicon-pencil"></span></button>
                                                                     <button type="button" class="btn btn-danger" ng-click="deletePreCotizacion(preCotizacion.idCita, preCotizacion.idCotizacion)"><span class="glyphicon glyphicon-remove"></span></button>
                                                                 </td>
                                                             </tr>

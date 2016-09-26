@@ -415,8 +415,11 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
 
     //Redirige a pagina para nueva cotización
-    $scope.nuevaCotizacion = function (cita, preCotizacion) {
-        if (preCotizacion == undefined) {
+    $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
+        if (nvaCotizacion == 1) {
+            localStorageService.set('cita', cita);
+            localStorageService.set('isNuevaCotizacion', nvaCotizacion);
+        } else if ($scope.isPreCotizacion == true) {
             localStorageService.set('cita', cita);
             localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
             //localStorageService.set('cotizacionEdit', preCotizacion);
@@ -1066,7 +1069,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     $scope.enviaAprobacion = function (cita) {
         citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
             if (result.data[0].respuesta != 0) {
-                alertFactory.success('OK');
+                alertFactory.success('Cotizaciones enviadas a aprobación');
+                location.href = '/cotizacionconsulta';
             } else {
                 alertFactory.info('Falta cargar el comprobante de recepción');
             }
