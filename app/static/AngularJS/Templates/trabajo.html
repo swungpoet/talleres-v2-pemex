@@ -58,7 +58,7 @@
 
                                                     <!--<button ng-hide="userData.idTipoUsuario == 4" ng-disabled="trabajo.tieneAnticipo" class="btn btn-success" type="button" ng-click="adjuntar(trabajo, 7, 0, 1)" data-toggle="tooltip" tooltip="Cargar Comprobante (Remisión, Prefactura)" tooltip-placement="left"><span class="glyphicon glyphicon-level-up"></span></button>-->
 
-                                                    <button ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 4" type="button" ng-click="getCotizacionesOrden(trabajo.idTrabajo)" ns-popover ns-popover-template="closeProceso" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-success"><span class="glyphicon glyphicon-level-up"></span>
+                                                    <button tooltip="Solicitar Anticipo" ng-if="trabajo.estatus == 'Iniciado' || trabajo.estatus == 'OrdenGarantia'" ng-hide="userData.idTipoUsuario == 4" type="button" ng-click="getCotizacionesOrden(trabajo.idTrabajo)" ns-popover ns-popover-template="closeProceso" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-success"><span class="glyphicon glyphicon-usd"></span>
                                                     </button>
                                                     <script type="text/ng-template" id="closeProceso">
                                                         <div class="triangle"></div>
@@ -311,7 +311,7 @@
                                                         <button class="btn btn-success" type="button" ng-click="lookAt(trabajo, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                                     </td>
                                                     <td>
-                                                        <a type="button" ng-disabled="trabajo.sinProveedor > 0" data-toggle="tooltip" tooltip="Verificar Orden" tooltip-placement="left" class="btn btn-primary btnVerificarOrden" role="button" ng-click="verificaOrden(trabajo.idTrabajo,trabajo.sinProveedor)"><span class="fa fa-check"></span></a>
+                                                        <a type="button" ng-disabled="trabajo.sinProveedor > 0" data-toggle="tooltip" tooltip="Pagar" tooltip-placement="left" class="btn btn-primary btnVerificarOrden" role="button" ng-click="verificaOrden(trabajo.idTrabajo,trabajo.sinProveedor)"><span class="fa fa-check"></span></a>
                                                     </td>
                                                 </tr>
                                             </tbody>
