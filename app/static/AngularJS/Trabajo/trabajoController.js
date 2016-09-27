@@ -199,8 +199,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         
         $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
             $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
-            $scope.idCotizacion = 0;
-        
+            $scope.idCotizacion = 0;  
+
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
         $scope.ejecutaMetodo = ejecutaMetodo;
@@ -475,7 +475,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                         }, 1000);
                         $scope.anticipo = 0;
-                        ordenAnticipoRepository.putAnticipo($scope.idCotizacionAnticipo).then(function (ordenAnticipo) {
+                        ordenAnticipoRepository.putAnticipo($scope.idCotizacionFactura).then(function (ordenAnticipo) {
                             alertFactory.success("Anticipo registrado");
                         }, function (error) {
                             alertFactory.error("Error al insertar el anticipo");
@@ -723,8 +723,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
 
     //obtiene el idCotizacion
-    $scope.getIdCotizacion = function (idCotizacion) {
-        $scope.idCotizacionAnticipo = idCotizacion;
+    $scope.getIdCotizacion = function (idCotizacion, numeroCotizacion) {
+        $scope.idCotizacionFactura = idCotizacion;
+        $scope.numeroCotizacion = numeroCotizacion;
     }
 
     //obtiene el idCotizacion
