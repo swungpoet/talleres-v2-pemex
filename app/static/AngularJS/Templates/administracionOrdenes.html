@@ -53,10 +53,10 @@
                                         <td>{{orden.trabajo}}</td>
                                         <td>{{orden.descripcionLarga }}</td>
                                         <td>
-                                            <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Asignar Id Proveedor" tooltip-placement="left"><span class="glyphicon glyphicon-wrench"></span></button>
+                                            <button class="btn btn-info" type="button" ng-click="modalEditaCM(orden.idCotizacion)" data-toggle="tooltip" tooltip="Asignar Id Proveedor" tooltip-placement="left"><span class="glyphicon glyphicon-wrench"></span></button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-success" type="button" ng-click="" data-toggle="tooltip" tooltip="Editar costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
+                                            <button class="btn btn-success" type="button" ng-click="lookAt(orden, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                         </td>
                                         <td>
                                             <button tooltip="Solicitar Anticipo" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" type="button" ng-click="getCotizacionesOrden(trabajo.idTrabajo)" ns-popover ns-popover-template="closeAnctipo" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-warning"><span class="fa fa-money"></span>
@@ -139,6 +139,43 @@
                     <button id="btnUploadFiles" type="button" class="btn btn-success" ng-click="dzMethods.processQueue();">Adjuntar</button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="editaCMaestro" class="modal inmodal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cotización</h4>
+            </div>
+            <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Tipo Cotización:</label>
+                            <div class="col-xs-9">
+                                <select class="form-control m-b" name="tipo" ng-model="idTipoCotizacion" ng-options="tipo.idTipoCotizacion as tipo.cotizacion  for tipo in tipoCotizacion">
+                                    <option value="">Seleccione tipó de Cotizacion</option>
+                                    <!--default option -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">IdTaller:</label>
+                            <div class="col-xs-9">
+                                <div class="input-group m-b">
+                                    <input type="text" class="form-control" ng-model="ideTaller" size="40">
+                                </div>
+                            </div>
+                        </div>
+                        <br><br><br>
+            </div>
+                <div class="modal-footer">
+                    <button id="btnUploadFiles" type="button" class="btn btn-success" ng-click="actualizaProveedor()">Actualiza</button>
+                </div>
+
         </div>
     </div>
 </div>
