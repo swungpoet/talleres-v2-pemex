@@ -8,7 +8,7 @@
 // -- Fecha:
 // -- =============================================
 
-registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository ) {
+registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository ) {
     //init del controller
     $scope.init = function () {
         $scope.tipoCotizacion();
@@ -159,6 +159,108 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         });
     }
 
+    //obtiene el idCotizacion
+    $scope.getIdCotizacion = function (idCotizacion, numeroCotizacion) {
+        $scope.idCotizacionFactura = idCotizacion;
+        $scope.numeroCotizacion = numeroCotizacion;
+    }
+    
+    //obtienes las cotizaciones de la orden
+    $scope.getCotizacionesOrden = function (idTrabajo) {
+        ordenAnticipoRepository.getCotizacionesOrden(idTrabajo).then(function (ordenAnticipo) {
+            if (ordenAnticipo.data.length > 0) {
+                alertFactory.success("Cotizaciones cargadas");
+                $scope.cotizacionesOrden = ordenAnticipo.data;
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener las cotizaciones de la orden");
+        })
+    }
+    
+    //muestra el modal para la carga de archivos
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
+        $scope.idTrabajo = objOrden.idTrabajo;
+        //LQMA add 19092016
+        $scope.idEstatusPorCerrar = objOrden.idEstatus;
+        
+        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
+            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
+            $scope.idCotizacion = 0;  
+
+        $scope.idCategoria = 2;
+        $scope.idNombreEspecial = idNombreEspecial;
+        $scope.ejecutaMetodo = ejecutaMetodo;
+        if (anticipo == 1) {
+            $scope.anticipo = 1;
+            $scope.tituloModal = 'Solicitud de Anticipo';
+            $scope.textoBoton = 'Solicitar';
+            //$scope.getMontoOrdenTrabajo(objOrden.idCita);
+        } else {
+            $scope.anticipo = 0;
+            $scope.tituloModal = 'Carga Archivo';
+            $scope.textoBoton = 'Cargar';
+        }
+        $('#modalCargaArchivos').appendTo('body').modal('show');
+    }
+    
+        //call backs of drop zone
+    $scope.dzCallbacks = {
+        'addedfile': function (file) {
+            $scope.newFile = file;
+        },
+        'sending': function (file, xhr, formData) {
+            formData.append('idTrabajo', $scope.idTrabajo);
+            formData.append('idCotizacion', $scope.idCotizacion);
+            formData.append('idCategoria', $scope.idCategoria);
+            formData.append('idNombreEspecial', $scope.idNombreEspecial);
+            //LQMA  add 15092016  --idEstatus , define si crea el archivo de forma temporal
+            formData.append('idEstatus', $scope.idEstatusPorCerrar);
+        },
+        'completemultiple': function (file, xhr) {
+            var checkErrorFile = file.some(checkExistsError);
+            if (!checkErrorFile) {
+                var allSuccess = file.every(checkAllSuccess);
+                if (allSuccess) {
+                    if ($scope.anticipo == 1) {
+                        setTimeout(function () {
+                            $scope.dzMethods.removeAllFiles();
+                            $('#modalCargaArchivos').appendTo('body').modal('hide');
+                        }, 1000);
+                        $scope.anticipo = 0;
+                        ordenAnticipoRepository.putAnticipo($scope.idCotizacionFactura).then(function (ordenAnticipo) {
+                            alertFactory.success("Anticipo registrado");
+                        }, function (error) {
+                            alertFactory.error("Error al insertar el anticipo");
+                        });
+                    } else {
+                        setTimeout(function () {
+                            $scope.dzMethods.removeAllFiles();
+                            $('#modalCargaArchivos').appendTo('body').modal('hide');
+                        }, 1000);
+                        $scope.getAdmonOrdenes();
+                    }
+                }
+            }
+        },
+        'error': function (file, xhr) {
+            if (!file.accepted) {
+                $scope.dzMethods.removeFile(file);
+            } else {
+                $scope.dzMethods.removeAllFiles(true);
+                alertFactory.info("No se pudieron subir los archivos");
+            }
+        },
+    };
+    
+     //valida si todos son success
+    function checkAllSuccess(file, index, array) {
+        return file.status === 'success';
+    }
+
+    //valida si existe algún error
+    function checkExistsError(file) {
+        return file.status === 'error';
+    }
 
 
 });
