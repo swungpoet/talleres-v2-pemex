@@ -121,6 +121,20 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        cierreOrden: function (idTrabajo) {
+            var cierreObj = {
+                idTrabajo: idTrabajo
+            };
+
+            return $http({
+                url: ordenUrl + 'mueveCierreOrden/',
+                method: "POST",
+                data: cierreObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });

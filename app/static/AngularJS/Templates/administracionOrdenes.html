@@ -28,8 +28,9 @@
                                         <th>Monto de la Orden</th>
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
-                                        <th>Archivos Factura</th>
-                                        <th>Generar txt</th>
+                                        <th>Mover a Cierre de Orden</th>
+                                       <!--  <th>Ver Factura</th>  -->
+                                        <!-- <th>Generar txt</th> -->
                                         <th>Editar Costos</th>
                                     </tr>
                                 </thead>
@@ -44,13 +45,16 @@
                                         <td>{{orden.trabajo}}</td>
                                         <td>{{orden.descripcionLarga }}</td>
                                         <td>
+                                        <button class="btn btn-info" type="button" ng-click="cierreTrabajo(orden.idTrabajo)" data-toggle="tooltip" tooltip="Mover a Cierre de Orden" tooltip-placement="left"><span class="glyphicon glyphicon-fast-forward"></span></button>
+                                        </td>
+                                        <!-- <td>
                                             <button class="btn btn-success" type="button" ng-click="verFactura(orden.idTrabajo)" data-toggle="tooltip" tooltip="Ver  Factura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
-
-                                            <button class="btn btn-info" type="button" ng-click="openFacturaModal(orden.idTrabajo)" data-toggle="tooltip" tooltip="Cargar Factura" tooltip-placement="left"><span class="glyphicon glyphicon-open"></span></button>
-                                        </td>
-                                        <td>
-                                            <a type="button" data-toggle="tooltip" tooltip="Generar Factura.txt" tooltip-placement="left" class="btn btn-primary" role="button" ng-click="generaTXT(orden.idTrabajo, orden.numeroTrabajo)"><span class="fa fa-file-text-o"></span></a>
-                                        </td>
+                                        </td>  -->
+                                            <!-- <button class="btn btn-info" type="button" ng-click="openFacturaModal(orden.idTrabajo)" data-toggle="tooltip" tooltip="Cargar Factura" tooltip-placement="left"><span class="glyphicon glyphicon-open"></span></button> -->
+                                        
+                                        <!-- <td>
+                                            <a type="button" data-toggle="tooltip" tooltip="Generar Factura.txt" tooltip-placement="left" class="btn btn-primary" role="button" ng-click="generaTXT(orden.idTrabajo, orden.numeroTrabajo)"><span class="fa fa-file-text-o"></span></a> 
+                                        </td> -->
                                         <td>
                                             <button class="btn btn-success" type="button" ng-click="lookAt(orden, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                         </td>

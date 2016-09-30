@@ -39,6 +39,20 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
         window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
     }
+ 
+    // Cierre de Orden
+    $scope.cierreTrabajo = function (idTrabajo) {
+        ordenServicioRepository.cierreOrden(idTrabajo).then(function (admonOrden) {
+            if (admonOrden.data.length > 0) {
+                alertFactory.success("Orden movida a cierre de orden");
+                location.href = '/trabajo';
+            } else {
+                alertFactory.info("No se pudo mover la orden");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden");
+        });
+    }
 
     //visualiza la orden de servicio
     $scope.lookAt = function (trabajo, valBotonera) {

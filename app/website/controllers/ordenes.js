@@ -374,6 +374,30 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
+//obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
+Orden.prototype.post_mueveCierreOrden = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        }];
+
+    this.model.post('UPD_TRABAJO_CIERRE_ORDEN_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 //Inserta los datos de la copade en bd
 Orden.prototype.post_insertaDatosCopade = function (req, res, next) { 
     //Objeto que almacena la respuesta
