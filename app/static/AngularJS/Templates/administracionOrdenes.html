@@ -1,6 +1,6 @@
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
-        <span class="title"> Administración de Órdenes<span class="subtitle">Administrador</span></span>
+        <span class="title"> Gestión de compras unificadas<span class="subtitle">Administrador</span></span>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -20,33 +20,57 @@
                             <table class="table table-striped table-bordered table-hover dataTableOrdenServicio" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <tr>
+                                        <th>Consecutivo</th>
                                         <th>Número de la Orden</th>
                                         <th>Número Económico</th>
+                                        <th>Zona</th>
                                         <th>Taller</th>
                                         <th>TAR</th>
-                                        <th>Orden de Surtimiento</th>
+                                        <!--<th>Orden de Surtimiento</th>-->
                                         <th>Monto de la Orden</th>
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
-                                        <th>Mover a Cierre de Orden</th>
+                                        <!--<th>Mover a Cierre de Orden</th>-->
                                        <!--  <th>Ver Factura</th>  -->
                                         <!-- <th>Generar txt</th> -->
+                                        <th>Id Proveedor</th>
                                         <th>Editar Costos</th>
+                                        <th>Anticipo</th>
+                                        <th>Factura</th>
+                                        <th>Comprar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="orden in admonOrdenes ">
+                                        <td>{{orden.idCita}}</td>
                                         <td>{{orden.numeroTrabajo}}</td>
                                         <td>{{orden.numEconomico}}</td>
+                                        <td>{{orden.zona}}</td>
                                         <td>{{orden.razonSocial}}</td>
                                         <td>{{orden.TAR}}</td>
-                                        <td>{{orden.folio}}</td>
+                                        <!--<td>{{orden.folio}}</td>-->
                                         <td>{{orden.montoOrden | currency}}</td>
                                         <td>{{orden.trabajo}}</td>
                                         <td>{{orden.descripcionLarga }}</td>
                                         <td>
-                                        <button class="btn btn-info" type="button" ng-click="cierreTrabajo(orden.idTrabajo)" data-toggle="tooltip" tooltip="Mover a Cierre de Orden" tooltip-placement="left"><span class="glyphicon glyphicon-fast-forward"></span></button>
+                                            <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Asignar Id Proveedor" tooltip-placement="left"><span class="glyphicon glyphicon-wrench"></span></button>
                                         </td>
+                                        <td>
+                                            <button class="btn btn-success" type="button" ng-click="" data-toggle="tooltip" tooltip="Editar costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning" type="button" ng-click="" data-toggle="tooltip" tooltip="Insertar anticipos" tooltip-placement="left"><span class="fa fa-money"></span></button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary" type="button" ng-click="" data-toggle="tooltip" tooltip="Subir factura" tooltip-placement="left"><span class="glyphicon glyphicon-file"></span></button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-informa" type="button" ng-click="" data-toggle="tooltip" tooltip="Realizar compra" tooltip-placement="left"><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                        </td>
+                                        
+                                        <!--<td>
+                                        <button class="btn btn-info" type="button" ng-click="cierreTrabajo(orden.idTrabajo)" data-toggle="tooltip" tooltip="Mover a Cierre de Orden" tooltip-placement="left"><span class="glyphicon glyphicon-fast-forward"></span></button>
+                                        </td>-->
                                         <!-- <td>
                                             <button class="btn btn-success" type="button" ng-click="verFactura(orden.idTrabajo)" data-toggle="tooltip" tooltip="Ver  Factura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
                                         </td>  -->
@@ -55,9 +79,9 @@
                                         <!-- <td>
                                             <a type="button" data-toggle="tooltip" tooltip="Generar Factura.txt" tooltip-placement="left" class="btn btn-primary" role="button" ng-click="generaTXT(orden.idTrabajo, orden.numeroTrabajo)"><span class="fa fa-file-text-o"></span></a> 
                                         </td> -->
-                                        <td>
+                                        <!--<td>
                                             <button class="btn btn-success" type="button" ng-click="lookAt(orden, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
-                                        </td>
+                                        </td>-->
                                     </tr>
                                 </tbody>
                             </table>
