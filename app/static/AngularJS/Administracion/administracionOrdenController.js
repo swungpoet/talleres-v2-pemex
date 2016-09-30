@@ -11,6 +11,7 @@
 registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository ) {
     //init del controller
     $scope.init = function () {
+        $scope.tipoCotizacion();
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsArchivos = uploadRepository.getDzOptions('text/xml,application/pdf', 2);
@@ -129,4 +130,35 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             alertFactory.error("Error al generar la prefactura");
         });
     }
+
+     //genera el txt de la factura
+    $scope.actualizaProveedor = function (idCotizacion, idTipoCotizacion, idTaller) {
+        ordenServicioRepository.updateCotMaestro(idCotizacion, idTipoCotizacion, idTaller).then(function (result) {
+            if (result.data.length > 0) {
+                alertFactory.success("IdProveedor insertado correctamente!");
+            } else {
+                alertFactory.info('No se pudo realizar el proceso');
+            }
+        }, function (error) {
+            alertFactory.error("Error al actualizar el IdProveedor");
+        });
+    }
+
+    $scope.modalEditaCM = function (idCotizacion) {
+      $('#editaCMaestro').appendTo("body").modal('show');
+        $scope.idCotizacion = idCotizacion;
+        $scope.tipoCotizacion;
+        $scope.ideTaller;
+    }
+      //obtiene el tipo de Cotizacion
+    $scope.tipoCotizacion = function () {
+        ordenServicioRepository.tipoCotizacion().then(function (result) {
+           $scope.tipoCotizacion=result.data;
+        }, function (error) {
+            alertFactory.error("Error al actualizar el IdProveedor");
+        });
+    }
+
+
+
 });
