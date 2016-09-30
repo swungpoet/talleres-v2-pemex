@@ -59,7 +59,38 @@
                                             <button class="btn btn-success" type="button" ng-click="" data-toggle="tooltip" tooltip="Editar costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                         </td>
                                         <td>
-                                            <button class="btn btn-warning" type="button" ng-click="" data-toggle="tooltip" tooltip="Insertar anticipos" tooltip-placement="left"><span class="fa fa-money"></span></button>
+                                            <button tooltip="Solicitar Anticipo" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" type="button" ng-click="getCotizacionesOrden(trabajo.idTrabajo)" ns-popover ns-popover-template="closeAnctipo" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-warning"><span class="fa fa-money"></span>
+                                            </button>
+                                            <script type="text/ng-template" id="closeAnctipo">
+                                                <div class="triangle"></div>
+                                                <div class="ns-popover-tooltip">
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <thead>
+                                                            <th>Fecha de la Orden</th>
+                                                            <th>Número de la Orden</th>
+                                                            <th>Número de Cotización</th>
+                                                            <th>Subtotal</th>
+                                                            <th>Acción</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="cotizacion in cotizacionesOrden">
+                                                                <td>{{cotizacion.fechaOrden}}</td>
+                                                                <td>{{cotizacion.numeroTrabajo}}</td>
+                                                                <td>{{cotizacion.numeroCotizacion}}</td>
+                                                                <td>{{cotizacion.subTotal | currency}}</td>
+                                                                <td ng-if="cotizacion.existeProveedor == 0" ng-class="'rowRojo'">
+                                                                    <i class="fa fa-cog" data-toggle="tooltip" tooltip="La cotización no tiene asignado un proveedor, favor de asignar." tooltip-placement="up"></i>
+                                                                </td>
+                                                                <td ng-if="cotizacion.existeProveedor > 0">
+                                                                   <button ng-show="userData.idTipoUsuario == 1" ng-disabled="cotizacion.existeAnticipo > 0" type="button" class="btn btn-success" ng-click="getIdCotizacion(cotizacion.idCotizacion, cotizacion.numeroCotizacion); adjuntar(trabajo, 7, 0, 1)" tooltip="Subir Anticipo"><span class="glyphicon glyphicon-upload"></span></button>
+
+                                                                   <button ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="lookAt(trabajo, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
+                                                                </td> 
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </script>
                                         </td>
                                         <td>
                                             <button class="btn btn-primary" type="button" ng-click="" data-toggle="tooltip" tooltip="Subir factura" tooltip-placement="left"><span class="glyphicon glyphicon-file"></span></button>
