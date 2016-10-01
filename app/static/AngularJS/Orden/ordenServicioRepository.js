@@ -121,6 +121,57 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        cierreOrden: function (idTrabajo) {
+            var cierreObj = {
+                idTrabajo: idTrabajo
+            };
+
+            return $http({
+                url: ordenUrl + 'mueveCierreOrden/',
+                method: "POST",
+                data: cierreObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+        updateCotMaestro: function (idCotizacion,idTipoCotizacion,idTaller) {
+            var cierreObj = {
+                idCotizacion: idCotizacion,
+                idTipoCotizacion:idTipoCotizacion,
+                idTaller:idTaller
+            };
+
+            return $http({
+                url: ordenUrl + 'actualizaCotizacionMaestro/',
+                method: "POST",
+                data: cierreObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+        tipoCotizacion: function () {
+            return $http({
+                url: ordenUrl + 'obtieneCotizacion',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        recuperaCotizacion: function (idCotizacion) {
+            return $http({
+                url: ordenUrl + 'obtieneMaestro',
+                method: "GET",
+                params: {
+                    idCotizacion: idCotizacion
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

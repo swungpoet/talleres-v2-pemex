@@ -535,6 +535,9 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')) {
                         fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')
                     }
+                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')) {
+                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')
+                    }
                 }
 
                 if (idNombreEspecial == 1) {
@@ -561,8 +564,8 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     nameFile = 'CertificadoConformidad';
                     cb(null, dirname + idTrabajo + '/documentos/certificadoConformidad');
                 } else if (idNombreEspecial == 7) {
-                    /*nameFile = 'ComprobantePreFactura';*/
-                    cb(null, dirname + idTrabajo + '/documentos/preFactura');
+                    nameFile = 'preFactura_' + nombreFacturaCotizacion;
+                    cb(null, dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura');
                 } else {
                     nameFile = 'Evidencia';
                     cb(null, dirname + idTrabajo + '/evidenciaTrabajo');
