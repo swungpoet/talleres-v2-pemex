@@ -357,14 +357,14 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                     },
                     function (isConfirm) {
                         if (isConfirm) {
-                            /*trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
+                            trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
                                 if (ordenVerificada.data[0].idHistorialProceso > 0) {
                                     swal("Proceso Realizado!");
-                                    location.href = '/ordenesporcobrar';
+                                    //location.href = '/ordenesporcobrar';
                                 }
                             }, function (error) {
                                 alertFactory.error("Error al verificar la orden");
-                            });*/
+                            });
                             swal("Proceso Realizado!");
                         } else {
                             swal("Cancelacion de Orden");

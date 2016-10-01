@@ -282,7 +282,20 @@ registrationModule.factory('trabajoRepository', function ($http) {
                    'Content-Type': 'application/json'        
                }      
            });    
-       }
+       },
+        cotizacionespago: function (idTrabajo) {
+            var objTrabajo = {
+                idTrabajo:idTrabajo
+            };
+            return $http({
+                url: trabajoUrl + 'insertBpro',
+                method: "POST",
+                params: objTrabajo,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 });
 
