@@ -6,8 +6,8 @@ var fs = require('fs'),
     xml2js = require('xml2js');
 
 
-var dirname = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/files/';
-var dirCopades = 'C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
+var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 
 
 var Orden = function (conf) {
@@ -199,7 +199,7 @@ function getDatosFactura(res, self, stored, params) {
                 object.error = error;
                 object.result = result;
 
-                var wstream = fs.createWriteStream('C:/Desarrollo/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
+                var wstream = fs.createWriteStream('C:/Produccion/Talleres/talleres-v2-pemex/app/static/facturas/factura-' + result[0].numeroTrabajo + '.txt', 'utf8');
                 if (wstream) {
                     var carrito = '';
                     var lineToInsert = '';
