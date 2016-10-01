@@ -273,5 +273,43 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         return file.status === 'error';
     }
 
+    $scope.verificaOrden = function (idTrabajo, sinProveedor) {
+        //LQMA 14092016
+         if(sinProveedor > 0)
+         {
+            swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
+         }
+         else
+         {
+            $('.btnVerificarOrden').ready(function () {
+                swal({
+                        title: "¿Está seguro de verificar la Orden?",
+                        text: "Pasara a Orden por Cobrar",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#67BF11",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            /*trabajoRepository.updEstatusVerificado(24, idTrabajo).then(function (ordenVerificada) {
+                                if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                    swal("Proceso Realizado!");
+                                    location.href = '/ordenesporcobrar';
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al verificar la orden");
+                            });*/
+                            swal("Proceso Realizado!");
+                        } else {
+                            swal("Cancelacion de Orden");
+                        }
+                    });
+            });
+         }
+    }
 
 });

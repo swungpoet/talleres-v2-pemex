@@ -1,3 +1,4 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Gestión de compras unificadas<span class="subtitle">Administrador</span></span>
@@ -122,7 +123,7 @@
                                             <button class="btn btn-primary" type="button" ng-click="" data-toggle="tooltip" tooltip="Subir factura" tooltip-placement="left"><span class="glyphicon glyphicon-file"></span></button>
                                         </td>
                                         <td>
-                                            <button ng-disabled="orden.idProveedor > 0" class="btn btn-informa" type="button" ng-click="" data-toggle="tooltip" tooltip="Realizar compra" tooltip-placement="left"><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                            <button ng-disabled="orden.sinProveedor == 0" class="btn btn-informa" type="button" ng-click="verificaOrden(orden.idTrabajo,orden.sinProveedor)" data-toggle="tooltip" tooltip="Realizar compra" tooltip-placement="left"><span class="glyphicon glyphicon-shopping-cart"></span></button>
                                         </td>
                                         
                                         <!--<td>
