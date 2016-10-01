@@ -136,6 +136,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         //Objeto de la pagina de orden servicio
         if (localStorageService.get('orden') != null) {
             $scope.orden = localStorageService.get('orden');
+            localStorageService.remove('orden');
             $scope.estado = 3;
             $scope.idTaller = $scope.orden.idTaller;
             $scope.idTrabajo = $scope.orden.idTrabajo;

@@ -196,11 +196,11 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $scope.idTrabajo = objOrden.idTrabajo;
         //LQMA add 19092016
         $scope.idEstatusPorCerrar = objOrden.idEstatus;
-        
-        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
-            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
+
+        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ?
+            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion :
             $scope.idCotizacion = 0;
-        
+
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
         $scope.ejecutaMetodo = ejecutaMetodo;
@@ -292,51 +292,61 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //genera el formato para el certificado de conformidad
-    $scope.generaCertificadoConformidadPDF = function () {
-        if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {
+    $scope.generaCertificadoConformidadPDF = function (idTrabajo) {
+        /*if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {*/
 
-            trabajoRepository.generaCerficadoConformidadTrabajo(17, $scope.idTrabajo).then(function (certificadoGenerado) {
-                //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-                alertFactory.success("Certificado de conformidad generado");
-                getTrabajo($scope.userData.idUsuario);
-                getTrabajoTerminado($scope.userData.idUsuario);
-                getTrabajoAprobado($scope.userData.idUsuario);
-                $scope.getAdmonOrdenes();
-                //}
-            }, function (error) {
-                alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
-            })
+        trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
+            $scope.certificadoParams.noReporte = certificadoGenerado.data[0].noReporte;
+            $scope.certificadoParams.gerencia = certificadoGenerado.data[0].region;
+            $scope.certificadoParams.tad = certificadoGenerado.data[0].tad;
+            $scope.certificadoParams.solpe = certificadoGenerado.data[0].solpe;
+            $scope.certificadoParams.ordenSurtimiento = certificadoGenerado.data[0].osur;
+            $scope.certificadoParams.montoOS = certificadoGenerado.data[0].montoOs;
+            $scope.certificadoParams.nombreEmisor = '';
+            $scope.certificadoParams.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
+            $scope.certificadoParams.puestoProveedor = certificadoGenerado.data[0].puestoProveedor
+            $scope.idTrabajo = idTrabajo;
+            //if(certificadoGenerado.data[0].idHistorialProceso > 0){
+            alertFactory.success("Certificado de conformidad generado");
+            getTrabajo($scope.userData.idUsuario);
+            getTrabajoTerminado($scope.userData.idUsuario);
+            getTrabajoAprobado($scope.userData.idUsuario);
+            $scope.getAdmonOrdenes();
+            //}
+        }, function (error) {
+            alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
+        })
 
-            setTimeout(function () {
-                window.open($rootScope.vIpServer +
-                    "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
-                    "&gerencia=" + $scope.certificadoParams.gerencia +
-                    "&tad=" + $scope.certificadoParams.tad +
-                    "&solpe=" + $scope.certificadoParams.solpe +
-                    "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
-                    "&montoOS=" + $scope.certificadoParams.montoOS +
-                    "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
-                    "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
-                    "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
-                    "&fecha=" + new Date() +
-                    "&idTrabajo=" + $scope.idTrabajo);
+        setTimeout(function () {
+            window.open($rootScope.vIpServer +
+                "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                "&gerencia=" + $scope.certificadoParams.gerencia +
+                "&tad=" + $scope.certificadoParams.tad +
+                "&solpe=" + $scope.certificadoParams.solpe +
+                "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
+                "&montoOS=" + $scope.certificadoParams.montoOS +
+                "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
+                "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
+                "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
+                "&fecha=" + new Date() +
+                "&idTrabajo=" + $scope.idTrabajo);
 
-                $scope.certificadoParams = {
-                    noReporte: "",
-                    gerencia: "",
-                    tad: "",
-                    solpe: "",
-                    ordenSurtimiento: "",
-                    montoOS: "",
-                    nombreEmisor: "",
-                    nombreProveedor: "",
-                    puestoProveedor: ""
-                }
-                $('#datosEntradaCertificadoModal').appendTo("body").modal('hide');
-            }, 1000);
-        } else {
+            $scope.certificadoParams = {
+                noReporte: "",
+                gerencia: "",
+                tad: "",
+                solpe: "",
+                ordenSurtimiento: "",
+                montoOS: "",
+                nombreEmisor: "",
+                nombreProveedor: "",
+                puestoProveedor: ""
+            }
+            /*$('#datosEntradaCertificadoModal').appendTo("body").modal('hide');*/
+        }, 1000);
+        /*} else {
             alertFactory.info("Llenar los campos vacíos");
-        }
+        }*/
     }
 
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
@@ -418,7 +428,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 if (allSuccess) {
                     if ($scope.ejecutaMetodo == 1) {
                         if ($scope.idNombreEspecial == 3) {
-                            trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario,$scope.idEstatusPorCerrar).then(function (result) {  //LQMA add idEstatusPorCerrar
+                            trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario, $scope.idEstatusPorCerrar).then(function (result) { //LQMA add idEstatusPorCerrar
                                 if (result.data.length > 0) {
                                     $scope.lecturaFactura = result.data;
                                     $scope.totalxml = $scope.lecturaFactura[4].value;
@@ -435,27 +445,27 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                             if (sumatoria.name == 'xmlFactura') $scope.xmlFacturaFac = sumatoria.value;
                                         });
                                         $scope.guardaDatosFactura($scope.idCotizacionFac, $scope.numFacturaFac, $scope.UUIDFac, $scope.fechaFacturaFac, $scope.totalFac, $scope.subtotalFac, $scope.idUsuarioFac, $scope.xmlFacturaFac);
-                                            if($scope.idEstatusTrabajo==11){
-                                                upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
-                                            }else{
-                                                    setTimeout(function () {
-                                                        $scope.dzMethods.removeAllFiles();
-                                                        $('#modalCargaArchivos').appendTo('body').modal('hide');
-                                                    }, 1000);
-                                                    alertFactory.success("Factura Cargada Correctamente");
-                                                }
-                                            //LQMA ADD 20092016, borra solo temporales: idOpcion = 2
-                                            $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,2);
+                                        if ($scope.idEstatusTrabajo == 11) {
+                                            upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                                        } else {
                                             setTimeout(function () {
-                                                 $scope.renombraFacturaTemporal($scope.idTrabajo, $scope.idCotizacionFactura);
-                                             },500);
+                                                $scope.dzMethods.removeAllFiles();
+                                                $('#modalCargaArchivos').appendTo('body').modal('hide');
+                                            }, 1000);
+                                            alertFactory.success("Factura Cargada Correctamente");
+                                        }
+                                        //LQMA ADD 20092016, borra solo temporales: idOpcion = 2
+                                        $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura, 2);
+                                        setTimeout(function () {
+                                            $scope.renombraFacturaTemporal($scope.idTrabajo, $scope.idCotizacionFactura);
+                                        }, 500);
 
 
                                     } else {
-                                            //if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
-                                                //LQMA ADD 20092016, borra solo temporales: idOpcion = 1
-                                                $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,1); 
-                                             //   }
+                                        //if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
+                                        //LQMA ADD 20092016, borra solo temporales: idOpcion = 1
+                                        $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura, 1);
+                                        //   }
                                         setTimeout(function () {
                                             $scope.dzMethods.removeAllFiles();
                                             $('#modalCargaArchivos').appendTo('body').modal('hide');
@@ -582,21 +592,21 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //visualizacion de facturas ADOLFO 15092016
-    $scope.verFactura = function (idCotizacion,idTrabajo,numeroCotizacion) {
-       trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
-           if (resp.data == 1) {
-                     window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' +idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
-                    window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' +idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
-               }else if (resp.data == 2){
-                      window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo +'/documentos/factura/Factura.xml', '_blank', 'Factura');
-                    window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo +'/documentos/factura/Factura.pdf', '_blank', 'Factura');
-               } else{
-                    alertFactory.info("No se encontraron Facturas");
-               }
-               }, function (error) {
-               alertFactory.error('Factura no se pudo obtener');
-           });
-       }
+    $scope.verFactura = function (idCotizacion, idTrabajo, numeroCotizacion) {
+        trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
+            if (resp.data == 1) {
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
+            } else if (resp.data == 2) {
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
+            } else {
+                alertFactory.info("No se encontraron Facturas");
+            }
+        }, function (error) {
+            alertFactory.error('Factura no se pudo obtener');
+        });
+    }
 
     //visualiza la orden de servicio
     $scope.lookAt = function (trabajo, valBotonera) {
@@ -611,12 +621,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         //Cambiamos el estatus a Orden verificada
     $scope.verificaOrden = function (idTrabajo, sinProveedor) {
         //LQMA 14092016
-         if(sinProveedor > 0)
-         {
+        if (sinProveedor > 0) {
             swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
-         }
-         else
-         {
+        } else {
             $('.btnVerificarOrden').ready(function () {
                 swal({
                         title: "¿Está seguro de verificar la Orden?",
@@ -644,7 +651,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         }
                     });
             });
-         }
+        }
     }
 
     //Obtiene el monto de la órden de servicio
@@ -747,8 +754,8 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             });
         }
         //eliminamos la factura de la ruta si no coincide el costo
-    $scope.eliminaFactura = function (idTrabajo, idCotizacion,idOpcion) {
-        trabajoRepository.removeFactura(idTrabajo, idCotizacion,idOpcion).then(function (orden) {
+    $scope.eliminaFactura = function (idTrabajo, idCotizacion, idOpcion) {
+        trabajoRepository.removeFactura(idTrabajo, idCotizacion, idOpcion).then(function (orden) {
             if (orden.data.length > 0) {
                 $scope.cotizacionesOrden = orden.data;
                 //alertFactory.info("");

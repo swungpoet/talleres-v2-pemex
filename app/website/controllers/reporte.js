@@ -390,6 +390,7 @@ function generateConfomidadReporte(data,res) {
     doc.text("Puesto                 ________________________________________",326,684+extra)
 
     doc.text(data.nombreProveedor,340,650+extra,{width: 220,align: 'center'})
+    /*doc.image('app/static/image/firma.png', 400, 620,{width: 90,height:45} )*/
     doc.text(fecha.format(data.fecha, 'DD  MMMM  YYYY'),340,668+extra,{width: 220,align: 'center'})
     doc.text(data.puestoProveedor,340,684+extra,{width: 220,align: 'center'})
     doc.fontSize(5);

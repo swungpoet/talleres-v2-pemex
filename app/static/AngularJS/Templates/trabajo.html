@@ -133,7 +133,7 @@
 
                                                     <button ng-if="trabajo.estatus == 'Terminado'" ng-hide="userData.idTipoUsuario == 4" class="btn btn-primary" type="button" ng-click="adjuntar(trabajo,2,1,0)" data-toggle="tooltip" tooltip="Cargar hoja de transferencia de custodia" tooltip-placement="left"><span class="glyphicon glyphicon-open-file"></span></button>
 
-                                                    <button ng-if="trabajo.estatus == 'TransResponsabilidad'" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="datosEntradaCertificadoModal(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span></button>
+                                                    <button ng-if="trabajo.estatus == 'TransResponsabilidad'" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" ng-click="generaCertificadoConformidadPDF(trabajo.idTrabajo)" data-toggle="tooltip" tooltip="Generar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-file"></span></button>
 
                                                     <button ng-if="trabajo.estatus == 'CertificadoGenerado'" ng-hide="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 4" class="btn btn-success" type="button" ng-click="adjuntar(trabajo,5,1,0)" data-toggle="tooltip" tooltip="Cargar certificado de conformidad" tooltip-placement="up"><span class="glyphicon glyphicon-upload"></span></button>
 
