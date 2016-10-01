@@ -934,4 +934,52 @@ Orden.prototype.post_encuentraFactura = function (req, res, next) {
 
 }
 
+
+//Obtiene los tipos de cotizaciones
+Orden.prototype.get_obtieneCotizacion = function (req, res, next) {
+    var self = this;
+    var params = [];
+
+    this.model.query('SEL_TIPO_COTIZACION_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+//Actualiza el precio de una partida desde la orden de servicio
+Orden.prototype.post_actualizaCotizacionMaestro = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idCotizacion',
+            value: req.body.idCotizacion,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTipoCotizacion',
+            value: req.body.idTipoCotizacion,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTaller',
+            value: req.body.idTaller,
+            type: self.model.types.DECIMAL
+        },
+    ];
+
+    this.model.post('UPD_PROVEEDOR_MAESTRO_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
 module.exports = Orden;

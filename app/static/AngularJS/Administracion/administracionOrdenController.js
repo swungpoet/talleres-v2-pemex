@@ -9,6 +9,10 @@
 // -- =============================================
 
 registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository ) {
+        $scope.idCotizacion = '';
+        $scope.tipoCotizacion = '';
+        $scope.ideTaller = ''; 
+
     //init del controller
     $scope.init = function () {
         $scope.tipoCotizacion();
@@ -133,6 +137,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
      //genera el txt de la factura
     $scope.actualizaProveedor = function (idCotizacion, idTipoCotizacion, idTaller) {
+        if($scope.tipoCotizacion == '' && $scope.ideTaller = ''){
         ordenServicioRepository.updateCotMaestro(idCotizacion, idTipoCotizacion, idTaller).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("IdProveedor insertado correctamente!");
@@ -142,6 +147,9 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         }, function (error) {
             alertFactory.error("Error al actualizar el IdProveedor");
         });
+        }else{
+            alertFactory.info('Debe llenar todos los campos');
+        }
     }
 
     $scope.modalEditaCM = function (idCotizacion) {
