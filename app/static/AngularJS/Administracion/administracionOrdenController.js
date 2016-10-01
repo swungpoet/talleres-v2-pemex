@@ -319,7 +319,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         trabajoRepository.removeFactura(idTrabajo, idCotizacion,idOpcion).then(function (orden) {
             if (orden.data.length > 0) {
                 $scope.cotizacionesOrden = orden.data;
-                //alertFactory.info("");
+                //alertFactory.info(""); 
             }
         }, function (error) {
             alertFactory.error("Error al procesar la informacion");
