@@ -8,14 +8,14 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
     $scope.presupuesto = '0.00';
     $scope.saldo = '0.00';
     $scope.gasto = '0.00';
-    $scope.conTar = false;
+    $scope.conTar = false;    
 
     $scope.init = function () {
         getTARS();
     }
 
     var getTARS = function () {
-        osurRepository.getTars().then(function (tars) {
+        osurRepository.getTars($scope.userData.idUsuario).then(function (tars) {
             if (tars.data.length > 0) {
                 $scope.tars = tars.data;
                 //alertFactory.success("Trabajos cargados");
@@ -50,4 +50,25 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                 });
         }
     }
+
+    //fecha
+    $('#fechaFinal .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: true,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd/mm/yyyy"
+    });
+
+    $('#fechaInicial .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: true,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        todayHighlight: true,
+        format: "dd/mm/yyyy"
+    });
 });

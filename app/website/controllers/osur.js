@@ -1,15 +1,17 @@
 var OsurView = require('../views/ejemploVista'),
-	OsurModel = require('../models/dataAccess2');
+    OsurModel = require('../models/dataAccess2');
 
-var Osur = function(conf){
-	this.conf = conf || {};
+var Osur = function (conf) {
+    this.conf = conf || {};
 
-	this.view = new OsurView();
-	this.model = new OsurModel({ parameters : this.conf.parameters});
+    this.view = new OsurView();
+    this.model = new OsurModel({
+        parameters: this.conf.parameters
+    });
 
-	this.response = function(){
-		this[this.conf.funcionalidad](this.conf.req,this.conf.res,this.conf.next);
-	}
+    this.response = function () {
+        this[this.conf.funcionalidad](this.conf.req, this.conf.res, this.conf.next);
+    }
 }
 
 //Valida credenciales de usuario
@@ -21,9 +23,15 @@ Osur.prototype.get_tars = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
 
-    var params = [];
+    var params = [
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }
+    ];
 
-    this.model.query('SEL_TAR_SP',params, function (error, result) {
+    this.model.query('SEL_TAR_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;
@@ -40,11 +48,11 @@ Osur.prototype.get_datosOsur = function (req, res, next) {
     var params = {};
     //Referencia a la clase para callback
     var self = this;
-    
+
     var params = [{
-            name: 'idTAR',
-            value: req.query.idTAR,
-            type: self.model.types.INT
+        name: 'idTAR',
+        value: req.query.idTAR,
+        type: self.model.types.INT
         }];
 
     this.model.query('SEL_DATOS_OSUR_BY_TAR_SP', params, function (error, result) {

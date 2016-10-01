@@ -3,7 +3,7 @@
         <div class="row">
             <div class="ibox-content" ng-hide="conTar">
                 <div class="alert alert-danger">
-                   <strong>Seleccione una TAR, </strong> para trabajar con ella.
+                    <strong>Seleccione una TAR, </strong> para trabajar con ella.
                 </div>
             </div>
             <br>
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-lg-offset-1 col-lg-8">
                 <form class="form-horizontal">
-                  <div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">TAR</label>
                         <div class="col-sm-10">
                             <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
@@ -60,8 +60,16 @@
                             </select>
                         </div>
                     </div>
-                   <div class="form-group">
-                        <label class="col-sm-2 control-label">Folio</label>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">No. OSUR</label>
+                        <div class="col-sm-10">
+                            <div class="input-group m-b">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Solpe</label>
                         <div class="col-sm-10">
                             <div class="input-group m-b">
                                 <input type="text" class="form-control">
@@ -75,22 +83,22 @@
                                 <input type="text" class="form-control">
                             </div>
                         </div>
-                    </div>                    
-                    <div class="form-group">
+                    </div>
+                    <div class="form-group" id="fechaInicial">
                         <label class="col-sm-2 control-label">Fecha Inicial</label>
                         <div class="col-sm-10">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control" value="03/04/2014">
+                                <input type="text" class="form-control">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="fechaFinal">
                         <label class="col-sm-2 control-label">Fecha Final</label>
                         <div class="col-sm-10">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control" value="03/04/2014">
+                                <input type="text" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -102,10 +110,10 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-2">
+            <!--<div class="col-md-2">
                 <button class="btn btn-success"><i class="fa fa-history">
                 </i> Ver Historial</button>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
