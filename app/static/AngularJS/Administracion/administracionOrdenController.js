@@ -9,9 +9,6 @@
 // -- =============================================
 
 registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository ) {
-        $scope.idCotizacion = '';
-        $scope.tipoCotizacion = '';
-        $scope.ideTaller = ''; 
 
     //init del controller
     $scope.init = function () {
@@ -136,20 +133,17 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     }
 
      //genera el txt de la factura
-    $scope.actualizaProveedor = function (idCotizacion, idTipoCotizacion, idTaller) {
-        if($scope.tipoCotizacion == '' && $scope.ideTaller = ''){
-        ordenServicioRepository.updateCotMaestro(idCotizacion, idTipoCotizacion, idTaller).then(function (result) {
+    $scope.actualizaProveedor = function () {
+        ordenServicioRepository.updateCotMaestro($scope.idCotizacion, $scope.idTipoCotizacion, $scope.ideTaller).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("IdProveedor insertado correctamente!");
+                 $('#editaCMaestro').appendTo('body').modal('hide');
             } else {
                 alertFactory.info('No se pudo realizar el proceso');
             }
         }, function (error) {
             alertFactory.error("Error al actualizar el IdProveedor");
         });
-        }else{
-            alertFactory.info('Debe llenar todos los campos');
-        }
     }
 
     $scope.modalEditaCM = function (idCotizacion) {
