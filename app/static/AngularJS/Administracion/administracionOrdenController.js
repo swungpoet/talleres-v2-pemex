@@ -9,7 +9,8 @@
 // -- =============================================
 
 registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository ) {
-
+        $scope.idTipoCotizacion=0;
+        $scope.ideTaller=0;
     //init del controller
     $scope.init = function () {
         $scope.tipoCotizacion();
@@ -134,6 +135,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
      //genera el txt de la factura
     $scope.actualizaProveedor = function () {
+ 
         ordenServicioRepository.updateCotMaestro($scope.idCotizacion, $scope.idTipoCotizacion, $scope.ideTaller).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("IdProveedor insertado correctamente!");
@@ -144,13 +146,20 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         }, function (error) {
             alertFactory.error("Error al actualizar el IdProveedor");
         });
+
     }
 
     $scope.modalEditaCM = function (idCotizacion) {
       $('#editaCMaestro').appendTo("body").modal('show');
+      ordenServicioRepository.recuperaCotizacion(idCotizacion).then(function (result) {
+           $scope.proveedor=result.data;
+           $scope.ideTaller=$scope.proveedor[0].idTaller;
+           $scope.idTipoCotizacion=$scope.proveedor[0].idTipoCotizacion;
+        }, function (error) {
+            alertFactory.error("Error al actualizar el IdProveedor");
+        });
+
         $scope.idCotizacion = idCotizacion;
-        $scope.tipoCotizacion;
-        $scope.ideTaller;
     }
       //obtiene el tipo de Cotizacion
     $scope.tipoCotizacion = function () {

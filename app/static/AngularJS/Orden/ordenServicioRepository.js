@@ -160,6 +160,18 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        recuperaCotizacion: function (idCotizacion) {
+            return $http({
+                url: ordenUrl + 'obtieneMaestro',
+                method: "GET",
+                params: {
+                    idCotizacion: idCotizacion
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

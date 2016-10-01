@@ -53,7 +53,7 @@
                                         <td>{{orden.trabajo}}</td>
                                         <td>{{orden.descripcionLarga }}</td>
                                         <td>
-                                            <button tooltip="Asignar Id Proveedor" type="button" ng-click="getCotizacionesOrden(orden.idTrabajo)" ns-popover ns-popover-template="closeAnctip" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-info"><span class="glyphicon glyphicon-wrench"></span>
+                                            <button tooltip="Asignar ID" type="button" ng-click="getCotizacionesOrden(orden.idTrabajo)" ns-popover ns-popover-template="closeAnctip" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-info"><span class="glyphicon glyphicon-wrench"></span>
                                             </button>
                                             <script type="text/ng-template" id="closeAnctip">
                                                 <div class="triangle"></div>
@@ -73,7 +73,7 @@
                                                                 <td>{{cotizacion.numeroCotizacion}}</td>
                                                                 <td>{{cotizacion.subTotal | currency}}</td>
                                                                 <td>
-                                                                   <button class="btn btn-info" type="button" ng-click="modalEditaCM(cotizacion.idCotizacion)" data-toggle="tooltip" tooltip="Asignar Id Proveedor" tooltip-placement="left"><span class="glyphicon glyphicon-wrench"></span></button>
+                                                                   <button class="btn btn-info" type="button" ng-click="modalEditaCM(cotizacion.idCotizacion)" data-toggle="tooltip" tooltip="Asignar ID" tooltip-placement="left"><span class="glyphicon glyphicon-wrench"></span></button>
                                                                 </td> 
                                                             </tr>
                                                         </tbody>

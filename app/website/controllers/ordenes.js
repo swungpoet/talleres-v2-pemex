@@ -947,6 +947,26 @@ Orden.prototype.get_obtieneCotizacion = function (req, res, next) {
         });
     });
 }
+//Obtiene los tipos de cotizaciones
+Orden.prototype.get_obtieneMaestro = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    var params = [{
+        name: 'idCotizacion',
+        value: req.query.idCotizacion,
+        type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_COTIZACION_MAESTRO_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 //Actualiza el precio de una partida desde la orden de servicio
 Orden.prototype.post_actualizaCotizacionMaestro = function (req, res, next) {
     //Objeto que almacena la respuesta
