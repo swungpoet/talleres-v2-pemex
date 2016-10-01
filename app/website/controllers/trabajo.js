@@ -439,5 +439,29 @@ Trabajo.prototype.get_cotizacionesordenAprobados = function (req, res, next) {
     });
 }
 
+//inserta el trabajo de la cita
+Trabajo.prototype.post_insertBpro = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    var params = {};
+    
+    //Asigno a params el valor de mis variables
+    var params = [{
+                name: 'idTrabajo',
+                value: req.query.idTrabajo,
+                type: self.model.types.INT
+                }];
+    
+    this.model.post('UPD_ORDEN_PAGO_SP',params, function (error, result) {
+    //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
 
 module.exports = Trabajo;
