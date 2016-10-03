@@ -1018,7 +1018,8 @@ Cotizacion.prototype.get_evidenciasByOrden = function (req, res, next) {
                                                         nombreArchivo: facturaCotizacion,
                                                         fecha: fecha,
                                                         idTrabajo: parseInt(trabajo),
-                                                        idCotizacion: parseInt(carpeta)
+                                                        idCotizacion: parseInt(carpeta),
+                                                        carpeta: documento
                                                     });
                                                 });
                                             }
