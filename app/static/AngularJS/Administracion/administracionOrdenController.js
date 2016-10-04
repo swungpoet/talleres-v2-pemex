@@ -206,7 +206,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                 $scope.lecturaFactura = result.data;
                                 $scope.totalxml = $scope.lecturaFactura[4].value;
                                 // alertFactory.success("Proceso Correcto");
-                                if ((($scope.totalxml - 1) <= $scope.totalCotizacionBD) && ($scope.totalCotizacionBD <= ($scope.totalxml + 1))) {
+                                if (((parseFloat($scope.totalxml) - 1.0000) <= $scope.totalCotizacionBD) && ($scope.totalCotizacionBD <= (parseFloat($scope.totalxml) + 1.0000))) {
                                     result.data.forEach(function (sumatoria) {
                                         if (sumatoria.name == 'idCotizacion') $scope.idCotizacionFac = sumatoria.value;
                                         if (sumatoria.name == 'numFactura') $scope.numFacturaFac = sumatoria.value;
