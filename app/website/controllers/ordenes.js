@@ -707,7 +707,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
         }];
 
                 //LQMA add 19092016, si idEstatus = 12, se lee el archivo temporal
-                var idEstatus = req.query.idEstatus;
+                //var idEstatus = req.query.idEstatus;
                 var aux = 0;
 
                 var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';

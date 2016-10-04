@@ -141,7 +141,7 @@
                                                             <th>Acción</th>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="cotizacion in cotizacionesOrden" ng-class="{'danger': cotizacion.idProveedor =='0'}">
+                                                            <tr ng-repeat="cotizacion in cotizacionesOrdenAprobado" ng-class="{'danger': cotizacion.idProveedor =='0'}">
                                                                 <td>{{cotizacion.fechaOrden}}</td>
                                                                 <td>{{cotizacion.numeroTrabajo}}</td>
                                                                 <td>{{cotizacion.numeroCotizacion}}</td>

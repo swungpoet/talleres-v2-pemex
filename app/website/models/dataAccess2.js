@@ -16,7 +16,7 @@ var DataAccess2 = function (config) {
     this.types = {
         INT: sql.Int,
         DECIMAL: sql.Decimal(18, 2),
-        STRING: sql.VarChar(8000),
+        STRING: sql.VarChar(30000),
         DATE: sql.DateTime
     }
     this.connection = new sql.Connection(connectionString);

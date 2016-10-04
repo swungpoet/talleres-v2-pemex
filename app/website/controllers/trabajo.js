@@ -426,9 +426,6 @@ Trabajo.prototype.get_cotizacionesordenAprobados = function (req, res, next) {
     //Obtención de valores de los parámetros del request
     var params = [{name: 'idTrabajo',
                    value: req.query.idTrabajo,
-                   type: self.model.types.INT},
-                   {name: 'idEstatus',
-                   value: req.query.idEstatus,
                    type: self.model.types.INT}]; 
 
     this.model.query('SEL_OBTIENE_COTIZACIONES_APROBADO_ORDEN_SP', params, function (error, result) {

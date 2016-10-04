@@ -147,10 +147,10 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     
     //LQMA 13092016 Obtiene el popopo que corresponde a su cotizacion por trabajo
     $scope.getCotizacionesOrdenAprobado = function (idTrabajo) {
-        trabajoRepository.getCotizacionesOrdenAprobado(idTrabajo,11).then(function (ordenAnticipo) {
+        trabajoRepository.getCotizacionesOrdenAprobado(idTrabajo).then(function (ordenAnticipo) {
             if (ordenAnticipo.data.length > 0) {
                 alertFactory.success("Cotizaciones cargadas");
-                $scope.cotizacionesOrden = ordenAnticipo.data;
+                $scope.cotizacionesOrdenAprobado = ordenAnticipo.data;
             }
         }, function (error) {
             alertFactory.error("Error al obtener las cotizaciones de la orden");
@@ -161,7 +161,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
         $scope.idTrabajo = objOrden.idTrabajo;
         //LQMA add 19092016
-        $scope.idEstatusPorCerrar = objOrden.estatusTrabajo;
+        //$scope.idEstatusPorCerrar = objOrden.estatusTrabajo;
         
         $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
             $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
@@ -193,7 +193,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             formData.append('idCategoria', $scope.idCategoria);
             formData.append('idNombreEspecial', $scope.idNombreEspecial);
             //LQMA  add 15092016  --idEstatus , define si crea el archivo de forma temporal
-            formData.append('idEstatus', $scope.idEstatusPorCerrar);
+            //formData.append('idEstatus', $scope.idEstatusPorCerrar);
         },
         'completemultiple': function (file, xhr) {
             var checkErrorFile = file.some(checkExistsError);
@@ -201,7 +201,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
                     if ($scope.idNombreEspecial == 3) {
-                        trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario,$scope.idEstatusPorCerrar).then(function (result) {  //LQMA add idEstatusPorCerrar
+                        trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario).then(function (result) {  //LQMA add idEstatusPorCerrar
                             if (result.data.length > 0) {
                                 $scope.lecturaFactura = result.data;
                                 $scope.totalxml = $scope.lecturaFactura[4].value;
@@ -295,7 +295,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     $scope.renombraFacturaTemporal = function (idTrabajo, idCotizacion) {
         trabajoRepository.renombraFacturaTemporal(idTrabajo, idCotizacion).then(function (orden) {
             if (orden.data.length > 0) {
-                $scope.cotizacionesOrden = orden.data;
+                $scope.cotizacionesOrdenes = orden.data;
                 //alertFactory.info("Cargue nuevamente la Factura");
             }
         }, function (error) {
