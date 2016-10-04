@@ -196,10 +196,10 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         $scope.idTrabajo = objOrden.idTrabajo;
         //LQMA add 19092016
         $scope.idEstatusPorCerrar = objOrden.idEstatus;
-        
-        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
-            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
-            $scope.idCotizacion = 0;  
+
+        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ?
+            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion :
+            $scope.idCotizacion = 0;
 
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
@@ -294,59 +294,70 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function (idTrabajo) {
         /*if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {*/
-
+        $scope.generaCertificado = false;
         trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
-            $scope.certificadoParams.noReporte = certificadoGenerado.data[0].noReporte;
-            $scope.certificadoParams.gerencia = certificadoGenerado.data[0].region;
-            $scope.certificadoParams.tad = certificadoGenerado.data[0].tad;
-            $scope.certificadoParams.solpe = certificadoGenerado.data[0].solpe;
-            $scope.certificadoParams.ordenSurtimiento = certificadoGenerado.data[0].osur;
-            $scope.certificadoParams.montoOS = certificadoGenerado.data[0].montoOs;
-            $scope.certificadoParams.nombreEmisor = '';
-            $scope.certificadoParams.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
-            $scope.certificadoParams.puestoProveedor = certificadoGenerado.data[0].puestoProveedor
-            $scope.idTrabajo = idTrabajo;
-            //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-            alertFactory.success("Certificado de conformidad generado");
-            getTrabajo($scope.userData.idUsuario);
-            getTrabajoTerminado($scope.userData.idUsuario);
-            getTrabajoAprobado($scope.userData.idUsuario);
-            $scope.getAdmonOrdenes();
-            //}
+            if (certificadoGenerado.data.length > 0) {
+                if (certificadoGenerado.data[0].noReporte != 'KO') {
+                    $scope.generaCertificado = true;
+                    $scope.certificadoParams.noReporte = certificadoGenerado.data[0].noReporte;
+                    $scope.certificadoParams.gerencia = certificadoGenerado.data[0].region;
+                    $scope.certificadoParams.tad = certificadoGenerado.data[0].tad;
+                    $scope.certificadoParams.solpe = certificadoGenerado.data[0].solpe;
+                    $scope.certificadoParams.ordenSurtimiento = certificadoGenerado.data[0].osur;
+                    $scope.certificadoParams.montoOS = certificadoGenerado.data[0].montoOs;
+                    $scope.certificadoParams.nombreEmisor = '';
+                    $scope.certificadoParams.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
+                    $scope.certificadoParams.puestoProveedor = certificadoGenerado.data[0].puestoProveedor
+                    $scope.idTrabajo = idTrabajo;
+                    //if(certificadoGenerado.data[0].idHistorialProceso > 0){
+                    alertFactory.success("Certificado de conformidad generado");
+                    getTrabajo($scope.userData.idUsuario);
+                    getTrabajoTerminado($scope.userData.idUsuario);
+                    getTrabajoAprobado($scope.userData.idUsuario);
+                    $scope.getAdmonOrdenes();
+
+                    setTimeout(function () {
+                        window.open($rootScope.vIpServer +
+                            "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
+                            "&gerencia=" + $scope.certificadoParams.gerencia +
+                            "&tad=" + $scope.certificadoParams.tad +
+                            "&solpe=" + $scope.certificadoParams.solpe +
+                            "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
+                            "&montoOS=" + $scope.certificadoParams.montoOS +
+                            "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
+                            "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
+                            "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
+                            "&fecha=" + new Date() +
+                            "&idTrabajo=" + $scope.idTrabajo);
+
+                        $scope.certificadoParams = {
+                                noReporte: "",
+                                gerencia: "",
+                                tad: "",
+                                solpe: "",
+                                ordenSurtimiento: "",
+                                montoOS: "",
+                                nombreEmisor: "",
+                                nombreProveedor: "",
+                                puestoProveedor: ""
+                            }
+                            /*$('#datosEntradaCertificadoModal').appendTo("body").modal('hide');*/
+                    }, 1000);
+
+                    //}
+                } else {
+                    alertFactory.success('Información insuficiente para poder generar este certificado');
+                }
+            } else {
+                alertFactory.success('Información insuficiente para poder generar este certificado');
+            }
         }, function (error) {
             alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
         })
 
-        setTimeout(function () {
-            window.open($rootScope.vIpServer +
-                "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
-                "&gerencia=" + $scope.certificadoParams.gerencia +
-                "&tad=" + $scope.certificadoParams.tad +
-                "&solpe=" + $scope.certificadoParams.solpe +
-                "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
-                "&montoOS=" + $scope.certificadoParams.montoOS +
-                "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
-                "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
-                "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
-                "&fecha=" + new Date() +
-                "&idTrabajo=" + $scope.idTrabajo);
+        if ($scope.generaCertificado) {
 
-            $scope.certificadoParams = {
-                noReporte: "",
-                gerencia: "",
-                tad: "",
-                solpe: "",
-                ordenSurtimiento: "",
-                montoOS: "",
-                nombreEmisor: "",
-                nombreProveedor: "",
-                puestoProveedor: ""
-            }
-            /*$('#datosEntradaCertificadoModal').appendTo("body").modal('hide');*/
-        }, 1000);
-        /*} else {
-            alertFactory.info("Llenar los campos vacíos");
-        }*/
+        }
     }
 
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
