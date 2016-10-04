@@ -724,7 +724,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
 
                                 //LQMA ADD 19092016 leer del archivo temporal para validar 
                                 //if(idEstatus == 12) 
-                                       file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
+                                     //  file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
 
                                 var parser = new xml2js.Parser();
                                 fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
