@@ -161,7 +161,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
         $scope.idTrabajo = objOrden.idTrabajo;
         //LQMA add 19092016
-        $scope.idEstatusPorCerrar = objOrden.idEstatus;
+        $scope.idEstatusPorCerrar = objOrden.estatusTrabajo;
         
         $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
             $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
