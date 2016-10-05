@@ -51,7 +51,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTablePendiente" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
-                                                        <th>Cotización</th>
+                                                        <th>Consecutivo</th>
                                                         <th>Número de cotización</th>
                                                         <th>Número Económico</th>
                                                         <th>Zona</th>
@@ -69,7 +69,7 @@
                                                 </thead>
                                                 <tbody>
                                                    <tr ng-repeat="pendientes in datapendiente">
-                                                        <td>{{pendientes.idCotizacion}}</td>
+                                                        <td>{{pendientes.idCita}}</td>
                                                         <td>{{pendientes.numeroCotizacion}}</td>
                                                         <td>{{pendientes.numEconomico}}</td>
                                                         <td>{{pendientes.zona}}</td>
@@ -95,7 +95,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTableSinCotizar" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
-                                                        <th>Cotización</th>
+                                                        <th>Consecutivo</th>
                                                         <th>Número de cotización</th>
                                                         <th>Número Económico</th>
                                                         <th>Zona</th>
@@ -113,7 +113,7 @@
                                                 </thead>
                                                 <tbody>
                                                      <tr ng-repeat="sincotizaciones in datasincotizacion">
-                                                        <td>{{sincotizaciones.idCotizacion}}</td>
+                                                        <td>{{sincotizaciones.idCita}}</td>
                                                         <td>{{sincotizaciones.numeroCotizacion}}</td>
                                                         <td>{{sincotizaciones.numEconomico}}</td>
                                                         <td>{{sincotizaciones.zona}}</td>

@@ -47,9 +47,9 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         //Muestra el historico de citas canceldas
     $scope.citaCancelada = function () {
             $scope.tipoCita = 3;
-
+            $('.dataTableCancelada').DataTable().destroy();
             reporteCitaRepository.getHistorialCita(22, null, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citacancela) {
-                $('.dataTableCancelada').DataTable().destroy();
+               
                 $scope.cancelacion = citacancela.data;
                 waitDrawDocument("dataTableCancelada");
                 if (citacancela.data.length > 0) {
@@ -64,9 +64,9 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         //Muestra el historico de citas confirmadas
     $scope.citaConfirmada = function () {
             $scope.tipoCita = 2;
-
+            $('.dataTableConfirmada').DataTable().destroy();
             reporteCitaRepository.getHistorialCita(2, null, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citaconfirma) {
-                $('.dataTableConfirmada').DataTable().destroy();
+               
                 $scope.confirmacion = citaconfirma.data;
                 waitDrawDocument("dataTableConfirmada");
                 if (citaconfirma.data.length > 0) {
@@ -81,9 +81,9 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         //Muestra el historico de citas agendadas
     $scope.citaAgendada = function () {
             $scope.tipoCita = 1;
-
+            $('.dataTableAgendada').DataTable().destroy();
             reporteCitaRepository.getHistorialCita(1, null, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citaagenda) {
-                $('.dataTableAgendada').DataTable().destroy();
+                
                 $scope.agendacion = citaagenda.data;
                 waitDrawDocument("dataTableAgendada");
                 if (citaagenda.data.length > 0) {
@@ -98,8 +98,9 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         //Muestra el historico de citas solicitadas
     $scope.citaSolicitada = function () {
         $scope.tipoCita = 0;
+        $('.dataTableSolicitar').DataTable().destroy();
         reporteCitaRepository.getHistorialCita(1, 0, $scope.userData.idUsuario, $scope.idZona, $scope.idTar).then(function (citasolicita) {
-            $('.dataTableSolicitar').DataTable().destroy();
+            
             $scope.solicitacion = citasolicita.data;
             waitDrawDocument("dataTableSolicitar");
             if (citasolicita.data.length > 0) {
