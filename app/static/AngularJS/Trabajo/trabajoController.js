@@ -307,44 +307,36 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     $scope.certificadoParams.montoOS = certificadoGenerado.data[0].montoOs;
                     $scope.certificadoParams.nombreEmisor = '';
                     $scope.certificadoParams.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
-                    $scope.certificadoParams.puestoProveedor = certificadoGenerado.data[0].puestoProveedor
+                    $scope.certificadoParams.puestoProveedor = certificadoGenerado.data[0].puestoProveedor;
                     $scope.idTrabajo = idTrabajo;
                     //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-                    alertFactory.success("Certificado de conformidad generado");
-                    getTrabajo($scope.userData.idUsuario);
+                    //alertFactory.success("Certificado de conformidad generado");
+                    /*getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
                     getTrabajoAprobado($scope.userData.idUsuario);
-                    $scope.getAdmonOrdenes();
+                    $scope.getAdmonOrdenes();*/
 
-                    setTimeout(function () {
-                        window.open($rootScope.vIpServer +
-                            "/api/reporte/conformidadpdf/?noReporte=" + $scope.certificadoParams.noReporte +
-                            "&gerencia=" + $scope.certificadoParams.gerencia +
-                            "&tad=" + $scope.certificadoParams.tad +
-                            "&solpe=" + $scope.certificadoParams.solpe +
-                            "&ordenSurtimiento=" + $scope.certificadoParams.ordenSurtimiento +
-                            "&montoOS=" + $scope.certificadoParams.montoOS +
-                            "&nombreEmisor=" + $scope.certificadoParams.nombreEmisor +
-                            "&nombreProveedor=" + $scope.certificadoParams.nombreProveedor +
-                            "&puestoProveedor=" + $scope.certificadoParams.puestoProveedor +
-                            "&fecha=" + new Date() +
-                            "&idTrabajo=" + $scope.idTrabajo);
-
+                    trabajoRepository.getReporteDummy(idTrabajo, $scope.certificadoParams.noReporte, $scope.certificadoParams.gerencia, $scope.certificadoParams.tad, $scope.certificadoParams.solpe, $scope.certificadoParams.ordenSurtimiento, $scope.certificadoParams.montoOS, $scope.certificadoParams.nombreProveedor, $scope.certificadoParams.puestoProveedor).then(function (respuesta) {
+                        var algo = ''
                         $scope.certificadoParams = {
-                                noReporte: "",
-                                gerencia: "",
-                                tad: "",
-                                solpe: "",
-                                ordenSurtimiento: "",
-                                montoOS: "",
-                                nombreEmisor: "",
-                                nombreProveedor: "",
-                                puestoProveedor: ""
-                            }
-                            /*$('#datosEntradaCertificadoModal').appendTo("body").modal('hide');*/
-                    }, 1000);
-
-                    //}
+                            noReporte: "",
+                            gerencia: "",
+                            tad: "",
+                            solpe: "",
+                            ordenSurtimiento: "",
+                            montoOS: "",
+                            nombreEmisor: "",
+                            nombreProveedor: "",
+                            puestoProveedor: ""
+                        }
+                        alertFactory.success('Certificado generado correctamente');
+                        getTrabajo($scope.userData.idUsuario);
+                        getTrabajoTerminado($scope.userData.idUsuario);
+                        getTrabajoAprobado($scope.userData.idUsuario);
+                        $scope.getAdmonOrdenes();
+                    }, function (error) {
+                        alertFactory.error('No se pudo generar el certificado');
+                    });
                 } else {
                     alertFactory.success('Información insuficiente para poder generar este certificado');
                 }
@@ -354,10 +346,6 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         }, function (error) {
             alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
         })
-
-        if ($scope.generaCertificado) {
-
-        }
     }
 
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
