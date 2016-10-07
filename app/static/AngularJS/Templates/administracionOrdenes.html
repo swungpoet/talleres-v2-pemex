@@ -149,6 +149,7 @@
                                                                 <td>{{cotizacion.subTotal | currency}}</td>
                                                                 <td>
                                                                     <button ng-disabled="cotizacion.existe > 0"  type="button" class="btn btn-success" ng-click="getCotizacion(cotizacion.idCotizacion, cotizacion.Total, cotizacion.existe, cotizacion.numeroCotizacion, cotizacion.estatusTrabajo); adjuntar(cotizacion,3,1,0)" tooltip="Subir Factura"><span class="glyphicon glyphicon-upload"></span></button>
+                                                                    <!-- ng-click="verFactura(cotizacion.idCotizacion,cotizacion.idTrabajo,cotizacion.numeroCotizacion)" -->
                                                                     <button class="btn btn-success" type="button" ng-click="verFactura(cotizacion)" data-toggle="tooltip" tooltip="Ver  Factura" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
                                                                 </td>               
                                                             </tr>
