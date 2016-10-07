@@ -154,13 +154,13 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         setTimeout(function () {
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableSolicitar') {
-                indicePorOrdenar = 11;
+                indicePorOrdenar = 10;
             } else if (dataTable == 'dataTableAgendada') {
                 indicePorOrdenar = 11;
             } else if (dataTable == 'dataTableConfirmada') {
                 indicePorOrdenar = 10;
             } else {
-                indicePorOrdenar = 6;
+                indicePorOrdenar = 10;
             }
 
             $('.' + dataTable).DataTable({
