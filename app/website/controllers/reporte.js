@@ -42,6 +42,7 @@ Reporte.prototype.get_reportegral = function (req, res, next) {
 }
 
 Reporte.prototype.get_conformidadpdf = function (req, res, next) {
+    var object = {}; 
     var self = this;
     var montoOS = parseFloat(req.query.montoOS.replace(/[^0-9| ./]/g, ''));
     var params = [
@@ -77,7 +78,7 @@ Reporte.prototype.get_conformidadpdf = function (req, res, next) {
         },
         {
             name: 'nombreEmisor',
-            value: req.query.nombreEmisor,
+            value: '',
             type: self.model.types.STRING
         },
         {
@@ -104,10 +105,11 @@ Reporte.prototype.get_conformidadpdf = function (req, res, next) {
         solpe: req.query.solpe,
         ordenSurtimiento: req.query.ordenSurtimiento,
         montoOS: req.query.montoOS,
-        nombreEmisor: req.query.nombreEmisor,
+        nombreEmisor: '',
         nombreProveedor: req.query.nombreProveedor,
         puestoProveedor: req.query.puestoProveedor,
-        fecha: new Date()
+        fecha: new Date(),
+        idTrabajo: req.query.idTrabajo
     }
 
     this.model.query('SEL_ORDEN_DETALLE_SP', [params[9]], function (error, result) {
@@ -118,14 +120,30 @@ Reporte.prototype.get_conformidadpdf = function (req, res, next) {
                 total = total + (data.data[i].cantidad * data.data[i].importe);
             }
             data.total = "$ " + parseFloat(total).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); + " M.N.";
-            generateConfomidadReporte(data, res);
-            self.model.query('SEL_EXISTE_CERTIFICADO_SP', params, function (error, result) {
-                if (result[0].existeCertificado > 0) {
-                    console.log("Certificado existente");
-                } else {
-                    console.log("Certificado creado");
-                }
-            });
+            generateConfomidadReporte(data);
+
+            setTimeout(function () {
+                self.view.expositor(res, {
+                    error: error,
+                    result: 1
+                });
+            }, 2000);
+
+
+            /*object.error = err;            
+            object.result = 1;            
+            self.view.expositor(res, object);*/
+            /* self.model.query('SEL_EXISTE_CERTIFICADO_SP', params, function (error, result) {
+                 if (result[0].existeCertificado > 0) {
+                     console.log("Certificado existente");
+                 } else {
+                     console.log("Certificado creado");
+                 }
+
+                 object.error = err;            
+                 object.result = 1;            
+                 self.view.expositor(res, object);
+             });*/
         }
     });
 }
@@ -205,17 +223,26 @@ Reporte.prototype.get_ordenesunidad = function (req, res, next) {
     });
 }
 
+
 module.exports = Reporte;
 
-function generateConfomidadReporte(data, res) {
+function generateConfomidadReporte(data) {
     var paginas = 0;
     var initTabla = 0;
+
     var doc = new PDFDocument({
         size: [612.00, 792.00],
         margin: 30
-    })  
-    
-    doc.pipe(res)
+    })
+
+    var dirCertificado = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/' + data.idTrabajo;
+    if (!fs.existsSync(dirCertificado + '/documentos' + '/certificadoConformidad')) {
+        fs.mkdirSync(dirCertificado + '/documentos' + '/certificadoConformidad');
+    }
+
+    doc.pipe(fs.createWriteStream(dirCertificado + '/documentos/certificadoConformidad/' + 'CertificadoConformidad.pdf'));
+
+    /*doc.pipe(res)*/
     doc.fontSize(7)
     doc.lineWidth(1)
 
@@ -223,10 +250,6 @@ function generateConfomidadReporte(data, res) {
     doc.rect(40, 50, 535, 690).stroke()
 
     doc.image('app/static/image/pemex_logo.png', 50, 55, {
-        width: 90,
-        height: 45
-    })
-    doc.image('app/static/image/firma.png', 400, 600, {
         width: 90,
         height: 45
     })
@@ -544,6 +567,12 @@ function generateConfomidadReporte(data, res) {
         width: 230,
         align: 'center'
     })
+
+    doc.image('app/static/image/firma.png', 400, 600 + extra, {
+        width: 90,
+        height: 45
+    });
+
     doc.text("Nombre y firma ________________________________________", 326, 650 + extra)
     doc.text("Fecha                    ________________________________________", 326, 668 + extra)
     doc.text("Puesto                 ________________________________________", 326, 684 + extra)
@@ -565,9 +594,7 @@ function generateConfomidadReporte(data, res) {
     doc.fontSize(7);
     doc.text("SI LOS SELLOS EN ESTE DOCUMENTO NO ESTAN EN ORIGINAL, NO ES UN DOCUMENTO CONTROLADO", 30, 753)
 
-    /*doc.pipe(fs.createWriteStream(rutaU));*/
+
     doc.end();
-    
-    
 
 }
