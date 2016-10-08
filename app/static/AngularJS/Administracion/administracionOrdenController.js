@@ -43,6 +43,23 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         window.open($rootScope.vIpServer + '/uploads/files/' + cotizacion.idTrabajo +'/'+ cotizacion.idCotizacion + '/documentos/factura/Factura_'+cotizacion.numeroCotizacion+'.xml', '_blank', 'Factura');
         window.open($rootScope.vIpServer + '/uploads/files/' + cotizacion.idTrabajo +'/'+ cotizacion.idCotizacion + '/documentos/factura/Factura_'+cotizacion.numeroCotizacion+'.pdf', '_blank', 'Factura');
     }
+
+        //visualizacion de facturas ADOLFO 15092016
+  /*  $scope.verFactura = function (idCotizacion, idTrabajo, numeroCotizacion) {
+        trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
+            if (resp.data == 1) {
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
+            } else if (resp.data == 2) {
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
+                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
+            } else {
+                alertFactory.info("No se encontraron Facturas");
+            }
+        }, function (error) {
+            alertFactory.error('Factura no se pudo obtener');
+        });
+    }  */
  
     // Cierre de Orden
     $scope.cierreTrabajo = function (idTrabajo) {
@@ -201,7 +218,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
                     if ($scope.idNombreEspecial == 3) {
-                        trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario).then(function (result) {  //LQMA add idEstatusPorCerrar
+                        trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario, $scope.numeroCotizacion).then(function (result) {  //LQMA add idEstatusPorCerrar
                             if (result.data.length > 0) {
                                 $scope.lecturaFactura = result.data;
                                 $scope.totalxml = $scope.lecturaFactura[4].value;

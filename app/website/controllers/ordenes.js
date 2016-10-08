@@ -4,7 +4,7 @@ var OrdenView = require('../views/ejemploVista'),
 var mkdirp = require('mkdirp');
 var fs = require('fs'),
     xml2js = require('xml2js');
-
+var numeroCotizacion = '';
 
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
@@ -735,7 +735,8 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
         }];
 
                 //LQMA add 19092016, si idEstatus = 12, se lee el archivo temporal
-                //var idEstatus = req.query.idEstatus;
+                var numeroCotizacion = req.query.numeroCotizacion;
+               
                 var aux = 0;
 
                 var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';
@@ -749,11 +750,13 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                         var extension = obtenerExtArchivo(file);
                         if (extension == '.xml' || extension == '.XML') {
                             if (file.includes('Factura')) {
-
+                              posicion = file.indexOf('temp')
+                                if (posicion != -1){
                                 //LQMA ADD 19092016 leer del archivo temporal para validar 
                                 //if(idEstatus == 12) 
-                                     //  file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
-
+                                //if (file.includes('Factura_' + numeroCotizacion + 'temp.XML' ||  'Factura_' + numeroCotizacion + 'temp.xml')){
+                                 //      file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
+                                 //   }
                                 var parser = new xml2js.Parser();
                                 fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
                                     parser.parseString(data, function (err, result) {
@@ -831,6 +834,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                 });
                             }
                         }
+                    }
                     });
 
                 } else {
