@@ -374,6 +374,34 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
+//Inserta los datos de aprobacion de utilidad en db
+Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) { 
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.DECIMAL
+        }    ]; 
+
+    this.model.post('INS_DATOS_APROBACION_UTILIDAD_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 //obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
 Orden.prototype.post_mueveCierreOrden = function (req, res, next) {
     //Objeto que almacena la respuesta

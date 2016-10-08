@@ -106,6 +106,21 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 }
             })
         },
+
+        putAprobacionUtilidad: function (idTrabajo,idUsuario) {             
+            return $http({        
+                url: ordenUrl + 'insertaDatosAprobacionUtilidad',
+                        method: "POST",
+                         data: {
+                           idTrabajo: idTrabajo,
+                           idUsuario: idUsuario
+                        },
+
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
         putPrecioEditado: function (idCotizacion, idPartida, nuevoPrecio) {
             var precioObj = {
                 idCotizacion: idCotizacion,
