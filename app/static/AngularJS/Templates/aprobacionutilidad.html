@@ -15,19 +15,41 @@
                                 <thead>
                                     <tr>
                                         <th>Consecutivo</th>
-                                        <th>Trabajo</th>
-                                        <th>Fecha</th>
-                                        <th>Usuario</th>
+                                        <th>Número de la Orden</th>
+                                        <th>Número Económico</th>
+                                        <th>Zona</th>
+                                        <th>TAR</th>
+                                        <th>Taller</th>
+                                        <th>Costo de la Orden</th>
+                                        <th>Precio de la Orden</th>
+                                        <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
+                                        <th>Horas en espera</th>
+                                        <th>Editar Costos</th>
+                                        <th>Aprobación</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="orden in admonOrdenes ">
-                                        <td>{{orden.idCita}}</td>
-                                        <td>{{orden.numeroTrabajo}}</td>
-                                        <td>{{orden.numEconomico}}</td>
-                                        <td>{{orden.zona}}</td>
-                                        <td>{{orden.TAR}}</td>
+                                    <tr ng-repeat="utilidad in aprobacionUtilidades ">
+
+                                         <td>{{utilidad.idCita}}</td>
+                                        <td>{{utilidad.numeroTrabajo}}</td>
+                                        <td>{{utilidad.numEconomico}}</td>
+                                        <td>{{utilidad.zona}}</td>
+                                        <td>{{utilidad.TAR}}</td>
+                                        <td>{{utilidad.razonSocial}}</td>
+                                        <td>{{utilidad.montoOrden | currency}}</td>
+                                        <td>{{utilidad.precioOrden | currency}}</td>
+                                        <td>{{utilidad.trabajo}}</td>
+                                        <td>{{utilidad.descripcionLarga }}</td>
+                                        <td>{{utilidad.tiempo }}</td>
+                                        <td>
+                                            <button class="btn btn-success" type="button" ng-click="lookAt(utilidad, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-informa" type="button" ng-click="" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>
+
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

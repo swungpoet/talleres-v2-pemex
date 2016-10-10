@@ -374,6 +374,18 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
+//obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
+Orden.prototype.get_getaprobacionutilidad = function (req, res, next) {
+    var self = this;
+
+    this.model.query('SEl_APROBACION_UTILIDAD_SP', "", function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //Inserta los datos de aprobacion de utilidad en db
 Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) { 
     //Objeto que almacena la respuesta
