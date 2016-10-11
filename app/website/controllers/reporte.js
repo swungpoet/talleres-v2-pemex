@@ -270,6 +270,48 @@ Reporte.prototype.get_reporteUtilidad = function (req, res, next) {
 }
 
 
+//Reporte Certificado de Conformidad
+Reporte.prototype.get_reporteCertificadoConformidad = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'fechaInicial',
+            value: req.query.fechaInicial,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'fechaFinal',
+            value: req.query.fechaFinal,
+            type: self.model.types.STRING
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_CERTIFICADO_CONFORMIDAD_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+
 module.exports = Reporte;
 
 function generateConfomidadReporte(data) {
