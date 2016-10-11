@@ -414,6 +414,36 @@ Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) 
         });
     });
 }
+
+//Inserta los datos de aprobacion de utilidad  respuesta en db y actualiza estatus
+Orden.prototype.post_insertaDatosAprobacionUtilidadRespuesta = function (req, res, next) { 
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idAprobacionUtilidad',
+            value: req.body.idAprobacionUtilidad,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.DECIMAL
+        }    ]; 
+
+    this.model.post('[PROC_RESPUESTA_APROBACION_UTILIDAD_SP]', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
 Orden.prototype.post_mueveCierreOrden = function (req, res, next) {
     //Objeto que almacena la respuesta
