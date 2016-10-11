@@ -154,7 +154,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/reporteUtilidad.html',
             controller: 'reporteUtilidadController'
         });
-
+        
+        $routeProvider.when('/reporteCertificadoConformidad', {
+            templateUrl: 'AngularJS/Templates/reporteCertificadoConformidad.html',
+            controller: 'reporteCertificadoConformidadController'
+        });
         
         $locationProvider.html5Mode({
             enabled: true,

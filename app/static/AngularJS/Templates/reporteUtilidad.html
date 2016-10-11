@@ -22,18 +22,24 @@
                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
-                             <div class="col-xs-3">
-                                <select class="form-control" name="orden" ng-model="tipoOrden">
-                                    <option value="">Selecionar Ordenes</option><!--default option -->
+                             <div class="col-xs-2">
+                                <select class="form-control" name="orden" ng-model="tipoOrden" ng-disabled="copade != ''">
+                                    <option value="">Tipo Trabajo</option><!--default option -->
                                     <option value="1">Servicio</option>
                                     <option value="2">Refacciones</option>
                                 </select>
                             </div>
-                            <div class="col-xs-3">
-                                <select class="form-control" name="facturada" ng-model="facturado">
-                                    <option value="">Seleciona Tipo Orden</option><!--default option -->
-                                    <option value="1">Facturadas</option>
-                                    <option value="2">No Facturadas</option>
+                            <div class="col-xs-2">
+                                <select class="form-control" name="facturada" ng-model="facturado" ng-disabled="copade != ''">
+                                    <option value="">Tipo Provisión</option><!--default option -->
+                                    <option value="1">Provisionadas</option>
+                                    <option value="2">No Provisionadas</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-2">
+                                <select class="form-control" name="copade" ng-model="copade" ng-disabled="tipoOrden != ''">
+                                    <option value="">Tipo Factura</option><!--default option -->
+                                    <option value="1">Por Facturar</option>
                                 </select>
                             </div>
                             <div class="col-xs-0">
@@ -69,18 +75,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="margenes in margen">
+                                <tr ng-repeat="margenes in arrayMargen" ng-hide="margenes.costoOrden == null">
                                     <td>{{margenes.idCita}}</td>
                                     <td>{{margenes.numeroTrabajo}}</td>
                                     <td>{{margenes.numEconomico}}</td>
                                     <td>{{margenes.zona}}</td>
                                     <td>{{margenes.TAR}}</td>
                                     <td>{{margenes.razonSocial}}</td>
-                                    <td>{{margenes.estatus}}</td>
-                                    <td>{{margenes.costoOrden}}</td>
-                                    <td>{{margenes.precioOrden}}</td>
-                                    <td>{{margenes.utilidad}}</td>
-                                    <td ng-class="{'rowVerde': margenes.margen <= 49, 'rowAmarillo': margenes.margen >= 50 && margenes.margen  <=100, 'rowRojo': margenes.margen >= 101}">{{margenes.margen}}</td>
+                                    <td>{{margenes.descripcionLarga}}</td>
+                                    <td>{{margenes.costoOrden | currency }}</td>
+                                    <td>{{margenes.precioOrden | currency }}</td>
+                                    <td>{{margenes.utilidad | currency }}</td>
+                                    <td ng-class="{'rowVerde': margenes.margen >= 10, 'rowAmarillo': margenes.margen >= 5 && margenes.margen  <=10, 'rowRojo': margenes.margen <= 5}">{{margenes.margen | number : 2}}%</td>
+
                                 </tr>
                             </tbody>
                         </table>
