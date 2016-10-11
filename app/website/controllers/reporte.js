@@ -257,6 +257,11 @@ Reporte.prototype.get_reporteUtilidad = function (req, res, next) {
             name: 'facturado',
             value: req.query.facturado,
             type: self.model.types.STRING
+        },
+        {
+            name: 'copade',
+            value: req.query.copade,
+            type: self.model.types.STRING
         }
     ];
 
