@@ -375,9 +375,6 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                    ordenServicioRepository.getEstatusUtilidad(idTrabajo).then(function (estatusUtilidad) {
                       
                         if (estatusUtilidad.data.length > 0) {
-                            //swal("Proceso Realizado!"); 
-
-                            debugger;
 
                             if(estatusUtilidad.data[0].estatus==1){
 
@@ -393,8 +390,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
                             }else{
                                 swal({
-                                    title: "¿Está seguro de verificar la Orden?",
-                                    text: "Pasara a Orden por Cobrar",
+                                    title: "Advertencia",
+                                    text: "¿Desea procesar el pago de esta oreden?",
                                     type: "warning",
                                     showCancelButton: true,
                                     confirmButtonColor: "#67BF11",

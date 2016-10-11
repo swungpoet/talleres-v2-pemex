@@ -23,6 +23,38 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
             if (aprobacionUtilidad.data.length > 0) {
                 alertFactory.success("Orden encontrada");
                 $scope.aprobacionUtilidades = aprobacionUtilidad.data;
+                /*setTimeout(function () {
+                    $('.dataTableAprobacionUtilidad').DataTable({
+                        buttons: [
+                            {
+                                extend: 'copy'
+                            },
+                            {
+                                extend: 'csv'
+                            },
+                            {
+                                extend: 'excel',
+                                title: 'ExampleFile'
+                            },
+                            {
+                                extend: 'pdf',
+                                title: 'ExampleFile'
+                            },
+
+                            {
+                                extend: 'print',
+                                customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                    }
+                ]
+                    });
+                }, 1000);*/
             } else {
                 alertFactory.info("No se encontrarón datos");
             }
@@ -48,12 +80,14 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
         $('.btn-aprobar').ready(function () {
                 swal({
                     title: "Advertencia",
-                    text: "Se aprobará la utilidad.",
+                    text: "¿Desea aprobar la orden con el margen de utilidad?.",
                     type: "warning",
-                    showCancelButton: false,
-                    confirmButtonColor: "#67BF11",
-                    confirmButtonText: "Aceptar",
-                    closeOnConfirm: true
+                    showCancelButton: true,
+                    confirmButtonColor: "#67BF11",  
+                    confirmButtonText: "Si",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
                 },
                 function (isConfirm) {
                     if (isConfirm) {
