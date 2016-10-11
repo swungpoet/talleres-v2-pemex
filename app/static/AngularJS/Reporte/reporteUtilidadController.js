@@ -42,7 +42,7 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                 $scope.margenUtilidad = utilidad.data;
                 
                 $scope.margenUtilidad.forEach(function (p, i) {
-                    if($scope.margenUtilidad[i].costoOrden != 0){
+                    if($scope.margenUtilidad[i].costoOrden != null){
                     $scope.costoOrden = $scope.margenUtilidad[i].costoOrden;
                     $scope.idCita = $scope.margenUtilidad[i].idCita;
                     $scope.numeroTrabajo = $scope.margenUtilidad[i].numeroTrabajo;
@@ -102,14 +102,14 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
     });
 
    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
+   /* var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
             $('.' + dataTable).DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
                         extend: 'excel',
-                        title: 'OrdenporCobrar'
+                        title: 'MargenUtilidad'
                     },
                     {
                         extend: 'print',
@@ -125,15 +125,12 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                 ]
             });
         }, 2500);
-    }
 
 
         //espera que el documento se pinte para llenar el dataTable
-   /* var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
            var indicePorOrdenar = 0;
             if (dataTable == 'dataTableUtilidad') {
-               indicePorOrdenar = 9;
             }
 
             $('.' + dataTable).DataTable({
@@ -158,6 +155,5 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                 ]
             });
         }, 2500);
-    }*/
 
 });
