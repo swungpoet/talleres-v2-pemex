@@ -235,7 +235,7 @@ function generateConfomidadReporte(data) {
         margin: 30
     })
 
-    var dirCertificado = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/' + data.idTrabajo;
+    var dirCertificado = 'app/static/uploads/files/' + data.idTrabajo;
     if (!fs.existsSync(dirCertificado + '/documentos' + '/certificadoConformidad')) {
         fs.mkdirSync(dirCertificado + '/documentos' + '/certificadoConformidad');
     }
