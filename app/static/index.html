@@ -96,6 +96,7 @@
                         <li><a href="/reporteorden">Reporte Órdenes</a></li>
                         <li><a href="/reportecotizacion">Reporte Cotizaciones</a></li>
                         <li ng-hide="userData.idTipoUsuario == 4"><a href="/reporteporcobrar">Reporte Órdenes por Cobrar</a></li>
+                        <li><a href="/reporteutilidad">Reporte Márgenes de Utilidad</a></li>
                         <li><a href="/reporteunidad">Historial de la unidad</a></li>
                     </ul>
                 </li>
@@ -111,6 +112,9 @@
                 </li>
                 <li ng-show="userData.idTipoUsuario == 1">
                     <a href="ordenanticipo" ng-click="showChat = 0"><i class="fa fa-usd"></i> <span class="nav-label">Anticipos de órdenes</span></a>
+                </li>
+                <li ng-show="userData.idTipoUsuario == 1">
+                    <a href="aprobacionutilidad" ng-click="showChat = 0"><i class="glyphicon glyphicon-ok-circle"></i> <span class="nav-label">Aprobación de utilidades</span></a>
                 </li>
             </ul>
 
@@ -315,6 +319,10 @@
     <script src="AngularJS/Reporte/reportePorCobrarController.js"></script>
     <script src="AngularJS/Reporte/reporteUnidadRepository.js"></script>
     <script src="AngularJS/Reporte/reporteUnidadController.js"></script>
+    <script src="AngularJS/Reporte/reporteUtilidadRepository.js"></script>
+    <script src="AngularJS/Reporte/reporteUtilidadController.js"></script>
+     <script src="AngularJS/AprobacionUtilidad/aprobacionUtilidadController.js"></script>
+
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia/slimscroll/jquery.slimscroll.min.js"></script>

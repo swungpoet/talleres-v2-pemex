@@ -352,8 +352,10 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         $scope.idEstatusTrabajo = idEstatus;
     }
     
-    $scope.verificaOrden = function (idTrabajo, sinProveedor) {
+    $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden) {
         //LQMA 14092016
+        var uitilidad = precioOrden - montoOrden;
+        var UtilidadNeta = precioOrden * 0.05;
          if(sinProveedor > 0)
          {
             swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
@@ -361,7 +363,33 @@ registrationModule.controller('administracionOrdenController', function ($scope,
          else
          {
             $('.btnVerificarOrden').ready(function () {
-                swal({
+               if (UtilidadNeta<uitilidad) {
+              // if (montoOrden<precioOrden) {
+
+                    swal({
+                        title: "La uitilidad debe ser minima de 5%",
+                        text: "Utilidad",
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#67BF11",
+                        confirmButtonText: "Aceptar",
+                        closeOnConfirm: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                           ordenServicioRepository.putAprobacionUtilidad(idTrabajo,$scope.userData.idUsuario).then(function (aprobacionUtilidad) {
+                                if (aprobacionUtilidad.data[0].id > 0) {
+                                    swal("Proceso Realizado!");
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al cargar la orden");
+                            });
+                            swal("Proceso Realizado!");
+                        }                     
+                      });
+                    
+               }else{
+                    swal({
                         title: "¿Está seguro de verificar la Orden?",
                         text: "Pasara a Orden por Cobrar",
                         type: "warning",
@@ -387,7 +415,10 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                             swal("Cancelacion de Orden");
                         }
                     });
-            });
-         }
+                  
+                }
+             });   
+                
+        }
     }
 });

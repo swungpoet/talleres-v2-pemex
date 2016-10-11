@@ -114,6 +114,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/ordenAnticipo.html',
             controller: 'ordenAnticipoController'
         });
+
+         $routeProvider.when('/aprobacionutilidad', {
+            templateUrl: 'AngularJS/Templates/aprobacionutilidad.html',
+            controller: 'aprobacionutilidadController'
+        });
         
         $routeProvider.when('/dashboardgeneral', {
             templateUrl: 'AngularJS/Templates/dashBoardGeneral.html',
@@ -144,6 +149,12 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/reporteUnidad.html',
             controller: 'reporteUnidadController'
         });
+
+        $routeProvider.when('/reporteutilidad', {
+            templateUrl: 'AngularJS/Templates/reporteUtilidad.html',
+            controller: 'reporteUtilidadController'
+        });
+
         
         $locationProvider.html5Mode({
             enabled: true,

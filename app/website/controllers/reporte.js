@@ -223,6 +223,42 @@ Reporte.prototype.get_ordenesunidad = function (req, res, next) {
     });
 }
 
+//Detalle Utilidad
+Reporte.prototype.get_reporteUtilidad = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idCotizacion',
+            value: req.query.idCotizacion,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTaller',
+            value: req.query.idTaller,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.DECIMAL
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_MARGEN_UTILIDAD_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 
 module.exports = Reporte;
 

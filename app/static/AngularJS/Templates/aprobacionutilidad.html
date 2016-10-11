@@ -1,0 +1,62 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
+<div ng-init="init()" class="animated bounceInRight">
+    <div class="headTitleTallerCita">
+        <span class="title"> Aprobación de utilidades<span class="subtitle">Administrador</span></span>
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        
+                        <br/>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTableOrdenServicio" cg-busy="{promise:promise,message:message}">
+                                <thead>
+                                    <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Número de la Orden</th>
+                                        <th>Número Económico</th>
+                                        <th>Zona</th>
+                                        <th>TAR</th>
+                                        <th>Taller</th>
+                                        <th>Costo de la Orden</th>
+                                        <th>Precio de la Orden</th>
+                                        <th>Descripción de la Orden</th>
+                                        <th>Estatus</th>
+                                        <th>Horas en espera</th>
+                                        <th>Editar Costos</th>
+                                        <th>Aprobación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="utilidad in aprobacionUtilidades ">
+
+                                         <td>{{utilidad.idCita}}</td>
+                                        <td>{{utilidad.numeroTrabajo}}</td>
+                                        <td>{{utilidad.numEconomico}}</td>
+                                        <td>{{utilidad.zona}}</td>
+                                        <td>{{utilidad.TAR}}</td>
+                                        <td>{{utilidad.razonSocial}}</td>
+                                        <td>{{utilidad.montoOrden | currency}}</td>
+                                        <td>{{utilidad.precioOrden | currency}}</td>
+                                        <td>{{utilidad.trabajo}}</td>
+                                        <td>{{utilidad.descripcionLarga }}</td>
+                                        <td>{{utilidad.tiempo }}</td>
+                                        <td>
+                                            <button class="btn btn-success" type="button" ng-click="lookAt(utilidad, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-informa" type="button" ng-click="" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
