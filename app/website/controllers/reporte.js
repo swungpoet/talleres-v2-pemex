@@ -234,19 +234,29 @@ Reporte.prototype.get_reporteUtilidad = function (req, res, next) {
 
     var params = [
         {
-            name: 'idCotizacion',
-            value: req.query.idCotizacion,
-            type: self.model.types.DECIMAL
+            name: 'fechaInicio',
+            value: req.query.fechaInicio,
+            type: self.model.types.STRING
         },
         {
-            name: 'idTaller',
-            value: req.query.idTaller,
-            type: self.model.types.DECIMAL
+            name: 'fechaFin',
+            value: req.query.fechaFin,
+            type: self.model.types.STRING
         },
         {
-            name: 'idUsuario',
-            value: req.query.idUsuario,
-            type: self.model.types.DECIMAL
+            name: 'numeroTrabajo',
+            value: req.query.numeroTrabajo,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'tipoOrden',
+            value: req.query.tipoOrden,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'facturado',
+            value: req.query.facturado,
+            type: self.model.types.STRING
         }
     ];
 

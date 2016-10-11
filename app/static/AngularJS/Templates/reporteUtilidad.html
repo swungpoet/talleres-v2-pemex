@@ -10,34 +10,40 @@
 
                         <div class="row">
 
-                            <div class="col-xs-4" id="fecha">
+                            <div class="col-xs-2" id="fecha">
                                 <div class="input-group date">
-                                    <input type="text" placeholder="Fecha Inicio" class="form-control" value="" ng-model="fechaI">
+                                    <input type="text" placeholder="Fecha Inicio" class="form-control" value="" ng-model="fechaInicio">
                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
-                            <div class="col-xs-4" id="fecha">
+                            <div class="col-xs-2" id="fecha">
                                 <div class="input-group date">
-                                    <input type="text" placeholder="Fecha Fin" class="form-control" value="" ng-model="fechaF">
+                                    <input type="text" placeholder="Fecha Fin" class="form-control" value="" ng-model="fechaFin">
                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
-                                <select class="form-control" name="facturada" ng-model="selectedOrden">
+                             <div class="col-xs-3">
+                                <select class="form-control" name="orden" ng-model="tipoOrden">
                                     <option value="">Selecionar Ordenes</option><!--default option -->
-                                    <option value="Facturadas">Facturadas</option>
-                                    <option value="NoFacturadas">No Facturadas</option>
+                                    <option value="1">Servicio</option>
+                                    <option value="2">Refacciones</option>
                                 </select>
                             </div>
-
+                            <div class="col-xs-3">
+                                <select class="form-control" name="facturada" ng-model="facturado">
+                                    <option value="">Seleciona Tipo Orden</option><!--default option -->
+                                    <option value="1">Facturadas</option>
+                                    <option value="2">No Facturadas</option>
+                                </select>
+                            </div>
                             <div class="col-xs-0">
-                                <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="facturadas(selectedCliente.idCliente, datoUnidad)"><span class="glyphicon glyphicon-search"></span></button>
+                                <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="facturadas()"><span class="glyphicon glyphicon-search"></span></button>
                             </div>
                         </div>
                         <br><br>
                         <div class="row">
                             <div class="col-xs-4">
-                                <input type="text" placeholder="Buscar Orden" ng-model="datoOrden" class="form-control">
+                                <input type="text" placeholder="Buscar Orden" ng-model="numeroTrabajo" class="form-control">
                             </div>
 
                             <div class="col-xs-0">
@@ -63,7 +69,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="margenes in utilidad">
+                                <tr ng-repeat="margenes in margen">
                                     <td>{{margenes.idCita}}</td>
                                     <td>{{margenes.numeroTrabajo}}</td>
                                     <td>{{margenes.numEconomico}}</td>

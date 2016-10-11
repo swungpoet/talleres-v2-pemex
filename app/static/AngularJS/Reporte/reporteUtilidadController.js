@@ -4,31 +4,57 @@
 // -- Description: Reporte Utilidad controller
 // -- =============================================
 
-registrationModule.controller('reporteUtilidadController', function ($scope, alertFactory, $rootScope, localStorageService, reporteUtilidadRepository) {
-
+registrationModule.controller('reporteUtilidadController', function ($scope, alertFactory, $rootScope, localStorageService, reporteUtilidadRepository) {     
 
     //Inicializa la pagina
     $scope.initUtilidad = function () {
-
+        $scope.limpiaCampos();
     }
 
-   
+    $scope.limpiaCampos = function () {
+        $scope.fechaInicio = '';
+        $scope.fechaFin = '';
+        $scope.tipoOrden = '';
+        $scope.facturado = '';
+        $scope.numeroTrabajo = '';
+    }
+
+    $scope.facturadas = function () {   
+    //$scope.fechaInicio;
+    $scope.fechaInicio == "" ? $scope.fechaInicio = '01/01/2016' : $scope.fechaInicio;
+    //$scope.fechaFin;
+    $scope.fechaFin == "" ? $scope.fechaFin = '10/31/2016' : $scope.fechaFin;
+    $scope.tipoOrden;
+    $scope.facturado;
+    $scope.getMargenUtilidad($scope.fechaInicio, $scope.fechaFin, 0, $scope.tipoOrden, $scope.facturado);
+    $scope.idProveedor == '' || $scope.idProveedor == null ? $scope.idProveedor = 0 : $scope.idProveedor;
+    }
+
+    $scope.ordenes = function () {
+    $scope.numeroTrabajo;
+    $scope.getMargenUtilidad(null,null, $scope.numeroTrabajo, null, null);
+    }
        //obtiene el total de las citas
-    $scope.getMargenUtilidad = function () {
-         $('.dataTableUtilidad').DataTable().destroy();
-            reporteUtilidadRepository.getUtilidad().then(function (utilidad) {
+    $scope.getMargenUtilidad = function (fechaInicio, fechaFin, numeroTrabajo, tipoOrden, facturado) {
+         if(($scope.tipoOrden != '' && $scope.facturado != '') || ($scope.numeroTrabajo != '')){
+            $('.dataTableUtilidad').DataTable().destroy();
+            reporteUtilidadRepository.getUtilidad(fechaInicio, fechaFin, numeroTrabajo, tipoOrden, facturado).then(function (utilidad) {
                 $scope.margen = utilidad.data;
 
                 if (utilidad.data.length > 0) {
                     alertFactory.success('Datos encontrados');
                     waitDrawDocument("dataTableUtilidad");
+                    $scope.limpiaCampos();
                 } else {
                     alertFactory.info('No se encontraron datos');
                 }
             }, function (error) {
                 alertFactory.error('Error al obtener los datos');
             });
-        }
+          }else{
+        alertFactory.info('Porfavor complete la informacion');
+      }
+    }
 
     //fecha
     $('#fecha .input-group.date').datepicker({
