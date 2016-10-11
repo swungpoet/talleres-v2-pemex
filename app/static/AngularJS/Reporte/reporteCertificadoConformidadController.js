@@ -58,6 +58,10 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
         }
     }
 
+    $scope.obtieneCertificados = function () {
+        $scope.getCertificados($scope.zonaSelected, $scope.tarSelected, $scope.fInicialSelected, $scope.fFinalSelected);
+    }
+
     //espera que el documento se pinte para llenar el dataTable
     var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
@@ -83,7 +87,7 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
             });
         }, 2500);
     }
-    
+
     //Fechas
     $('#fechaFinal .input-group.date').datepicker({
         todayBtn: "linked",
