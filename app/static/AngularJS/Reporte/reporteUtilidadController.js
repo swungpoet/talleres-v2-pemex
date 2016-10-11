@@ -14,30 +14,28 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
     $scope.limpiaCampos = function () {
         $scope.fechaInicio = '';
         $scope.fechaFin = '';
-        $scope.tipoOrden = '';
         $scope.facturado = '';
         $scope.numeroTrabajo = '';
-        $scope.copade = '';
     }
 
     $scope.facturadas = function () {   
     $scope.fechaInicio == "" ? $scope.fechaInicio = '01/01/2010' : $scope.fechaInicio;
     $scope.fechaFin == "" ? $scope.fechaFin = '11/29/2020' : $scope.fechaFin;
-    $scope.tipoOrden;
+    //$scope.tipoOrden;
     $scope.facturado;
-    $scope.copade == "" ? $scope.copade = 0 : $scope.copade;
-    $scope.getMargenUtilidad($scope.fechaInicio, $scope.fechaFin, 0, $scope.tipoOrden, $scope.facturado, $scope.copade);
+    //$scope.copade == "" ? $scope.copade = 0 : $scope.copade;
+    $scope.getMargenUtilidad($scope.fechaInicio, $scope.fechaFin, 0, $scope.facturado);
     }
 
     $scope.ordenes = function () {
     $scope.numeroTrabajo;
-    $scope.getMargenUtilidad(null,null, $scope.numeroTrabajo, null, null, 0);
+    $scope.getMargenUtilidad(null,null, $scope.numeroTrabajo, null);
     }
        //obtiene el total de las citas
-    $scope.getMargenUtilidad = function (fechaInicio, fechaFin, numeroTrabajo, tipoOrden, facturado, copade) {
-         if(($scope.tipoOrden != '' && $scope.facturado != '') || ($scope.numeroTrabajo != '') || ($scope.copade != '')){
+    $scope.getMargenUtilidad = function (fechaInicio, fechaFin, numeroTrabajo, facturado) {
+         if(($scope.facturado != '') || ($scope.numeroTrabajo != '')){
             $('.dataTableUtilidad').DataTable().destroy();
-            reporteUtilidadRepository.getUtilidad(fechaInicio, fechaFin, numeroTrabajo, tipoOrden, facturado, copade).then(function (utilidad) {
+            reporteUtilidadRepository.getUtilidad(fechaInicio, fechaFin, numeroTrabajo, facturado).then(function (utilidad) {
                 $scope.arrayMargen = [];
                 $scope.margenUtilidad = utilidad.data;
                 

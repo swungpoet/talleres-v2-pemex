@@ -2,7 +2,7 @@ var reporteUtilidadUrl = global_settings.urlCORS + '/api/reporte/';
 
 registrationModule.factory('reporteUtilidadRepository', function ($http) {
     return {        
-        getUtilidad: function (fechaInicio, fechaFin, numeroTrabajo, tipoOrden, facturado, copade) {
+        getUtilidad: function (fechaInicio, fechaFin, numeroTrabajo, facturado) {
             return $http({
                 url: reporteUtilidadUrl + 'reporteUtilidad/',
                 method: "GET",
@@ -10,9 +10,7 @@ registrationModule.factory('reporteUtilidadRepository', function ($http) {
                     fechaInicio:fechaInicio,
                     fechaFin:fechaFin,
                     numeroTrabajo:numeroTrabajo,
-                    tipoOrden:tipoOrden,
-                    facturado:facturado,
-                    copade:copade
+                    facturado:facturado
                 },
                 headers: {
                     'Content-Type': 'application/json'

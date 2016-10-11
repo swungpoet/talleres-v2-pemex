@@ -23,26 +23,27 @@
                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
-                             <div class="col-xs-2">
+<!--                              <div class="col-xs-2">
                                 <select class="form-control" name="orden" ng-model="tipoOrden" ng-disabled="copade != ''">
-                                    <option value="">Tipo Trabajo</option><!--default option -->
+                                    <option value="">Tipo Trabajo</option>
                                     <option value="1">Servicio</option>
                                     <option value="2">Refacciones</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-xs-2">
-                                <select class="form-control" name="facturada" ng-model="facturado" ng-disabled="copade != ''">
-                                    <option value="">Tipo Provisión</option><!--default option -->
+                                <select class="form-control" name="facturada" ng-model="facturado">
+                                    <option value="">Por Estatus</option><!--default option -->
                                     <option value="1">Provisionadas</option>
                                     <option value="2">No Provisionadas</option>
+                                    <option value="3">Por Facturar BPRO</option>
                                 </select>
                             </div>
-                            <div class="col-xs-2">
+<!--                             <div class="col-xs-2">
                                 <select class="form-control" name="copade" ng-model="copade" ng-disabled="tipoOrden != ''">
-                                    <option value="">Tipo Factura</option><!--default option -->
+                                    <option value="">Tipo Factura</option>
                                     <option value="1">Por Facturar</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-xs-0">
                                 <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="facturadas()"><span class="glyphicon glyphicon-search"></span></button>
                             </div>
