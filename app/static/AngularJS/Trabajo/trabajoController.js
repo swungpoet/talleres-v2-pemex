@@ -56,9 +56,16 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     var getTrabajo = function (idUsuario) {
+        var sumatoria= 0
         trabajoRepository.getTrabajo(idUsuario).then(function (trabajo) {
             $('.dataTableTrabajo').DataTable().destroy();
             $scope.trabajos = trabajo.data;
+            for(var i=0;i<trabajo.data.length;i++){
+                sumatoria += parseFloat(trabajo.data[i].precioOrden);
+            };
+
+            console.log("suma "+ sumatoria);
+            $scope.sumatoriaProceso=sumatoria;
             if (trabajo.data.length > 0) {
                 waitDrawDocument("dataTableTrabajo");
                 alertFactory.success("Trabajos cargados");
@@ -72,9 +79,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //obtiene los trabajos terminados
     var getTrabajoTerminado = function (idUsuario) {
+        var sumatoria= 0
         $('.dataTableTrabajoTerminado').DataTable().destroy();
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
             $scope.trabajosTerminados = trabajoTerminado.data;
+
+            for(var i=0;i<trabajoTerminado.data.length;i++){
+                sumatoria += parseFloat(trabajoTerminado.data[i].precioOrden);
+            };
+
+            console.log("suma "+ sumatoria);
+            $scope.sumatoriaEntrega=sumatoria;
 
             if (trabajoTerminado.data.length > 0) {
                 waitDrawDocument("dataTableTrabajoTerminado");
