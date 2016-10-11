@@ -415,6 +415,44 @@ Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) 
     });
 }
 
+//obtiene el estatus de una utilidad registrada 
+Orden.prototype.get_getestatusutilidad = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.STRING
+        }];
+
+    this.model.query('[SEL_ESTATUS_APROBACION_UTILIDAD_SP]', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//obtiene parametro de %
+Orden.prototype.get_getparametro = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'idTipo',
+        value: req.query.idTipo,
+        type: self.model.types.INT
+    },
+    {
+        name: 'nombre',
+        value: req.query.nombre,
+        type: self.model.types.STRING
+    }];
+
+    this.model.query('[SEL_PARAMETROS_SP]', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 //Inserta los datos de aprobacion de utilidad  respuesta en db y actualiza estatus
 Orden.prototype.post_insertaDatosAprobacionUtilidadRespuesta = function (req, res, next) { 
     //Objeto que almacena la respuesta

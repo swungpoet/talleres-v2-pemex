@@ -47,8 +47,8 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
      
         $('.btn-aprobar').ready(function () {
                 swal({
-                    title: "Se aprobará la utilidad",
-                    text: "Utilidad",
+                    title: "Advertencia",
+                    text: "Se aprobará la utilidad.",
                     type: "warning",
                     showCancelButton: false,
                     confirmButtonColor: "#67BF11",

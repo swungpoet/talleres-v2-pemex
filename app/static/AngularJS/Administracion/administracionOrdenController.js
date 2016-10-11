@@ -354,71 +354,146 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     
     $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden) {
         //LQMA 14092016
-        var uitilidad = precioOrden - montoOrden;
-        var UtilidadNeta = precioOrden * 0.05;
-         if(sinProveedor > 0)
+        var uitilidad = Math.abs(precioOrden - montoOrden); 
+        var UtilidadNeta = 0;
+        //var UtilidadNeta = (precioOrden * 0.05)+1;
+
+        ordenServicioRepository.getParametro(1,'MV').then(function (parametro) {
+           
+            if (parametro.data.length > 0) {
+                 UtilidadNeta = (precioOrden * parametro.data[0].valor)+1;
+
+                 if(sinProveedor > 0)
          {
             swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
          }
          else
          {
             $('.btnVerificarOrden').ready(function () {
-               if (UtilidadNeta<uitilidad) {
-              // if (montoOrden<precioOrden) {
 
-                    swal({
-                        title: "La uitilidad debe ser minima de 5%",
-                        text: "Utilidad",
-                        type: "warning",
-                        showCancelButton: false,
-                        confirmButtonColor: "#67BF11",
-                        confirmButtonText: "Aceptar",
-                        closeOnConfirm: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                           ordenServicioRepository.putAprobacionUtilidad(idTrabajo,$scope.userData.idUsuario).then(function (aprobacionUtilidad) {
-                                if (aprobacionUtilidad.data[0].id > 0) {
-                                    swal("Proceso Realizado!");
-                                }
-                            }, function (error) {
-                                alertFactory.error("Error al cargar la orden");
-                            });
-                            swal("Proceso Realizado!");
-                        }                     
-                      });
-                    
-               }else{
-                    swal({
-                        title: "¿Está seguro de verificar la Orden?",
-                        text: "Pasara a Orden por Cobrar",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#67BF11",
-                        confirmButtonText: "Si",
-                        cancelButtonText: "No",
-                        closeOnConfirm: false,
-                        closeOnCancel: false
-                    },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                                    swal("Proceso Realizado!");
-                                    //location.href = '/ordenesporcobrar';
-                                }
-                            }, function (error) {
-                                alertFactory.error("Error al verificar la orden");
-                            });
-                            swal("Proceso Realizado!");
-                        } else {
-                            swal("Cancelacion de Orden");
+             
+                   ordenServicioRepository.getEstatusUtilidad(idTrabajo).then(function (estatusUtilidad) {
+                      
+                        if (estatusUtilidad.data.length > 0) {
+                            //swal("Proceso Realizado!"); 
+
+                            debugger;
+
+                            if(estatusUtilidad.data[0].estatus==1){
+
+                                swal({
+                                    title: "Advertencia",
+                                    text: "La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.",
+                                    type: "warning",
+                                    showCancelButton: false,
+                                    confirmButtonColor: "#67BF11",
+                                    confirmButtonText: "Aceptar",
+                                    closeOnConfirm: true
+                                });
+
+                            }else{
+                                swal({
+                                    title: "¿Está seguro de verificar la Orden?",
+                                    text: "Pasara a Orden por Cobrar",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#67BF11",
+                                    confirmButtonText: "Si",
+                                    cancelButtonText: "No",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                swal("Proceso Realizado!");
+                                                //location.href = '/ordenesporcobrar';
+                                            }
+                                        }, function (error) {
+                                            alertFactory.error("Error al verificar la orden");
+                                        });
+                                        swal("Proceso Realizado!");
+                                    } else {
+                                        swal("Cancelacion de Orden");
+                                    }
+                                }); 
+                            }
+                             
+
+                        }else{
+
+                          
+
+                            if (UtilidadNeta<uitilidad) {
+                          // if (montoOrden<precioOrden) {
+
+                                swal({
+                                    title: "Advertencia",
+                                    text: "La uitilidad debe ser minima de 5%.",
+                                    type: "warning",
+                                    showCancelButton: false,
+                                    confirmButtonColor: "#67BF11",
+                                    confirmButtonText: "Aceptar",
+                                    closeOnConfirm: false
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                       ordenServicioRepository.putAprobacionUtilidad(idTrabajo,$scope.userData.idUsuario).then(function (aprobacionUtilidad) {
+                                            if (aprobacionUtilidad.data[0].id > 0) {
+                                                swal("Proceso Realizado!");
+                                            }
+                                        }, function (error) {
+                                            alertFactory.error("Error al cargar la orden");
+                                        });
+                                    }                     
+                                  });
+                                
+                           }else{
+                                swal({
+                                    title: "¿Está seguro de verificar la Orden?",
+                                    text: "Pasara a Orden por Cobrar",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#67BF11",
+                                    confirmButtonText: "Si",
+                                    cancelButtonText: "No",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                swal("Proceso Realizado!");
+                                                //location.href = '/ordenesporcobrar';
+                                            }
+                                        }, function (error) {
+                                            alertFactory.error("Error al verificar la orden");
+                                        });
+                                        swal("Proceso Realizado!");
+                                    } else {
+                                        swal("Cancelacion de Orden");
+                                    }
+                                });
+                              
+                            }
                         }
-                    });
-                  
-                }
-             });   
+                     
+                            
                 
-        }
+               
+                }, function (error) {
+                        alertFactory.error("Error al cargar la orden");
+                    });
+              
+             });
+         }      
+            }
+        }, function (error) {
+            alertFactory.error("Error en la consulta");
+        });
+
+         
     }
 });

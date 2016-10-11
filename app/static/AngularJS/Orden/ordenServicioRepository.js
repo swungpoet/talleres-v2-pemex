@@ -94,12 +94,40 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 method: "GET"
             });
         },
+
         getAdmonOrdenes: function (numeroTrabajo) {
             return $http({
                 url: ordenUrl + 'getadmonordenes/',
                 method: "GET",
                 params: {
                     numeroTrabajo: numeroTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+
+         getEstatusUtilidad: function (idTrabajo) {
+            return $http({
+                url: ordenUrl + 'getestatusutilidad/',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+
+        getParametro: function (idTipo, nombre) {
+            return $http({
+                url: ordenUrl + 'getparametro/',
+                method: "GET",
+                params: {
+                    idTipo: idTipo,
+                    nombre: nombre
                 },
                 headers: {
                     'Content-Type': 'application/json'
