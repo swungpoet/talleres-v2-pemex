@@ -25,9 +25,11 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
                 alertFactory.success("Certificados Cargados");
                 waitDrawDocument("dataTableCertificadoConformidad");
             } else {
+                $scope.certificados = [];
                 alertFactory.info("No se encontraron certificados generados con los criterios de búsqueda");
             }
         }, function (error) {
+            $scope.certificados = [];
             alertFactory.error("Error al obtener los certificados");
         });
     }
