@@ -125,12 +125,14 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                 ]
             });
         }, 2500);
-
+    }*/
 
         //espera que el documento se pinte para llenar el dataTable
+    var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
            var indicePorOrdenar = 0;
             if (dataTable == 'dataTableUtilidad') {
+               indicePorOrdenar = 10;
             }
 
             $('.' + dataTable).DataTable({
@@ -155,5 +157,6 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                 ]
             });
         }, 2500);
+    }
 
 });
