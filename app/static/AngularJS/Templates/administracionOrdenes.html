@@ -10,7 +10,7 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-xs-4">
-                                <input type="text" placeholder="Buscar Número de Órden" ng-model="numeroTrabajo" class="form-control">
+                                <input type="text" placeholder="Buscar Número de Órden" ng-model="numeroTrabajo" class="form-control" ng-enter="getAdmonOrdenes(numeroTrabajo)">
                             </div>
                             <div class="col-xs-0">
                                 <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="getAdmonOrdenes(numeroTrabajo)"><span class="glyphicon glyphicon-search"></span></button>
@@ -51,8 +51,8 @@
                                         <td>{{orden.TAR}}</td>
                                         <td>{{orden.razonSocial}}</td>
                                         <!--<td>{{orden.folio}}</td>-->
-                                        <td>{{orden.montoOrden | currency}}</td>
-                                        <td>{{orden.precioOrden | currency}}</td>
+                                        <td>{{orden.montoOrden | currency: "$"}}</td>
+                                        <td>{{orden.precioOrden | currency: "$"}}</td>
                                         <td>{{orden.trabajo}}</td>
                                         <td>{{orden.descripcionLarga }}</td>
                                         <td>

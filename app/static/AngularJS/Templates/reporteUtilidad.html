@@ -37,7 +37,7 @@
                                 </select>
                             </div> -->
                             <div class="col-xs-2">
-                                <select class="form-control" name="facturada" ng-model="facturado">
+                                <select class="form-control" name="facturada" ng-model="facturado" ng-enter="facturadas()">
                                     <option value="">Por Estatus</option><!--default option -->
                                     <option value="1">Provisionadas</option>
                                     <option value="2">No Provisionadas</option>
@@ -57,7 +57,7 @@
                         <br><br>
                         <div class="row">
                             <div class="col-xs-4">
-                                <input type="text" placeholder="Buscar Orden" ng-model="numeroTrabajo" class="form-control">
+                                <input type="text" placeholder="Buscar Orden" ng-model="numeroTrabajo" class="form-control" ng-enter="ordenes()">
                             </div>
 
                             <div class="col-xs-0">
