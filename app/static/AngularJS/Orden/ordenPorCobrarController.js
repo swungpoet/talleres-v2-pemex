@@ -61,10 +61,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
 
     $scope.preFacturas = function () {
+        var sumatoria= 0;
         $('.dataTablePreFacturas').DataTable().destroy();
         ordenPorCobrarRepository.getPreFacturas().then(function (result) {
             if (result.data.length > 0) {
                 $scope.facturas = result.data;
+                for(var i=0;i<result.data.length;i++){
+                    sumatoria += parseFloat(result.data[i].montoOrden);
+                };
+                $scope.sumatoriaPrefactura=sumatoria;
                 waitDrawDocument("dataTablePreFacturas");
             } else {
                 alertFactory.info('No se encontraron trabajos por cobrar');
@@ -194,11 +199,16 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Devuelve las copades pendientes por asignar
     $scope.getCopades = function () {
+        var sumatoria = 0;
         $('.dataTableCopades').DataTable().destroy();
         ordenPorCobrarRepository.getCopades().then(function (result) {
             if (result.data.length > 0) {
                 $scope.copades = result.data;
-                    waitDrawDocument("dataTableCopades");
+                 for(var i=0;i<result.data.length;i++){
+                    sumatoria += parseFloat(result.data[i].subTotal);
+                };
+                $scope.sumatoriaCOPADE=sumatoria;
+                waitDrawDocument("dataTableCopades");
             } else {
                 alertFactory.info('No se encontró ninguna COPADE');
             }
@@ -304,10 +314,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
      //Devuelve las copades pendientes por asignar
     $scope.getOrdenesPorCobrar = function () {
+        var sumatoria= 0;
         $('.dataTableOrdenesVerificadas').DataTable().destroy();
         ordenPorCobrarRepository.getOrdenesVerificadas().then(function (result) {
             if (result.data.length > 0) {
                 $scope.verificadas = result.data;
+                 for(var i=0;i<result.data.length;i++){
+                    sumatoria += parseFloat(result.data[i].montoOrden);
+                };
+                $scope.sumatoriaOrdenes=sumatoria;
                 waitDrawDocument("dataTableOrdenesVerificadas");
             } else {
                 alertFactory.info('No se encontró ninguna Orden Verificada');

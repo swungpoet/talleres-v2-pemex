@@ -19,7 +19,7 @@
                     <div class="ibox-content">
                         <tabset>
                             <tab heading="En proceso" index="0">
-                                <div class=" row totales">Precio total: {{sumatoriaProceso | currency: "$"}}</div>
+                                <div class=" row etiquetaTotales">Precio total: <span class="totales"> {{sumatoriaProceso | currency: "$"}}</span></div>
                                 <br/>
                                 <br/>
                                 <br/>
@@ -38,7 +38,8 @@
                                                 <th>Modelo</th>
                                                 <th>Descripción</th>
                                                 <th>Estatus</th>
-                                                <th>Fecha</th>
+                                                <th>Precio de la orden</th>
+                                                <th ng-hide="userData.idTipoUsuario == 3">Fecha</th>
                                                 <th ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">Fecha inicio real de trabajos</th>
                                                 <th>Acción</th>
                                             </tr>
@@ -54,6 +55,7 @@
                                                 <td>{{trabajo.modeloMarca}}</td>
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td ng-class="{'rowAzul': trabajo.estatus=='OrdenGarantia'}">{{trabajo.descripcionLarga}}</td>
+                                                <td ng-hide="userData.idTipoUsuario == 3">{{trabajo.precioOrden | currency: "$"}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">{{trabajo.fechaServicio}}
                                                     <br>
@@ -106,7 +108,7 @@
                                 </div>
                             </tab>
                             <tab heading="Entrega" index="1">
-                                 <div class=" row totales">Precio total: {{sumatoriaEntrega| currency: "$"}}</div>
+                                 <div class=" row etiquetaTotales">Precio total: <span class="totales"> {{sumatoriaEntrega| currency: "$"}}</span></div>
                                  <br/>
                                 <br/>
                                 <br/>
@@ -126,6 +128,7 @@
                                                 <th>Descripción</th>
                                                 <th>Observaciones</th>
                                                 <th>Estatus</th>
+                                                <th ng-hide="userData.idTipoUsuario == 3">Precio de la orden</th>
                                                 <th>Fecha</th>
                                                 <th>Acción</th>
                                             </tr>
@@ -142,6 +145,7 @@
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td>{{trabajo.observacion}}</td>
                                                 <td>{{trabajo.descripcionLarga}}</td>
+                                                <td ng-hide="userData.idTipoUsuario == 3">{{trabajo.precioOrden | currency: "$"}}</td>
                                                 <td>{{trabajo.fechaFin | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
                                                     <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(trabajo, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
