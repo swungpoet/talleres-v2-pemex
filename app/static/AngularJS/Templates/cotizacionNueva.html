@@ -39,7 +39,7 @@
                                     </select>
                                 </div>
                                 <div class="col-xs-6">
-                                    <input class="form-control" type="text" ng-model="datoTaller" placeholder=" Buscar taller">
+                                    <input class="form-control" type="text" ng-model="datoTaller" placeholder=" Buscar taller" ng-enter="lookUpTaller(datoTaller)" >
                                 </div>
                                 <div class="col-xs-0">
                                     <button type="button" class="btn btn-primary" ng-click="lookUpTaller(datoTaller)" data-toggle="tooltip" tooltip="Buscar taller" tooltip-placement="right"><span class="glyphicon glyphicon-search"></span></button>
@@ -78,7 +78,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <input type="text" placeholder="Introduzca servicio, paquete o refacción" ng-model="partida" class="form-control">
+                                    <input type="text" placeholder="Introduzca servicio, paquete o refacción" ng-model="partida" class="form-control" ng-enter="buscarPieza(partida)">
                                 </div>
                                 <div class="col-xs-0">
                                     <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="buscarPieza(partida)" data-toggle="tooltip" tooltip="Buscar" id="btnCotizar" tooltip-placement="right"><span class="glyphicon glyphicon-search dim"></span></button>

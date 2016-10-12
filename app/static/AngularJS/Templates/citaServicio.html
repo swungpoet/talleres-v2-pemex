@@ -1,6 +1,6 @@
 <div class="contenedor" ng-init="init()">
 	<div class="formGroup">
-        <input  class="rounded inputWidth" type="text" placeholder="Búsqueda: Servicio/Paquete/Refacción" ng-model="pieza">
+        <input  class="rounded inputWidth" type="text" placeholder="Búsqueda: Servicio/Paquete/Refacción" ng-model="pieza" ng-enter="getPieza(pieza)">
         <button id="btnBuscarPieza" busy="Buscando.." type="button" class="btn btn-primary glyphicon glyphicon-search" ng-click="getPieza(pieza)"></button>
     </div>       	
     <div class="row tablaBusqueda tablaAlign" cg-busy="{promise:promise,message:message}">
