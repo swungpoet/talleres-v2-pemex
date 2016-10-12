@@ -23,7 +23,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
             if (aprobacionUtilidad.data.length > 0) {
                 alertFactory.success("Orden encontrada");
                 $scope.aprobacionUtilidades = aprobacionUtilidad.data;
-                /*setTimeout(function () {
+                setTimeout(function () {
                     $('.dataTableAprobacionUtilidad').DataTable({
                         buttons: [
                             {
@@ -54,7 +54,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
                     }
                 ]
                     });
-                }, 1000);*/
+                }, 1000);
             } else {
                 alertFactory.info("No se encontrarón datos");
             }
