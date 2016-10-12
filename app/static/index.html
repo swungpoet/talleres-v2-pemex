@@ -96,9 +96,9 @@
                         <li><a href="/reporteorden">Reporte Órdenes</a></li>
                         <li><a href="/reportecotizacion">Reporte Cotizaciones</a></li>
                         <li ng-hide="userData.idTipoUsuario == 4"><a href="/reporteporcobrar">Reporte Órdenes por Cobrar</a></li>
-                        <li><a href="/reporteutilidad">Reporte Márgenes de Utilidad</a></li>
+                        <li ng-hide="userData.idTipoUsuario == 4"><a href="/reporteutilidad">Reporte Márgenes de Utilidad</a></li>
                         <li><a href="/reporteunidad">Historial de la unidad</a></li>
-                        <li><a href="/reporteCertificadoConformidad">Certificado Conformidad</a></li>
+                        <li ng-hide="userData.idTipoUsuario == 4"><a href="/reporteCertificadoConformidad">Certificado Conformidad</a></li>
                     </ul>
                 </li>
                 <li ng-show="userData.idTipoUsuario == 1">
