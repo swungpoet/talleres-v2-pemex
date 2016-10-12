@@ -130,12 +130,18 @@ Trabajo.prototype.post_updtrabajocertificadogenerado = function(req, res, next){
                   {name: 'idTrabajo', value: req.body.idTrabajo, type: self.model.types.INT}];
 	
 	this.model.post('UPD_ESTATUS_TRABAJO_SP', params, function (error, result) {
-        //Callback
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
+    
+    /*this.model.post('SEL_GENERA_CERTIFICADO_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });*/
 }
 
 //realiza la actualización del trabajo a tranferencia de responsabilidad
