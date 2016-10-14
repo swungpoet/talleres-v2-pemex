@@ -4,88 +4,137 @@
 // -- Description: Reporte Utilidad controller
 // -- =============================================
 
-registrationModule.controller('reporteUtilidadController', function ($scope, alertFactory, $rootScope, localStorageService, reporteUtilidadRepository) {
-    $scope.arrayMargen = [];
+registrationModule.controller('reporteUtilidadController', function ($scope, alertFactory, $rootScope, localStorageService, reporteUtilidadRepository, dashBoardRepository) {
+    $scope.zona = null;
+    $scope.tar = null;
+    $scope.estatus = '';
+    $scope.fechaInicio = null;
+    $scope.fechaFin = null;
+    $scope.fechaMes = null;
+    $scope.userData = localStorageService.get('userData');
+
     //Inicializa la pagina
     $scope.initUtilidad = function () {
-        $scope.limpiaCampos();
+       // $scope.limpiaCampos();
+        $scope.devuelveZonas();
+        $scope.devuelveTars();
+       // $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.rangoInicial,$scope.rangoFinal,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, 1);
     }
 
-    $scope.limpiaCampos = function () {
+    //Limpia los campos de la pantalla de reporte de utilidad
+  /*  $scope.limpiaCampos = function () {
         $scope.fechaInicio = '';
         $scope.fechaFin = '';
-        $scope.facturado = '';
+        $scope.mes = '';
+        $scope.rangoInicial = '';
+        $scope.rangoFinal = '';
+        $scope.zona = '';
+        $scope.tar = '';
+        $scope.idTipoCita = '';
+        $scope.estatus = '';
         $scope.numeroTrabajo = '';
+        $scope.bandera = '';
+    }*/
+
+    $scope.fechaRango = function () {
+        $scope.fechaMes = null;
     }
 
-    $scope.facturadas = function () {
-        $scope.fechaInicio == "" ? $scope.fechaInicio = '01/01/2010' : $scope.fechaInicio;
-        $scope.fechaFin == "" ? $scope.fechaFin = '11/29/2020' : $scope.fechaFin;
-        //$scope.tipoOrden;
-        $scope.facturado;
-        //$scope.copade == "" ? $scope.copade = 0 : $scope.copade;
-        $scope.getMargenUtilidad($scope.fechaInicio, $scope.fechaFin, 0, $scope.facturado);
+    $scope.fechaMess = function () {
+        $scope.fechaInicio = null;
+        $scope.fechaFin = null;
     }
 
-    $scope.ordenes = function () {
-            $scope.numeroTrabajo;
-            $scope.getMargenUtilidad(null, null, $scope.numeroTrabajo, null);
+    //obtiene los scope necesarios para el reporte de utilidad 
+    $scope.buscaFiltros = function () {
+        $scope.bandera = 1;
+        $scope.fechaInicio == '' ? $scope.fechaInicio = null : $scope.fechaInicio;
+        $scope.fechaFin == '' ? $scope.fechaFin = null : $scope.fechaFin;
+        $scope.fechaMes == '' ? $scope.fechaMes = null : $scope.fechaMes;
+        $scope.rangoInicial = $('#rangoi').val();
+        $scope.rangoFinal = $('#rangof').val();
+        $scope.rangoInicial == '' ? $scope.rangoInicial = null : $scope.rangoInicial;
+        $scope.rangoFinal == '' ? $scope.rangoFinal = null : $scope.rangoFinal;
+        $scope.zona;
+        $scope.tar;
+        $scope.idTipoCita == '' ? $scope.idTipoCita = null : $scope.idTipoCita;
+        $scope.estatus == '' ? $scope.bandera = 1 : $scope.bandera = 2;
+        $scope.numeroTrabajo;
+        $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.rangoInicial,$scope.rangoFinal,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera);
+    }
+
+    //obtiene los scope necesarios para el reporte de utilidad 
+    $scope.buscaOrden = function () {
+        $scope.bandera = 3;
+        $scope.fechaInicio == '' ? $scope.fechaInicio = null : $scope.fechaInicio;
+        $scope.fechaFin == '' ? $scope.fechaFin = null : $scope.fechaFin;
+        $scope.fechaMes == '' ? $scope.fechaMes = null : $scope.fechaMes;
+        $scope.rangoInicial = $('#rangoi').val();
+        $scope.rangoFinal = $('#rangof').val();
+        $scope.rangoInicial == '' ? $scope.rangoInicial = null : $scope.rangoInicial;
+        $scope.rangoFinal == '' ? $scope.rangoFinal = null : $scope.rangoFinal;
+        $scope.zona;
+        $scope.tar;
+        $scope.idTipoCita == '' ? $scope.idTipoCita = null : $scope.idTipoCita;
+       // $scope.estatus == '' ? $scope.estatus == null : $scope.estatus;
+        $scope.numeroTrabajo;
+        $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.rangoInicial,$scope.rangoFinal,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera);
+    }
+
+    //obtiene el resultado de reporte de utilidad 
+    $scope.getMargenUtilidad = function (fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera) {
+        $('.dataTableUtilidad').DataTable().destroy();
+        if(fechaMes != '' && fechaMes != null && fechaMes != undefined){
+            var fechaPartida = fechaMes.split('-');
+            if(fechaPartida[0] == 'Enero'){
+                fechaMes = '01/01/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Febrero'){
+                fechaMes = '01/02/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Marzo'){
+                fechaMes = '01/03/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Abril'){
+                fechaMes = '01/04/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Mayo'){
+                fechaMes = '01/05/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Junio'){
+                fechaMes = '01/06/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Julio'){
+                fechaMes = '01/07/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Agosto'){
+                fechaMes = '01/08/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Septiembre'){
+                fechaMes = '01/09/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Octubre'){
+                fechaMes = '01/10/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Noviembre'){
+                fechaMes = '01/11/' + fechaPartida[1];
+            }
+            else if(fechaPartida[0] == 'Diciembre'){
+                fechaMes = '01/12/' + fechaPartida[1];
+            }
         }
-        //obtiene el total de las citas
-    $scope.getMargenUtilidad = function (fechaInicio, fechaFin, numeroTrabajo, facturado) {
-        if (($scope.facturado != '') || ($scope.numeroTrabajo != '')) {
-            $('.dataTableUtilidad').DataTable().destroy();
-            reporteUtilidadRepository.getUtilidad(fechaInicio, fechaFin, numeroTrabajo, facturado).then(function (utilidad) {
-                $scope.arrayMargen = [];
+
+        reporteUtilidadRepository.getUtilidad(fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera).then(function (utilidad) { 
+            if (utilidad.data.length > 0) {
                 $scope.margenUtilidad = utilidad.data;
-
-                $scope.margenUtilidad.forEach(function (p, i) {
-                    if ($scope.margenUtilidad[i].costoOrden != null) {
-                        $scope.costoOrden = $scope.margenUtilidad[i].costoOrden;
-                        $scope.idCita = $scope.margenUtilidad[i].idCita;
-                        $scope.numeroTrabajo = $scope.margenUtilidad[i].numeroTrabajo;
-                        $scope.numEconomico = $scope.margenUtilidad[i].numEconomico;
-                        $scope.zona = $scope.margenUtilidad[i].zona;
-                        $scope.TAR = $scope.margenUtilidad[i].TAR;
-                        $scope.razonSocial = $scope.margenUtilidad[i].razonSocial;
-                        $scope.descripcionLarga = $scope.margenUtilidad[i].descripcionLarga;
-                        $scope.fecha = $scope.margenUtilidad[i].fecha;
-                        $scope.precioOrden = $scope.margenUtilidad[i].precioOrden;
-                        $scope.razonSocialCM = $scope.margenUtilidad[i].razonSocialCM;
-                        $scope.margen = ($scope.margenUtilidad[i].precioOrden - $scope.margenUtilidad[i].costoOrden) * (100) / ($scope.margenUtilidad[i].precioOrden);
-                        $scope.utilidad = ($scope.margenUtilidad[i].precioOrden - $scope.margenUtilidad[i].costoOrden);
-
-                        $scope.arrayMargen.push({
-                            idCita: $scope.idCita,
-                            numeroTrabajo: $scope.numeroTrabajo,
-                            numEconomico: $scope.numEconomico,
-                            zona: $scope.zona,
-                            TAR: $scope.TAR,
-                            razonSocial: $scope.razonSocial,
-                            descripcionLarga: $scope.descripcionLarga,
-                            fecha: $scope.fecha,
-                            costoOrden: $scope.costoOrden,
-                            precioOrden: $scope.precioOrden,
-                            razonSocialCM: $scope.razonSocialCM,
-                            utilidad: $scope.utilidad,
-                            margen: $scope.margen
-                        });
-                    }
-                });
-
-                if (utilidad.data.length > 0) {
-                    alertFactory.success('Datos encontrados');
-                    waitDrawDocument("dataTableUtilidad");
-                    $scope.limpiaCampos();
-                } else {
-                    alertFactory.info('No se encontraron datos');
-                }
-            }, function (error) {
-                alertFactory.error('Error al obtener los datos');
-            });
-        } else {
-            alertFactory.info('Porfavor complete la informacion');
-        }
+                alertFactory.success('Datos encontrados');
+                waitDrawDocument("dataTableUtilidad");
+            } else {
+                alertFactory.info('No se encontraron datos');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
     }
 
     //fecha
@@ -98,57 +147,44 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
         todayHighlight: true
             //startDate: new Date()
     });
-
+    //Fecha del mes
     $('#fechaMes .input-group.date').datepicker({
         minViewMode: 1,
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
+        format: 'MM-yyyy'
+    });
+    //Rango de datos
+    $('#data_5 .input-daterange').datepicker({
+        keyboardNavigation: false,
+        forceParse: false,
+        autoclose: true
+    });
+    //Rango de Porcentaje
+    $(".touchspin2").TouchSpin({
+        min: -1000,
+        max: 1000,
+        step: 0.1,
+        decimals: 2,
+        //boostat: 5,
+        //maxboostedstep: 10,
+        //postfix: '%',
+        buttondown_class: 'btn btn-white',
+        buttonup_class: 'btn btn-white'
     });
 
     //espera que el documento se pinte para llenar el dataTable
-    /* var waitDrawDocument = function (dataTable) {
-         setTimeout(function () {
-             $('.' + dataTable).DataTable({
-                 dom: '<"html5buttons"B>lTfgitp',
-                 buttons: [
-                     {
-                         extend: 'excel',
-                         title: 'MargenUtilidad'
-                     },
-                     {
-                         extend: 'print',
-                         customize: function (win) {
-                             $(win.document.body).addClass('white-bg');
-                             $(win.document.body).css('font-size', '10px');
-
-                             $(win.document.body).find('table')
-                                 .addClass('compact')
-                                 .css('font-size', 'inherit');
-                         }
-                     }
-                 ]
-             });
-         }, 2500);
-     }*/
-
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
+   /* var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
-            var indicePorOrdenar = 0;
-            if (dataTable == 'dataTableUtilidad') {
-                indicePorOrdenar = 10;
-            }
-
             $('.' + dataTable).DataTable({
-                order: [[indicePorOrdenar, 'desc']],
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
                     {
                         extend: 'excel',
                         title: 'MargenUtilidad'
-                    },
+                     },
                     {
                         extend: 'print',
                         customize: function (win) {
@@ -159,10 +195,67 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                                 .addClass('compact')
                                 .css('font-size', 'inherit');
                         }
-                    }
-                ]
+                     }
+                 ]
             });
         }, 2500);
+    }*/
+    //Devuelve todas las zonas correspondientes
+    $scope.devuelveZonas = function () {
+        dashBoardRepository.getZonas($scope.userData.idUsuario).then(function (zonas) {
+            if (zonas.data.length > 0) {
+                $scope.zonas = zonas.data;
+
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de las zonas');
+        });
     }
+    //Devuelve todas las tars de su zona correspondiente
+    $scope.devuelveTars = function () {
+            if ($scope.zona != null) {
+                dashBoardRepository.getTars($scope.zona).then(function (tars) {
+                    if (tars.data.length > 0) {
+                        $scope.tars = tars.data;
+
+                    }
+                }, function (error) {
+                    alertFactory.error('No se pudo recuperar información de las TARs');
+                });
+            } else {
+                $scope.tar = null;
+            }
+        }
+            //espera que el documento se pinte para llenar el dataTable
+            var waitDrawDocument = function (dataTable) {
+                setTimeout(function () {
+                    var indicePorOrdenar = 0;
+                    if (dataTable == 'dataTableUtilidad') {
+                        indicePorOrdenar = 11;
+                    }
+
+                    $('.' + dataTable).DataTable({
+                        order: [[indicePorOrdenar, 'desc']],
+                        dom: '<"html5buttons"B>lTfgitp',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                title: 'MargenUtilidad'
+                            },
+                            {
+                                extend: 'print',
+                                customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 2500);
+            }
 
 });
