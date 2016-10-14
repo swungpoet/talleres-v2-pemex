@@ -51,6 +51,23 @@ Trabajo.prototype.get_trabajoterminado = function(req, res, next){
     });
 }
 
+//obtiene el saldo de un TAR
+Trabajo.prototype.get_saldotar = function (req, res, next) {
+    var self = this;
+     var params = [{
+        name: 'idTAR',
+        value: req.query.idTAR,
+        type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_SALDO_TAR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //realiza la actualización del trabajo a estatus certificado conformidad cargada call center
 Trabajo.prototype.post_updtrabajocertificadocallcenter = function(req, res, next){
 	//Referencia a la clase para callback
