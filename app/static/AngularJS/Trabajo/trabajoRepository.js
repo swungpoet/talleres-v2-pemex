@@ -28,6 +28,18 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
+        getSaldoTar: function (idTAR) {
+            return $http({
+                url: trabajoUrl + 'saldotar/',
+                method: "GET",
+                params: {
+                    idTAR: idTAR
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
         getTrabajoAprobado: function (idUsuario) {
             return $http({
                 url: trabajoUrl + 'trabajoaprobado/',
