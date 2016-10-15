@@ -90,37 +90,37 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                 fechaMes = '01/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Febrero'){
-                fechaMes = '01/02/' + fechaPartida[1];
+                fechaMes = '02/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Marzo'){
-                fechaMes = '01/03/' + fechaPartida[1];
+                fechaMes = '03/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Abril'){
-                fechaMes = '01/04/' + fechaPartida[1];
+                fechaMes = '04/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Mayo'){
-                fechaMes = '01/05/' + fechaPartida[1];
+                fechaMes = '05/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Junio'){
-                fechaMes = '01/06/' + fechaPartida[1];
+                fechaMes = '06/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Julio'){
-                fechaMes = '01/07/' + fechaPartida[1];
+                fechaMes = '07/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Agosto'){
-                fechaMes = '01/08/' + fechaPartida[1];
+                fechaMes = '08/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Septiembre'){
-                fechaMes = '01/09/' + fechaPartida[1];
+                fechaMes = '09/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Octubre'){
-                fechaMes = '01/10/' + fechaPartida[1];
+                fechaMes = '10/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Noviembre'){
-                fechaMes = '01/11/' + fechaPartida[1];
+                fechaMes = '11/01/' + fechaPartida[1];
             }
             else if(fechaPartida[0] == 'Diciembre'){
-                fechaMes = '01/12/' + fechaPartida[1];
+                fechaMes = '12/01/' + fechaPartida[1];
             }
         }
 
