@@ -244,13 +244,48 @@ Reporte.prototype.get_reporteUtilidad = function (req, res, next) {
             type: self.model.types.STRING
         },
         {
+            name: 'fechaMes',
+            value: req.query.fechaMes,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'rangoInicial',
+            value: req.query.rangoInicial,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'rangoFinal',
+            value: req.query.rangoFinal,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'zona',
+            value: req.query.zona,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'tar',
+            value: req.query.tar,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'idTipoCita',
+            value: req.query.idTipoCita,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'estatus',
+            value: req.query.estatus,
+            type: self.model.types.STRING
+        },
+        {
             name: 'numeroTrabajo',
             value: req.query.numeroTrabajo,
             type: self.model.types.STRING
         },
         {
-            name: 'facturado',
-            value: req.query.facturado,
+            name: 'bandera',
+            value: req.query.bandera,
             type: self.model.types.STRING
         }
     ];
