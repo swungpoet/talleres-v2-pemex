@@ -1,4 +1,7 @@
-<div ng-init="init()">
+<div ng-init="init()" class="animated bounceInRight">
+    <div class="headTitleTallerCita">
+        <span class="title"> OSUR<span class="subtitle"></span></span>
+    </div>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="ibox-content" ng-hide="conTar">
@@ -6,60 +9,64 @@
                     <strong>Seleccione una TAR, </strong> para trabajar con ella.
                 </div>
             </div>
-            <br>
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-success pull-right">Inicial</span>
-                        <h5>Presupuesto</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{presupuesto | currency}}</h1>
-                        <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
-                        <small></small>
+        </div>
+        <div class="ibox-content">
+            <form method="get" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">TAR</label>
+                    <div class="col-sm-7">
+                        <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                            <option value="">Seleccione una TAR</option>
+                        </select>
                     </div>
                 </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                <table class="table table-bordered dataTableCitaTaller">
+                    <thead>
+                        <tr>
+                            <th>No. OSUR</th>
+                            <th>Presupuesto</th>
+                            <th>TAR</th>
+                            <th>Solpe</th>
+                            <th>Fecha Inicial</th>
+                            <th>Fecha Final</th>
+                            <th>Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="info in datosOsur">
+                            <td>{{info.folio}}</td>
+                            <td>{{info.presupuesto}}</td>
+                            <td>{{info.TAR}}</td>
+                            <td>{{info.solpe}}</td>
+                            <td>{{info.fechaInicial | date:'dd-MM-yyyy HH:mm'}} </td>
+                            <td>{{info.fechaFinal | date:'dd-MM-yyyy HH:mm'}} </td>
+                            <td>{{info.estatus}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-info pull-right">Actual</span>
-                        <h5>Saldo</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{saldo | currency}}</h1>
-                        <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
-                        <small></small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-danger pull-right">Cotizaciones</span>
-                        <h5>Gastado</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{gasto | currency}}</h1>
-                        <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
-                        <small></small>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary" ng-click="nuevaOsur()"><i class="fa fa-check">
+                                </i> Nueva OSUR</button>
                     </div>
                 </div>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-lg-offset-1 col-lg-8">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">TAR</label>
-                        <div class="col-sm-10">
-                            <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
-                                <option value="">Seleccione una TAR</option>
-                                <!--default option -->
-                            </select>
-                        </div>
-                    </div>
+    </div>
+    <div class="modal inmodal lg" id="newOsurModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <h4 class="modal-title">Nueva OSUR</h4>
+                </div>
+                <br>
+                <div class="modal-body">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">No. OSUR</label>
                         <div class="col-sm-10">
@@ -102,18 +109,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-10 col-sm-2">
-                            <button class="btn btn-primary"><i class="fa fa-check">
-                                </i> Guardar</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" ng-click="saveFecha()">Guardar</button>
+                </div>
             </div>
-            <!--<div class="col-md-2">
-                <button class="btn btn-success"><i class="fa fa-history">
-                </i> Ver Historial</button>
-            </div>-->
         </div>
     </div>
 </div>

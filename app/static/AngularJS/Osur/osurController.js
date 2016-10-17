@@ -35,18 +35,14 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
             $scope.conTar = true;
             osurRepository.getDatosOsur($scope.selectedTar.idTAR).then(function (result) {
                     if (result.data.length > 0) {
-                        $scope.presupuesto = result.data[0].presupuesto;
-                        $scope.gasto = result.data[0].gasto;
-                        $scope.saldo = result.data[0].saldo;
+                        $scope.datosOsur = result.data;
                     } else {
-                        $scope.presupuesto = '0.00';
-                        $scope.saldo = '0.00';
-                        $scope.gasto = '0.00';
-                        alertFactory.info("No se pudo obtener la Osur");
+                        $scope.datosOsur = [];
+                        alertFactory.info("No existe información con los criterios de búsqueda");
                     }
                 },
                 function (error) {
-                    alertFactory.error("Error al obtener la Osur");
+                    alertFactory.error("Error al obtener la información");
                 });
         }
     }
@@ -71,4 +67,9 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
         todayHighlight: true,
         format: "dd/mm/yyyy"
     });
+    
+    //Ventana Modal
+    $scope.nuevaOsur = function () {
+        $('#newOsurModal').appendTo('body').modal('show');
+    }
 });
