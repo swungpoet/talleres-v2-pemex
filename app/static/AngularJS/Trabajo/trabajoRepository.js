@@ -40,6 +40,30 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             })
         },
+        postEstatusOsur: function (idTAR) {
+            return $http({
+                url: trabajoUrl + 'estatusosur/',
+                method: "POST",
+                data: {
+                    idTAR: idTAR
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+         enviarMailOsur: function (idTAR) {
+            return $http({
+                url: trabajoUrl + 'enviaremailosur/',
+                method: "GET",
+                params: {
+                    idTAR: idTAR
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         getTrabajoAprobado: function (idUsuario) {
             return $http({
                 url: trabajoUrl + 'trabajoaprobado/',

@@ -308,9 +308,13 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function (idTrabajo, idTAR, montoOrden) {
         var saldo = 0;
+        //idTAR= 31;
+       
         trabajoRepository.getSaldoTar(idTAR).then(function (saldoRes) {
-            //saldo = -5800058182;
-            saldo = saldoRes.data.length;
+      
+
+          if (saldoRes.data.length > 0){
+            saldo = saldoRes.data[0].saldo;
             if (saldo > 0) {
                 saldo = saldo - montoOrden ; 
             }
@@ -370,24 +374,79 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     })
 
                 }else{
+
+                    trabajoRepository.postEstatusOsur(idTAR).then(function (estatusOsur) {
+                              debugger;
+                            if (estatusOsur.data[0].id = 1) {
+
+                                //regresa
+                                 $scope.generaCertificadoConformidadPDF (idTrabajo, idTAR, montoOrden);
+
+                            }else{
+                                //correo
+
+                                swal({
+                                    title: "Advertencia",
+                                    text: "No se puede generar el certificado por saldo insuficiente.",
+                                    type: "warning",
+                                    showCancelButton: false,
+                                    confirmButtonColor: "#67BF11",
+                                    confirmButtonText: "Aceptar",
+                                    closeOnConfirm: false
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                       trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
+                                        
+                                            if (mail.data[0].enviado == 1) {
+                                                swal("Proceso Realizado!");
+                                            }
+                                        }, function (error) {
+                                            alertFactory.error("Error al cargar enviar mail");
+                                        });
+                                    }                     
+                                });
+                            }
+
+
+                     }, function (error) {
+                           console.log('error '+ error)
+                             alertFactory.error("Error al cambiar el estatus ");
+                        })
+
                                 
-                    swal({
-                        title: "Advertencia",
-                        text: "No se puede generar el certificado por saldo insuficiente.",
-                        type: "warning",
-                        showCancelButton: false,
-                        confirmButtonColor: "#67BF11",
-                        confirmButtonText: "Aceptar",
-                        closeOnConfirm: true
-                    });
+                    
                 } 
                      
-
         /*if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {*/
           
-        
+          }else{
+            //correo
+
+            swal({
+                title: "Advertencia",
+                text: "No se puede generar el certificado por saldo insuficiente. Se enviará Mail para nueva Osur.",
+                type: "warning",
+                showCancelButton: false,
+                confirmButtonColor: "#67BF11",
+                confirmButtonText: "Aceptar",
+                closeOnConfirm: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                   trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
+                  
+                        if (mail.data[0].enviado == 1) {
+                            swal("Proceso Realizado!");
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al cargar enviar mail");
+                    });
+                }                     
+            });
+        }
         }, function (error) {
-            alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
+            alertFactory.error("Error del precio");
         })
     }
 

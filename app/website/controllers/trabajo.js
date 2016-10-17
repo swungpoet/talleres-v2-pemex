@@ -68,6 +68,49 @@ Trabajo.prototype.get_saldotar = function (req, res, next) {
     });
 }
 
+//Actualiza estatus del osur
+Trabajo.prototype.post_estatusosur = function (req, res, next) {
+    var self = this;
+     var params = [{
+        name: 'idTAR',
+        value: req.body.idTAR,
+        type: self.model.types.INT
+        }];
+
+    this.model.post('UPD_ESTATUS_OSUR_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//realiza el envío de email para nuevo Osur
+Trabajo.prototype.get_enviaremailosur = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    var storeName = 'SEL_CORREO_OSUR_SP';
+    //Obtención de valores de los parámetros del request
+    var params = [{
+        name: 'idTAR',
+        value: req.query.idTAR,
+        type: self.model.types.INT
+    }];
+
+   // req.query.tipoCorreo == 4 ? storeName = 'SEL_NOTIFICACION_CITA_SIN_TALLER_SP' : storeName = 'SEL_NOTIFICACION_CITA_SP';
+
+    this.model.query(storeName, params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //realiza la actualización del trabajo a estatus certificado conformidad cargada call center
 Trabajo.prototype.post_updtrabajocertificadocallcenter = function(req, res, next){
 	//Referencia a la clase para callback
