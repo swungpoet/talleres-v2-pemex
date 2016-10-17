@@ -64,4 +64,55 @@ Osur.prototype.get_datosOsur = function (req, res, next) {
     });
 }
 
+
+//Inserta nueva Osur
+Osur.prototype.post_nuevaosur = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'presupuesto',
+            value: req.body.presupuesto,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTAR',
+            value: req.body.idTAR,
+            type: self.model.types.INT
+        },
+        {
+            name: 'folio',
+            value: req.body.folio,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'fechaInicial',
+            value: req.body.fechaInicial,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'fechaFinal',
+            value: req.body.fechaFinal,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'solpe',
+            value: req.body.solpe,
+            type: self.model.types.INT
+        }];
+
+
+    this.model.post('INS_OSUR_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Osur;

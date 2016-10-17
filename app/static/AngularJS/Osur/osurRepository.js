@@ -22,6 +22,24 @@ registrationModule.factory('osurRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+        putNuevaOsur: function (presupuesto,idTAR,folio,fechaInicial,fechaFinal,solpe) {             
+            return $http({        
+                url: osurUrl + 'nuevaosur',
+                        method: "POST",
+                         data: {
+                           presupuesto: presupuesto,
+                           idTAR: idTAR,
+                           folio: folio,
+                           fechaInicial: fechaInicial,
+                           fechaFinal: fechaFinal,
+                           solpe: solpe
+                        },
+
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
     };
 });

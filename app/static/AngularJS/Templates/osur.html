@@ -1,6 +1,6 @@
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
-        <span class="title"> OSUR<span class="subtitle"></span></span>
+        <span class="title">Administración de ordenes de surtimiento<span class="subtitle"></span></span>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -10,20 +10,33 @@
                 </div>
             </div>
         </div>
-        <div class="ibox-content">
-            <form method="get" class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">TAR</label>
-                    <div class="col-sm-7">
-                        <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
-                            <option value="">Seleccione una TAR</option>
-                        </select>
+        <!--ibox-content-->
+
+        <div class="row col-cm-12">
+            <div class="col-md-10">
+                <form method="get" class="form-horizontal">
+                    <div >
+                        <label class="col-sm-1 control-label">TAR</label>
+                        <div class="col-sm-5">
+                            <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                                <option value="">Seleccione una TAR</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>    
+
+            <div class="col-md-2 control-label">
+                <!--div class="form-group"-->
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary" ng-click="nuevaOsur()"><i class="fa fa-check">
+                                </i> Nueva OSUR</button>
+                    </div>
+                <!--/div-->
+            </div>
         </div>
-        <div class="row">
-            <div class="col-lg-10">
+        <!--div class="row"-->
+            <div class="row col-md-12">
                 <table class="table table-bordered dataTableCitaTaller">
                     <thead>
                         <tr>
@@ -49,15 +62,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-2">
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        <button class="btn btn-primary" ng-click="nuevaOsur()"><i class="fa fa-check">
-                                </i> Nueva OSUR</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+            
+        <!--/div-->
     </div>
     <div class="modal inmodal lg" id="newOsurModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -67,52 +73,64 @@
                 </div>
                 <br>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group row">
+                         <form method="get">
+                            <div >
+                                <label class="col-sm-2 control-label">TAR</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control m-b" name="tar" ng-model="tarNuevo" ng-options="tar.nombreTar for tar in tars">
+                                        <option value="">Seleccione una TAR</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-sm-2 control-label">No. OSUR</label>
-                        <div class="col-sm-10">
-                            <div class="input-group m-b">
-                                <input type="text" class="form-control">
+                        <div class="col-sm-7">
+                            <div class="m-b">
+                                <input type="text" class="form-control" type="number" ng-model="folio">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label class="col-sm-2 control-label">Solpe</label>
-                        <div class="col-sm-10">
-                            <div class="input-group m-b">
-                                <input type="text" class="form-control">
+                        <div class="col-sm-7">
+                            <div class="m-b">
+                                <input type="text" class="form-control" ng-model="solpe">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <label class="col-sm-2 control-label">Presupuesto</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-7">
                             <div class="input-group m-b"><span class="input-group-addon">$</span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" type="number" ng-model="presupuesto">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" id="fechaInicial">
+                    <div class="form-group row" id="fechaInicial">
                         <label class="col-sm-2 control-label">Fecha Inicial</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-7">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="fechaInicial">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group" id="fechaFinal">
+                    <div class="form-group row" id="fechaFinal">
                         <label class="col-sm-2 control-label">Fecha Final</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-7">
                             <div class="input-group date">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="fechaFinal">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success" ng-click="saveFecha()">Guardar</button>
+                    <button type="button" class="btn btn-success" ng-click="saveOsur()">Guardar</button>
                 </div>
             </div>
         </div>

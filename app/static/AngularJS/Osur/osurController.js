@@ -72,4 +72,22 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
     $scope.nuevaOsur = function () {
         $('#newOsurModal').appendTo('body').modal('show');
     }
+
+    $scope.saveOsur = function (){
+        //presupuesto,idTAR,folio,fechaInicial,fechaFinal,solpe
+        debugger;
+        osurRepository.putNuevaOsur($scope.presupuesto,$scope.tarNuevo.idTAR,$scope.folio,$scope.fechaInicial,$scope.fechaFinal,$scope.solpe).then(function (result) {
+                    debugger;
+                    if (result.data[0].id == 1) {
+                        alertFactory.info("Se generó correctamente la Osur");
+                        $scope.GetMonto ();
+                    } else {
+                        $scope.datosOsur = [];
+                        alertFactory.info("No existe información con los criterios de búsqueda");
+                    }
+                },
+                function (error) {
+                    alertFactory.error("Error al procesar la información");
+                });
+    }
 });
