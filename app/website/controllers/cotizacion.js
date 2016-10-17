@@ -522,6 +522,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     if (!fs.existsSync(dirname + idTrabajo + '/documentos/preFactura'))
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/preFactura');
                 } else {
+                 if (idNombreEspecial == 3 || idNombreEspecial == 7){
                     if (!fs.existsSync(dirname + idTrabajo)) {
                         fs.mkdirSync(dirname + idTrabajo);
                     }
@@ -538,6 +539,7 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')) {
                         fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')
                     }
+                 }
                 }
 
                 if (idNombreEspecial == 1) {

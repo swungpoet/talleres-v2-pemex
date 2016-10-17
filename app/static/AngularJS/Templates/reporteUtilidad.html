@@ -97,6 +97,7 @@
                                         <th>Zona</th>
                                         <th>TAR</th>
                                         <th>Taller</th>
+                                        <th>Fecha de Cita</th>
                                         <th>Estatus Órden Servicio</th>
                                         <th>Tipo Orden</th>
                                         <th>Costo Orden</th>
@@ -113,6 +114,7 @@
                                         <td>{{margenes.Zona}}</td>
                                         <td>{{margenes.TAR}}</td>
                                         <td>{{margenes.razonSocial}}</td>
+                                        <td>{{margenes.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                         <td>{{margenes.descripcionLarga}}</td>
                                         <td ng-if="margenes.idTipoCita == 1">Servicio</td>
                                         <td ng-if="margenes.idTipoCita == 2">Refaccion</td>
