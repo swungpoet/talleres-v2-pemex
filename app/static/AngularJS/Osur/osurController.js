@@ -8,7 +8,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
     $scope.presupuesto = '0.00';
     $scope.saldo = '0.00';
     $scope.gasto = '0.00';
-    $scope.conTar = false;    
+    $scope.conTar = false;
 
     $scope.init = function () {
         getTARS();
@@ -67,27 +67,33 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
         todayHighlight: true,
         format: "dd/mm/yyyy"
     });
-    
+
     //Ventana Modal
     $scope.nuevaOsur = function () {
         $('#newOsurModal').appendTo('body').modal('show');
     }
 
-    $scope.saveOsur = function (){
-        //presupuesto,idTAR,folio,fechaInicial,fechaFinal,solpe
-        debugger;
-        osurRepository.putNuevaOsur($scope.presupuesto,$scope.tarNuevo.idTAR,$scope.folio,$scope.fechaInicial,$scope.fechaFinal,$scope.solpe).then(function (result) {
-                    debugger;
-                    if (result.data[0].id == 1) {
-                        alertFactory.info("Se generó correctamente la Osur");
-                        $scope.GetMonto ();
-                    } else {
-                        $scope.datosOsur = [];
-                        alertFactory.info("No existe información con los criterios de búsqueda");
+    $scope.saveOsur = function () {
+        var valoresInicial = $scope.fechaInicial.split('/');
+        var dateStringInicial = valoresInicial[2] + '-' + valoresInicial[1] + '-' + valoresInicial[0];
+
+        var valoresFinal = $scope.fechaFinal.split('/');
+        var dateStringFinal = valoresFinal[2] + '-' + valoresFinal[1] + '-' + valoresFinal[0];
+
+        osurRepository.putNuevaOsur($scope.presupuesto, $scope.tarNuevo.idTAR, $scope.folio, dateStringInicial, dateStringFinal, $scope.solpe).then(function (result) {
+                if (result.data.length > 0) {
+                    alertFactory.info("Se generó correctamente la Osur");
+                    $('#newOsurModal').modal('hide');
+                    if ($scope.selectedTar != null) {
+                        $scope.GetMonto();
                     }
-                },
-                function (error) {
-                    alertFactory.error("Error al procesar la información");
-                });
+                } else {
+                    $scope.datosOsur = [];
+                    alertFactory.info("No existe información con los criterios de búsqueda");
+                }
+            },
+            function (error) {
+                alertFactory.error("Error al procesar la información");
+            });
     }
 });
