@@ -79,13 +79,37 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     //obtiene los trabajos terminados
     var getTrabajoTerminado = function (idUsuario) {
         var sumatoria= 0
+        $scope.trabajosTerminados =[];
         $('.dataTableTrabajoTerminado').DataTable().destroy();
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
 
-            $scope.trabajosTerminados = trabajoTerminado.data;
-
             for(var i=0;i<trabajoTerminado.data.length;i++){
                 sumatoria += parseFloat(trabajoTerminado.data[i].precioOrden);
+
+                obj=new Object();
+              obj.idCita=trabajoTerminado.data[i].idCita;
+              obj.numeroTrabajo=trabajoTerminado.data[i].numeroTrabajo;
+              obj.numEconomico=trabajoTerminado.data[i].numEconomico;
+              obj.zona=trabajoTerminado.data[i].zona;
+              obj.TAR=trabajoTerminado.data[i].TAR;
+              obj.marca=trabajoTerminado.data[i].marca;
+              obj.modeloMarca=trabajoTerminado.data[i].modeloMarca;
+              obj.trabajo=trabajoTerminado.data[i].trabajo;
+              obj.observacion=trabajoTerminado.data[i].observacion;
+              obj.descripcionLarga=trabajoTerminado.data[i].descripcionLarga;
+              obj.precioOrden=trabajoTerminado.data[i].precioOrden;
+              obj.idTrabajo=trabajoTerminado.data[i].idTrabajo;
+              obj.montoOrden=trabajoTerminado.data[i].montoOrden;
+              obj.estatus=trabajoTerminado.data[i].estatus;
+              obj.fecha=trabajoTerminado.data[i].fecha;
+              obj.fechaFin=trabajoTerminado.data[i].fechaFin;
+              obj.idTrabajo=trabajoTerminado.data[i].idTrabajo;
+              obj.idTAR=trabajoTerminado.data[i].idTAR;
+              obj.razonSocial=trabajoTerminado.data[i].razonSocial;
+              obj.indice=i;
+              obj.class_buttonCeritficado='glyphicon glyphicon-file';
+
+              $scope.trabajosTerminados.push(obj);
             };
 
             $scope.sumatoriaEntrega=sumatoria;
@@ -306,10 +330,9 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     //genera el formato para el certificado de conformidad
-    $scope.generaCertificadoConformidadPDF = function (idTrabajo, idTAR, montoOrden) {
+    $scope.generaCertificadoConformidadPDF = function (idTrabajo, idTAR, montoOrden, indice) {
         var saldo = 0;
-        //idTAR= 31;
-       
+        //idTAR= 31; 
         trabajoRepository.getSaldoTar(idTAR).then(function (saldoRes) {
       
 
@@ -320,7 +343,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             }
 
                if (saldo > 0 ) {
-                    $scope.generaCertificado = false;
+                    $scope.trabajosTerminados[indice].class_buttonCeritficado= 'fa fa-circle-o-notch fa-spin';                    $scope.generaCertificado = false;
                     trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
                         if (certificadoGenerado.data.length > 0) {
                             if (certificadoGenerado.data[0].noReporte != 'KO') {
@@ -355,6 +378,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                         nombreProveedor: "",
                                         puestoProveedor: ""
                                     }
+                                    $scope.trabajosTerminados[indice].class_buttonCeritficado= 'glyphicon glyphicon-file';
                                     alertFactory.success('Certificado generado correctamente');
                                     getTrabajo($scope.userData.idUsuario);
                                     getTrabajoTerminado($scope.userData.idUsuario);
@@ -376,7 +400,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 }else{
 
                     trabajoRepository.postEstatusOsur(idTAR).then(function (estatusOsur) {
-                              debugger;
+                           
                             if (estatusOsur.data[0].id = 1) {
 
                                 //regresa
