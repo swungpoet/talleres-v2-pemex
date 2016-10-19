@@ -360,14 +360,14 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
         ordenServicioRepository.getParametro(1,'MV').then(function (parametro) {
            
-            if (parametro.data.length > 0) {
+        if (parametro.data.length > 0) {
                  UtilidadNeta = (precioOrden * parametro.data[0].valor)+1;
 
         if(sinProveedor > 0)
-         {
-           swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
-         }
-         else
+          {
+            swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
+          }
+          else
          {
             $('.btnVerificarOrden').ready(function () {
 
@@ -411,7 +411,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                             confirmButtonText: "Si",
                                             cancelButtonText: "No",
                                             closeOnConfirm: false,
-                                            closeOnCancel: false
+                                            closeOnCancel: true
                                         },
                                         function (isConfirm) {
                                             if (isConfirm) {
@@ -424,9 +424,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                                     alertFactory.error("Error al verificar la orden");
                                                 });
                                                 swal("Proceso Realizado!");
-                                            } else {
-                                                swal("Cancelacion de Orden");
-                                            }
+                                            } 
                                         });
 
                                     }
@@ -486,7 +484,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                             confirmButtonText: "Si",
                                             cancelButtonText: "No",
                                             closeOnConfirm: false,
-                                            closeOnCancel: false
+                                            closeOnCancel: true
                                         },
                                         function (isConfirm) {
                                             if (isConfirm) {
@@ -499,8 +497,6 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                                     alertFactory.error("Error al verificar la orden");
                                                 });
                                                 swal("Proceso Realizado!");
-                                            } else {
-                                                swal("Cancelacion de Orden");
                                             }
                                         });
 
@@ -522,8 +518,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                     });
               
              });
-         }      
-            }
+         s}      
+        }
         }, function (error) {
             alertFactory.error("Error en la consulta");
         });
