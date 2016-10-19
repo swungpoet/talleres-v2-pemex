@@ -386,6 +386,23 @@ Orden.prototype.get_getaprobacionutilidad = function (req, res, next) {
     });
 }
 
+//Valiada si ya se encuentra procesada la orden 
+Orden.prototype.get_getordenservicio = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'orden',
+        value: req.query.orden,
+        type: self.model.types.STRING
+        }];
+
+    this.model.query('SEL_ORDEN_SERVICIO_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //Inserta los datos de aprobacion de utilidad en db
 Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) { 
     //Objeto que almacena la respuesta

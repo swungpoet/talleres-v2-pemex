@@ -352,7 +352,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         $scope.idEstatusTrabajo = idEstatus;
     }
     
-    $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden) {
+    $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden, numeroTrabajo) {
         //LQMA 14092016
         var uitilidad = Math.abs(precioOrden - montoOrden); 
         var UtilidadNeta = 0;
@@ -363,9 +363,9 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             if (parametro.data.length > 0) {
                  UtilidadNeta = (precioOrden * parametro.data[0].valor)+1;
 
-                 if(sinProveedor > 0)
+        if(sinProveedor > 0)
          {
-            swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
+           swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
          }
          else
          {
@@ -389,39 +389,54 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                 });
 
                             }else{
-                                swal({
-                                    title: "Advertencia",
-                                    text: "¿Desea procesar el pago de esta oreden?",
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#67BF11",
-                                    confirmButtonText: "Si",
-                                    cancelButtonText: "No",
-                                    closeOnConfirm: false,
-                                    closeOnCancel: false
-                                },
-                                function (isConfirm) {
-                                    if (isConfirm) {
-                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                                                swal("Proceso Realizado!");
-                                                //location.href = '/ordenesporcobrar';
-                                            }
-                                        }, function (error) {
-                                            alertFactory.error("Error al verificar la orden");
+                                  ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
+                                    if (result.data.length > 0) {
+                                         swal({
+                                            title: "Advertencia",
+                                            text: "La compra ya fue procesada para esta orden.",
+                                            type: "warning",
+                                            showCancelButton: false,
+                                            confirmButtonColor: "#67BF11",
+                                            confirmButtonText: "Aceptar",
+                                            closeOnConfirm: true
                                         });
-                                        swal("Proceso Realizado!");
-                                    } else {
-                                        swal("Cancelacion de Orden");
+                                    }else{
+
+                                         swal({
+                                            title: "Advertencia",
+                                            text: "¿Está seguro de procesar la compra?",
+                                            type: "warning",
+                                            showCancelButton: true,
+                                            confirmButtonColor: "#67BF11",
+                                            confirmButtonText: "Si",
+                                            cancelButtonText: "No",
+                                            closeOnConfirm: false,
+                                            closeOnCancel: false
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                                    if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                        swal("Proceso Realizado!");
+                                                        //location.href = '/ordenesporcobrar';
+                                                    }
+                                                }, function (error) {
+                                                    alertFactory.error("Error al verificar la orden");
+                                                });
+                                                swal("Proceso Realizado!");
+                                            } else {
+                                                swal("Cancelacion de Orden");
+                                            }
+                                        });
+
                                     }
+                                }, function (error) {
+                                    alertFactory.error("Error al verificar la orden");
                                 }); 
                             }
                              
 
                         }else{
-
-                          
-
                             if (UtilidadNeta<uitilidad) {
                           // if (montoOrden<precioOrden) {
 
@@ -447,32 +462,54 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                   });
                                 
                            }else{
-                                swal({
-                                    title: "¿Está seguro de verificar la Orden?",
-                                    text: "Pasara a Orden por Cobrar",
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#67BF11",
-                                    confirmButtonText: "Si",
-                                    cancelButtonText: "No",
-                                    closeOnConfirm: false,
-                                    closeOnCancel: false
-                                },
-                                function (isConfirm) {
-                                    if (isConfirm) {
-                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                                                swal("Proceso Realizado!");
-                                                //location.href = '/ordenesporcobrar';
-                                            }
-                                        }, function (error) {
-                                            alertFactory.error("Error al verificar la orden");
+
+                                 ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
+                                 
+                                    if (result.data.length > 0) {
+                                         swal({
+                                            title: "Advertencia",
+                                            text: "La compra ya fue procesada para esta orden.",
+                                            type: "warning",
+                                            showCancelButton: false,
+                                            confirmButtonColor: "#67BF11",
+                                            confirmButtonText: "Aceptar",
+                                            closeOnConfirm: true
                                         });
-                                        swal("Proceso Realizado!");
-                                    } else {
-                                        swal("Cancelacion de Orden");
+                                    }else{
+
+                                         swal({
+                                            title: "Advertencia",
+                                            text: "¿Está seguro de procesar la compra?",
+                                            type: "warning",
+                                            showCancelButton: true,
+                                            confirmButtonColor: "#67BF11",
+                                            confirmButtonText: "Si",
+                                            cancelButtonText: "No",
+                                            closeOnConfirm: false,
+                                            closeOnCancel: false
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                                    if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                        swal("Proceso Realizado!");
+                                                        //location.href = '/ordenesporcobrar';
+                                                    }
+                                                }, function (error) {
+                                                    alertFactory.error("Error al verificar la orden");
+                                                });
+                                                swal("Proceso Realizado!");
+                                            } else {
+                                                swal("Cancelacion de Orden");
+                                            }
+                                        });
+
                                     }
-                                });
+                                }, function (error) {
+                                    alertFactory.error("Error al verificar la orden");
+                                }); 
+
+                               
                               
                             }
                         }

@@ -145,6 +145,19 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             })
         },
 
+        getOrdenServicio: function (orden) {
+            return $http({
+                url: ordenUrl + 'getordenservicio/',
+                method: "GET",
+                params: {
+                    orden: orden
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+
         putAprobacionUtilidad: function (idTrabajo,idUsuario) {             
             return $http({        
                 url: ordenUrl + 'insertaDatosAprobacionUtilidad',
