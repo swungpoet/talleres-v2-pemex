@@ -618,7 +618,14 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //realiza la actualización de partidas de la cita
     $scope.updateCita = function () {
-        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.horaCita !== null && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
+        if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") && 
+            ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && ($scope.labelItems > 0) && 
+            ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "")){
+
+            if(($scope.procesAutotanque == "1" && $scope.requiereGrua == undefined) || ($scope.procesAutotanque == "1" && $scope.clasificacionCita == "")){
+                alertFactory.info("Llene todos los campos");
+            }else{
+       // if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.horaCita !== null && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
             if ($scope.userData.idTipoUsuario != 4 && $scope.datosCita.idTaller == undefined) {
                 alertFactory.info("Seleccione un Taller");
             } else {
@@ -634,11 +641,17 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.trabajo = $scope.datosCita.trabajoCita;
                 citaTaller.observacion = $scope.datosCita.observacionCita;
                 citaTaller.idUsuario = $scope.userData.idUsuario;
-                citaTaller.idTipoCita = $scope.datosCita.tipoCita;
-                citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
-                citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
-                citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
-                if (citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque == 1 && citaTaller.idTrasladoUnidad != null) {
+
+                citaTaller.idTipoCita = $scope.clasificacionCita;
+                $scope.procesAutotanque == "4" ? citaTaller.idTipoCita = $scope.procesAutotanque : citaTaller.idTipoCita;
+                citaTaller.idTrasladoUnidad = $scope.requiereGrua;
+                citaTaller.idEstadoAutotanque = $scope.idEstadoAutotanque;
+
+               // citaTaller.idTipoCita = $scope.datosCita.tipoCita;
+               // citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
+               // citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
+               // citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
+                //if (citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque == 1 && citaTaller.idTrasladoUnidad != null) {
                     citaRepository.updateCita(citaTaller).then(function (cita) {
                         citaTaller.idCita = $scope.idCitaToUpdate;
                         //citaTaller.idCita=localStorageService.get('idCitaActualizar');
@@ -683,11 +696,15 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                     }, function (error) {
                         alertFactory.error("Error al insertar la cita");
                     });
-                } else {
-                    alertFactory.info("Debes de agregar una forma de traslado para la unidad");
-                }
+            //    } else {
+            //        alertFactory.info("Debes de agregar una forma de traslado para la unidad");
+            //    }
             }
-        } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
+        } 
+        } else if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && 
+            ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") && 
+            ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && 
+            ($scope.labelItems <= 0)) {
             alertFactory.info("Llene la Pre-Orden");
         } else {
             alertFactory.info("Llene todos los campos");
@@ -702,16 +719,23 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 $scope.datosCita.razonSocial = citaDato[0].razonSocial;
                 $scope.datosCita.direccion = citaDato[0].direccion;
                 $scope.datosCita.idTaller = citaDato[0].tallerid;
-                $scope.datosCita.idEstadoAutotanque = citaDato[0].idEstadoAutotanque;
-                $scope.datosCita.idTrasladoUnidad = citaDato[0].idTrasladoUnidad;
-                $scope.datosCita.tipoCita = citaDato[0].NumCita;
+                $scope.idEstadoAutotanque = citaDato[0].idEstadoAutotanque.toString();
+                citaDato[0].NumCita == 4 ? $scope.procesAutotanque = "4" : $scope.procesAutotanque = "1";
+                if(citaDato[0].NumCita != 4){
+                $scope.clasificacionCita=citaDato[0].NumCita.toString();
+                }
+                if(citaDato[0].idTrasladoUnidad != null){
+                $scope.requiereGrua = citaDato[0].idTrasladoUnidad.toString();
+                }
+                //$scope.idTrasladoUnidad = citaDato[0].idTrasladoUnidad;
+                //$scope.datosCita.tipoCita = citaDato[0].NumCita;
                 $scope.datosCita.fechaCita = citaDato[0].fechaCita;
                 $scope.datosCita.horaCita = citaDato[0].horaCita;
                 $scope.datosCita.trabajoCita = citaDato[0].trabajo;
                 $scope.datosCita.observacionCita = citaDato[0].observacion;
-                localStorageService.set('citaTipo', $scope.datosCita.tipoCita);
-                $scope.datosCita.tipoCita = parseInt(localStorageService.get('citaTipo'));
-                localStorageService.remove('citaTipo');
+                //localStorageService.set('citaTipo', $scope.datosCita.tipoCita);
+                //$scope.datosCita.tipoCita = parseInt(localStorageService.get('citaTipo'));
+                //localStorageService.remove('citaTipo');
                 //$scope.idtipoCita='3';
                 localStorageService.set('idtallerselected', $scope.datosCita.idTaller);
                 $scope.datosCita.idTaller = localStorageService.get('idtallerselected');
