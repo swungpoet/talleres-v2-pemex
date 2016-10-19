@@ -35,17 +35,22 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         $scope.edita = localStorageService.get('ModoEdicion');
         localStorageService.remove('ModoEdicion');
 
+        $scope.idEstadoAutotanque='';
+        $scope.procesAutotanque='';
+        //requiereGrua
+        //clasificacionCita
+
         $scope.datosCita = {
             razonSocial: "",
             direccion: "",
             idTaller: "",
-            tipoCita: undefined,
+            //tipoCita: undefined,
             fechaCita: "",
             horaCita: "",
             trabajoCita: "",
             observacionCita: "",
-            idEstadoAutotanque: "",
-            idTrasladoUnidad: ""
+            //idEstadoAutotanque: "",
+            //idTrasladoUnidad: ""
         }
         if (localStorageService.get('citaEdicion') != undefined) {
             var idCita = localStorageService.get('citaEdicion')
@@ -54,114 +59,11 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             busquedaServicioDetalle(idCita);
         }
         getTipoCita();
-        getEstadoAutotanque();
+        //getEstadoAutotanque();
         getTrasladoUnidad();
         $scope.idTipoCita = 1;
         $scope.userData = localStorageService.get('userData');
-
         $('.clockpicker').clockpicker();
-        // When the window has finished loading google map
-        google.maps.event.addDomListener(window, 'load', init);
-
-        function init() {
-            // Options for Google map
-            // More info see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-            var mapOptions1 = {
-                zoom: 11,
-                center: new google.maps.LatLng(19.3329031, -99.2031112),
-                // Style for Google Maps
-                styles: [{
-                    "featureType": "water",
-                    "stylers": [{
-                        "saturation": 43
-                    }, {
-                        "lightness": -11
-                    }, {
-                        "hue": "#0088ff"
-                    }]
-                }, {
-                    "featureType": "road",
-                    "elementType": "geometry.fill",
-                    "stylers": [{
-                        "hue": "#ff0000"
-                    }, {
-                        "saturation": -100
-                    }, {
-                        "lightness": 99
-                    }]
-                }, {
-                    "featureType": "road",
-                    "elementType": "geometry.stroke",
-                    "stylers": [{
-                        "color": "#808080"
-                    }, {
-                        "lightness": 54
-                    }]
-                }, {
-                    "featureType": "landscape.man_made",
-                    "elementType": "geometry.fill",
-                    "stylers": [{
-                        "color": "#ece2d9"
-                    }]
-                }, {
-                    "featureType": "poi.park",
-                    "elementType": "geometry.fill",
-                    "stylers": [{
-                        "color": "#ccdca1"
-                    }]
-                }, {
-                    "featureType": "road",
-                    "elementType": "labels.text.fill",
-                    "stylers": [{
-                        "color": "#767676"
-                    }]
-                }, {
-                    "featureType": "road",
-                    "elementType": "labels.text.stroke",
-                    "stylers": [{
-                        "color": "#ffffff"
-                    }]
-                }, {
-                    "featureType": "poi",
-                    "stylers": [{
-                        "visibility": "off"
-                    }]
-                }, {
-                    "featureType": "landscape.natural",
-                    "elementType": "geometry.fill",
-                    "stylers": [{
-                        "visibility": "on"
-                    }, {
-                        "color": "#b8cb93"
-                    }]
-                }, {
-                    "featureType": "poi.park",
-                    "stylers": [{
-                        "visibility": "on"
-                    }]
-                }, {
-                    "featureType": "poi.sports_complex",
-                    "stylers": [{
-                        "visibility": "on"
-                    }]
-                }, {
-                    "featureType": "poi.medical",
-                    "stylers": [{
-                        "visibility": "on"
-                    }]
-                }, {
-                    "featureType": "poi.business",
-                    "stylers": [{
-                        "visibility": "simplified"
-                    }]
-                }]
-            };
-
-            // Get all html elements for map
-            var mapElement1 = document.getElementById('map1');
-            // Create the Google Map using elements
-            var map1 = new google.maps.Map(mapElement1, mapOptions1);
-        }
         $scope.userData.idTipoUsuario == 4 ? $scope.selectedTaller = false : $scope.selectedTaller = true;
         $scope.datosCita = {};
         $scope.unidadInfo = localStorageService.get('unidad');
@@ -302,9 +204,13 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //inserta una nueva cita
     $scope.addCita = function () {
+         if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") && 
+            ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && ($scope.labelItems > 0) && 
+            ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "")){
 
-        if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems > 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
-
+            if(($scope.procesAutotanque == "1" && $scope.requiereGrua == undefined) || ($scope.procesAutotanque == "1" && $scope.clasificacionCita == "")){
+                alertFactory.info("Llene todos los campos");
+            }else{
             if ($scope.userData.idTipoUsuario != 4 && $scope.datosCita.idTaller == undefined) {
                 alertFactory.info("Seleccione un Taller");
             } else {
@@ -316,17 +222,21 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 citaTaller.idCita = 0;
                 citaTaller.idUnidad = localStorageService.get('unidad').idUnidad;
                 $scope.userData.idTipoUsuario == 4 ? citaTaller.idTaller = 0 :
-                    citaTaller.idTaller = $scope.datosCita.idTaller;
-                //citaTaller.idTaller = $scope.datosCita.idTaller;
+                citaTaller.idTaller = $scope.datosCita.idTaller;
                 citaTaller.fecha = $scope.datosCita.fechaCita + ' ' + $scope.datosCita.horaCita;
                 citaTaller.trabajo = $scope.datosCita.trabajoCita;
                 citaTaller.observacion = $scope.datosCita.observacionCita;
                 citaTaller.idUsuario = $scope.userData.idUsuario;
-                citaTaller.idTipoCita = $scope.datosCita.tipoCita;
-                citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque;
-                citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad;
-                citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
-                if (citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque == 1 && citaTaller.idTrasladoUnidad != null) {
+
+                citaTaller.idTipoCita = $scope.clasificacionCita;
+                $scope.procesAutotanque == "4" ? citaTaller.idTipoCita = $scope.procesAutotanque : citaTaller.idTipoCita;
+                citaTaller.idTrasladoUnidad = $scope.requiereGrua;
+                citaTaller.idEstadoAutotanque = $scope.idEstadoAutotanque;
+                //citaTaller.idTipoCita = $scope.tipoCita; check
+                //citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque; check       
+                //citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad; check
+                 //citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
+               // if (citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque == 1 && citaTaller.idTrasladoUnidad != null) {
                     citaRepository.addCita(citaTaller).then(function (cita) {
                         citaTaller.idCita = cita.data[0].idCita;
                         if (citaTaller.idCita > 0) {
@@ -370,11 +280,15 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                     }, function (error) {
                         alertFactory.error("Error al insertar la cita");
                     });
-                } else {
-                    alertFactory.info("Debes de agregar una forma de traslado para la unidad");
-                }
+              //  } else {
+                //    alertFactory.info("Debes de agregar una forma de traslado para la unidad");
+              //  }
             }
-        } else if ($scope.datosCita.fechaCita !== undefined && $scope.datosCita.horaCita !== undefined && $scope.datosCita.trabajoCita !== undefined && $scope.labelItems <= 0 && $scope.datosCita.tipoCita != undefined && $scope.datosCita.idEstadoAutotanque != undefined) {
+            }
+        } else if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && 
+            ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") && 
+            ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && 
+            ($scope.labelItems <= 0)) {
             alertFactory.info("Llene la Pre-Orden");
         } else {
             alertFactory.info("Llene todos los campos");
@@ -698,6 +612,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         localStorageService.set('ModoEdicion', edita);
         localStorageService.set('citaEdicion', idCita);
         localStorageService.set('cita', cita);
+        localStorageService.set('unidad', cita);
         location.href = "nuevacita"
     }
 
@@ -797,6 +712,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 localStorageService.set('citaTipo', $scope.datosCita.tipoCita);
                 $scope.datosCita.tipoCita = parseInt(localStorageService.get('citaTipo'));
                 localStorageService.remove('citaTipo');
+                //$scope.idtipoCita='3';
                 localStorageService.set('idtallerselected', $scope.datosCita.idTaller);
                 $scope.datosCita.idTaller = localStorageService.get('idtallerselected');
                 localStorageService.remove('idtallerselected');
@@ -1096,4 +1012,23 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
     function checkExistsPrecotizacion(precotizacion) {
         return precotizacion.idCotizacion == null;
     }
+    //Si es unidad parada el valor de tipo de cita es Correctiva
+    $scope.unidadParada = function (estadoAutotanque) {
+        if(estadoAutotanque==1){
+            $scope.clasificacionCita='2';
+        }else{
+            $scope.clasificacionCita='';
+        }
+    }
+     //deseleccion del radio
+        $scope.radioSelect = function (procesAutotanque) {
+        if(procesAutotanque==''){
+            $('input:radio[name=radioInline]').attr('checked',false);
+        }else if(procesAutotanque=='1'){
+            $('input:radio[name=radioInline]').attr('checked',false);
+        }
+    }
+
+
+
 });
