@@ -1,5 +1,6 @@
 <link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
 <link rel="stylesheet" href="../../css/trabajo.css">
+<link rel="stylesheet" href="../../css/main.css">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title">Órdenes por cobrar<span class="subtitle">Call Center / Taller</span></span>
@@ -30,6 +31,7 @@
                                                 <th>Orden de Surtimiento</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Estatus</th>
+                                                <th>Estatus provisión</th>
                                                 <th>Precio venta sin IVA</th>
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
@@ -48,6 +50,22 @@
                                                 <td>{{ordenverificada.folio}}</td>
                                                 <td>{{ordenverificada.trabajo}}</td>
                                                 <td>{{ordenverificada.descripcionLarga }}</td>
+                                                <!--td>
+                                                    <div ng-if="ordenverificada.estatusProvision == 1">
+                                                        <div>Provisionada</div>
+                                                    </div>
+                                                    <div ng-if="ordenverificada.estatusProvision == 0">
+                                                        <div class="rowAzul">No provisionada</div>
+                                                    </div>
+
+                                                </td-->
+
+                                                <td ng-if="ordenverificada.estatusProvision == 1">
+                                                    Provisionada
+                                                </td>
+                                                <td class="rowAzul" ng-if="ordenverificada.estatusProvision == 0">
+                                                    No provisionada
+                                                </td>
                                                 <td>{{ordenverificada.montoOrden | currency}}</td>
                                                 <td>{{ordenverificada.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{ordenverificada.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
@@ -343,7 +361,7 @@ dataTableOrdenesPorCobrar -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="cleanDatos()">Salir</button>
-                    <button type="button" class="btn btn-primary" ng-click="asociarCopade()">Asignar</button>
+                    <button type="button" class="btn btn-primary" ng-click="asociarCopade()">Crear prefactura</button>
                 </div>
             </div>
         </div>
