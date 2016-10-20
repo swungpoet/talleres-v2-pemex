@@ -38,6 +38,7 @@
                                                 <th>Modelo</th>
                                                 <th>Descripción</th>
                                                 <th>Estatus</th>
+                                                <th>Estatus provisión</th>
                                                 <th>Precio venta sin IVA</th>
                                                 <th ng-hide="userData.idTipoUsuario == 3">Fecha</th>
                                                 <th ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">Fecha inicio real de trabajos</th>
@@ -55,6 +56,12 @@
                                                 <td>{{trabajo.modeloMarca}}</td>
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td ng-class="{'rowAzul': trabajo.estatus=='OrdenGarantia'}">{{trabajo.descripcionLarga}}</td>
+                                                <td ng-if="trabajo.estatusProvision == 1">
+                                                    Provisionada
+                                                </td>
+                                                <td class="rowAzul" ng-if="trabajo.estatusProvision == 0">
+                                                    No provisionada
+                                                </td>
                                                 <td ng-hide="userData.idTipoUsuario == 3">{{trabajo.precioOrden | currency: "$"}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">{{trabajo.fechaServicio}}
@@ -128,6 +135,7 @@
                                                 <th>Descripción</th>
                                                 <th>Observaciones</th>
                                                 <th>Estatus</th>
+                                                <th>Estatus provisión</th>
                                                 <th ng-hide="userData.idTipoUsuario == 3">Precio venta sin IVA</th>
                                                 <th>Fecha</th>
                                                 <th>Acción</th>
@@ -145,6 +153,12 @@
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td>{{trabajo.observacion}}</td>
                                                 <td>{{trabajo.descripcionLarga}}</td>
+                                                <td ng-if="trabajo.estatusProvision == 1">
+                                                    Provisionada
+                                                </td>
+                                                <td class="rowAzul" ng-if="trabajo.estatusProvision == 0">
+                                                    No provisionada
+                                                </td>
                                                 <td ng-hide="userData.idTipoUsuario == 3">{{trabajo.precioOrden | currency: "$"}}</td>
                                                 <td>{{trabajo.fechaFin | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>
