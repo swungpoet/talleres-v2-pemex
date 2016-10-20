@@ -33,7 +33,7 @@
                                     <!--<select class="form-control m-b" name="tar" ng-model="selectedTipo" ng-options="tipo.cotizacion for tipo in tipoCotizaciones">
                                         <option value="">Seleccione el tipo de cotizaciÃ³n</option>
                                     </select> -->
-                                        <select class="form-control m-b" name="tar" ng-model="selectedTipo.idTipoCotizacion" ng-options="tipo.idTipoCotizacion as tipo.cotizacion for tipo in tipoCotizaciones">
+                                        <select class="form-control m-b" name="tar" ng-model="selectedTipo.idTipoCotizacion" ng-options="tipo.idTipoCotizacion as tipo.cotizacion for tipo in tipoCotizaciones" ng-disabled="verificaRefaccion == 4">
                                         <option value="">Seleccione el tipo de cotización</option>
 
                                     </select>

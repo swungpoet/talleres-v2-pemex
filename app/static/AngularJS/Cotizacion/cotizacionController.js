@@ -69,7 +69,7 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
         });
     }
     $scope.init = function () {
-
+        $scope.verificaRefaccion();
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT", 20);
@@ -152,8 +152,9 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             alertFactory.info("Ingrese un dato para búsqueda");
         } else {
             $('.dataTableItem').DataTable().destroy();
+            $scope.selectedTipo.idTipoCotizacion == 2 ? $scope.refaccion = 4 : $scope.refaccion = 1;
             /* $('.dataTableCotizacion').DataTable().destroy();*/
-            $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza).then(function (result) {
+            $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza, $scope.refaccion).then(function (result) {
                 $scope.listaPiezas = result.data;
                 if (result.data.length > 0) {
                     setTimeout(function () {
@@ -872,4 +873,18 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
             alertFactory.error('No se pudo obtener la información del taller');
         });
     }
+
+    //Visualiza si la cita a la que se accede esta en refaccion
+    $scope.verificaRefaccion = function () {
+        $scope.datosRefaccion = localStorageService.get('citaRefacciones');
+        cotizacionRepository.getcitaRefaccion($scope.datosRefaccion.idCita).then(function (result) {
+            localStorageService.remove('citaRefacciones');
+            if (result.data.length > 0) {
+                $scope.verificaRefaccion =result.data[0].idTipoCita;
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener la informacion');
+        });
+    }
+
 });

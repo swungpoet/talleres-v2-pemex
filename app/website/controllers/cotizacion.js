@@ -88,6 +88,11 @@ Cotizacion.prototype.get_buscarPieza = function (req, res, next) {
             name: 'nombrePieza',
             value: req.query.nombrePieza,
             type: self.model.types.STRING
+        },
+        {
+            name: 'refaccion',
+            value: req.query.refaccion,
+            type: self.model.types.STRING
         }];
 
     this.model.query('SEL_BUSQUEDA_PIEZA_SP', params, function (error, result) {
@@ -1261,6 +1266,31 @@ Cotizacion.prototype.get_datosTallerByCotizacion = function (req, res, next) {
     }];
 
     this.model.query('SEL_TALLER_BY_ID_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+//Se los datos del taller por una cotización
+Cotizacion.prototype.get_citabyRefaccion = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+    var params = [{
+        name: 'idCita',
+        value: req.query.idCita,
+        type: self.model.types.DECIMAL
+    }];
+
+    this.model.query('SEL_BUSQUEDA_REFACCION_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;
