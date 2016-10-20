@@ -26,6 +26,8 @@
                                         <th>Taller</th>
                                         <th>Costo de la Orden</th>
                                         <th>Precio de la Orden</th>
+                                        <th>Perdida</th>
+                                        <th>Margen</th>
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
                                         <th>Horas en espera</th>
@@ -44,6 +46,8 @@
                                         <td>{{utilidad.razonSocial}}</td>
                                         <td>{{utilidad.montoOrden |  currency: "$"}}</td>
                                         <td>{{utilidad.precioOrden | currency: "$"}}</td>
+                                        <td>{{utilidad.perdida | currency: "$"}}</td>
+                                        <td>{{utilidad.margen | number : 2}}%</td>
                                         <td>{{utilidad.trabajo}}</td>
                                         <td>{{utilidad.descripcionLarga }}</td>
                                         <td>{{utilidad.tiempo }}</td>
@@ -61,6 +65,33 @@
                             
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="modal inmodal lg" id="insertarToken" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <h4 class="modal-title">Token</h4>
+                </div>
+                <br>
+                <div class="modal-body">
+                   
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">No. Token</label>
+                        <div class="col-sm-7">
+                            <div class="m-b">
+                                <input type="text" class="form-control" ng-model="token">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" ng-click="saveToken()">Aceptar</button>
                 </div>
             </div>
         </div>

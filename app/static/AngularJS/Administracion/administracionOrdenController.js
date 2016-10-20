@@ -435,6 +435,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                              
 
                         }else{
+                       
                             if (UtilidadNeta<uitilidad) {
                           // if (montoOrden<precioOrden) {
 
@@ -518,8 +519,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                     });
               
              });
-         s}      
-        }
+           }      
+          }
         }, function (error) {
             alertFactory.error("Error en la consulta");
         });

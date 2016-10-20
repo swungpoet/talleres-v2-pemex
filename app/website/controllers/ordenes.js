@@ -489,9 +489,31 @@ Orden.prototype.post_insertaDatosAprobacionUtilidadRespuesta = function (req, re
             name: 'idUsuario',
             value: req.body.idUsuario,
             type: self.model.types.DECIMAL
-        }    ]; 
+        },
+        {
+            name: 'token',
+            value: req.body.token,
+            type: self.model.types.STRING
+        }]; 
 
     this.model.post('[PROC_RESPUESTA_APROBACION_UTILIDAD_SP]', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+//obtiene estatus de token
+Orden.prototype.get_estatusToken = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'token',
+        value: req.query.token,
+        type: self.model.types.STRING
+    }];
+
+    this.model.query('[SEL_TOKEN_SP]', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

@@ -173,13 +173,14 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             });    
         },
 
-        putAprobacionUtilidadRespuesta: function (idAprobacionUtilidad,idUsuario) {             
+        putAprobacionUtilidadRespuesta: function (idAprobacionUtilidad,idUsuario, token) {             
             return $http({        
                 url: ordenUrl + 'insertaDatosAprobacionUtilidadRespuesta',
                         method: "POST",
                          data: {
                            idAprobacionUtilidad: idAprobacionUtilidad,
-                           idUsuario: idUsuario
+                           idUsuario: idUsuario,
+                           token: token
                         },
 
                         headers: {          
@@ -187,6 +188,20 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 }      
             });    
         },
+
+        estatusToken: function (token) {             
+            return $http({
+                url: ordenUrl + 'estatusToken',
+                method: "GET",
+                params: {
+                    token: token
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });    
+        },
+
 
         putPrecioEditado: function (idCotizacion, idPartida, nuevoPrecio) {
             var precioObj = {

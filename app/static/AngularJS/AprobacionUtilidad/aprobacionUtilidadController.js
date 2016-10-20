@@ -18,6 +18,8 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     }
 
     $scope.getAprobacionUtilidad = function () {
+
+        $scope.aprobacionUtilidades =[];
         ordenServicioRepository.getAprobacionUtilidad().then(function (aprobacionUtilidad) {
      
             if (aprobacionUtilidad.data.length > 0) {
@@ -75,7 +77,8 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     }
 
      $scope.aprobar = function (idAprobacionUtilidad) {
-
+       
+       $scope.idAprobacionUtilidad=idAprobacionUtilidad;
      
         $('.btn-aprobar').ready(function () {
                 swal({
@@ -91,19 +94,41 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
                 },
                 function (isConfirm) {
                     if (isConfirm) {
-                 
-                       ordenServicioRepository.putAprobacionUtilidadRespuesta(idAprobacionUtilidad,$scope.userData.idUsuario).then(function (aprobacionUtilidad) {
-                            if (aprobacionUtilidad.data[0].id > 0) {
-                                 $scope.getAprobacionUtilidad();
-                                 swal("Proceso Realizado!");                               
-                            }
-                        }, function (error) {
-                            alertFactory.error("Error al cargar la orden");
-                        });
+                         $('#insertarToken').appendTo('body').modal('show');
+                
                     }                   
                   });
          });   
                 
+    }
+
+    $scope.saveToken = function () {
+        ordenServicioRepository.estatusToken($scope.token).then(function (estatus) {
+      
+            if (estatus.data.length > 0) {
+                if (estatus.data[0].estatus == 1) {
+                   // swal("Token disponible"); 
+                   $('#insertarToken').modal('hide');
+                    ordenServicioRepository.putAprobacionUtilidadRespuesta($scope.idAprobacionUtilidad,$scope.userData.idUsuario, $scope.token).then(function (aprobacionUtilidad) {
+                    
+                        if (aprobacionUtilidad.data[0].id > 0) {
+                            
+                             $scope.getAprobacionUtilidad();
+                             //alertFactory.success("Proceso Realizado!");                               
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al cargar la orden");
+                    });
+                }else{
+                    alertFactory.error("El token se ha utilizado previamente."); 
+                }
+                                               
+            }else{
+                 alertFactory.error("El token es incorrecto");  
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden.");
+        });
     }
 
 });
