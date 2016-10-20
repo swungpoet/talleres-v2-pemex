@@ -39,7 +39,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
             
         } else {
             $scope.conTar = true;
-
+            $('.dataTableOsur').DataTable().destroy();
             osurRepository.getDatosOsur($scope.selectedTar.idTAR).then(function (result) {
                     if (result.data.length > 0) {
                         $scope.datosOsur = result.data;
@@ -49,38 +49,8 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                             $scope.utilizadoTotal += parseFloat(result.data[i].utilizado);
                             $scope.saldoTotal += parseFloat(result.data[i].saldo);
                         };
-                        setTimeout(function () {
-                            $('.dataTableOsur').DataTable({
-                                buttons: [
-                                    {
-                                        extend: 'copy'
-                                    },
-                                    {
-                                        extend: 'csv'
-                                    },
-                                    {
-                                        extend: 'excel',
-                                        title: 'ExampleFile'
-                                    },
-                                    {
-                                        extend: 'pdf',
-                                        title: 'ExampleFile'
-                                    },
 
-                                    {
-                                        extend: 'print',
-                                        customize: function (win) {
-                                            $(win.document.body).addClass('white-bg');
-                                            $(win.document.body).css('font-size', '10px');
-
-                                            $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
-                                        }
-                            }
-                        ]
-                            });
-                        }, 1000);
+                        waitDrawDocument("dataTableOsur");
                     } else {
                         $scope.datosOsur = [];
                         alertFactory.info("No existe información con los criterios de búsqueda");
