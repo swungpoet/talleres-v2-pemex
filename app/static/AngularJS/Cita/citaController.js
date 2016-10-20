@@ -83,7 +83,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             autoclose: true,
             todayHighlight: true
         });
-        $scope.busquedaCita($scope.fecha);
+        $scope.busquedaCita('');
     }
 
     //obtiene la unidad mediante el dato buscado
@@ -1064,7 +1064,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             mm = '0' + mm
         }
         var today = mm + '/' + dd + '/' + yyyy;
-        $scope.fecha = today;
+        /*$scope.fecha = today;*/
     }
 
 });
