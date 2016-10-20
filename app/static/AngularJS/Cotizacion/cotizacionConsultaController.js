@@ -68,42 +68,12 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
 
     //Obtiene las cotizaciones pendientes por autorizar
     $scope.Maestro = function () {
+         $('.dataTableCotizaciones').DataTable().destroy();
         $scope.promise =
             cotizacionConsultaRepository.get($scope.userData.idUsuario).then(function (result) {
                     if (result.data.length > 0) {
                         $scope.cotizaciones = result.data;
-                        setTimeout(function () {
-                            $('.dataTableCotizaciones').DataTable({
-                                buttons: [
-                                    {
-                                        extend: 'copy'
-                                    },
-                                    {
-                                        extend: 'csv'
-                                    },
-                                    {
-                                        extend: 'excel',
-                                        title: 'ExampleFile'
-                                    },
-                                    {
-                                        extend: 'pdf',
-                                        title: 'ExampleFile'
-                                    },
-
-                                    {
-                                        extend: 'print',
-                                        customize: function (win) {
-                                            $(win.document.body).addClass('white-bg');
-                                            $(win.document.body).css('font-size', '10px');
-
-                                            $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
-                                        }
-                            }
-                        ]
-                            });
-                        }, 1000);
+                        waitDrawDocument("dataTableCotizaciones");
                     } else {
                         alertFactory.info('No se encontraron cotizaciones.');
                     }
