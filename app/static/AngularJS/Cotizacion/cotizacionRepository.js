@@ -4,13 +4,14 @@ var ruta = global_settings.uploadPath;
 
 registrationModule.factory('cotizacionRepository', function ($http) {
     return {
-        buscarPieza: function (idTaller, nombrePieza) {
+        buscarPieza: function (idTaller, nombrePieza, refaccion) {
             return $http({
                 url: searchUrl + 'buscarPieza',
                 method: "GET",
                 params: {
                     idTaller: idTaller,
-                    nombrePieza: nombrePieza
+                    nombrePieza: nombrePieza,
+                    refaccion:refaccion
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -175,6 +176,18 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 method: "GET",
                 params: {
                     idTaller: idTaller
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getcitaRefaccion: function (idCita) {
+            return $http({
+                url: searchUrl + 'citabyRefaccion',
+                method: "GET",
+                params: {
+                    idCita: idCita
                 },
                 headers: {
                     'Content-Type': 'application/json'
