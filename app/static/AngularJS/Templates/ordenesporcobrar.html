@@ -27,6 +27,7 @@
                                                 <th>Zona</th>
                                                 <th>TAR</th>
                                                 <th>Taller</th>
+                                                <th>Tipo Orden</th>
                                                 <th>Orden de Surtimiento</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Estatus</th>
@@ -46,6 +47,7 @@
                                                 <td>{{ordenverificada.zona}}</td>
                                                 <td>{{ordenverificada.TAR}}</td>
                                                 <td>{{ordenverificada.razonSocial}}</td>
+                                                <td>{{ordenverificada.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
                                                 <td>{{ordenverificada.folio}}</td>
                                                 <td>{{ordenverificada.trabajo}}</td>
                                                 <td>{{ordenverificada.descripcionLarga }}</td>
@@ -136,6 +138,7 @@
                                                 <th>Zona</th>
                                                 <th>TAR</th>
                                                 <th>Taller</th>
+                                                <th>Tipo Orden</th>
                                                 <th>No. COPADE</th>
                                                 <th>Orden de Surtimiento</th>
                                                 <th>No. Estimación</th>
@@ -155,6 +158,7 @@
                                                 <td>{{cita.zona}}</td>
                                                 <td>{{cita.TAR}}</td>
                                                 <td>{{cita.razonSocial}}</td>
+                                                <td>{{cita.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
                                                 <td>{{cita.numeroCopade}}</td>
                                                 <td>{{cita.folio}}</td>
                                                 <td>{{cita.numeroEstimacion}}</td>
