@@ -26,10 +26,12 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     }
 
     $scope.getAdmonOrdenes = function (numeroTrabajo) {
+        $('.dataTableOrdenServicio').DataTable().destroy();
         ordenServicioRepository.getAdmonOrdenes(numeroTrabajo).then(function (admonOrden) {
             if (admonOrden.data.length > 0) {
                 alertFactory.success("Orden encontrada");
                 $scope.admonOrdenes = admonOrden.data;
+                waitDrawDocument("dataTableOrdenServicio");
             } else {
                 alertFactory.info("No se encontró el número de órden especificado");
             }
