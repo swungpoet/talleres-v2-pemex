@@ -236,6 +236,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 $scope.idDatosDeCopade = $scope.copades[i].idDatosCopade;
                 ordenPorCobrarRepository.getMejorCoincidencia($scope.folio, $scope.monto).then(function (result) {
                     $scope.coincidencia = result.data;
+                    $scope.trabajos=[];
                     $('#mejorCoincidencia').modal('show');
                     setTimeout(function () {
                         $('.dataTableCoincidencia').DataTable();
@@ -258,15 +259,29 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Selecciona una orden en Radio y obtiene idTrabajo
     $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado) {
-        $scope.idDeTrabajo = idTrabajo;
-        $scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
+        debugger;
+        //$scope.idDeTrabajo = idTrabajo;
+        //$scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
+
+          $scope.checkChange = function (browser) {
+            for(var i =0; i< $scope.stories.length; i++){
+                if(!$scope.stories[i].selected){
+                $scope.checked = false
+                return false;
+                }
+            }
+    }
+         var obj=new Object();
+        obj=new Object();
+        obj.idTrabajo=idTrabajo;
+        obj.montoOrdenSeleccionado=montoOrdenSeleccionado;
+        $scope.trabajos.push(obj);
     }
 
     //Asociamos un idtrabajo con DatosCopade
     $scope.asociarCopade = function () {
-         debugger;
+         
         ordenServicioRepository.getOrdenServicio($scope.numeroCopade).then(function (result) {
-            debugger;
             if (result.data.length > 0) {
 
                 if(validaMontoCapadeOrden($scope.montoOrdenSeleccionado)){
@@ -285,7 +300,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                                 },
                                 function (isConfirm) {
                                     if (isConfirm) {
-                                        $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
+                                        $scope.trabajoCobrado($scope.trabajos, $scope.idDatosDeCopade);
                                         ordenPorCobrarRepository.putMueveCopade($scope.idDeTrabajo, $scope.idDatosDeCopade).then(function (resp) {
                                             if (resp.data > 0) {
                                                 alertFactory.success('La copade se copio correctamente');
@@ -360,7 +375,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     var validaMontoCapadeOrden = function(montoOrdenSeleccionado){
         if($scope.monto != null && $scope.monto != '' && $scope.monto > 0){
             var resultado = montoOrdenSeleccionado >= $scope.monto ? (montoOrdenSeleccionado - $scope.monto) : ($scope.monto - montoOrdenSeleccionado);
-            if(resultado >= 0 && resultado <= 10)
+            if(resultado >= 0 && resultado <= 1)
                 return true;
             else
                 return false;
