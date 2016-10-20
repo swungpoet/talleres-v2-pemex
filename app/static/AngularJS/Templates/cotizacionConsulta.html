@@ -14,10 +14,15 @@
    delay:delay}">
                                 <thead>
                                     <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Número de la Orden</th>
+                                        <th>Número Económico</th>
+                                        <th>Zona</th>
+                                        <th>TAR</th>
+                                        <th>Taller</th>
+                                        <th>Tipo Orden</th>
                                         <th>Fecha</th>
                                         <th>No. de Aprobación</th>
-                                        <th>Número Económico</th>
-                                        <th>TAR</th>
                                         <th>Marca - Modelo</th>
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
@@ -29,16 +34,21 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="cotizacion in cotizaciones | filter: cotizacion">
+                                        <td>{{cotizacion.idCita}}</td>
+                                        <td>{{cotizacion.numeroTrabajo}}</td>
+                                        <td>{{cotizacion.numEconomico}}</td>
+                                        <td>{{cotizacion.zona}}</td>
+                                        <td>{{cotizacion.TAR}}</td>
+                                        <td>{{cotizacion.razonSocial}}</td>
+                                        <td>{{cotizacion.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
                                         <td>{{ cotizacion.fecha | date:'dd-MM-yyyy HH:mm'}}</td>
                                         <td>{{cotizacion.numeroCotizacion}}</td>
-                                        <td>{{cotizacion.numEconomico}}</td>
-                                        <td>{{cotizacion.TAR}}</td>
                                         <td>{{cotizacion.marca}}</td>
                                         <td>{{cotizacion.trabajo}}</td>
                                         <td>{{ cotizacion.estatus }}</td>
                                         <td>{{cotizacion.observaciones}}</td>
                                         <td>{{ cotizacion.nombreCompleto }}</td>
-<!--                                         <td>
+                                        <!--                                         <td>
                                             <button class="btn btn-primary" type="button" id="btnEnviar" ng-click="Detalle(cotizacion.idCotizacion, cotizacion.idTaller, cotizacion.idUsuario)">
                                                 <span class="glyphicon glyphicon-zoom-in" aria-hidden="true" data-toggle="modal"></span>
                                             </button>
@@ -49,7 +59,7 @@
                                             </button>
                                             <button ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" class="btn btn-danger btnTerminarTrabajo" type="button" tooltip="Cancelar Aprobación" ng-click="cancelarAprobacion(cotizacion.idTrabajo,cotizacion.idCotizacion)">
                                                 <span class="glyphicon glyphicon-remove-sign" aria-hidden="true" data-toggle="modal"></span>
-                                            </button> 
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
