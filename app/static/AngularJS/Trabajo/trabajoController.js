@@ -56,15 +56,15 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
     }
 
     var getTrabajo = function (idUsuario) {
-        var sumatoria= 0
+        var sumatoria = 0
         trabajoRepository.getTrabajo(idUsuario).then(function (trabajo) {
             $('.dataTableTrabajo').DataTable().destroy();
             $scope.trabajos = trabajo.data;
-            for(var i=0;i<trabajo.data.length;i++){
+            for (var i = 0; i < trabajo.data.length; i++) {
                 sumatoria += parseFloat(trabajo.data[i].precioOrden);
             };
 
-            $scope.sumatoriaProceso=sumatoria;
+            $scope.sumatoriaProceso = sumatoria;
             if (trabajo.data.length > 0) {
                 waitDrawDocument("dataTableTrabajo");
                 alertFactory.success("Trabajos cargados");
@@ -78,42 +78,43 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //obtiene los trabajos terminados
     var getTrabajoTerminado = function (idUsuario) {
-        var sumatoria= 0
-        $scope.trabajosTerminados =[];
+        var sumatoria = 0
+        $scope.trabajosTerminados = [];
         $('.dataTableTrabajoTerminado').DataTable().destroy();
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
 
-            for(var i=0;i<trabajoTerminado.data.length;i++){
+            for (var i = 0; i < trabajoTerminado.data.length; i++) {
                 sumatoria += parseFloat(trabajoTerminado.data[i].precioOrden);
 
-                obj=new Object();
-              obj.idCita=trabajoTerminado.data[i].idCita;
-              obj.numeroTrabajo=trabajoTerminado.data[i].numeroTrabajo;
-              obj.numEconomico=trabajoTerminado.data[i].numEconomico;
-              obj.zona=trabajoTerminado.data[i].zona;
-              obj.TAR=trabajoTerminado.data[i].TAR;
-              obj.marca=trabajoTerminado.data[i].marca;
-              obj.modeloMarca=trabajoTerminado.data[i].modeloMarca;
-              obj.trabajo=trabajoTerminado.data[i].trabajo;
-              obj.observacion=trabajoTerminado.data[i].observacion;
-              obj.descripcionLarga=trabajoTerminado.data[i].descripcionLarga;
-              obj.precioOrden=trabajoTerminado.data[i].precioOrden;
-              obj.idTrabajo=trabajoTerminado.data[i].idTrabajo;
-              obj.montoOrden=trabajoTerminado.data[i].montoOrden;
-              obj.estatus=trabajoTerminado.data[i].estatus;
-              obj.fecha=trabajoTerminado.data[i].fecha;
-              obj.fechaFin=trabajoTerminado.data[i].fechaFin;
-              obj.idTrabajo=trabajoTerminado.data[i].idTrabajo;
-              obj.idTAR=trabajoTerminado.data[i].idTAR;
-              obj.razonSocial=trabajoTerminado.data[i].razonSocial;
-              obj.estatusProvision=trabajoTerminado.data[i].estatusProvision;
-              obj.indice=i;
-              obj.class_buttonCeritficado='glyphicon glyphicon-file';
+                obj = new Object();
+                obj.idCita = trabajoTerminado.data[i].idCita;
+                obj.numeroTrabajo = trabajoTerminado.data[i].numeroTrabajo;
+                obj.numEconomico = trabajoTerminado.data[i].numEconomico;
+                obj.zona = trabajoTerminado.data[i].zona;
+                obj.TAR = trabajoTerminado.data[i].TAR;
+                obj.marca = trabajoTerminado.data[i].marca;
+                obj.modeloMarca = trabajoTerminado.data[i].modeloMarca;
+                obj.trabajo = trabajoTerminado.data[i].trabajo;
+                obj.observacion = trabajoTerminado.data[i].observacion;
+                obj.descripcionLarga = trabajoTerminado.data[i].descripcionLarga;
+                obj.precioOrden = trabajoTerminado.data[i].precioOrden;
+                obj.idTrabajo = trabajoTerminado.data[i].idTrabajo;
+                obj.montoOrden = trabajoTerminado.data[i].montoOrden;
+                obj.estatus = trabajoTerminado.data[i].estatus;
+                obj.fecha = trabajoTerminado.data[i].fecha;
+                obj.fechaFin = trabajoTerminado.data[i].fechaFin;
+                obj.idTrabajo = trabajoTerminado.data[i].idTrabajo;
+                obj.idTAR = trabajoTerminado.data[i].idTAR;
+                obj.razonSocial = trabajoTerminado.data[i].razonSocial;
+                obj.estatusProvision = trabajoTerminado.data[i].estatusProvision;
+                obj.indice = i;
+                obj.class_buttonCeritficado = 'glyphicon glyphicon-file';
+                obj.idTipoCita = trabajoTerminado.data[i].idTipoCita;
 
-              $scope.trabajosTerminados.push(obj);
+                $scope.trabajosTerminados.push(obj);
             };
 
-            $scope.sumatoriaEntrega=sumatoria;
+            $scope.sumatoriaEntrega = sumatoria;
 
             if (trabajoTerminado.data.length > 0) {
                 waitDrawDocument("dataTableTrabajoTerminado");
@@ -335,16 +336,17 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
         var saldo = 0;
         //idTAR= 31; 
         trabajoRepository.getSaldoTar(idTAR).then(function (saldoRes) {
-      
 
-          if (saldoRes.data.length > 0){
-            saldo = saldoRes.data[0].saldo;
-            if (saldo > 0) {
-                saldo = saldo - montoOrden ; 
-            }
 
-               if (saldo > 0 ) {
-                    $scope.trabajosTerminados[indice].class_buttonCeritficado= 'fa fa-circle-o-notch fa-spin';                    $scope.generaCertificado = false;
+            if (saldoRes.data.length > 0) {
+                saldo = saldoRes.data[0].saldo;
+                if (saldo > 0) {
+                    saldo = saldo - montoOrden;
+                }
+
+                if (saldo > 0) {
+                    $scope.trabajosTerminados[indice].class_buttonCeritficado = 'fa fa-circle-o-notch fa-spin';
+                    $scope.generaCertificado = false;
                     trabajoRepository.generaCerficadoConformidadTrabajo(17, idTrabajo).then(function (certificadoGenerado) {
                         if (certificadoGenerado.data.length > 0) {
                             if (certificadoGenerado.data[0].noReporte != 'KO') {
@@ -379,7 +381,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                         nombreProveedor: "",
                                         puestoProveedor: ""
                                     }
-                                    $scope.trabajosTerminados[indice].class_buttonCeritficado= 'glyphicon glyphicon-file';
+                                    $scope.trabajosTerminados[indice].class_buttonCeritficado = 'glyphicon glyphicon-file';
                                     alertFactory.success('Certificado generado correctamente');
                                     getTrabajo($scope.userData.idUsuario);
                                     getTrabajoTerminado($scope.userData.idUsuario);
@@ -398,19 +400,19 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         alertFactory.error("Error al cambiar la orden a estatus Certificado generado");
                     })
 
-                }else{
+                } else {
 
                     trabajoRepository.postEstatusOsur(idTAR).then(function (estatusOsur) {
-                           
-                            if (estatusOsur.data[0].id = 1) {
 
-                                //regresa
-                                 $scope.generaCertificadoConformidadPDF (idTrabajo, idTAR, montoOrden);
+                        if (estatusOsur.data[0].id = 1) {
 
-                            }else{
-                                //correo
+                            //regresa
+                            $scope.generaCertificadoConformidadPDF(idTrabajo, idTAR, montoOrden);
 
-                                swal({
+                        } else {
+                            //correo
+
+                            swal({
                                     title: "Advertencia",
                                     text: "No se puede generar el certificado por saldo insuficiente.",
                                     type: "warning",
@@ -421,55 +423,55 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                 },
                                 function (isConfirm) {
                                     if (isConfirm) {
-                                       trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
-                                        
+                                        trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
+
                                             if (mail.data[0].enviado == 1) {
                                                 swal("Proceso Realizado!");
                                             }
                                         }, function (error) {
                                             alertFactory.error("Error al cargar enviar mail");
                                         });
-                                    }                     
+                                    }
                                 });
-                            }
-
-
-                     }, function (error) {
-                           console.log('error '+ error)
-                             alertFactory.error("Error al cambiar el estatus ");
-                        })
-
-                                
-                    
-                } 
-                     
-        /*if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {*/
-          
-          }else{
-            //correo
-
-            swal({
-                title: "Advertencia",
-                text: "No se puede generar el certificado por saldo insuficiente. Se enviará Mail para nueva Osur.",
-                type: "warning",
-                showCancelButton: false,
-                confirmButtonColor: "#67BF11",
-                confirmButtonText: "Aceptar",
-                closeOnConfirm: false
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                   trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
-                  
-                        if (mail.data[0].enviado == 1) {
-                            swal("Proceso Realizado!");
                         }
+
+
                     }, function (error) {
-                        alertFactory.error("Error al cargar enviar mail");
+                        console.log('error ' + error)
+                        alertFactory.error("Error al cambiar el estatus ");
+                    })
+
+
+
+                }
+
+                /*if ($scope.certificadoParams.noReporte != '' && $scope.certificadoParams.tad != '' && $scope.certificadoParams.gerencia != '' && $scope.certificadoParams.solpe != '' && $scope.certificadoParams.ordenSurtimiento != '' && $scope.certificadoParams.montoOS != '' && $scope.certificadoParams.nombreProveedor != '' && $scope.certificadoParams.puestoProveedor != '') {*/
+
+            } else {
+                //correo
+
+                swal({
+                        title: "Advertencia",
+                        text: "No se puede generar el certificado por saldo insuficiente. Se enviará Mail para nueva Osur.",
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#67BF11",
+                        confirmButtonText: "Aceptar",
+                        closeOnConfirm: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
+
+                                if (mail.data[0].enviado == 1) {
+                                    swal("Proceso Realizado!");
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al cargar enviar mail");
+                            });
+                        }
                     });
-                }                     
-            });
-        }
+            }
         }, function (error) {
             alertFactory.error("Error del precio");
         })
