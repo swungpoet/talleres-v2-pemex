@@ -330,7 +330,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
 
     //Redirige a pagina para nueva cotización
-    $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
+$scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
+        localStorageService.set('citaRefacciones', cita);
         if (nvaCotizacion == 1) {
             localStorageService.set('cita', cita);
             localStorageService.set('isNuevaCotizacion', nvaCotizacion);
@@ -345,7 +346,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 idTrabajo: preCotizacion.idTrabajo,
                 idTipoCotizacion: preCotizacion.idTipoCotizacion
             };
-            localStorageService.set('objEditCotizacion', objEditCotizacion);
+            localStorageService.set('objEditCotizacion', objEditCotizacion); 
         }
         location.href = '/cotizacionnueva';
     }
@@ -400,12 +401,12 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         $scope.listaPiezas = [];
     }
 
-    //obtiene servicios/items
+ //obtiene servicios/items
     $scope.getPieza = function (nombrePieza) {
         if (nombrePieza !== '' && nombrePieza !== undefined) {
             $('#btnBuscarPieza').button('Buscando...');
             $('.dataTablePiezaTaller').DataTable().destroy();
-            $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza).then(function (pieza) {
+            $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza, $scope.procesAutotanque).then(function (pieza) {
                 $scope.piezas = pieza.data;
                 if (pieza.data.length > 0) {
                     waitDrawDocument("dataTablePiezaTaller");
@@ -712,7 +713,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
         }
     }
 
-    var getidCita = function (idCita) {
+var getidCita = function (idCita) {
         citaRepository.getidCita(idCita).then(function (result) {
             if (result.data.length > 0) {
                 var citaDato = result.data;
@@ -720,13 +721,15 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
                 $scope.datosCita.razonSocial = citaDato[0].razonSocial;
                 $scope.datosCita.direccion = citaDato[0].direccion;
                 $scope.datosCita.idTaller = citaDato[0].tallerid;
+                if(citaDato[0].idEstadoAutotanque != '' && citaDato[0].idEstadoAutotanque != null){
                 $scope.idEstadoAutotanque = citaDato[0].idEstadoAutotanque.toString();
-                citaDato[0].NumCita == 4 ? $scope.procesAutotanque = "4" : $scope.procesAutotanque = "1";
-                if (citaDato[0].NumCita != 4) {
-                    $scope.clasificacionCita = citaDato[0].NumCita.toString();
                 }
-                if (citaDato[0].idTrasladoUnidad != null) {
-                    $scope.requiereGrua = citaDato[0].idTrasladoUnidad.toString();
+                citaDato[0].NumCita == 4 ? $scope.procesAutotanque = "4" : $scope.procesAutotanque = "1";
+                if(citaDato[0].NumCita != 4){
+                $scope.clasificacionCita=citaDato[0].NumCita.toString();
+                }
+                if(citaDato[0].idTrasladoUnidad != null){
+                $scope.requiereGrua = citaDato[0].idTrasladoUnidad.toString();
                 }
                 //$scope.idTrasladoUnidad = citaDato[0].idTrasladoUnidad;
                 //$scope.datosCita.tipoCita = citaDato[0].NumCita;
