@@ -125,8 +125,14 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
         }
 
         reporteUtilidadRepository.getUtilidad(fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera).then(function (utilidad) { 
+            var sumatoria=0
             if (utilidad.data.length > 0) {
                 $scope.margenUtilidad = utilidad.data;
+            
+                 for(var i=0;i<utilidad.data.length;i++){
+                    sumatoria += parseFloat(utilidad.data[i].precioOrden);
+                };
+                $scope.sumatoria=sumatoria;
                 alertFactory.success('Datos encontrados');
                 waitDrawDocument("dataTableUtilidad");
             } else {

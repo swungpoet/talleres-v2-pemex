@@ -1,4 +1,5 @@
 <link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="../../css/trabajo.css">
 <div ng-init="initUtilidad()">
     <div class="headTitleTallerCita">
         <span class="title">Reporte Márgenes de Utilidad<span class="subtitle"></span></span>
@@ -87,7 +88,14 @@
                         </div>
                         <br>
                         <br>
+                        
                         <div class="table-responsive">
+                                 <div class=" row etiquetaTotales">Precio total: <span class="totales">{{sumatoria| currency: "$"}}</span></div>
+                        
+                                <br>
+                                <br>
+                                <br>
+                                <br>
                             <table class="table table-striped table-bordered table-hover dataTableUtilidad" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <tr>
