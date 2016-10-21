@@ -314,7 +314,7 @@ dataTableOrdenesPorCobrar -->
                                     <td>{{coincidencias.montoOrden | currency}}</td>
                                     <td>
 
-                                        <input type="checkbox" name="name" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo, coincidencias.montoOrden)" data-toggle="tooltip" tooltip="" tooltip-placement="left">&nbsp;Elegir
+                                        <input type="radio" name="name" ng-click="seleccionMejorCoincidencia(coincidencias.idTrabajo, coincidencias.montoOrden)" data-toggle="tooltip" tooltip="" tooltip-placement="left">&nbsp;Elegir
 
                                     </td>
 
@@ -344,10 +344,7 @@ dataTableOrdenesPorCobrar -->
                                     <td>{{orden.montoOrden | currency}}</td>
                                     <td>
 
-                                        <!--.input type="checkbox" name="name" ng-click="seleccionMejorCoincidencia(orden.idTrabajo, orden.montoOrden)" data-toggle="tooltip" tooltip-placement="left" value="{{orden.idTrabajo}}"   ng-model="{{orden.idTrabajo}}">&nbsp;Elegir-->
-
-                                        <input type="checkbox" value="{{Ordenes.idTrabajo}}" ng-model="selection[story].ordenes[Ordenes.idTrabajo]" ng-change="seleccionMejorCoincidencia(orden.idTrabajo, orden.montoOrden)">&nbsp;Elegir
-                    >
+                                        <input type="radio" name="name" ng-click="seleccionMejorCoincidencia(orden.idTrabajo, orden.montoOrden)" data-toggle="tooltip" tooltip-placement="left">&nbsp;Elegir                    
 
                                     </td>
                                 </tr>
