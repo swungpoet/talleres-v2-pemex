@@ -5,7 +5,8 @@
         <!-- <button type="button" class="btn btn-success" ng-click="videoTutorial()" data-toggle="tooltip" tooltip-placement="right"> -->
         <span class="glyphicon glyphicon-facetime-video"></span><!-- </button> -->
         &nbsp;&nbsp;
-        <a href="#" ng-click="videoTutorial()">Ver Tutorial</a>
+        <a href="#" ng-hide="userData.idTipoUsuario == 4" ng-click="videoTutorialAdministrador()">Ver Tutorial</a>
+        <a href="#" ng-hide="userData.idTipoUsuario != 4" ng-click="videoTutorialCliente()">Ver Tutorial</a>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
