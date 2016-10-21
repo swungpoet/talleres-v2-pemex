@@ -84,26 +84,27 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.totalHorasCotizaciones = 0;
 
                 cotizaciones.data.forEach(function (sumatoria) {
-                    /*if (sumatoria.estatus == 'Falta autorización de diagnóstico') pendientes = sumatoria.total;*/
-                    if (sumatoria.estatus == 'Falta validación de diagnóstico') sinCotizacion = sumatoria.total;
+                    if (sumatoria.estatus == 'Falta autorización de diagnóstico') pendientes = sumatoria.total;
+                    /*if (sumatoria.estatus == 'Falta validación de diagnóstico') sinCotizacion = sumatoria.total;*/
 
                     $scope.totalHorasCotizaciones = $scope.totalHorasCotizaciones + sumatoria.promedio;
                 });
 
 
-                $scope.totalCotizaciones = sinCotizacion;
+                $scope.totalCotizaciones = pendientes;
 
                 Morris.Donut({
                     element: 'morris-donut-cotizaciones',
                     data: [
-                        /*{
+                        {
                             label: "Falta autorización de diagnóstico",
                             value: pendientes
-                        },*/
-                        {
+                        }
+                       /* ,{
                             label: "Falta validación de diagnóstico",
                             value: sinCotizacion
-                }],
+                        }*/
+                    ],
                     resize: true,
                     colors: ['#CA4B7C'],
                     /*colors: ['#FF889A', '#CA4B7C', '#7A2E7A'],*/
