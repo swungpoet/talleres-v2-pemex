@@ -1070,4 +1070,8 @@ var getidCita = function (idCita) {
         /*$scope.fecha = today;*/
     }
 
+        $scope.videoTutorial = function () {
+            //window.open($rootScope.vIpServer + '/uploads/AirGuitar.mp4', '_blank', 'Factura');
+    }
+
 });

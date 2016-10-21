@@ -1,6 +1,11 @@
 <div ng-init="initNuevaCita()" class="animated fadeInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Citas<span class="subtitle">Call Center / Taller</span></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- <button type="button" class="btn btn-success" ng-click="videoTutorial()" data-toggle="tooltip" tooltip-placement="right"> -->
+        <span class="glyphicon glyphicon-facetime-video"></span><!-- </button> -->
+        &nbsp;&nbsp;
+        <a href="#" ng-click="videoTutorial()">Ver Tutorial</a>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -129,17 +134,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Descripción de la orden: </label>
+                            <label class="col-sm-3 control-label">Comentarios Adicionales: </label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" ng-model="datosCita.trabajoCita" value="">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--  <div class="form-group">
                             <label class="col-sm-3 control-label">Observaciones: </label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" rows="4" ng-model="datosCita.observacionCita"></textarea>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label"></label>
                             <div class="col-sm-9">
