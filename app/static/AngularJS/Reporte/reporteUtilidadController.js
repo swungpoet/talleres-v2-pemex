@@ -11,6 +11,9 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
     $scope.fechaInicio = null;
     $scope.fechaFin = null;
     $scope.fechaMes = null;
+    $scope.sumatoriaCosto = 0.00;
+    $scope.sumatoriaPrecio = 0.00;
+    $scope.sumatoriaUtilidad = 0.00;
     $scope.userData = localStorageService.get('userData');
 
     //Inicializa la pagina
@@ -125,14 +128,17 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
         }
 
         reporteUtilidadRepository.getUtilidad(fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera).then(function (utilidad) { 
-            var sumatoria=0
+           $scope.sumatoriaCosto = 0.00;
+            $scope.sumatoriaPrecio = 0.00;
+            $scope.sumatoriaUtilidad = 0.00;
             if (utilidad.data.length > 0) {
                 $scope.margenUtilidad = utilidad.data;
             
                  for(var i=0;i<utilidad.data.length;i++){
-                    sumatoria += parseFloat(utilidad.data[i].precioOrden);
+                    $scope.sumatoriaCosto += parseFloat(utilidad.data[i].costoOrden);
+                    $scope.sumatoriaPrecio += parseFloat(utilidad.data[i].precioOrden);
+                    $scope.sumatoriaUtilidad += parseFloat(utilidad.data[i].utilidad);
                 };
-                $scope.sumatoria=sumatoria;
                 alertFactory.success('Datos encontrados');
                 waitDrawDocument("dataTableUtilidad");
             } else {
