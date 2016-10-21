@@ -39,8 +39,8 @@
                                         <th>Tipo Orden</th>
                                         <th>Fecha</th>
                                         <th>Dirección Taller</th>
-                                        <th>Descripción de la Orden</th>
-                                        <th>Observaciones</th>
+                                        <th>Comentarios Adicionales</th>
+                                        <!-- <th>Observaciones</th> -->
                                         <th>Estatus</th>
                                         <th>Agendó</th>
                                         <th>Acción</th>
@@ -58,7 +58,7 @@
                                         <td>{{ cita.Fecha | date:'dd-MM-yyyy HH:mm'}} </td>
                                         <td ng-class="{'rowRojo': cita.direccion=='SIN TALLER'}">{{ cita.direccion }}</td>
                                         <td>{{ cita.trabajo }}</td>
-                                        <td>{{ cita.observacion }}</td>
+                                        <!-- <td>{{ cita.observacion }}</td> -->
                                         <td ng-class="{'rowRojo': cita.idEstatus==22}">{{ cita.estatus }}</td>
                                         <td>{{ cita.nombreCompleto }} </td>
                                         <td>

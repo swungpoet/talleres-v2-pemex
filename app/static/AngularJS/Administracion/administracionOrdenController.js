@@ -182,7 +182,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         //LQMA add 19092016
         //$scope.idEstatusPorCerrar = objOrden.estatusTrabajo;
         
-        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != 'undefined' ? 
+        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != undefined ? 
             $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
             $scope.idCotizacion = 0;  
 
