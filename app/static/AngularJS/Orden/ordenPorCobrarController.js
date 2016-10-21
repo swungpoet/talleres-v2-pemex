@@ -2,6 +2,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
+    $scope.stories= [];
 
     $scope.init = function () {
         Dropzone.autoDiscover = false;
@@ -259,23 +260,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Selecciona una orden en Radio y obtiene idTrabajo
     $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado) {
-        debugger;
-        //$scope.idDeTrabajo = idTrabajo;
-        //$scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
-
-          $scope.checkChange = function (browser) {
-            for(var i =0; i< $scope.stories.length; i++){
-                if(!$scope.stories[i].selected){
-                $scope.checked = false
-                return false;
-                }
-            }
-    }
-         var obj=new Object();
-        obj=new Object();
-        obj.idTrabajo=idTrabajo;
-        obj.montoOrdenSeleccionado=montoOrdenSeleccionado;
-        $scope.trabajos.push(obj);
+        
+        $scope.idDeTrabajo = idTrabajo;
+        $scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
     }
 
     //Asociamos un idtrabajo con DatosCopade
