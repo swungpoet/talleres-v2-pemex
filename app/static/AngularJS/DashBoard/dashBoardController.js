@@ -29,8 +29,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 datos.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'Solicitadas por Cliente') solicitadas = sumatoria.total;
-                        if (sumatoria.estatus == 'Sin cotizar orden') agendadas = sumatoria.total;
-                        /*if (sumatoria.estatus == 'Falta recepción de unidad') confirmadas = sumatoria.total;*/
+                        /*if (sumatoria.estatus == 'Falta recepción de unidad') agendadas = sumatoria.total;*/
+                        if (sumatoria.estatus == 'Falta cotizar orden') confirmadas = sumatoria.total;
                         if (sumatoria.estatus == 'Canceladas') canceladas = sumatoria.total;
 
                         $scope.totalHorasCitas = $scope.totalHorasCitas + sumatoria.promedio;
@@ -39,7 +39,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 );
 
-                $scope.totalCitas = solicitadas + agendadas + canceladas;
+                $scope.totalCitas = solicitadas + confirmadas + canceladas;
 
                 Morris.Donut({
                     element: 'morris-donut-citas',
@@ -50,7 +50,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         },
                         {
                             label: "Falta cotizar orden",
-                            value: agendadas
+                            value: confirmadas
                         },
                         /*{
                             label: "Falta recepción de unidad",
