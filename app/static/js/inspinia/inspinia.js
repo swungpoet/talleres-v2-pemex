@@ -128,21 +128,27 @@ $(document).ready(function () {
         var navbarHeigh = $('nav.navbar-default').height();
         var wrapperHeigh = $('#page-wrapper').height();
 
-        if (navbarHeigh > wrapperHeigh) {
-            $('#page-wrapper').css("min-height", navbarHeigh + "px");
-        }
+   
 
-        if (navbarHeigh < wrapperHeigh) {
-            $('#page-wrapper').css("min-height", $(window).height() + "px");
-        }
+        // if (navbarHeigh > wrapperHeigh) {
+        //     $('#page-wrapper').css("min-height", navbarHeigh + "px");
+        // }
 
-        if ($('body').hasClass('fixed-nav')) {
-            if (navbarHeigh > wrapperHeigh) {
-                $('#page-wrapper').css("min-height", navbarHeigh - 60 + "px");
-            } else {
-                $('#page-wrapper').css("min-height", $(window).height() - 60 + "px");
-            }
-        }
+        // if (navbarHeigh < wrapperHeigh) {
+        //     $('#page-wrapper').css("min-height", $(window).height() + "px");
+        // }
+
+        // if (navbarHeigh == wrapperHeigh) {
+        //     $('#page-wrapper').css("min-height", navbarHeigh +300+ "px");
+        // }
+
+        // if ($('body').hasClass('fixed-nav')) {
+        //     if (navbarHeigh > wrapperHeigh) {
+        //         $('#page-wrapper').css("min-height", navbarHeigh - 60 + "px");
+        //     } else {
+        //         $('#page-wrapper').css("min-height", $(window).height() - 60 + "px");
+        //     }
+        // }
 
     }
 

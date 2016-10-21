@@ -9,6 +9,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
      $scope.utilizadoTotal=0.00;
      $scope.saldoTotal=0.00;
     $scope.conTar = false;
+    $scope.selectedTar ="";
 
     $scope.init = function () {
         getTARS();
@@ -33,7 +34,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
         $scope.utilizadoTotal=0.00;
         $scope.saldoTotal=0.00;
 
-        if ($scope.selectedTar == null) {
+        if ($scope.selectedTar == "") {
             $scope.conTar = false;
             alertFactory.info("Debe seleccionar una TAR");
             
@@ -53,12 +54,21 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                         waitDrawDocument("dataTableOsur");
                     } else {
                         $scope.datosOsur = [];
-                        alertFactory.info("No existe información con los criterios de búsqueda");
+                        autocloseertFactory.info("No existe información con los criterios de búsqueda");
                     }
                 },
                 function (error) {
                     alertFactory.error("Error al obtener la información");
                 });
+        }
+    }
+
+    $scope.validateTAR = function() {
+        
+        if ($scope.selectedTar !== "") {
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -86,6 +96,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
     //Ventana Modal
     $scope.nuevaOsur = function () {
         $('#newOsurModal').appendTo('body').modal('show');
+        $scope.tarNuevo=$scope.selectedTar.nombreTar;
     }
 
     $scope.saveOsur = function () {
@@ -95,7 +106,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
         var valoresFinal = $scope.fechaFinal.split('/');
         var dateStringFinal = valoresFinal[2] + '-' + valoresFinal[1] + '-' + valoresFinal[0];
 
-        osurRepository.putNuevaOsur($scope.presupuesto, $scope.tarNuevo.idTAR, $scope.folio, dateStringInicial, dateStringFinal, $scope.solpe).then(function (result) {
+        osurRepository.putNuevaOsur($scope.presupuesto, $scope.selectedTar.idTAR, $scope.folio, dateStringInicial, dateStringFinal, $scope.solpe).then(function (result) {
                 if (result.data.length > 0) {
                     alertFactory.info("Se generó correctamente la Osur");
                     $('#newOsurModal').modal('hide');
