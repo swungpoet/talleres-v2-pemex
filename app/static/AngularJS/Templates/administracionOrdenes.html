@@ -32,6 +32,7 @@
                                         <th>Precio de la Orden</th>
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
+                                        <th>Estatus provisión</th>
                                         <!--<th>Mover a Cierre de Orden</th>-->
                                        <!--  <th>Ver Factura</th>  -->
                                         <!-- <th>Generar txt</th> -->
@@ -55,6 +56,12 @@
                                         <td>{{orden.precioOrden | currency: "$"}}</td>
                                         <td>{{orden.trabajo}}</td>
                                         <td>{{orden.descripcionLarga }}</td>
+                                        <td ng-if="orden.estatusProvision == 1">
+                                            Provisionada
+                                        </td>
+                                        <td class="rowAzul" ng-if="orden.estatusProvision == 0">
+                                            No provisionada
+                                        </td>
                                         <td>
                                             <button tooltip="Asignar ID" type="button" ng-click="getCotizacionesOrden(orden.idTrabajo)" ns-popover ns-popover-template="closeAnctip" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-info"><span class="glyphicon glyphicon-wrench"></span>
                                             </button>

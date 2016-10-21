@@ -1069,5 +1069,11 @@ var getidCita = function (idCita) {
         var today = mm + '/' + dd + '/' + yyyy;
         /*$scope.fecha = today;*/
     }
+        $scope.videoTutorialAdministrador = function () {
+            window.open($rootScope.vIpServer + '/uploads/tutorial/citas_administrador.mp4', '_blank', 'Cita');
+         }
+        $scope.videoTutorialCliente = function () {
+            window.open($rootScope.vIpServer + '/uploads/tutorial/citas_cliente.mp4', '_blank', 'Cita');
+         }
 
 });

@@ -89,9 +89,18 @@
                         <br>
                         <br>
                         
-                        <div class="table-responsive">
-                                 <div class=" row etiquetaTotales" style="margin-top: 299px !important;">Precio total: <span class="totales">{{sumatoria| currency: "$"}}</span></div>
-                        
+                        <div class="table-responsive ">
+                                <div class=" row etiquetaTotales sumRepUtilidad">
+                                     <label>  Costo total: </label> 
+                                     <span class="totales">{{sumatoriaCosto| currency: "$"}}</span> 
+                                     <label>  Precio total: </label> 
+                                     <span class="totales">{{sumatoriaPrecio| currency: "$"}}</span>
+                                     <label>  Utilidad total: </label>
+                                     <span class="totales">{{sumatoriaUtilidad| currency: "$"}}</span>
+                                </div>
+                            
+                                <br>
+                                <br>
                                 <br>
                                 <br>
                                 <br>
