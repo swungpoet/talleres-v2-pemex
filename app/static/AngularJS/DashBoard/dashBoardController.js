@@ -232,8 +232,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.ordenesCobrarD.splice(0, 5);
 
                 ordenesCobrar.data.forEach(function (sumatoria) {
-                        if (sumatoria.estatus == 'Falta factura de proveedor') sinFactura = sumatoria.total;
-                        if (sumatoria.estatus == 'Falta por facturar') esperaCopade = sumatoria.total;
+                        if (sumatoria.estatus == 'Ordenes sin COPADE') sinFactura = sumatoria.total;
+                        if (sumatoria.estatus == 'PreFactura generada') esperaCopade = sumatoria.total;
                         /*if (sumatoria.estatus == 'ESPERA COPADE') revision = sumatoria.total;*/
                         $scope.totalHorasOrdenesCobrar = $scope.totalHorasOrdenesCobrar + sumatoria.promedio;
                     }
@@ -246,7 +246,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     element: 'morris-donut-cobrar',
                     data: [
                         {
-                            label: "Falta factura de proveedor",
+                            label: "Ordenes sin COPADE",
                             value: sinFactura
                         },
                         /*{
@@ -254,7 +254,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: revision
                         },*/
                         {
-                            label: "Falta por facturar",
+                            label: "PreFactura generada",
                             value: esperaCopade
                         }
                     ],
