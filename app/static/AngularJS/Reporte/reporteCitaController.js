@@ -134,13 +134,13 @@ registrationModule.controller('reporteCitaController', function ($scope, alertFa
         if ($scope.tipoCita == 0) {
             $scope.citaSolicitada();
             $scope.getNumeroCitas();
+      //  } else if ($scope.tipoCita == 1) {
+       //     $scope.citaAgendada();
+       //     $scope.getNumeroCitas();
         } else if ($scope.tipoCita == 1) {
-            $scope.citaAgendada();
-            $scope.getNumeroCitas();
-        } else if ($scope.tipoCita == 2) {
             $scope.citaConfirmada();
             $scope.getNumeroCitas();
-        } else if ($scope.tipoCita == 3) {
+        } else if ($scope.tipoCita == 2) {
             $scope.citaCancelada();
             $scope.getNumeroCitas();
         } else {

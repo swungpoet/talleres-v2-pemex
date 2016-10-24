@@ -109,7 +109,7 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
     //Muestra el historico de ordenes sin copade
     $scope.ordensinCopade = function () {
         $scope.tipoPorCobrar = 1;
-        reportePorCobrarRepository.getHistorialPorCobrar(12, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sincopade) {
+        reportePorCobrarRepository.getHistorialPorCobrar(16, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sincopade) {
             $('.dataTableSinCopade').DataTable().destroy();
             $scope.datasincopade = sincopade.data;
             waitDrawDocument("dataTableSinCopade");
@@ -126,7 +126,7 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
     //Muestra el historico de ordenes sin factura
     $scope.ordensinFactura = function () {
         $scope.tipoPorCobrar = 0;
-        reportePorCobrarRepository.getHistorialPorCobrar(11, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sinfactura) {
+        reportePorCobrarRepository.getHistorialPorCobrar(24, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sinfactura) {
             $('.dataTableSinFactura').DataTable().destroy();
             $scope.datasinfactura = sinfactura.data;
             waitDrawDocument("dataTableSinFactura");

@@ -29,8 +29,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 datos.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'Solicitadas por Cliente') solicitadas = sumatoria.total;
-                        if (sumatoria.estatus == 'Falta confirmación de fecha') agendadas = sumatoria.total;
-                        if (sumatoria.estatus == 'Falta recepción de unidad') confirmadas = sumatoria.total;
+                        /*if (sumatoria.estatus == 'Falta recepción de unidad') agendadas = sumatoria.total;*/
+                        if (sumatoria.estatus == 'Falta cotizar orden') confirmadas = sumatoria.total;
                         if (sumatoria.estatus == 'Canceladas') canceladas = sumatoria.total;
 
                         $scope.totalHorasCitas = $scope.totalHorasCitas + sumatoria.promedio;
@@ -39,7 +39,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 );
 
-                $scope.totalCitas = solicitadas + agendadas + confirmadas + canceladas;
+                $scope.totalCitas = solicitadas + confirmadas + canceladas;
 
                 Morris.Donut({
                     element: 'morris-donut-citas',
@@ -49,20 +49,21 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: solicitadas
                         },
                         {
-                            label: "Falta confirmación de fecha",
-                            value: agendadas
-                        },
-                        {
-                            label: "Falta recepción de unidad",
+                            label: "Falta cotizar orden",
                             value: confirmadas
                         },
+                        /*{
+                            label: "Falta recepción de unidad",
+                            value: confirmadas
+                        },*/
                         {
                             label: "Canceladas",
                             value: canceladas
                         }
                     ],
                     resize: true,
-                    colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#A1F480'],
+                    colors: ['#591FCE', '#0C9CEE', '#A1F480'],
+                    /*colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#A1F480'],*/
                 }).on('click', function (i, row) {
                     location.href = '/reportecita?tipoCita=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
@@ -84,26 +85,29 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
 
                 cotizaciones.data.forEach(function (sumatoria) {
                     if (sumatoria.estatus == 'Falta autorización de diagnóstico') pendientes = sumatoria.total;
-                    if (sumatoria.estatus == 'Falta validación de diagnóstico') sinCotizacion = sumatoria.total;
+                    /*if (sumatoria.estatus == 'Falta validación de diagnóstico') sinCotizacion = sumatoria.total;*/
 
                     $scope.totalHorasCotizaciones = $scope.totalHorasCotizaciones + sumatoria.promedio;
                 });
 
 
-                $scope.totalCotizaciones = pendientes + sinCotizacion;
+                $scope.totalCotizaciones = pendientes;
 
                 Morris.Donut({
                     element: 'morris-donut-cotizaciones',
-                    data: [{
+                    data: [
+                        {
                             label: "Falta autorización de diagnóstico",
                             value: pendientes
-                },
-                        {
+                        }
+                       /* ,{
                             label: "Falta validación de diagnóstico",
                             value: sinCotizacion
-                }],
+                        }*/
+                    ],
                     resize: true,
-                    colors: ['#FF889A', '#CA4B7C', '#7A2E7A'],
+                    colors: ['#CA4B7C'],
+                    /*colors: ['#FF889A', '#CA4B7C', '#7A2E7A'],*/
                 }).on('click', function (i, row) {
                     location.href = '/reportecotizacion?tipoCotizacion=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
@@ -125,7 +129,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
     }
 
     $scope.devuelveTars = function () {
-        if($scope.zonaSelected != null){
+        if ($scope.zonaSelected != null) {
             dashBoardRepository.getTars($scope.zonaSelected).then(function (tars) {
                 if (tars.data.length > 0) {
                     $scope.tars = tars.data;
@@ -133,9 +137,8 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 }
             }, function (error) {
                 alertFactory.error('No se pudo recuperar información de las citas');
-            });   
-        }
-        else{
+            });
+        } else {
             $scope.tarSelected = null;
         }
         $scope.sumatoriaCitas();
@@ -164,7 +167,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.ordenesServicio = ordenes.data;
                 $scope.totalHorasOrdenesServicio = 0;
 
-                $scope.ordenesServicio.splice(5,2);
+                $scope.ordenesServicio.splice(5, 2);
 
                 ordenes.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'En proceso de reparación') proceso = sumatoria.total;
@@ -226,11 +229,11 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.ordenesCobrarD = ordenesCobrar.data;
                 $scope.totalHorasOrdenesCobrar = 0;
 
-                $scope.ordenesCobrarD.splice(0,5);
+                $scope.ordenesCobrarD.splice(0, 5);
 
                 ordenesCobrar.data.forEach(function (sumatoria) {
-                        if (sumatoria.estatus == 'Falta factura de proveedor') sinFactura = sumatoria.total;
-                        if (sumatoria.estatus == 'Falta por facturar') esperaCopade = sumatoria.total;                        
+                        if (sumatoria.estatus == 'Ordenes sin COPADE') sinFactura = sumatoria.total;
+                        if (sumatoria.estatus == 'PreFactura generada') esperaCopade = sumatoria.total;
                         /*if (sumatoria.estatus == 'ESPERA COPADE') revision = sumatoria.total;*/
                         $scope.totalHorasOrdenesCobrar = $scope.totalHorasOrdenesCobrar + sumatoria.promedio;
                     }
@@ -243,7 +246,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                     element: 'morris-donut-cobrar',
                     data: [
                         {
-                            label: "Falta factura de proveedor",
+                            label: "Ordenes sin COPADE",
                             value: sinFactura
                         },
                         /*{
@@ -251,7 +254,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: revision
                         },*/
                         {
-                            label: "Falta por facturar",
+                            label: "PreFactura generada",
                             value: esperaCopade
                         }
                     ],

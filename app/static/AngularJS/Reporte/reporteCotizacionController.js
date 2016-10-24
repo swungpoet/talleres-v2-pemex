@@ -58,11 +58,12 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
         $scope.idZona = 0;
         }
         if ($scope.tipoCotizacion == 0) {
-            $scope.cotizacionPendiente();
+           $scope.cotizacionPendiente();
              $scope.getNumeroCotizaciones();
-        } else if ($scope.tipoCotizacion == 1) {
-            $scope.cotizacionSinCotizar();
-             $scope.getNumeroCotizaciones();
+       //} else 
+        //  if ($scope.tipoCotizacion == 0) {
+         //   $scope.cotizacionSinCotizar();
+         //    $scope.getNumeroCotizaciones();
         } else {
             $scope.cotizacionSinCotizar();
              $scope.getNumeroCotizaciones();
