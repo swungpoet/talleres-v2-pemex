@@ -373,7 +373,6 @@ registrationModule.controller('administracionOrdenController', function ($scope,
          {
             $('.btnVerificarOrden').ready(function () {
 
-             
                    ordenServicioRepository.getEstatusUtilidad(idTrabajo).then(function (estatusUtilidad) {
                       
                         if (estatusUtilidad.data.length > 0) {
@@ -437,8 +436,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                              
 
                         }else{
-                       
-                            if (UtilidadNeta<uitilidad) {
+                
+                            if (UtilidadNeta>uitilidad) {
                           // if (montoOrden<precioOrden) {
 
                                 swal({
