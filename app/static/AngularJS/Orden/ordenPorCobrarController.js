@@ -259,16 +259,17 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
 
     //Selecciona una orden en Radio y obtiene idTrabajo
-    $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado) {
+    $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado, numeroTrabajo) {
         
         $scope.idDeTrabajo = idTrabajo;
         $scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
+        $scope.numeroDeTrabajo = numeroTrabajo;
     }
 
     //Asociamos un idtrabajo con DatosCopade
     $scope.asociarCopade = function () {
          
-        ordenServicioRepository.getOrdenServicio($scope.numeroCopade).then(function (result) {
+        ordenServicioRepository.getOrdenServicio($scope.numeroDeTrabajo).then(function (result) {
             if (result.data.length > 0) {
 
                 if(validaMontoCapadeOrden($scope.montoOrdenSeleccionado)){
