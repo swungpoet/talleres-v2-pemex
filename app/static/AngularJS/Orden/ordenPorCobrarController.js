@@ -288,7 +288,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                                 },
                                 function (isConfirm) {
                                     if (isConfirm) {
-                                        $scope.trabajoCobrado($scope.trabajos, $scope.idDatosDeCopade);
+                                        $scope.trabajoCobrado($scope.idDeTrabajo, $scope.idDatosDeCopade);
                                         ordenPorCobrarRepository.putMueveCopade($scope.idDeTrabajo, $scope.idDatosDeCopade).then(function (resp) {
                                             if (resp.data > 0) {
                                                 alertFactory.success('La copade se copio correctamente');
@@ -363,7 +363,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     var validaMontoCapadeOrden = function(montoOrdenSeleccionado){
         if($scope.monto != null && $scope.monto != '' && $scope.monto > 0){
             var resultado = montoOrdenSeleccionado >= $scope.monto ? (montoOrdenSeleccionado - $scope.monto) : ($scope.monto - montoOrdenSeleccionado);
-            if(resultado >= 0 && resultado <= 1)
+            if(resultado >= 0 && resultado <= 10)
                 return true;
             else
                 return false;
