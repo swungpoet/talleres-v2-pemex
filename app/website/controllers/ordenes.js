@@ -102,86 +102,86 @@ Orden.prototype.get_generaTxtFactura = function (req, res, next) {
         object.result = result;
         if (result.length > 0) {
             // if (result[0].tipoOrdenServicio == 'SER') {
-                var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
-                var files = fs.readdirSync(directorioFactura);
-                var fecha, numFactura, uuid, nombreXml, totalFactura;
+            var directorioFactura = dirname + req.query.idTrabajo + '/documentos/factura';
+            var files = fs.readdirSync(directorioFactura);
+            var fecha, numFactura, uuid, nombreXml, totalFactura;
 
-                var existeFacturaXML = files.some(checkExistsXML);
-                if (existeFacturaXML) {
-                    files.forEach(function (file) {
-                        var extension = obtenerExtArchivo(file);
-                        if (extension == '.xml' || extension == '.XML') {
-                            if (file.includes('Factura')) {
-                                var parser = new xml2js.Parser();
-                                fs.readFile(directorioFactura + '/' + file, function (err, data) {
-                                    parser.parseString(data, function (err, result) {
-                                        fecha = result['cfdi:Comprobante'].$['fecha'];
-                                        if ((result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') &&
-                                            (result['cfdi:Comprobante'].$['folio'] == undefined ||
-                                                result['cfdi:Comprobante'].$['folio'] == ''
-                                            )) {
-                                            numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                        } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
-                                            numFactura = result['cfdi:Comprobante'].$['folio'];
-                                        } else {
-                                            numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
-                                        }
-                                        uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+            var existeFacturaXML = files.some(checkExistsXML);
+            if (existeFacturaXML) {
+                files.forEach(function (file) {
+                    var extension = obtenerExtArchivo(file);
+                    if (extension == '.xml' || extension == '.XML') {
+                        if (file.includes('Factura')) {
+                            var parser = new xml2js.Parser();
+                            fs.readFile(directorioFactura + '/' + file, function (err, data) {
+                                parser.parseString(data, function (err, result) {
+                                    fecha = result['cfdi:Comprobante'].$['fecha'];
+                                    if ((result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') &&
+                                        (result['cfdi:Comprobante'].$['folio'] == undefined ||
+                                            result['cfdi:Comprobante'].$['folio'] == ''
+                                        )) {
+                                        numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                    } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
+                                        numFactura = result['cfdi:Comprobante'].$['folio'];
+                                    } else {
+                                        numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                                    }
+                                    uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
 
-                                        totalFactura = result['cfdi:Comprobante'].$['total'];
-                                        var nombreXml = file;
+                                    totalFactura = result['cfdi:Comprobante'].$['total'];
+                                    var nombreXml = file;
 
-                                        console.log('Fecha: ' + fecha);
-                                        console.log('Factura: ' + numFactura);
-                                        console.log('UUID: ' + uuid);
-                                        console.log('Nombre Xml: ' + nombreXml);
-                                        console.log('=========================')
+                                    console.log('Fecha: ' + fecha);
+                                    console.log('Factura: ' + numFactura);
+                                    console.log('UUID: ' + uuid);
+                                    console.log('Nombre Xml: ' + nombreXml);
+                                    console.log('=========================')
 
-                                        var paramsSER = [{
-                                                name: 'idTrabajo',
-                                                value: req.query.idTrabajo,
-                                                type: self.model.types.INT
+                                    var paramsSER = [{
+                                            name: 'idTrabajo',
+                                            value: req.query.idTrabajo,
+                                            type: self.model.types.INT
                                                 },
-                                            {
-                                                name: 'fecha',
-                                                value: fecha,
-                                                type: self.model.types.STRING
+                                        {
+                                            name: 'fecha',
+                                            value: fecha,
+                                            type: self.model.types.STRING
                                                 },
-                                            {
-                                                name: 'numFactura',
-                                                value: numFactura,
-                                                type: self.model.types.STRING
+                                        {
+                                            name: 'numFactura',
+                                            value: numFactura,
+                                            type: self.model.types.STRING
                                                 },
-                                            {
-                                                name: 'UUID',
-                                                value: uuid,
-                                                type: self.model.types.STRING
+                                        {
+                                            name: 'UUID',
+                                            value: uuid,
+                                            type: self.model.types.STRING
                                                 },
-                                            {
-                                                name: 'XML',
-                                                value: nombreXml,
-                                                type: self.model.types.STRING
+                                        {
+                                            name: 'XML',
+                                            value: nombreXml,
+                                            type: self.model.types.STRING
                                             },
-                                            {
-                                                name: 'totalFactura',
-                                                value: totalFactura,
-                                                type: self.model.types.DECIMAL
+                                        {
+                                            name: 'totalFactura',
+                                            value: totalFactura,
+                                            type: self.model.types.DECIMAL
                                             }
                                         ];
-                                        getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsSER);
-                                    });
+                                    getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsSER);
                                 });
-                            }
+                            });
                         }
-                    });
-                } else {
-                    res.end('');
-                }
-                console.log(result[0].tipoOrdenServicio);
-/*            } else if (result[0].tipoOrdenServicio == 'REF') {
-                getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsTipoOrden);
-                console.log(result[0].tipoOrdenServicio);
-            }*/
+                    }
+                });
+            } else {
+                res.end('');
+            }
+            console.log(result[0].tipoOrdenServicio);
+            /*            } else if (result[0].tipoOrdenServicio == 'REF') {
+                            getDatosFactura(res, self, 'SEL_FACTURA_TXT_SP', paramsTipoOrden);
+                            console.log(result[0].tipoOrdenServicio);
+                        }*/
         } else {
             res.end('');
         }
@@ -256,8 +256,8 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
     var nombreArchivos = [];
     nombreArchivos = req.body.archivos;  
     var fechaRecepcionCopade = req.body.fechaRecepcionCopade; 
-    var subTotal,total,moneda,cantidad,descripcion,importeConcepto,unidad,valorUnitario,totalImpuestosRetenidos,totalImpuestosTrasladados,impuesto,importeTraslado,tasa;
-    var contrato,ordenSurtimiento,numeroEstimacion,numeroAcreedor,gestor,finiquito,posicionap,numeroCopade,ejercicio,xmlCopade,i;
+    var subTotal, total, moneda, cantidad, descripcion, importeConcepto, unidad, valorUnitario, totalImpuestosRetenidos, totalImpuestosTrasladados, impuesto, importeTraslado, tasa;
+    var contrato, ordenSurtimiento, numeroEstimacion, numeroAcreedor, gestor, finiquito, posicionap, numeroCopade, ejercicio, xmlCopade, i;
     var objCopade = [];
     var paramValuesCopade = [];
 
@@ -265,8 +265,7 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
     nombreArchivos.forEach(function (file, i) {    
         var extension = obtenerExtArchivo(file);    
         if (extension == '.xml' || extension == '.XML') {      
-            var parser = new xml2js.Parser();
-                  
+            var parser = new xml2js.Parser();      
             fs.readFile(dirCopades + file, 'utf8', function (err, data) {        
                 parser.parseString(data, function (err, lector) {          
                     subTotal = lector['PreFactura']['Comprobante'][0].$['subtotal'];    
@@ -285,51 +284,57 @@ Orden.prototype.post_generaDatosCopade = function (req, res, next) {  //Objeto 
 
                     contrato = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:CONTRATO'][0];          
                     ordenSurtimiento = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:O_SURTIMIENTO'][0]; 
-                    numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0]; 
+
+                    try {
+                        numeroEstimacion = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ESTIMACION'][0]; 
+                    } catch (error) {
+                        console.log('No hay número de estimación');
+                        console.log(error)
+                        numeroEstimacion = '';
+                    }
+
                     numeroAcreedor = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:N_ACREEDOR'][0];          
                     gestor = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:C_GESTOR'][0]; 
                     finiquito = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:FINIQUITO'][0]; 
                     posicionap = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:POSICIONAP'][0];          
                     numeroCopade = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:ENTRADA'][0]; 
                     ejercicio = lector['PreFactura']['cfdi:Addenda'][0]['pm:Addenda_Pemex'][0]['pm:EJERCICIO'][0]; 
-                    xmlCopade = data; 
-                                   
+                    xmlCopade = data;                
                     objCopade = {            
                         subTotal: subTotal,
-                        total:total,
-                        moneda:moneda,
-                        cantidad:cantidad,
-                        descripcion:descripcion,
-                        importeConcepto:importeConcepto,
-                        unidad:unidad,
-                        valorUnitario:valorUnitario,
-                        totalImpuestosRetenidos:totalImpuestosRetenidos,
-                        totalImpuestosTrasladados:totalImpuestosTrasladados,
-                        impuesto:impuesto,
-                        importeTraslado:importeTraslado,
-                        tasa:tasa,
-                        contrato:contrato,
+                        total: total,
+                        moneda: moneda,
+                        cantidad: cantidad,
+                        descripcion: descripcion,
+                        importeConcepto: importeConcepto,
+                        unidad: unidad,
+                        valorUnitario: valorUnitario,
+                        totalImpuestosRetenidos: totalImpuestosRetenidos,
+                        totalImpuestosTrasladados: totalImpuestosTrasladados,
+                        impuesto: impuesto,
+                        importeTraslado: importeTraslado,
+                        tasa: tasa,
+                        contrato: contrato,
                         ordenSurtimiento: ordenSurtimiento,
                         numeroEstimacion: numeroEstimacion,
-                        numeroAcreedor:numeroAcreedor,
-                        gestor:gestor,
-                        finiquito:finiquito,
-                        posicionap:posicionap,
-                        numeroCopade:numeroCopade,
-                        ejercicio:ejercicio,
+                        numeroAcreedor: numeroAcreedor,
+                        gestor: gestor,
+                        finiquito: finiquito,
+                        posicionap: posicionap,
+                        numeroCopade: numeroCopade,
+                        ejercicio: ejercicio,
                         fechaRecepcionCopade: fechaRecepcionCopade,
                         xmlCopade: xmlCopade          
                     };                    
 
-                    paramValuesCopade.push(objCopade);   
-                        
-                      // if ((nombreArchivos.length - i) == 1) {            
-                        object.error = err;            
-                        object.result = paramValuesCopade;            
-                        self.view.expositor(res, object);
-                        nombreArchivos = [];
-                        paramValuesCopade = [];          
-                       //} 
+                    paramValuesCopade.push(objCopade);       
+                    // if ((nombreArchivos.length - i) == 1) {            
+                    object.error = err;            
+                    object.result = paramValuesCopade;            
+                    self.view.expositor(res, object);
+                    nombreArchivos = [];
+                    paramValuesCopade = [];          
+                    //} 
                 });      
             });    
         }  
@@ -422,7 +427,7 @@ Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) 
             name: 'idUsuario',
             value: req.body.idUsuario,
             type: self.model.types.DECIMAL
-        }    ]; 
+        }]; 
 
     this.model.post('INS_DATOS_APROBACION_UTILIDAD_SP', params, function (error, result) {
         self.view.expositor(res, {
@@ -451,26 +456,26 @@ Orden.prototype.get_getestatusutilidad = function (req, res, next) {
 
 //obtiene parametro de %
 Orden.prototype.get_getparametro = function (req, res, next) {
-    var self = this;
-    var params = [{
-        name: 'idTipo',
-        value: req.query.idTipo,
-        type: self.model.types.INT
+        var self = this;
+        var params = [{
+                name: 'idTipo',
+                value: req.query.idTipo,
+                type: self.model.types.INT
     },
-    {
-        name: 'nombre',
-        value: req.query.nombre,
-        type: self.model.types.STRING
+            {
+                name: 'nombre',
+                value: req.query.nombre,
+                type: self.model.types.STRING
     }];
 
-    this.model.query('[SEL_PARAMETROS_SP]', params, function (error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
+        this.model.query('[SEL_PARAMETROS_SP]', params, function (error, result) {
+            self.view.expositor(res, {
+                error: error,
+                result: result
+            });
         });
-    });
-}
-//Inserta los datos de aprobacion de utilidad  respuesta en db y actualiza estatus
+    }
+    //Inserta los datos de aprobacion de utilidad  respuesta en db y actualiza estatus
 Orden.prototype.post_insertaDatosAprobacionUtilidadRespuesta = function (req, res, next) { 
     //Objeto que almacena la respuesta
     var object = {};
@@ -531,9 +536,9 @@ Orden.prototype.post_mueveCierreOrden = function (req, res, next) {
     var self = this;
 
     var params = [{
-            name: 'idTrabajo',
-            value: req.body.idTrabajo,
-            type: self.model.types.INT
+        name: 'idTrabajo',
+        value: req.body.idTrabajo,
+        type: self.model.types.INT
         }];
 
     this.model.post('UPD_TRABAJO_CIERRE_ORDEN_SP', params, function (error, result) {
@@ -758,16 +763,16 @@ Orden.prototype.post_renombraFacturaTemporal = function (req, res, next) {
     var params = {};
     //Referencia a la clase para callback
     var self = this;
-    
+
     var idCotizacion = req.body.idCotizacion;
     var idTrabajo = req.body.idTrabajo;
 
-    var directorioFactura = dirname + idTrabajo +'/'+ idCotizacion + '/documentos/factura';
+    var directorioFactura = dirname + idTrabajo + '/' + idCotizacion + '/documentos/factura';
 
     var files = fs.readdirSync(directorioFactura);
 
-    files.forEach(function (file) {            
-                fs.renameSync(directorioFactura + '/' + file, directorioFactura + '/' + file.replace('temp',''));
+    files.forEach(function (file) {
+        fs.renameSync(directorioFactura + '/' + file, directorioFactura + '/' + file.replace('temp', ''));
     });
     //Callback
     object.error = null;
@@ -838,134 +843,134 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
     var self = this;
     //Objeto que envía los parámetros
     var paramsTipoOrden = [{
-        name: 'idTrabajo',
-        value: req.query.idTrabajo,
-        type: self.model.types.INT
+            name: 'idTrabajo',
+            value: req.query.idTrabajo,
+            type: self.model.types.INT
         },
         {
-        name: 'idCotizacion',
-        value: req.query.idCotizacion,
-        type: self.model.types.INT
+            name: 'idCotizacion',
+            value: req.query.idCotizacion,
+            type: self.model.types.INT
         },
         {
-        name: 'idUsuario',
-        value: req.query.idUsuario,
-        type: self.model.types.INT
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
         }];
 
-                //LQMA add 19092016, si idEstatus = 12, se lee el archivo temporal
-                var numeroCotizacion = req.query.numeroCotizacion;
-               
-                var aux = 0;
+    //LQMA add 19092016, si idEstatus = 12, se lee el archivo temporal
+    var numeroCotizacion = req.query.numeroCotizacion;
 
-                var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion + '/documentos/factura';
-                var files = fs.readdirSync(directorioFactura);
-                var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
-                var paramsFactura=[];
+    var aux = 0;
 
-                var existeFacturaXML = files.some(checkExistsXML);
-                if (existeFacturaXML) {
-                    files.forEach(function (file) {
-                        var extension = obtenerExtArchivo(file);
-                        if (extension == '.xml' || extension == '.XML') {
-                            if (file.includes('Factura')) {
-                              posicion = file.indexOf('temp')
-                                if (posicion != -1){
-                                //LQMA ADD 19092016 leer del archivo temporal para validar 
-                                //if(idEstatus == 12) 
-                                //if (file.includes('Factura_' + numeroCotizacion + 'temp.XML' ||  'Factura_' + numeroCotizacion + 'temp.xml')){
-                                 //      file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
-                                 //   }
-                                var parser = new xml2js.Parser();
-                                fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
-                                    parser.parseString(data, function (err, result) {
-                                        fechaFactura = result['cfdi:Comprobante'].$['fecha'];
-                                        if ((result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') &&
-                                            (result['cfdi:Comprobante'].$['folio'] == undefined ||
-                                                result['cfdi:Comprobante'].$['folio'] == ''
-                                            )) {
-                                            numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                        } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
-                                            numFactura = result['cfdi:Comprobante'].$['folio'];
-                                        } else {
-                                            numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
-                                        }
-                                        uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                        total = result['cfdi:Comprobante'].$['total'];
-                                        subtotal = result['cfdi:Comprobante'].$['subTotal'];
-                                        xmlFactura = data;
-                                        //var xmlFactura = file;
+    var directorioFactura = dirname + req.query.idTrabajo + '/' + req.query.idCotizacion + '/documentos/factura';
+    var files = fs.readdirSync(directorioFactura);
+    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
+    var paramsFactura = [];
 
-                                        console.log('Fecha: ' + fechaFactura);
-                                        console.log('Factura: ' + numFactura);
-                                        console.log('UUID: ' + uuid);
-                                        console.log('=========================')
+    var existeFacturaXML = files.some(checkExistsXML);
+    if (existeFacturaXML) {
+        files.forEach(function (file) {
+            var extension = obtenerExtArchivo(file);
+            if (extension == '.xml' || extension == '.XML') {
+                if (file.includes('Factura')) {
+                    posicion = file.indexOf('temp')
+                    if (posicion != -1) {
+                        //LQMA ADD 19092016 leer del archivo temporal para validar 
+                        //if(idEstatus == 12) 
+                        //if (file.includes('Factura_' + numeroCotizacion + 'temp.XML' ||  'Factura_' + numeroCotizacion + 'temp.xml')){
+                        //      file = file.indexOf('temp') >= 0?file.replace('.XML','temp.XML'):file.replace('.xml','temp.xml');
+                        //   }
+                        var parser = new xml2js.Parser();
+                        fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
+                            parser.parseString(data, function (err, result) {
+                                fechaFactura = result['cfdi:Comprobante'].$['fecha'];
+                                if ((result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') &&
+                                    (result['cfdi:Comprobante'].$['folio'] == undefined ||
+                                        result['cfdi:Comprobante'].$['folio'] == ''
+                                    )) {
+                                    numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
+                                    numFactura = result['cfdi:Comprobante'].$['folio'];
+                                } else {
+                                    numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                                }
+                                uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                total = result['cfdi:Comprobante'].$['total'];
+                                subtotal = result['cfdi:Comprobante'].$['subTotal'];
+                                xmlFactura = data;
+                                //var xmlFactura = file;
 
-                                        paramsFactura = [{
-                                                name: 'idCotizacion',
-                                                value: req.query.idCotizacion,
-                                                type: self.model.types.INT
+                                console.log('Fecha: ' + fechaFactura);
+                                console.log('Factura: ' + numFactura);
+                                console.log('UUID: ' + uuid);
+                                console.log('=========================')
+
+                                paramsFactura = [{
+                                        name: 'idCotizacion',
+                                        value: req.query.idCotizacion,
+                                        type: self.model.types.INT
                                                 },
-                                                {
-                                                name: 'numFactura',
-                                                value: numFactura,
-                                                type: self.model.types.STRING
+                                    {
+                                        name: 'numFactura',
+                                        value: numFactura,
+                                        type: self.model.types.STRING
                                                 },
-                                                {
-                                                name: 'UUID',
-                                                value: uuid,
-                                                type: self.model.types.STRING
+                                    {
+                                        name: 'UUID',
+                                        value: uuid,
+                                        type: self.model.types.STRING
                                                 },
-                                                {
-                                                name: 'fechaFactura',
-                                                value: fechaFactura,
-                                                type: self.model.types.STRING
+                                    {
+                                        name: 'fechaFactura',
+                                        value: fechaFactura,
+                                        type: self.model.types.STRING
                                                 },
-                                                {
-                                                name: 'total',
-                                                value: total,
-                                                type: self.model.types.DECIMAL
+                                    {
+                                        name: 'total',
+                                        value: total,
+                                        type: self.model.types.DECIMAL
                                                  },
-                                                 {
-                                                name: 'subtotal',
-                                                value: subtotal,
-                                                type: self.model.types.DECIMAL
+                                    {
+                                        name: 'subtotal',
+                                        value: subtotal,
+                                        type: self.model.types.DECIMAL
                                                  },
-                                                 {
-                                                name: 'idUsuario',
-                                                value: req.query.idUsuario,
-                                                type: self.model.types.INT
+                                    {
+                                        name: 'idUsuario',
+                                        value: req.query.idUsuario,
+                                        type: self.model.types.INT
                                                 },
-                                                {
-                                                name: 'xmlFactura',
-                                                value: xmlFactura,
-                                                type: self.model.types.STRING
+                                    {
+                                        name: 'xmlFactura',
+                                        value: xmlFactura,
+                                        type: self.model.types.STRING
                                                  }
                                         ];
 
-                                        //LQMA add 19092016    
-                                        if(aux == 0)
-                                           getDatosFactura2(res, self, paramsFactura);
+                                //LQMA add 19092016    
+                                if (aux == 0)
+                                    getDatosFactura2(res, self, paramsFactura);
 
-                                        aux = aux + 1;//LQMA add 19092016
+                                aux = aux + 1; //LQMA add 19092016
 
-                                    });
-                                });
-                            }
-                        }
+                            });
+                        });
                     }
-                    });
-
-                } else {
-                    res.end('');
                 }
+            }
+        });
+
+    } else {
+        res.end('');
+    }
 };
 
 function getDatosFactura2(res, self, paramsFactura) {
-              var object = {};
-                 object.result = paramsFactura;
-                 self.view.expositor(res, object);
-        }
+    var object = {};
+    object.result = paramsFactura;
+    self.view.expositor(res, object);
+}
 
 /*
 function getDatosFactura2(res, self, stored, paramsFactura) {
@@ -990,55 +995,55 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
     var self = this;
     //Objeto que envía los parámetros
     var paramsTipoOrden = [{
-        name: 'idTrabajo',
-        value: req.query.idTrabajo,
-        type: self.model.types.INT
+            name: 'idTrabajo',
+            value: req.query.idTrabajo,
+            type: self.model.types.INT
         },
         {
-        name: 'idCotizacion',
-        value: req.query.idCotizacion,
-        type: self.model.types.INT
+            name: 'idCotizacion',
+            value: req.query.idCotizacion,
+            type: self.model.types.INT
         },
         {
-        name: 'idOpcion',
-        value: req.query.idOpcion,
-        type: self.model.types.INT
+            name: 'idOpcion',
+            value: req.query.idOpcion,
+            type: self.model.types.INT
         }];
 
-                //LQMA add 20092016 
-                var idOpcion = req.query.idOpcion; //1:borrar temporales; 2:borrar originales
+    //LQMA add 20092016 
+    var idOpcion = req.query.idOpcion; //1:borrar temporales; 2:borrar originales
 
-                var directorioFactura = dirname + req.query.idTrabajo +'/'+ req.query.idCotizacion+ '/documentos/factura';
-                var files = fs.readdirSync(directorioFactura);
-                var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
+    var directorioFactura = dirname + req.query.idTrabajo + '/' + req.query.idCotizacion + '/documentos/factura';
+    var files = fs.readdirSync(directorioFactura);
+    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
 
-                var existeFacturaXML = files.some(checkExistsXML);
-                if (existeFacturaXML) {
-                    files.forEach(function (file) {
-                        var extension = obtenerExtArchivo(file);
-                        if (extension == '.xml' || extension == '.XML' || extension == '.pdf' || extension == '.PDF') {
-                            console.log(idOpcion);
-                            if(idOpcion == 1){ //LQMA add 20092016 borra temporaleas
-                                if(file.indexOf('temp') >= 0) // LQMA 20092016 ADD para que solo borre los temporales
-                                    fs.unlink(directorioFactura + '/' + file, function(err, result){
-                                        if(err) return 
-                                    });
-                            }else
-                                if(file.indexOf('temp') == -1) // LQMA 20092016 ADD para que borre originales
-                                    fs.unlink(directorioFactura + '/' + file, function(err, result){
-                                        if(err) return 
-                                    });
-                        }
+    var existeFacturaXML = files.some(checkExistsXML);
+    if (existeFacturaXML) {
+        files.forEach(function (file) {
+            var extension = obtenerExtArchivo(file);
+            if (extension == '.xml' || extension == '.XML' || extension == '.pdf' || extension == '.PDF') {
+                console.log(idOpcion);
+                if (idOpcion == 1) { //LQMA add 20092016 borra temporaleas
+                    if (file.indexOf('temp') >= 0) // LQMA 20092016 ADD para que solo borre los temporales
+                        fs.unlink(directorioFactura + '/' + file, function (err, result) {
+                        if (err) return
                     });
-                        self.model.query('SEL_COTIZACION_FACTURA_SP', paramsTipoOrden, function (error, result) {
-                            self.view.expositor(res, {
-                                error: error,
-                                result: result
-                            });
-                        });
-                } else {
-                    res.end('');
-                }
+                } else
+                if (file.indexOf('temp') == -1) // LQMA 20092016 ADD para que borre originales
+                    fs.unlink(directorioFactura + '/' + file, function (err, result) {
+                    if (err) return
+                });
+            }
+        });
+        self.model.query('SEL_COTIZACION_FACTURA_SP', paramsTipoOrden, function (error, result) {
+            self.view.expositor(res, {
+                error: error,
+                result: result
+            });
+        });
+    } else {
+        res.end('');
+    }
 };
 
 //En cuentra la ubicacion de la factura donde se guardo
@@ -1064,23 +1069,23 @@ Orden.prototype.post_encuentraFactura = function (req, res, next) {
     var nombrePdfMinusculas = 'Factura_' + numeroCotizacion + '.pdf';
     var nombrePdfMayusculas = 'Factura_' + numeroCotizacion + '.PDF';
 
-    var rutaAnterior = dirname + idTrabajo +'/documentos/factura/';
-     var rutaActual = dirname + idTrabajo + '/' +idCotizacion+'/documentos/factura/';
+    var rutaAnterior = dirname + idTrabajo + '/documentos/factura/';
+    var rutaActual = dirname + idTrabajo + '/' + idCotizacion + '/documentos/factura/';
 
     if (fs.existsSync(rutaActual + nombreXmlMinusculas || rutaActual + nombreXmlMayusculas || rutaActual + nombrePdfMinusculas || rutaActual + nombrePdfMayusculas)) {
-    //Callback
-    object.error = null;
-    object.result = 1;
-    }else if (fs.existsSync(rutaAnterior + nombreXmlMinuscula || rutaAnterior + nombreXmlMayuscula || rutaAnterior + nombrePdfMinuscula || rutaAnterior + nombrePdfMayuscula)) {
-    //Callback
-    object.error = null;
-    object.result = 2;
-    }else{
-   //Callback
-    object.error = null;
-    object.result = 3;
+        //Callback
+        object.error = null;
+        object.result = 1;
+    } else if (fs.existsSync(rutaAnterior + nombreXmlMinuscula || rutaAnterior + nombreXmlMayuscula || rutaAnterior + nombrePdfMinuscula || rutaAnterior + nombrePdfMayuscula)) {
+        //Callback
+        object.error = null;
+        object.result = 2;
+    } else {
+        //Callback
+        object.error = null;
+        object.result = 3;
     }
-                self.view.expositor(res, object);
+    self.view.expositor(res, object);
 
 
 }
@@ -1088,37 +1093,37 @@ Orden.prototype.post_encuentraFactura = function (req, res, next) {
 
 //Obtiene los tipos de cotizaciones
 Orden.prototype.get_obtieneCotizacion = function (req, res, next) {
-    var self = this;
-    var params = [];
+        var self = this;
+        var params = [];
 
-    this.model.query('SEL_TIPO_COTIZACION_SP', params, function (error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
+        this.model.query('SEL_TIPO_COTIZACION_SP', params, function (error, result) {
+            self.view.expositor(res, {
+                error: error,
+                result: result
+            });
         });
-    });
-}
-//Obtiene los tipos de cotizaciones
+    }
+    //Obtiene los tipos de cotizaciones
 Orden.prototype.get_obtieneMaestro = function (req, res, next) {
-    //Objeto que almacena la respuesta
-    var object = {};
-    //Referencia a la clase para callback
-    var self = this;
-    //Objeto que envía los parámetros
-    var params = [{
-        name: 'idCotizacion',
-        value: req.query.idCotizacion,
-        type: self.model.types.INT
+        //Objeto que almacena la respuesta
+        var object = {};
+        //Referencia a la clase para callback
+        var self = this;
+        //Objeto que envía los parámetros
+        var params = [{
+            name: 'idCotizacion',
+            value: req.query.idCotizacion,
+            type: self.model.types.INT
         }];
 
-    this.model.query('SEL_COTIZACION_MAESTRO_SP', params, function (error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
+        this.model.query('SEL_COTIZACION_MAESTRO_SP', params, function (error, result) {
+            self.view.expositor(res, {
+                error: error,
+                result: result
+            });
         });
-    });
-}
-//Actualiza el precio de una partida desde la orden de servicio
+    }
+    //Actualiza el precio de una partida desde la orden de servicio
 Orden.prototype.post_actualizaCotizacionMaestro = function (req, res, next) {
     //Objeto que almacena la respuesta
     var object = {};
