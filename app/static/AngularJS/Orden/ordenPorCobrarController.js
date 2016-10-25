@@ -3,6 +3,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
     $scope.stories= [];
+    $scope.checkedTrabajos=[];
 
     $scope.init = function () {
         Dropzone.autoDiscover = false;
@@ -259,19 +260,67 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
 
     //Selecciona una orden en Radio y obtiene idTrabajo
-    $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado) {
-        
-        $scope.idDeTrabajo = idTrabajo;
-        $scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
+    $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado, numeroTrabajo) {
+
+         var trabajo = false;
+        if ($scope.checkedTrabajos.length>0) {
+
+            for (i = 0; i < $scope.checkedTrabajos.length; i++) {
+                if ($scope.checkedTrabajos[i].idTrabajo == idTrabajo) {
+                    trabajo = true;
+
+                     if ($scope.checkedTrabajos[i].check ) {
+                        $scope.checkedTrabajos[i].check= false;
+                    }else{
+                        $scope.checkedTrabajos[i].check= true;
+                    } 
+                }
+         
+            } 
+
+            if (!trabajo) {
+                 obj = new Object();
+                obj.idTrabajo= idTrabajo;
+                obj.numeroTrabajo= numeroTrabajo;
+                obj.montoOrdenSeleccionado= montoOrdenSeleccionado;
+                obj.check = true;
+                $scope.checkedTrabajos.push(obj); 
+            }
+
+        }else{
+            obj = new Object();
+            obj.idTrabajo= idTrabajo;
+            obj.numeroTrabajo= numeroTrabajo;
+            obj.montoOrdenSeleccionado= montoOrdenSeleccionado;
+            obj.check = true;
+            $scope.checkedTrabajos.push(obj); 
+        }
+          
+
+       // $scope.idDeTrabajo = idTrabajo;
+       // $scope.montoOrdenSeleccionado = montoOrdenSeleccionado;
+
+
     }
 
     //Asociamos un idtrabajo con DatosCopade
     $scope.asociarCopade = function () {
-         
-        ordenServicioRepository.getOrdenServicio($scope.numeroCopade).then(function (result) {
+      
+       var idTrabajos='';
+       var numeroTrbajos='';
+       var montoOrdenSeleccionadoSuma=0;
+        for (i = 0; i < $scope.checkedTrabajos.length; i++) {
+            if ($scope.checkedTrabajos[i].check ) {
+                idTrabajos+=$scope.checkedTrabajos[i].idTrabajo+',';
+                numeroTrbajos+=$scope.checkedTrabajos[i].numeroTrabajo+',';
+                montoOrdenSeleccionadoSuma+=parseFloat($scope.checkedTrabajos[i].montoOrdenSeleccionado);
+            }
+        };
+
+        ordenServicioRepository.getOrdenServicio(numeroTrbajos).then(function (result) {
             if (result.data.length > 0) {
 
-                if(validaMontoCapadeOrden($scope.montoOrdenSeleccionado)){
+                if(validaMontoCapadeOrden(montoOrdenSeleccionadoSuma)){
                     if ($scope.idDeTrabajo != '') {
                         $('.btnTerminarTrabajo').ready(function () {
                             swal({
@@ -287,7 +336,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                                 },
                                 function (isConfirm) {
                                     if (isConfirm) {
-                                        $scope.trabajoCobrado($scope.trabajos, $scope.idDatosDeCopade);
+                                        $scope.trabajoCobrado(idTrabajos, $scope.idDatosDeCopade);
                                         ordenPorCobrarRepository.putMueveCopade($scope.idDeTrabajo, $scope.idDatosDeCopade).then(function (resp) {
                                             if (resp.data > 0) {
                                                 alertFactory.success('La copade se copio correctamente');
@@ -327,7 +376,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
          }, function (error) {
             alertFactory.error("Error al verificar la orden");
-        });     
+        });   
 
 
         
