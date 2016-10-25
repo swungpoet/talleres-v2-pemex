@@ -115,4 +115,68 @@ Osur.prototype.post_nuevaosur = function (req, res, next) {
     });
 }
 
+//Inserta nueva Osur
+Osur.prototype.post_osuraplicacion = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idTAR',
+            value: req.body.idTAR,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idOsur',
+            value: req.body.idOsur,
+            type: self.model.types.STRING 
+        },
+        {
+            name: 'monto',
+            value: req.body.monto,
+            type: self.model.types.STRING
+        }];
+
+
+    this.model.post('UPD_OSUR_APLICACION_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+//Obtiene los datos de Osur por TAR
+Osur.prototype.get_fondos = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+        name: 'idTAR',
+        value: req.query.idTAR,
+        type: self.model.types.INT
+        },
+        {
+        name: 'idOsur',
+        value: req.query.idOsur,
+        type: self.model.types.STRING
+        }];
+
+    this.model.query('SEL_OSUR_APLICACION_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
 module.exports = Osur;

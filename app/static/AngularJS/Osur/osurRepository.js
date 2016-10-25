@@ -41,5 +41,34 @@ registrationModule.factory('osurRepository', function ($http) {
                 }      
             });    
         },
+        getOsurAplicacion: function (idTAR,idOsur,monto) {             
+            return $http({        
+                url: osurUrl + 'osuraplicacion',
+                        method: "POST",
+                         data: {
+                           idTAR: idTAR,
+                           idOsur: idOsur,
+                           monto: monto
+                        },
+
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
+        getFondos: function (idTAR, idOsur) {
+          
+            return $http({
+                url: osurUrl + 'fondos',
+                method: "GET",
+                params: {
+                    idTAR: idTAR,
+                    idOsur: idOsur
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 });

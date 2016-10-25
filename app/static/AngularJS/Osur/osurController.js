@@ -93,10 +93,55 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
         format: "dd/mm/yyyy"
     });
 
+    $scope.change_presupuesto = function (){
+        
+        $scope.presupuestoSumaTotal= parseFloat($scope.presupuesto) + parseFloat($scope.presupuestoSuma);
+
+    }
+
     //Ventana Modal
     $scope.nuevaOsur = function () {
         $('#newOsurModal').appendTo('body').modal('show');
         $scope.tarNuevo=$scope.selectedTar.nombreTar;
+        $scope.presupuestoSuma=0;
+        $scope.presupuestoSumaTotal=0;
+        $scope.presupuesto=0;
+        var indice= 0;
+
+        $scope.sumaOsur=[];
+                         
+        for(var i=0;i<$scope.datosOsur.length;i++){
+        
+            if ($scope.datosOsur[i].estatus === 'Utilizado'  && $scope.datosOsur[i].idAplicacion === null ) {
+
+                obj = new Object();
+                obj.idOsur= $scope.datosOsur[i].idOsur;
+                obj.folio = $scope.datosOsur[i].folio;
+                obj.saldo = $scope.datosOsur[i].saldo;
+                obj.estatus = $scope.datosOsur[i].estatus;
+                obj.indice = indice;
+                obj.class_suma = 'glyphicon glyphicon-plus';
+
+                $scope.sumaOsur.push(obj);
+                indice +=1;
+            }
+            
+        };
+    }
+
+
+    $scope.sumaPresupuesto = function (indice){
+        
+        if ($scope.sumaOsur[indice].class_suma === 'glyphicon glyphicon-plus') {
+            $scope.presupuestoSuma+= $scope.sumaOsur[indice].saldo;
+            $scope.sumaOsur[indice].class_suma ='glyphicon glyphicon-minus'
+        }else{
+            $scope.presupuestoSuma-= $scope.sumaOsur[indice].saldo;
+            $scope.sumaOsur[indice].class_suma ='glyphicon glyphicon-plus'
+        }
+
+         $scope.presupuestoSumaTotal= parseFloat($scope.presupuesto) + parseFloat($scope.presupuestoSuma);
+
     }
 
     $scope.saveOsur = function () {
@@ -105,14 +150,40 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
 
         var valoresFinal = $scope.fechaFinal.split('/');
         var dateStringFinal = valoresFinal[2] + '-' + valoresFinal[1] + '-' + valoresFinal[0];
+         $scope.aplicacion=[];
 
-        osurRepository.putNuevaOsur($scope.presupuesto, $scope.selectedTar.idTAR, $scope.folio, dateStringInicial, dateStringFinal, $scope.solpe).then(function (result) {
+        for(var i=0;i<$scope.sumaOsur.length;i++){
+            if ($scope.sumaOsur[i].class_suma ==='glyphicon glyphicon-minus') {
+               
+                obj = new Object();
+                obj.idAplicacion = $scope.sumaOsur[i].idOsur;
+                obj.presupuestoAplicacion =$scope.sumaOsur[i].saldo;
+                $scope.aplicacion.push(obj);
+                
+            };
+        };
+
+        osurRepository.putNuevaOsur($scope.presupuestoSumaTotal, $scope.selectedTar.idTAR, $scope.folio, dateStringInicial, dateStringFinal, $scope.solpe ).then(function (result) {
                 if (result.data.length > 0) {
                     alertFactory.info("Se generó correctamente la Osur");
                     $('#newOsurModal').modal('hide');
                     if ($scope.selectedTar != null) {
                         $scope.GetMonto();
                     }
+
+                        for(var i=0;i<$scope.aplicacion.length;i++){
+                            osurRepository.getOsurAplicacion( $scope.selectedTar.idTAR, $scope.aplicacion[i].idAplicacion.toString(), $scope.aplicacion[i].presupuestoAplicacion.toString() ).then(function (result) {
+                                if (result.data.length > 0) {
+                                    alertFactory.info("Se generó correctamente la Osur");
+                                   
+                                } 
+                            },
+                            function (error) {
+                                alertFactory.error("Error al procesar la información");
+                            });
+                        };
+
+                    
                 } else {
                     $scope.datosOsur = [];
                     alertFactory.info("No existe información con los criterios de búsqueda");
@@ -122,4 +193,34 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                 alertFactory.error("Error al procesar la información");
             });
     }
+
+    $scope.verAplicacion = function (info) {
+     
+        osurRepository.getFondos($scope.selectedTar.idTAR, info.idOsur.toString()).then(function (result) {
+            if (result.data.length > 0) {
+                
+                $scope.fondos=result.data;
+                $('#fondosOsurModal').appendTo('body').modal('show');
+                
+            } else {
+                swal({
+                    title: "información",
+                    text: "No se encuentra ningún  fondo asociado.",
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonColor: "#67BF11",
+                    confirmButtonText: "Aceptar",
+                    closeOnConfirm: true
+                });
+            }
+        },
+        function (error) {
+            alertFactory.error("Error al obtener la información");
+        });
+        
+    }
 });
+
+
+
+

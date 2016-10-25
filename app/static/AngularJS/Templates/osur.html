@@ -90,8 +90,10 @@
                             <th>Fecha Final</th>
                             <th>Presupuesto</th>
                             <th>Utilizado</th>
-                            <th>Saldo</th>
+                            <th>+ Fondos</th>
                             <th>Estatus</th>
+                            <th>Saldo</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -103,8 +105,10 @@
                             <td>{{info.fechaFinal | date:'dd-MM-yyyy HH:mm'}} </td>
                             <td>{{info.presupuesto | currency: "$"}}</td>
                             <td>{{info.utilizado | currency: "$"}}</td>
-                            <td>{{info.saldo | currency: "$"}}</td>
+                            <td><button class="btn btn-info" type="button" ng-click="verAplicacion(info)" ><span class="glyphicon glyphicon-eye-open"></span></button></td>
                             <td>{{info.estatus}}</td>
+                            <td>{{info.saldo | currency: "$"}}</td>
+                            
                         </tr>
                     </tbody>
                 </table>
@@ -147,7 +151,7 @@
                         <label class="col-sm-2 control-label">Presupuesto</label>
                         <div class="col-sm-7">
                             <div class="input-group m-b"><span class="input-group-addon">$</span>
-                                <input type="text" class="form-control" type="number" ng-model="presupuesto">
+                                <input type="text" class="form-control" type="number" ng-model="presupuesto" ng-change="change_presupuesto()">
                             </div>
                         </div>
                     </div>
@@ -169,6 +173,43 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--div class="row col-md-12 table-responsive"-->
+                        <table class="table table-bordered table-striped table-hover dataSumaOsur" ng-show="sumaOsur.length>0">
+                            <thead>
+                                <tr>
+                                    <th>No. OSUR</th>
+                                    <th>Saldo</th>
+                                    <th>Estatus</th>
+                                    <th>Operación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="suma in sumaOsur">
+                                    <td>{{suma.folio}}</td>
+                                    <td>{{suma.saldo | currency: "$"}}</td>
+                                    <td>{{suma.estatus}}</td>
+                                    <td>
+                                        <button class="btn btn-info" type="button" ng-click="sumaPresupuesto(suma.indice)" ><span class="{{suma.class_suma}}"></span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <footer style="float: right;"  ng-show="sumaOsur.length>0">
+                                <div>
+                                    <label>Presupuesto: {{presupuesto | currency: "$"}} </label>
+                                       
+                                </div>
+                                <div>
+                                    <label>Presupuesto adicional: {{presupuestoSuma | currency: "$"}} </label>
+                                       
+                                </div>
+                                <div>
+                                    <label>Presupuesto total: {{presupuestoSumaTotal | currency: "$"}} </label>
+                                       
+                                </div>
+                            </footer>        
+                        </table>
+                    <!--/div-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cancelar</button>
@@ -177,3 +218,40 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal inmodal lg" id="fondosOsurModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated flipInY">
+                <div class="modal-header">
+                    <h4 class="modal-title">Fondos de OSUR</h4>
+                </div>
+                <br>
+                <div class="modal-body col-md-12">
+                    
+
+                    <!--div class="row col-md-12 table-responsive"-->
+                        <table class="table table-bordered table-striped table-hover" >
+                            <thead>
+                                <tr>
+                                    <th>No. OSUR</th>
+                                    <th>Folio</th>
+                                    <th>Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fondo in fondos">
+                                    <td>{{fondo.idAplicacion}}</td>
+                                    <td>{{fondo.folio | currency: "$"}}</td>
+                                    <td>{{fondo.presupuestoAplicacion}}</td>
+                                </tr>
+                            </tbody>        
+                        </table>
+                    <!--/div-->
+            </div>
+            <div class="modal-footer">
+                <button  type="button" class="btn btn-success" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    
