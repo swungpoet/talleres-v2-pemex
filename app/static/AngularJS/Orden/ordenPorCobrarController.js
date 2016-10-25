@@ -4,6 +4,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.userData = localStorageService.get('userData');
     $scope.stories= [];
     $scope.checkedTrabajos=[];
+    $scope.fechaRecepcionCopade = localStorageService.get("fechaRecepcion");
 
     $scope.init = function () {
         Dropzone.autoDiscover = false;
@@ -16,7 +17,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         if ($scope.userData.idTipoUsuario == 1) {
             $scope.getCopades();
         }
-        $scope.limpiaFecha();
+        //$scope.limpiaFecha();
         $scope.cleanDatos();
         $scope.getOrdenesPorCobrar(); 
     }
@@ -69,7 +70,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             if (result.data.length > 0) {
                 $scope.facturas = result.data;
                 for(var i=0;i<result.data.length;i++){
-                    sumatoria += parseFloat(result.data[i].montoOrden);
+                    sumatoria += parseFloat(result.data[i].total);
                 };
                 $scope.sumatoriaPrefactura=sumatoria;
                 waitDrawDocument("dataTablePreFacturas");
@@ -108,6 +109,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         //Guardamos la fecha capturable de la copade
     $scope.saveFecha = function () {
         if ($scope.fechaRecepcionCopade != '') {
+            localStorageService.set("fechaRecepcion", $scope.fechaRecepcionCopade);
             $('#finalizarTrabajoModal').modal('hide');
         } else {
             alertFactory.info('Debe ingresar una fecha');
@@ -153,7 +155,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                                     ordenPorCobrarRepository.putRenombraCopade(nombreCopades, resp.data).then(function (respuesta) {
                                         if (respuesta.data > 0) {
                                             alertFactory.success('Copade cargada satisfactoriamente');
-                                            $scope.limpiaFecha();
+                                            //$scope.limpiaFecha();
                                             $scope.cleanDatos();
                                             $scope.getCopades();
                                         }
