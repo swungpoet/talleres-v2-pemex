@@ -269,6 +269,18 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getOrden: function (orden) {
+            return $http({
+                url: ordenUrl + 'getservicio/',
+                method: "GET",
+                params: {
+                    orden: orden
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });
