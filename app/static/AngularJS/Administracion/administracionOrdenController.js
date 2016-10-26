@@ -8,9 +8,9 @@
 // -- Fecha:
 // -- =============================================
 
-registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository ) {
-        $scope.idTipoCotizacion=0;
-        $scope.ideTaller=0;
+registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository) {
+    $scope.idTipoCotizacion = 0;
+    $scope.ideTaller = 0;
     //init del controller
     $scope.init = function () {
         $scope.tipoCotizacion();
@@ -18,7 +18,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         Dropzone.autoDiscover = false;
         $scope.dzOptionsArchivos = uploadRepository.getDzOptions('text/xml,application/pdf', 2);
         //realiza la búsqueda si viene la página órdenes
-        if(localStorageService.get('actualizaCosto') != null){
+        if (localStorageService.get('actualizaCosto') != null) {
             $scope.numeroTrabajo = localStorageService.get('actualizaCosto');
             localStorageService.remove('actualizaCosto');
             $scope.getAdmonOrdenes($scope.numeroTrabajo);
@@ -42,27 +42,27 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
     //visualiza las facturas de las cotizaciones
     $scope.verFactura = function (cotizacion) {
-        window.open($rootScope.vIpServer + '/uploads/files/' + cotizacion.idTrabajo +'/'+ cotizacion.idCotizacion + '/documentos/factura/Factura_'+cotizacion.numeroCotizacion+'.xml', '_blank', 'Factura');
-        window.open($rootScope.vIpServer + '/uploads/files/' + cotizacion.idTrabajo +'/'+ cotizacion.idCotizacion + '/documentos/factura/Factura_'+cotizacion.numeroCotizacion+'.pdf', '_blank', 'Factura');
+        window.open($rootScope.vIpServer + '/uploads/files/' + cotizacion.idTrabajo + '/' + cotizacion.idCotizacion + '/documentos/factura/Factura_' + cotizacion.numeroCotizacion + '.xml', '_blank', 'Factura');
+        window.open($rootScope.vIpServer + '/uploads/files/' + cotizacion.idTrabajo + '/' + cotizacion.idCotizacion + '/documentos/factura/Factura_' + cotizacion.numeroCotizacion + '.pdf', '_blank', 'Factura');
     }
 
-        //visualizacion de facturas ADOLFO 15092016
-  /*  $scope.verFactura = function (idCotizacion, idTrabajo, numeroCotizacion) {
-        trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
-            if (resp.data == 1) {
-                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
-                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
-            } else if (resp.data == 2) {
-                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
-                window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
-            } else {
-                alertFactory.info("No se encontraron Facturas");
-            }
-        }, function (error) {
-            alertFactory.error('Factura no se pudo obtener');
-        });
-    }  */
- 
+    //visualizacion de facturas ADOLFO 15092016
+    /*  $scope.verFactura = function (idCotizacion, idTrabajo, numeroCotizacion) {
+          trabajoRepository.encuentraFactura(idCotizacion, idTrabajo, numeroCotizacion).then(function (resp) {
+              if (resp.data == 1) {
+                  window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.xml', '_blank', 'Factura');
+                  window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/' + idCotizacion + '/documentos/factura/Factura_' + numeroCotizacion + '.pdf', '_blank', 'Factura');
+              } else if (resp.data == 2) {
+                  window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.xml', '_blank', 'Factura');
+                  window.open($rootScope.vIpServer + '/uploads/files/' + idTrabajo + '/documentos/factura/Factura.pdf', '_blank', 'Factura');
+              } else {
+                  alertFactory.info("No se encontraron Facturas");
+              }
+          }, function (error) {
+              alertFactory.error('Factura no se pudo obtener');
+          });
+      }  */
+
     // Cierre de Orden
     $scope.cierreTrabajo = function (idTrabajo) {
         ordenServicioRepository.cierreOrden(idTrabajo).then(function (admonOrden) {
@@ -100,7 +100,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("PreFactura generada correctamente!");
-                window.open($rootScope.vIpServer + '/facturas/factura-' + numeroTrabajo + '.txt', '_blank', 'Factura'); 
+                window.open($rootScope.vIpServer + '/facturas/factura-' + numeroTrabajo + '.txt', '_blank', 'Factura');
             } else {
                 alertFactory.info('No existe la factura.xml');
             }
@@ -109,13 +109,13 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         });
     }
 
-     //genera el txt de la factura
+    //genera el txt de la factura
     $scope.actualizaProveedor = function () {
- 
+
         ordenServicioRepository.updateCotMaestro($scope.idCotizacion, $scope.idTipoCotizacion, $scope.ideTaller).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("IdProveedor insertado correctamente!");
-                 $('#editaCMaestro').appendTo('body').modal('hide');
+                $('#editaCMaestro').appendTo('body').modal('hide');
             } else {
                 alertFactory.info('No se pudo realizar el proceso');
             }
@@ -126,21 +126,21 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     }
 
     $scope.modalEditaCM = function (idCotizacion) {
-      $('#editaCMaestro').appendTo("body").modal('show');
-      ordenServicioRepository.recuperaCotizacion(idCotizacion).then(function (result) {
-           $scope.proveedor=result.data;
-           $scope.ideTaller=$scope.proveedor[0].idTaller;
-           $scope.idTipoCotizacion=$scope.proveedor[0].idTipoCotizacion;
-        }, function (error) {
-            alertFactory.error("Error al actualizar el IdProveedor");
-        });
+            $('#editaCMaestro').appendTo("body").modal('show');
+            ordenServicioRepository.recuperaCotizacion(idCotizacion).then(function (result) {
+                $scope.proveedor = result.data;
+                $scope.ideTaller = $scope.proveedor[0].idTaller;
+                $scope.idTipoCotizacion = $scope.proveedor[0].idTipoCotizacion;
+            }, function (error) {
+                alertFactory.error("Error al actualizar el IdProveedor");
+            });
 
-        $scope.idCotizacion = idCotizacion;
-    }
-      //obtiene el tipo de Cotizacion
+            $scope.idCotizacion = idCotizacion;
+        }
+        //obtiene el tipo de Cotizacion
     $scope.tipoCotizacion = function () {
         ordenServicioRepository.tipoCotizacion().then(function (result) {
-           $scope.tipoCotizacion=result.data;
+            $scope.tipoCotizacion = result.data;
         }, function (error) {
             alertFactory.error("Error al actualizar el IdProveedor");
         });
@@ -151,7 +151,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         $scope.idCotizacionFactura = idCotizacion;
         $scope.numeroCotizacion = numeroCotizacion;
     }
-    
+
     //obtienes las cotizaciones de la orden
     $scope.getCotizacionesOrden = function (idTrabajo) {
         ordenAnticipoRepository.getCotizacionesOrden(idTrabajo).then(function (ordenAnticipo) {
@@ -163,7 +163,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             alertFactory.error("Error al obtener las cotizaciones de la orden");
         })
     }
-    
+
     //LQMA 13092016 Obtiene el popopo que corresponde a su cotizacion por trabajo
     $scope.getCotizacionesOrdenAprobado = function (idTrabajo) {
         trabajoRepository.getCotizacionesOrdenAprobado(idTrabajo).then(function (ordenAnticipo) {
@@ -175,16 +175,16 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             alertFactory.error("Error al obtener las cotizaciones de la orden");
         })
     }
-    
+
     //muestra el modal para la carga de archivos
     $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
         $scope.idTrabajo = objOrden.idTrabajo;
         //LQMA add 19092016
         //$scope.idEstatusPorCerrar = objOrden.estatusTrabajo;
-        
-        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != undefined ? 
-            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion : 
-            $scope.idCotizacion = 0;  
+
+        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != undefined ?
+            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion :
+            $scope.idCotizacion = 0;
 
         $scope.idCategoria = 2;
         $scope.idNombreEspecial = idNombreEspecial;
@@ -201,7 +201,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         }
         $('#modalCargaArchivos').appendTo('body').modal('show');
     }
-    
+
     $scope.dzCallbacks = {
         'addedfile': function (file) {
             $scope.newFile = file;
@@ -220,7 +220,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                 var allSuccess = file.every(checkAllSuccess);
                 if (allSuccess) {
                     if ($scope.idNombreEspecial == 3) {
-                        trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario, $scope.numeroCotizacion).then(function (result) {  //LQMA add idEstatusPorCerrar
+                        trabajoRepository.getGuardaFactura($scope.idTrabajo, $scope.idCotizacionFactura, $scope.userData.idUsuario, $scope.numeroCotizacion).then(function (result) { //LQMA add idEstatusPorCerrar
                             if (result.data.length > 0) {
                                 $scope.lecturaFactura = result.data;
                                 $scope.totalxml = $scope.lecturaFactura[4].value;
@@ -237,27 +237,27 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                         if (sumatoria.name == 'xmlFactura') $scope.xmlFacturaFac = sumatoria.value;
                                     });
                                     $scope.guardaDatosFactura($scope.idCotizacionFac, $scope.numFacturaFac, $scope.UUIDFac, $scope.fechaFacturaFac, $scope.totalFac, $scope.subtotalFac, $scope.idUsuarioFac, $scope.xmlFacturaFac);
-                                        /*if($scope.idEstatusTrabajo==11){
-                                            upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
-                                        }else{*/
-                                                setTimeout(function () {
-                                                    $scope.dzMethods.removeAllFiles();
-                                                    $('#modalCargaArchivos').appendTo('body').modal('hide');
-                                                }, 1000);
-                                                alertFactory.success("Factura Cargada Correctamente");
-                                            //}
-                                        //LQMA ADD 20092016, borra solo temporales: idOpcion = 2
-                                        $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,2);
-                                        setTimeout(function () {
-                                             $scope.renombraFacturaTemporal($scope.idTrabajo, $scope.idCotizacionFactura);
-                                         },500);
+                                    /*if($scope.idEstatusTrabajo==11){
+                                        upadateEstatusTrabajo($scope.idTrabajo, $scope.idNombreEspecial);
+                                    }else{*/
+                                    setTimeout(function () {
+                                        $scope.dzMethods.removeAllFiles();
+                                        $('#modalCargaArchivos').appendTo('body').modal('hide');
+                                    }, 1000);
+                                    alertFactory.success("Factura Cargada Correctamente");
+                                    //}
+                                    //LQMA ADD 20092016, borra solo temporales: idOpcion = 2
+                                    $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura, 2);
+                                    setTimeout(function () {
+                                        $scope.renombraFacturaTemporal($scope.idTrabajo, $scope.idCotizacionFactura);
+                                    }, 500);
 
 
                                 } else {
-                                        //if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
-                                            //LQMA ADD 20092016, borra solo temporales: idOpcion = 1
-                                            $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura,1); 
-                                         //   }
+                                    //if($scope.idEstatusTrabajo==11 || $scope.idEstatusPorCerrar == 12){
+                                    //LQMA ADD 20092016, borra solo temporales: idOpcion = 1
+                                    $scope.eliminaFactura($scope.idTrabajo, $scope.idCotizacionFactura, 1);
+                                    //   }
                                     setTimeout(function () {
                                         $scope.dzMethods.removeAllFiles();
                                         $('#modalCargaArchivos').appendTo('body').modal('hide');
@@ -268,8 +268,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                         }, function (error) {
                             alertFactory.error("Error al cargar la prefactura");
                         });
-                    }
-                    else if ($scope.anticipo == 1) {
+                    } else if ($scope.anticipo == 1) {
                         setTimeout(function () {
                             $scope.dzMethods.removeAllFiles();
                             $('#modalCargaArchivos').appendTo('body').modal('hide');
@@ -299,8 +298,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             }
         },
     };
-    
-     //valida si todos son success
+
+    //valida si todos son success
     function checkAllSuccess(file, index, array) {
         return file.status === 'success';
     }
@@ -321,21 +320,21 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             alertFactory.error("Error al procesar la informacion Temporal");
         })
     }
-    
+
     //  guardamos datos de la factura
     $scope.guardaDatosFactura = function (idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura) {
-            trabajoRepository.insertaFactura(idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura).then(function (result) {
-                if (result.data.length > 0) {
-                    alertFactory.success("Registro Exitoso");
-                }
-            }, function (error) {
-                alertFactory.error("Error al generar la prefactura");
-            });
+        trabajoRepository.insertaFactura(idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura).then(function (result) {
+            if (result.data.length > 0) {
+                alertFactory.success("Registro Exitoso");
+            }
+        }, function (error) {
+            alertFactory.error("Error al generar la prefactura");
+        });
     }
-    
+
     //eliminamos la factura de la ruta si no coincide el costo
-    $scope.eliminaFactura = function (idTrabajo, idCotizacion,idOpcion) {
-        trabajoRepository.removeFactura(idTrabajo, idCotizacion,idOpcion).then(function (orden) {
+    $scope.eliminaFactura = function (idTrabajo, idCotizacion, idOpcion) {
+        trabajoRepository.removeFactura(idTrabajo, idCotizacion, idOpcion).then(function (orden) {
             if (orden.data.length > 0) {
                 $scope.cotizacionesOrden = orden.data;
                 //alertFactory.info(""); 
@@ -344,7 +343,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             alertFactory.error("Error al procesar la informacion");
         })
     }
-    
+
     //obtiene el idCotizacion
     $scope.getCotizacion = function (idCotizacion, Total, existe, numeroCotizacion, idEstatus) {
         $scope.idCotizacionFactura = idCotizacion;
@@ -353,179 +352,210 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         $scope.numeroCotizacion = numeroCotizacion;
         $scope.idEstatusTrabajo = idEstatus;
     }
-    
+
     $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden, numeroTrabajo) {
         //LQMA 14092016
-        var uitilidad = Math.abs(precioOrden - montoOrden); 
+        var uitilidad = Math.abs(precioOrden - montoOrden);
         var UtilidadNeta = 0;
         //var UtilidadNeta = (precioOrden * 0.05)+1;
 
-        ordenServicioRepository.getParametro(1,'MV').then(function (parametro) {
-           
-        if (parametro.data.length > 0) {
-                 UtilidadNeta = (precioOrden * parametro.data[0].valor)+1;
+        ordenServicioRepository.getParametro(1, 'MV').then(function (parametro) {
 
-        if(sinProveedor > 0)
-          {
-            swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
-          }
-          else
-         {
-            $('.btnVerificarOrden').ready(function () {
+            if (parametro.data.length > 0) {
+                UtilidadNeta = (precioOrden * parametro.data[0].valor) + 1;
 
-                   ordenServicioRepository.getEstatusUtilidad(idTrabajo).then(function (estatusUtilidad) {
-                      
-                        if (estatusUtilidad.data.length > 0) {
+                if (sinProveedor > 0) {
+                    swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
+                } else {
+                    $('.btnVerificarOrden').ready(function () {
 
-                            if(estatusUtilidad.data[0].estatus==1){
+                        ordenServicioRepository.getEstatusUtilidad(idTrabajo).then(function (estatusUtilidad) {
 
-                                swal({
-                                    title: "Advertencia",
-                                    text: "La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.",
-                                    type: "warning",
-                                    showCancelButton: false,
-                                    confirmButtonColor: "#67BF11",
-                                    confirmButtonText: "Aceptar",
-                                    closeOnConfirm: true
-                                });
+                            if (estatusUtilidad.data.length > 0) {
 
-                            }else{
-                                  ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
-                                    if (result.data.length > 0) {
-                                         swal({
+                                if (estatusUtilidad.data[0].estatus == 1) {
+
+                                    swal({
+                                        title: "Advertencia",
+                                        text: "La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.",
+                                        type: "warning",
+                                        showCancelButton: false,
+                                        confirmButtonColor: "#67BF11",
+                                        confirmButtonText: "Aceptar",
+                                        closeOnConfirm: true
+                                    });
+
+                                } else {
+                                    ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
+                                        if (result.data.length > 0) {
+                                            swal({
+                                                title: "Advertencia",
+                                                text: "La compra ya fue procesada para esta orden.",
+                                                type: "warning",
+                                                showCancelButton: false,
+                                                confirmButtonColor: "#67BF11",
+                                                confirmButtonText: "Aceptar",
+                                                closeOnConfirm: true
+                                            });
+                                        } else {
+
+                                            swal({
+                                                    title: "Advertencia",
+                                                    text: "¿Está seguro de procesar la compra?",
+                                                    type: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#67BF11",
+                                                    confirmButtonText: "Si",
+                                                    cancelButtonText: "No",
+                                                    closeOnConfirm: false,
+                                                    closeOnCancel: true
+                                                },
+                                                function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                                swal("Proceso Realizado!");
+                                                                //location.href = '/ordenesporcobrar';
+                                                            }
+                                                        }, function (error) {
+                                                            alertFactory.error("Error al verificar la orden");
+                                                        });
+                                                        swal("Proceso Realizado!");
+                                                    }
+                                                });
+
+                                        }
+                                    }, function (error) {
+                                        alertFactory.error("Error al verificar la orden");
+                                    });
+                                }
+
+
+                            } else {
+
+                                if (UtilidadNeta > uitilidad) {
+                                    // if (montoOrden<precioOrden) {
+
+                                    swal({
                                             title: "Advertencia",
-                                            text: "La compra ya fue procesada para esta orden.",
+                                            text: "La uitilidad debe ser minima de 5%.",
                                             type: "warning",
                                             showCancelButton: false,
                                             confirmButtonColor: "#67BF11",
                                             confirmButtonText: "Aceptar",
-                                            closeOnConfirm: true
-                                        });
-                                    }else{
-
-                                         swal({
-                                            title: "Advertencia",
-                                            text: "¿Está seguro de procesar la compra?",
-                                            type: "warning",
-                                            showCancelButton: true,
-                                            confirmButtonColor: "#67BF11",
-                                            confirmButtonText: "Si",
-                                            cancelButtonText: "No",
-                                            closeOnConfirm: false,
-                                            closeOnCancel: true
+                                            closeOnConfirm: false
                                         },
                                         function (isConfirm) {
                                             if (isConfirm) {
-                                                trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                                    if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                ordenServicioRepository.putAprobacionUtilidad(idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
+                                                    if (aprobacionUtilidad.data[0].id > 0) {
                                                         swal("Proceso Realizado!");
-                                                        //location.href = '/ordenesporcobrar';
                                                     }
                                                 }, function (error) {
-                                                    alertFactory.error("Error al verificar la orden");
+                                                    alertFactory.error("Error al cargar la orden");
                                                 });
-                                                swal("Proceso Realizado!");
-                                            } 
-                                        });
-
-                                    }
-                                }, function (error) {
-                                    alertFactory.error("Error al verificar la orden");
-                                }); 
-                            }
-                             
-
-                        }else{
-                
-                            if (UtilidadNeta>uitilidad) {
-                          // if (montoOrden<precioOrden) {
-
-                                swal({
-                                    title: "Advertencia",
-                                    text: "La uitilidad debe ser minima de 5%.",
-                                    type: "warning",
-                                    showCancelButton: false,
-                                    confirmButtonColor: "#67BF11",
-                                    confirmButtonText: "Aceptar",
-                                    closeOnConfirm: false
-                                },
-                                function (isConfirm) {
-                                    if (isConfirm) {
-                                       ordenServicioRepository.putAprobacionUtilidad(idTrabajo,$scope.userData.idUsuario).then(function (aprobacionUtilidad) {
-                                            if (aprobacionUtilidad.data[0].id > 0) {
-                                                swal("Proceso Realizado!");
-                                            }
-                                        }, function (error) {
-                                            alertFactory.error("Error al cargar la orden");
-                                        });
-                                    }                     
-                                  });
-                                
-                           }else{
-
-                                 ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
-                                 
-                                    if (result.data.length > 0) {
-                                         swal({
-                                            title: "Advertencia",
-                                            text: "La compra ya fue procesada para esta orden.",
-                                            type: "warning",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#67BF11",
-                                            confirmButtonText: "Aceptar",
-                                            closeOnConfirm: true
-                                        });
-                                    }else{
-
-                                         swal({
-                                            title: "Advertencia",
-                                            text: "¿Está seguro de procesar la compra?",
-                                            type: "warning",
-                                            showCancelButton: true,
-                                            confirmButtonColor: "#67BF11",
-                                            confirmButtonText: "Si",
-                                            cancelButtonText: "No",
-                                            closeOnConfirm: false,
-                                            closeOnCancel: true
-                                        },
-                                        function (isConfirm) {
-                                            if (isConfirm) {
-                                                trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                                    if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                                                        swal("Proceso Realizado!");
-                                                        //location.href = '/ordenesporcobrar';
-                                                    }
-                                                }, function (error) {
-                                                    alertFactory.error("Error al verificar la orden");
-                                                });
-                                                swal("Proceso Realizado!");
                                             }
                                         });
 
-                                    }
-                                }, function (error) {
-                                    alertFactory.error("Error al verificar la orden");
-                                }); 
+                                } else {
 
-                               
-                              
+                                    ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
+
+                                        if (result.data.length > 0) {
+                                            swal({
+                                                title: "Advertencia",
+                                                text: "La compra ya fue procesada para esta orden.",
+                                                type: "warning",
+                                                showCancelButton: false,
+                                                confirmButtonColor: "#67BF11",
+                                                confirmButtonText: "Aceptar",
+                                                closeOnConfirm: true
+                                            });
+                                        } else {
+
+                                            swal({
+                                                    title: "Advertencia",
+                                                    text: "¿Está seguro de procesar la compra?",
+                                                    type: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#67BF11",
+                                                    confirmButtonText: "Si",
+                                                    cancelButtonText: "No",
+                                                    closeOnConfirm: false,
+                                                    closeOnCancel: true
+                                                },
+                                                function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                                swal("Proceso Realizado!");
+                                                                //location.href = '/ordenesporcobrar';
+                                                            }
+                                                        }, function (error) {
+                                                            alertFactory.error("Error al verificar la orden");
+                                                        });
+                                                        swal("Proceso Realizado!");
+                                                    }
+                                                });
+
+                                        }
+                                    }, function (error) {
+                                        alertFactory.error("Error al verificar la orden");
+                                    });
+
+
+
+                                }
                             }
-                        }
-                     
-                            
-                
-               
-                }, function (error) {
-                        alertFactory.error("Error al cargar la orden");
+
+
+
+
+                        }, function (error) {
+                            alertFactory.error("Error al cargar la orden");
+                        });
+
                     });
-              
-             });
-           }      
-          }
+                }
+            }
         }, function (error) {
             alertFactory.error("Error en la consulta");
         });
 
-         
+
+    }
+
+
+    $scope.cancelarOrden = function (idCita, numeroTrabajo) {
+        swal({
+                title: "Advertencia",
+                text: "¿Está seguro en eliminar la orden: " + numeroTrabajo + " ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#67BF11",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    trabajoRepository.postEliminaOrden(idCita).then(function (ordenEliminada) {
+                        if (ordenEliminada.data[0].id > 0) {
+                            alertFactory.success('Orden eliminada correctamente');
+                            setTimeout(function () {
+                                location.href = "/administracionordenes";
+                            }, 1500);
+                        } else {
+                            alertFactory.info('La orden no se pudo eliminar');
+                        }
+                    }, function (error) {
+                        console.log('No se pudo eliminar la orden: ' + error);
+                        alertFactory.error('La orden no se pudo eliminar');
+                    });
+                }
+            });
+
+
     }
 });

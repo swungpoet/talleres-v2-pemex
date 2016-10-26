@@ -394,6 +394,18 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        postEliminaOrden: function (idCita) {
+            return $http({
+                url: trabajoUrl + 'eliminaOrden/',
+                method: "POST",
+                data: {
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });
