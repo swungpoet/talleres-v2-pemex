@@ -82,8 +82,18 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
-    $scope.verOrdenes= function(){
-         $('#facturasOrden').appendTo("body").modal('show');
+    $scope.verOrdenes= function(idDatosCopade){
+    $('.dataTableTrabajosCobrados').DataTable().destroy();
+    $('#facturasOrden').appendTo("body").modal('show');
+        ordenPorCobrarRepository.getTrbajoCobrado(idDatosCopade).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.trabajosCobrados = result.data;
+                waitDrawDocument("dataTableTrabajosCobrados");
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener trabajos por cobrar");
+        });
+
     }
 
     $scope.generaTXT = function (idTrabajo, numeroTrabajo) {

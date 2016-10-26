@@ -52,7 +52,7 @@ Orden.prototype.post_trabajocobrado = function (req, res, next) {
     var params = [{
             name: 'idTrabajo',
             value: req.body.idTrabajo,
-            type: self.model.types.INT
+            type: self.model.types.STRING
         },
         {
             name: 'idDatosCopade',
@@ -1201,4 +1201,25 @@ Orden.prototype.get_enviarnotificacionutilidad = function (req, res, next) {
         });
     });
 }
+
+    //Obtiene los tipos de cotizaciones
+Orden.prototype.get_trbajoCobrado = function (req, res, next) {
+        //Objeto que almacena la respuesta
+        var object = {};
+        //Referencia a la clase para callback
+        var self = this;
+        //Objeto que envía los parámetros
+        var params = [{
+            name: 'idDatosCopade',
+            value: req.query.idDatosCopade,
+            type: self.model.types.INT
+        }];
+
+        this.model.query('SEL_TRABAJOS_COBRADOS_ORDEN_SP', params, function (error, result) {
+            self.view.expositor(res, {
+                error: error,
+                result: result
+            });
+        });
+    }
 module.exports = Orden;

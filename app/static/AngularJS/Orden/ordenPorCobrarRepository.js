@@ -130,7 +130,19 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 url: ordenUrl + 'ordenesverificadas',
                 method: "GET"
             });
-        }
+        },
+        getTrbajoCobrado: function (idDatosCopade) {
+            return $http({
+                url: ordenUrl + 'trbajoCobrado',
+                method: "GET",
+                params: {
+                    idDatosCopade: idDatosCopade
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
 
     };
 });
