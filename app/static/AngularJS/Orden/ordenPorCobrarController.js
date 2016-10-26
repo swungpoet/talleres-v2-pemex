@@ -82,6 +82,10 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
+    $scope.verOrdenes= function(){
+         $('#facturasOrden').appendTo("body").modal('show');
+    }
+
     $scope.generaTXT = function (idTrabajo, numeroTrabajo) {
         ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
             if (result.data.length > 0) {
@@ -260,7 +264,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
         });
     }
-
+       
     //Selecciona una orden en Radio y obtiene idTrabajo
     $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado, numeroTrabajo) {
 
@@ -307,7 +311,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //Asociamos un idtrabajo con DatosCopade
     $scope.asociarCopade = function () {
-      
+
        var idTrabajos='';
        var numeroTrbajos='';
        var montoOrdenSeleccionadoSuma=0;
