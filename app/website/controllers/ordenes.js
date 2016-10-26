@@ -1175,4 +1175,30 @@ Orden.prototype.post_actualizaCotizacionMaestro = function (req, res, next) {
         self.view.expositor(res, object);
     });
 }
+
+//realiza el envío de email para nuevo Osur
+Orden.prototype.get_enviarnotificacionutilidad = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //Referencia a la clase para callback
+    var self = this;
+    var storeName = 'SEL_NOTIFICACION_MARGEN_UTILIDAD_SP';
+    //Obtención de valores de los parámetros del request
+    var params = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.INT
+    }];
+
+   // req.query.tipoCorreo == 4 ? storeName = 'SEL_NOTIFICACION_CITA_SIN_TALLER_SP' : storeName = 'SEL_NOTIFICACION_CITA_SP';
+
+    this.model.query(storeName, params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 module.exports = Orden;

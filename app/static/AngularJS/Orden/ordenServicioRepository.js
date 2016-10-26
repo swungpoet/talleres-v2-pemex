@@ -281,6 +281,18 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
+        },
+         enviarNotificacionUtilidad: function (idTAR) {
+            return $http({
+                url: ordenUrl + 'enviarnotificacionutilidad/',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
