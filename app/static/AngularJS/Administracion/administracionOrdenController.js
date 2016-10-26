@@ -355,6 +355,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
     $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden, numeroTrabajo) {
         //LQMA 14092016
+        $scope.idTrabajo=idTrabajo;
         var uitilidad = Math.abs(precioOrden - montoOrden);
         var UtilidadNeta = 0;
         //var UtilidadNeta = (precioOrden * 0.05)+1;
@@ -434,28 +435,23 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                             } else {
 
                                 if (UtilidadNeta > uitilidad) {
-                                    // if (montoOrden<precioOrden) {
+                                    //INSERTA UTILIDAD
+                                    ordenServicioRepository.putAprobacionUtilidad(idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
+                                        if (aprobacionUtilidad.data[0].id > 0) {
+                                           //CORREO
+                                             ordenServicioRepository.enviarNotificacionUtilidad(idTrabajo).then(function (mail) {
 
-                                    swal({
-                                            title: "Advertencia",
-                                            text: "La uitilidad debe ser minima de 5%.",
-                                            type: "warning",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#67BF11",
-                                            confirmButtonText: "Aceptar",
-                                            closeOnConfirm: false
-                                        },
-                                        function (isConfirm) {
-                                            if (isConfirm) {
-                                                ordenServicioRepository.putAprobacionUtilidad(idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
-                                                    if (aprobacionUtilidad.data[0].id > 0) {
-                                                        swal("Proceso Realizado!");
-                                                    }
-                                                }, function (error) {
-                                                    alertFactory.error("Error al cargar la orden");
-                                                });
-                                            }
-                                        });
+                                                if (mail.data[0].enviado == 1) {
+                                                    //token
+                                                    $('#insertarToken').appendTo("body").modal('show');
+                                                }
+                                            }, function (error) {
+                                                alertFactory.error("Error al enviar mail");
+                                            });
+                                        }
+                                    }, function (error) {
+                                        alertFactory.error("Error al cargar la orden");
+                                    });
 
                                 } else {
 
@@ -473,56 +469,88 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                             });
                                         } else {
 
-                                            swal({
-                                                    title: "Advertencia",
-                                                    text: "¿Está seguro de procesar la compra?",
-                                                    type: "warning",
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: "#67BF11",
-                                                    confirmButtonText: "Si",
-                                                    cancelButtonText: "No",
-                                                    closeOnConfirm: false,
-                                                    closeOnCancel: true
-                                                },
-                                                function (isConfirm) {
-                                                    if (isConfirm) {
-                                                        trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
-                                                                swal("Proceso Realizado!");
-                                                                //location.href = '/ordenesporcobrar';
-                                                            }
-                                                        }, function (error) {
-                                                            alertFactory.error("Error al verificar la orden");
-                                                        });
-                                                        swal("Proceso Realizado!");
-                                                    }
-                                                });
+                                            $scope.procesarCompra();
 
                                         }
                                     }, function (error) {
                                         alertFactory.error("Error al verificar la orden");
                                     });
 
-
-
                                 }
                             }
-
-
-
 
                         }, function (error) {
                             alertFactory.error("Error al cargar la orden");
                         });
 
                     });
-                }
+               }
             }
         }, function (error) {
             alertFactory.error("Error en la consulta");
         });
 
 
+    }
+
+    $scope.procesarCompra = function (){
+        swal({
+            title: "Advertencia",
+            text: "¿Está seguro de procesar la compra?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#67BF11",
+            confirmButtonText: "Si",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                trabajoRepository.cotizacionespago($scope.idTrabajo).then(function (ordenVerificada) {
+                   
+                    if (ordenVerificada.data[0].idHistorialProceso == 1) {
+                        swal("Proceso Realizado!");
+                        //location.href = '/ordenesporcobrar';
+                    }else{
+                         swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                        // alertFactory.error("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al verificar la orden");
+                });
+            }
+        });
+
+    }
+
+     $scope.saveToken = function () {
+        ordenServicioRepository.estatusToken($scope.token).then(function (estatus) {
+      
+            if (estatus.data.length > 0) {
+                if (estatus.data[0].estatus == 1) {
+                   // swal("Token disponible"); 
+                   $('#insertarToken').modal('hide');
+                    ordenServicioRepository.putAprobacionUtilidadRespuesta($scope.idAprobacionUtilidad,$scope.userData.idUsuario, $scope.token).then(function (aprobacionUtilidad) {
+                    
+                        if (aprobacionUtilidad.data[0].id > 0) {
+                            
+                             $scope.procesarCompra();
+                             //alertFactory.success("Proceso Realizado!");                               
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al cargar la orden");
+                    });
+                }else{
+                    alertFactory.error("El token se ha utilizado previamente."); 
+                }
+                                               
+            }else{
+                 alertFactory.error("El token es incorrecto");  
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden.");
+        });
     }
 
 
