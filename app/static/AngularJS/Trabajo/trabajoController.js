@@ -905,5 +905,31 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             alertFactory.error("Error al procesar la informacion Temporal");
         })
     }
+    
+    $scope.cancelarOrden = function (idCita, numeroOrden) {
+        swal({
+                title: "Advertencia",
+                text: "¿Está seguro en eliminar la orden: " + numeroOrden + "? ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#67BF11",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    trabajoRepository.postEliminaOrden(numeroOrden).then(function (ordenEliminada) {
+                        if (ordenEliminada.data[0].id > 0) {
+                            alertFactory.success('Orden eliminada correctamente');
+                            location.href = "/administracionordenes";
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al eliminar la orden");
+                    });
+                }
+            });
+    }
 
 });

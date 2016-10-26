@@ -527,4 +527,26 @@ Trabajo.prototype.post_insertBpro = function(req, res, next){
     });
 }
 
+//Elimina la Orden completa incluyendo la cita
+Trabajo.prototype.post_eliminaOrden = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idCita',
+            value: req.body.idCita,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.post('EXT_UPD_CANCELACION_ORDEN_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Trabajo;
