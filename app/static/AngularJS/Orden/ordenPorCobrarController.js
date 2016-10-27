@@ -82,6 +82,20 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
+    $scope.verOrdenes= function(idDatosCopade){
+    $('.dataTableTrabajosCobrados').DataTable().destroy();
+    $('#facturasOrden').appendTo("body").modal('show');
+        ordenPorCobrarRepository.getTrbajoCobrado(idDatosCopade).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.trabajosCobrados = result.data;
+                waitDrawDocument("dataTableTrabajosCobrados");
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener trabajos por cobrar");
+        });
+
+    }
+
     $scope.generaTXT = function (idTrabajo, numeroTrabajo) {
         ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
             if (result.data.length > 0) {
@@ -260,7 +274,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
         });
     }
-
+       
     //Selecciona una orden en Radio y obtiene idTrabajo
     $scope.seleccionMejorCoincidencia = function (idTrabajo, montoOrdenSeleccionado, numeroTrabajo) {
 
@@ -319,11 +333,12 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
         };
 
-        ordenServicioRepository.getOrdenServicio(numeroTrbajos).then(function (result) {
-            if (result.data.length > 0) {
+        ordenServicioRepository.getOrden(numeroTrbajos).then(function (result) {
 
-                if(validaMontoCapadeOrden(montoOrdenSeleccionadoSuma)){
-                    if ($scope.idDeTrabajo != '') {
+            if (result.data[0].Orden != 0) {
+
+               if(validaMontoCapadeOrden(montoOrdenSeleccionadoSuma)){
+                    if (idTrabajos != '') {
                         $('.btnTerminarTrabajo').ready(function () {
                             swal({
                                     title: "¿Esta seguro en asociar esta copade con la orden de servicio selecionado?",
@@ -340,15 +355,17 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                                     if (isConfirm) {
                                         $scope.trabajoCobrado(idTrabajos, $scope.idDatosDeCopade);
                                         ordenPorCobrarRepository.putMueveCopade(idTrabajos, $scope.idDatosDeCopade).then(function (resp) {
-                                            if (resp.data > 0) {
-                                                alertFactory.success('La copade se copio correctamente');
-                                            }
-                                        }, function (error) {
-                                            alertFactory.error('La copade no se pudo depositar en su carpeta');
-                                        });
+                                           if (resp.data > 0) {
+                                             alertFactory.success('La copade se copio correctamente');
+                                           }
+                                       }, function (error) {
+                                           alertFactory.error('La copade no se pudo depositar en su carpeta');
+                                        }); 
                                         $scope.cleanDatos();
                                         swal("Trabajo terminado!", "La copade se ha asociada", "success");
-                                        location.href = '/ordenesporcobrar';
+                                        setTimeout(function () {
+                                         location.href = '/ordenesporcobrar';
+                                         }, 1500);
                                     } else {
                                         swal("Copade no asociada", "", "error");
                                         $scope.cleanDatos();
@@ -361,7 +378,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     }   
                 }
                 else{
-                    alertFactory.error("El monto de la orden seleccionada rebasa el rango especificado de (+- $1.00 MXN), seleccione una orden que se adecúe con el monto de la COPADE");
+                   alertFactory.error("El monto de la orden seleccionada rebasa el rango especificado de (+- $1.00 MXN), seleccione una orden que se adecúe con el monto de la COPADE");
                 }
 
             }else{
@@ -378,11 +395,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
          }, function (error) {
             alertFactory.error("Error al verificar la orden");
-        });   
-
-
-        
+        });     
     }
+
 
     //Limpiamos campos idTrabajo
     $scope.cleanDatos = function () {
