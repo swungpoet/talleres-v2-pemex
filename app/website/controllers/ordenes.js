@@ -791,30 +791,61 @@ Orden.prototype.post_mueveCopade = function (req, res, next) {
     var self = this;
 
     var idTrabajo = req.body.idTrabajo;
+    var idTrabajos = req.body.idTrabajo;
     var idCopade = req.body.idDatosCopade;
+
+    var trabajos = idTrabajos.split(',');
 
     var nombreXmlMinusculas = 'COPADE_' + idCopade + '.xml';
     var nombreXmlMayusculas = 'COPADE_' + idCopade + '.XML';
     var nombrePdfMinusculas = 'COPADE_' + idCopade + '.pdf';
     var nombrePdfMayusculas = 'COPADE_' + idCopade + '.PDF';
-    var rutaDestino = dirname + idTrabajo + '/documentos/adendaCopade';
 
-    if (!fs.existsSync(rutaDestino)) {
-        fs.mkdirSync(rutaDestino);
-    }
 
+    trabajos.forEach(function (idTrabajo) {
+        if (idTrabajo != '' && idTrabajo != null && idTrabajo != undefined) {
+            var rutaDestino = dirname + idTrabajo + '/documentos/adendaCopade';
+
+            if (!fs.existsSync(rutaDestino)) {
+                fs.mkdirSync(rutaDestino);
+            }
+
+            if (fs.existsSync(dirCopades + nombreXmlMinusculas)) {
+                fs.createReadStream(dirCopades + nombreXmlMinusculas).pipe(fs.createWriteStream(rutaDestino + '/' + nombreXmlMinusculas));
+                //fs.renameSync(dirCopades + nombreXmlMinusculas, rutaDestino + '/' + nombreXmlMinusculas);
+            }
+            if (fs.existsSync(dirCopades + nombreXmlMayusculas)) {
+                fs.createReadStream(dirCopades + nombreXmlMayusculas).pipe(fs.createWriteStream(rutaDestino + '/' + nombreXmlMayusculas));
+                //fs.renameSync(dirCopades + nombreXmlMayusculas, rutaDestino + '/' + nombreXmlMayusculas);
+            }
+            if (fs.existsSync(dirCopades + nombrePdfMinusculas)) {
+                fs.createReadStream(dirCopades + nombrePdfMinusculas).pipe(fs.createWriteStream(rutaDestino + '/' + nombrePdfMinusculas));
+                //fs.renameSync(dirCopades + nombrePdfMinusculas, rutaDestino + '/' + nombrePdfMinusculas);
+            }
+            if (fs.existsSync(dirCopades + nombrePdfMayusculas)) {
+                fs.createReadStream(dirCopades + nombrePdfMayusculas).pipe(fs.createWriteStream(rutaDestino + '/' + nombrePdfMayusculas));
+                //fs.renameSync(dirCopades + nombrePdfMayusculas, rutaDestino + '/' + nombrePdfMayusculas);
+            }
+        }
+    });
+
+    //Elimina la COPADE original
     if (fs.existsSync(dirCopades + nombreXmlMinusculas)) {
-        fs.renameSync(dirCopades + nombreXmlMinusculas, rutaDestino + '/' + nombreXmlMinusculas);
+        fs.unlinkSync(dirCopades + nombreXmlMinusculas);
     }
+
     if (fs.existsSync(dirCopades + nombreXmlMayusculas)) {
-        fs.renameSync(dirCopades + nombreXmlMayusculas, rutaDestino + '/' + nombreXmlMayusculas);
+        fs.unlinkSync(dirCopades + nombreXmlMayusculas);
     }
+
     if (fs.existsSync(dirCopades + nombrePdfMinusculas)) {
-        fs.renameSync(dirCopades + nombrePdfMinusculas, rutaDestino + '/' + nombrePdfMinusculas);
+        fs.unlinkSync(dirCopades + nombrePdfMinusculas);
     }
+
     if (fs.existsSync(dirCopades + nombrePdfMayusculas)) {
-        fs.renameSync(dirCopades + nombrePdfMayusculas, rutaDestino + '/' + nombrePdfMayusculas);
+        fs.unlinkSync(dirCopades + nombrePdfMayusculas);
     }
+
 
     //Callback
     object.error = null;
