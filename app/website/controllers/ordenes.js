@@ -847,7 +847,7 @@ Orden.prototype.post_mueveCopade = function (req, res, next) {
     });
 
     //Elimina la COPADE original
-    if (fs.existsSync(dirCopades + nombreXmlMinusculas)) {
+    /*if (fs.existsSync(dirCopades + nombreXmlMinusculas)) {
         fs.unlinkSync(dirCopades + nombreXmlMinusculas);
     }
 
@@ -861,7 +861,7 @@ Orden.prototype.post_mueveCopade = function (req, res, next) {
 
     if (fs.existsSync(dirCopades + nombrePdfMayusculas)) {
         fs.unlinkSync(dirCopades + nombrePdfMayusculas);
-    }
+    } */
 
 
     //Callback
