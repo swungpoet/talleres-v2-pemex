@@ -414,9 +414,12 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                                 function (isConfirm) {
                                                     if (isConfirm) {
                                                         trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                                            if (ordenVerificada.data[0].idHistorialProceso > 0) {
+                                                            if (ordenVerificada.data[0].idHistorialProceso == 1) {
                                                                 swal("Proceso Realizado!");
                                                                 //location.href = '/ordenesporcobrar';
+                                                            }else{
+                                                                 swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                                                                // alertFactory.error("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
                                                             }
                                                         }, function (error) {
                                                             alertFactory.error("Error al verificar la orden");
