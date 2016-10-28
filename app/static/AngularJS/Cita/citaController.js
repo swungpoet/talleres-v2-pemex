@@ -1038,7 +1038,10 @@ var getidCita = function (idCita) {
 
                                     if (estatusUtilidad.data[0].estatus == 1) {
 
-                                        swal({
+                                         $('#insertarToken').appendTo("body").modal('show');
+                                         // $scope.insertarToken = true;
+
+                                        /*swal({
                                             title: "Advertencia",
                                             text: "La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.",
                                             type: "warning",
@@ -1046,7 +1049,7 @@ var getidCita = function (idCita) {
                                             confirmButtonColor: "#67BF11",
                                             confirmButtonText: "Aceptar",
                                             closeOnConfirm: true
-                                        });
+                                        });*/
 
                                     } else {
                                           $scope.aprobacionCita(cita);
@@ -1134,7 +1137,8 @@ var getidCita = function (idCita) {
 
                     if (mail.data[0].enviado == 1) {
                         //token
-                        $('#insertarToken').appendTo("body").modal('show');
+                        alertFactory.success("La orden se mandó a aprobación por margen de utilidad bajo a lo esperado. ");
+                       
                     }
                 }, function (error) {
                     alertFactory.error("Error al enviar mail");
@@ -1152,6 +1156,7 @@ var getidCita = function (idCita) {
             if (estatus.data.length > 0) {
                 if (estatus.data[0].estatus == 1) {
                    // swal("Token disponible"); 
+                  // $scope.insertarToken = false;
                    $('#insertarToken').modal('hide');
                     ordenServicioRepository.putAprobacionUtilidadRespuesta($scope.idAprobacionUtilidad,$scope.userData.idUsuario, $scope.token).then(function (aprobacionUtilidad) {
                     

@@ -1,4 +1,5 @@
 <link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
+<link rel="stylesheet" href="../../css/administracionOrden.css">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Aprobación de Utilidades<span class="subtitle">Administrador</span></span>
@@ -26,7 +27,7 @@
                                         <th>Taller</th>
                                         <th>Costo de la Orden</th>
                                         <th>Precio de la Orden</th>
-                                        <th>Perdida</th>
+                                        <th>Utilidad</th>
                                         <th>Margen</th>
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
@@ -117,11 +118,7 @@
                                 <tr>
                                     <th>Artículos</th>
                                     <th>Cantidad</th>
-                                    <th>Precio Unitario Taller</th>
-                                    <th>I.V.A. Taller</th>
                                     <th>Precio Total Taller</th>
-                                    <th>Precio Unitario Cliente</th>
-                                    <th>I.V.A. Cliente</th>
                                     <th>Precio Total Cliente</th>
                                 </tr>
                             </thead>
@@ -131,16 +128,8 @@
                                         <div><strong>Número de Partida: {{ articulo.numeroPartida }}</strong></div>
                                         <small>{{articulo.item}}</small></td>
                                     <td>{{ articulo.cantidad }}</td>
-                                    <td>{{articulo.precio | currency: "$"}} </td>
-                                    <td>
-                                        {{(articulo.cantidad * (articulo.precio * (articulo.valorIva / 100)))  | currency: "$"}}
-                                    </td>
                                     <td>
                                         {{  ((articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))))  | currency: "$" }}
-                                    </td>
-                                    <td>{{articulo.precioCliente | currency: "$" }} </td>
-                                    <td>
-                                        {{(articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100))) | currency: "$"}}
                                     </td>
                                     <td>
                                         {{ ((articulo.cantidad * articulo.precioCliente) + (articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100)))) | currency: "$" }}
@@ -155,20 +144,11 @@
                             <tr>
                                 <td><strong>Sub Total Taller :</strong></td>
                                 <td>{{ sumaPrecioTotal  | currency: "$"}}</td>
+                                
+                            </tr>
+                            <tr>
                                 <td><strong>Sub Total Cliente:</strong></td>
                                 <td>{{sumaPrecioTotalCliente | currency: "$"}}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>I.V.A. Taller :</strong></td>
-                                <td>{{sumaIvaTotal | currency: "$"}}</td>
-                                <td><strong>I.V.A. Cliente :</strong></td>
-                                <td>{{sumaIvaTotalCliente | currency: "$"}}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>TOTAL Taller:</strong></td>
-                                <td>{{sumaGranTotal  | currency: "$"}}</td>
-                                <td><strong>TOTAL Cliente:</strong></td>
-                                <td>{{ sumaGranTotalCliente | currency: "$"}}</td>
                             </tr>
                         </tbody>
                     </table>
