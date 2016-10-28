@@ -45,30 +45,50 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
         location.href = '/ordenservicio?state=1';
     }
 
-     $scope.aprobar = function (idAprobacionUtilidad) {
+     $scope.aprobar = function (utilidad) {
        
-       $scope.idAprobacionUtilidad=idAprobacionUtilidad;
+       $scope.idAprobacionUtilidad=utilidad.idAprobacionUtilidad;
      
-        $('.btn-aprobar').ready(function () {
-                swal({
-                    title: "Advertencia",
-                    text: "¿Desea aprobar la orden con el margen de utilidad?.",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#67BF11",  
-                    confirmButtonText: "Si",
-                    cancelButtonText: "No",
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                         $('#insertarToken').appendTo('body').modal('show');
+       ordenServicioRepository.getDetalleOrden(parseInt(utilidad.idTrabajo)).then(function (detalle) {
+            $scope.detalleOrden=detalle.data;
+            $scope.sumaIvaTotal = 0;
+            $scope.sumaPrecioTotal =0;
+            $scope.sumaIvaTotalCliente =0;
+            $scope.sumaPrecioTotalCliente =0;
+            $scope.sumaGranTotal =0;
+            $scope.sumaGranTotalCliente =0;
+            $scope.detalleOrden=detalle.data;
+             for (var i = 0; i < detalle.data.length; i++) {
+                //Sumatoria Taller
+                $scope.sumaIvaTotal += (detalle.data[i].cantidad * detalle.data[i].precio) * (detalle.data[i].valorIva / 100);
+                $scope.sumaPrecioTotal += (detalle.data[i].cantidad * detalle.data[i].precio);
+
+                //Sumatoria Cliente
+                $scope.sumaIvaTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente) * (detalle.data[i].valorIva / 100);
+                $scope.sumaPrecioTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente);
+            }
+            //Total Taller
+            $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
+
+            //Total Cliente
+            $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
+
+            $('.modal-dialog').css('width','1000px'); 
+            $('#cotizacionDetalle').appendTo("body").modal('show');
+
+
+
+        }, function (error) {
+           alertFactory.error("Error al cargar la orden");
+        });
+
                 
-                    }                   
-                  });
-         });   
-                
+    }
+
+    $scope.aprobarUtilidad = function (){
+         $('#cotizacionDetalle').modal('hide');
+         $('.modal-dialog').css('width','600px'); 
+         $('#insertarToken').appendTo('body').modal('show');          
     }
 
     $scope.saveToken = function () {

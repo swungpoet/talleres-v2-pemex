@@ -108,6 +108,19 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             })
         },
 
+        getDetalleOrden: function (idTrabajo) {
+            return $http({
+                url: ordenUrl + 'getdetalleorden/',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+
          getEstatusUtilidad: function (idTrabajo) {
             return $http({
                 url: ordenUrl + 'getestatusutilidad/',
@@ -282,7 +295,7 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 }
             })
         },
-         enviarNotificacionUtilidad: function (idTAR) {
+         enviarNotificacionUtilidad: function (idTrabajo) {
             return $http({
                 url: ordenUrl + 'enviarnotificacionutilidad/',
                 method: "GET",

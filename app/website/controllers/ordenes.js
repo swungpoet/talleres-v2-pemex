@@ -379,6 +379,25 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
     });
 }
 
+//obtiene el detalle de la orden
+Orden.prototype.get_getdetalleorden = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_DETALLE_COTIZACIONES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+
+
 //obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
 Orden.prototype.get_getaprobacionutilidad = function (req, res, next) {
     var self = this;

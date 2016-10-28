@@ -8,7 +8,7 @@
 // -- Fecha: 08/07/2016
 // -- =============================================
 
-registrationModule.controller('citaController', function ($scope, $route, $rootScope, localStorageService, alertFactory, citaRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
+registrationModule.controller('citaController', function ($scope, $route, $rootScope, localStorageService, alertFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
     var idTrabajoNew = '';
     $scope.message = 'Buscando...';
     $scope.userData = localStorageService.get('userData');
@@ -165,6 +165,7 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
 
     //Se obtienen las citas de la fecha seleccionada
     var getCitaTaller = function (fecha, idCita, idUsuario) {
+    
         $('.dataTableCitaTaller').DataTable().destroy();
         $scope.promise = citaRepository.getCitaTaller(fecha, idCita, idUsuario).then(function (cita) {
             if (cita.data.length > 0) {
@@ -179,6 +180,8 @@ registrationModule.controller('citaController', function ($scope, $route, $rootS
             alertFactory.error("Error al obtener citas");
         });
     }
+
+
 
 
     //obtiene los talleres con su especialidad
@@ -1012,26 +1015,164 @@ var getidCita = function (idCita) {
 
     //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion = function (cita) {
-        //verifica si la unidad ya llegó al taller
+       
+        var uitilidad = Math.abs(cita.precioOrden - cita.montoOrden);
+       // var uitilidad = 100;
+        var UtilidadNeta = 0;
+        $scope.idTrabajo=cita.idTrabajo;   
+        // var UtilidadNeta = (precioOrden * 0.05)+1;
         if (cita.idEstatus == 15) {
             var existePrecotizacion = $scope.preCotizaciones.some(checkExistsPrecotizacion);
             if (!existePrecotizacion) {
                 console.log("no existe");
-                citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
-                    if (result.data[0].respuesta != 0) {
-                        alertFactory.success('Cotizaciones enviadas a aprobación');
-                        location.href = '/cotizacionconsulta';
+
+                ordenServicioRepository.getParametro(1, 'MV').then(function (parametro) {
+                    if (parametro.data.length > 0) {
+                       UtilidadNeta = (cita.precioOrden * parametro.data[0].valor) + 1;
+                      //  UtilidadNeta = 120;
+                            //verifica si la unidad ya llegó al taller
+                             ordenServicioRepository.getEstatusUtilidad(cita.idTrabajo).then(function (estatusUtilidad) {
+                               
+                                if (estatusUtilidad.data.length > 0) {
+
+                                    if (estatusUtilidad.data[0].estatus == 1) {
+
+                                        swal({
+                                            title: "Advertencia",
+                                            text: "La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.",
+                                            type: "warning",
+                                            showCancelButton: false,
+                                            confirmButtonColor: "#67BF11",
+                                            confirmButtonText: "Aceptar",
+                                            closeOnConfirm: true
+                                        });
+
+                                    } else {
+                                          $scope.aprobacionCita(cita);
+                                    }
+                                }else{
+                                     if (UtilidadNeta > uitilidad) {    
+                                     
+                                        //Detalle de la cotiazacion
+                                        ordenServicioRepository.getDetalleOrden(parseInt(cita.idTrabajo)).then(function (detalle) {
+                                            $scope.sumaIvaTotal = 0;
+                                            $scope.sumaPrecioTotal =0;
+                                            $scope.sumaIvaTotalCliente =0;
+                                            $scope.sumaPrecioTotalCliente =0;
+                                            $scope.sumaGranTotal =0;
+                                            $scope.sumaGranTotalCliente =0;
+                                            $scope.detalleOrden=detalle.data;
+                                             for (var i = 0; i < detalle.data.length; i++) {
+                                                //Sumatoria Taller
+                                                $scope.sumaIvaTotal += (detalle.data[i].cantidad * detalle.data[i].precio) * (detalle.data[i].valorIva / 100);
+                                                $scope.sumaPrecioTotal += (detalle.data[i].cantidad * detalle.data[i].precio);
+
+                                                //Sumatoria Cliente
+                                                $scope.sumaIvaTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente) * (detalle.data[i].valorIva / 100);
+                                                $scope.sumaPrecioTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente);
+                                            }
+                                            //Total Taller
+                                            $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
+
+                                            //Total Cliente
+                                            $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
+                                            $('.modal-dialog').css('width','1000px'); 
+                                            $('#cotizacionDetalle').appendTo("body").modal('show');
+
+                                        }, function (error) {
+                                           alertFactory.error("Error al cargar la orden");
+                                        });
+
+                                    }else{
+                                        $scope.aprobacionCita(cita); 
+                                    }
+                                }  
+                                    
+                             }, function (error) {
+                                alertFactory.error("Error al cargar la orden");
+                            });    
                     }
                 }, function (error) {
-                    alertFactory.error('No se pudieron enviar las cotizaciones  a Aprobación');
-                });
+                    alertFactory.error("Error en la consulta");
+                }); 
+
             } else {
                 alertFactory.info("Falta asignar la cotización");
             }
-        } else {
+       } else {
             alertFactory.info("No se podrán enviar las cotizaciones a Aprobación, la unidad aún no llega al taller");
         }
+           
+            
     }
+
+
+    $scope.aprobacionCita = function(cita){
+        citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
+                
+            if (result.data[0].respuesta != 0) {
+               alertFactory.success('Cotizaciones enviadas a aprobación');
+                location.href = '/cotizacionconsulta';
+            }
+        }, function (error) {
+            alertFactory.error('No se pudieron enviar las cotizaciones  a Aprobación');
+       });
+
+    }
+
+
+    //UTILIDAD
+    $scope.saveUtilidad = function (){
+         $('#cotizacionDetalle').modal('hide');
+         $('.modal-dialog').css('width','600px'); 
+        ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
+            if (aprobacionUtilidad.data[0].id > 0) {
+               //CORREO
+                 ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo).then(function (mail) {
+
+                    if (mail.data[0].enviado == 1) {
+                        //token
+                        $('#insertarToken').appendTo("body").modal('show');
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al enviar mail");
+                });
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden");
+        });
+
+    }
+
+       $scope.saveToken = function () {
+        ordenServicioRepository.estatusToken($scope.token).then(function (estatus) {
+      
+            if (estatus.data.length > 0) {
+                if (estatus.data[0].estatus == 1) {
+                   // swal("Token disponible"); 
+                   $('#insertarToken').modal('hide');
+                    ordenServicioRepository.putAprobacionUtilidadRespuesta($scope.idAprobacionUtilidad,$scope.userData.idUsuario, $scope.token).then(function (aprobacionUtilidad) {
+                    
+                        if (aprobacionUtilidad.data[0].id > 0) {
+                            
+                             $scope.procesarCompra();
+                             //alertFactory.success("Proceso Realizado!");                               
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al cargar la orden");
+                    });
+                }else{
+                    alertFactory.error("El token se ha utilizado previamente."); 
+                }
+                                               
+            }else{
+                 alertFactory.error("El token es incorrecto");  
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden.");
+        });
+    }
+
 
 
     //valida si existe alguna precotización
