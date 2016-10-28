@@ -1015,8 +1015,8 @@ var getidCita = function (idCita) {
 
     //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion = function (cita) {
-       
-        var uitilidad = Math.abs(cita.precioOrden - cita.montoOrden);
+     
+        var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
        // var uitilidad = 100;
         var UtilidadNeta = 0;
         $scope.idTrabajo=cita.idTrabajo;   
@@ -1028,7 +1028,8 @@ var getidCita = function (idCita) {
 
                 ordenServicioRepository.getParametro(1, 'MV').then(function (parametro) {
                     if (parametro.data.length > 0) {
-                       UtilidadNeta = (cita.precioOrden * parametro.data[0].valor) + 1;
+                      //UtilidadNeta = (cita.precioOrden * parametro.data[0].valor) + 1;
+                      UtilidadNeta = parametro.data[0].valor;
                       //  UtilidadNeta = 120;
                             //verifica si la unidad ya llegó al taller
                              ordenServicioRepository.getEstatusUtilidad(cita.idTrabajo).then(function (estatusUtilidad) {
@@ -1051,7 +1052,8 @@ var getidCita = function (idCita) {
                                           $scope.aprobacionCita(cita);
                                     }
                                 }else{
-                                     if (UtilidadNeta > uitilidad) {    
+
+                                     if (UtilidadNeta >uitilidad) {    
                                      
                                         //Detalle de la cotiazacion
                                         ordenServicioRepository.getDetalleOrden(parseInt(cita.idTrabajo)).then(function (detalle) {

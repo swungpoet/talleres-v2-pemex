@@ -23,7 +23,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
         ordenServicioRepository.getAprobacionUtilidad().then(function (aprobacionUtilidad) {
      
             if (aprobacionUtilidad.data.length > 0) {
-                alertFactory.success("Orden encontrada");
+               // alertFactory.success("Orden encontrada");
                 $scope.aprobacionUtilidades = aprobacionUtilidad.data;
                 waitDrawDocument("dataTableAprobacionUtilidad");
             } else {
@@ -88,6 +88,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     $scope.aprobarUtilidad = function (){
          $('#cotizacionDetalle').modal('hide');
          $('.modal-dialog').css('width','600px'); 
+         $scope.token='';
          $('#insertarToken').appendTo('body').modal('show');          
     }
 
