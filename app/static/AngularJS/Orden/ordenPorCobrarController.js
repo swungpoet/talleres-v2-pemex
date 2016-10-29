@@ -88,14 +88,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         ordenPorCobrarRepository.getTrbajoCobrado(idDatosCopade).then(function (result) {
             if (result.data.length > 0) {
                 $scope.trabajosCobrados = result.data;
+                 $scope.numeroCopadeOrden = $scope.trabajosCobrados[0].numeroCopade;
                 waitDrawDocument("dataTableTrabajosCobrados");
             }
         }, function (error) {
             alertFactory.error("Error al obtener trabajos por cobrar");
         });
-
     }
 
+   
     $scope.generaTXT = function (idTrabajo, numeroTrabajo) {
         ordenPorCobrarRepository.getGeneraTXT(idTrabajo).then(function (result) {
             if (result.data.length > 0) {

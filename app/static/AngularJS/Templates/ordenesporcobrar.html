@@ -144,7 +144,7 @@
                                                 <th>No. Estimación</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Total</th>
-                                                <th>Fecha</th>
+                                                <th>Fecha COPADE</th>
                                                 <!--th>Estatus</th>
                                                 <th>Precio venta sin IVA</th>
                                                 <th>Fecha</th> 
@@ -166,7 +166,7 @@
                                                 <td>{{cita.numeroEstimacion}}</td>
                                                 <td>{{cita.descripcion}}</td>
                                                 <td>{{cita.total | currency}}</td>
-                                                <td>{{cita.fechaRecepcionCopade | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                <td>{{cita.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
                                                 <!--td>{{cita.estatus}}</td>
                                                 <td>{{cita.montoOrden | currency}}</td>
                                                 <td>{{cita.fecha | date:'dd-MM-yyyy HH:mm'}}</td>     
@@ -185,12 +185,21 @@
             </div>
         </div>
 
-
     <div class="modal inmodal lg" id="facturasOrden" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content animated flipInY">
                 <div class="modal-header">
-                    <h4 class="modal-title">Órdenes por cobrar</h4>
+                    <h4 class="modal-title">Órdenes relacionadas con COPADE</h4>
+
+                    <div class="row"> 
+                        <div class="col-xs-12">
+                            <h6 class="modal-title text-navy">
+                                         <br>
+                          Número COPADE: {{numeroCopadeOrden}}
+                                         </h6>
+                        </div>
+                     </div> 
+
                 </div>
                 <br>
                 <div class="modal-body col-md-12">

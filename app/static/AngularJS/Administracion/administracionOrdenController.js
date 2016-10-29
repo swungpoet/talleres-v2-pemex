@@ -390,7 +390,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                             if (isConfirm) {
                                 trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
                                     if (ordenVerificada.data[0].idHistorialProceso == 1) {
-                                        swal("Proceso Realizado!");
+                                        swal("Orden Provisionada!");
                                         //location.href = '/ordenesporcobrar';
                                     }else{
                                         swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
@@ -399,7 +399,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                 }, function (error) {
                                     alertFactory.error("Error al verificar la orden");
                                 });
-                                swal("Proceso Realizado!");
+                                swal("Orden Provisionada!");
                             }
                          });
 
