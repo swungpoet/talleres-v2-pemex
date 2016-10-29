@@ -74,7 +74,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
             $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
 
             $('.modal-dialog').css('width','1000px'); 
-            $('#cotizacionDetalle').appendTo("body").modal('show');
+            $('#cotizacionDetalle').modal('show');
 
 
 
@@ -89,7 +89,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
          $('#cotizacionDetalle').modal('hide');
          $('.modal-dialog').css('width','600px'); 
          $scope.token='';
-         $('#insertarToken').appendTo('body').modal('show');          
+         $('#insertarToken').modal('show');          
     }
 
     $scope.saveToken = function () {
