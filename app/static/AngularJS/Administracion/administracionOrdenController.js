@@ -445,4 +445,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
 
     }
+    
+    $scope.modalCertificado = function(){
+        $('#modalGeneraCertificado').appendTo("body").modal('show'); 
+    }
 });
