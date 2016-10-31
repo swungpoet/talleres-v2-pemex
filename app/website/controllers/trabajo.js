@@ -34,22 +34,31 @@ Trabajo.prototype.get_trabajo = function(req, res, next){
 
 //obtiene los trabajos con estatus de terminado
 Trabajo.prototype.get_trabajoterminado = function(req, res, next){
-    //Con req.query se obtienen los parametros de la url
-    //Ejemplo: ?p1=a&p2=b
-    //Retorna {p1:'a',p2:'b'}
+    //Objeto que almacena la respuesta
+    var object = {};
     //Objeto que envía los parámetros
+    var params = {};
     //Referencia a la clase para callback
     var self = this;
+
     //Obtención de valores de los parámetros del request
-    var params = [{name: 'idUsuario', value: req.query.idUsuario, type: self.model.types.INT}];
+    var params = [
+    {
+        name: 'idUsuario',
+        value: req.query.idUsuario, 
+        type: self.model.types.INT
+    }
+    ];
 	
     this.model.query('SEL_TRABAJO_TERMINADO_SP', params, function(error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
-        });
+                //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
     });
 }
+
 
 //obtiene el saldo de un TAR
 Trabajo.prototype.get_saldotar = function (req, res, next) {
