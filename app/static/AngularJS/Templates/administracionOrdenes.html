@@ -3,7 +3,11 @@
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Gestión de Compras Unificadas<span class="subtitle">Administrador</span></span>
+        <div class="col-lg-offset-10 col-lg-2">
+            <button class="btn btn-success" type="button" ng-click="modalCertificado()" data-toggle="tooltip" tooltip="Genera Certificados" tooltip-placement="left"><span class="glyphicon glyphicon-cog"></span></button>
+        </div>
     </div>
+    <br>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12">
@@ -261,7 +265,25 @@
     </div>
 </div>
 
- 
-   
 
-  
+<!-- Modal para generar Certificados de Conformidad -->
+<div id="modalGeneraCertificado" class="modal inmodal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Certificado de Conformidad</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive m-t">
+                    Número de Órden:
+                    <input type="text" ng-model="trabajoGenerar" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button id="btnUploadFiles" type="button" class="btn btn-success" ng-click="Generar()">Generar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
