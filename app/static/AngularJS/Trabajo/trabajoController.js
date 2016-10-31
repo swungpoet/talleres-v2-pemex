@@ -107,6 +107,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                 obj.idTAR = trabajoTerminado.data[i].idTAR;
                 obj.razonSocial = trabajoTerminado.data[i].razonSocial;
                 obj.estatusProvision = trabajoTerminado.data[i].estatusProvision;
+                obj.estatusBPRO = trabajoTerminado.data[i].estatusBPRO;
                 obj.indice = i;
                 obj.class_buttonCeritficado = 'glyphicon glyphicon-file';
                 obj.idTipoCita = trabajoTerminado.data[i].idTipoCita;

@@ -60,12 +60,13 @@
                                                 <td>{{trabajo.modeloMarca}}</td>
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td ng-class="{'rowAzul': trabajo.estatus=='OrdenGarantia'}">{{trabajo.descripcionLarga}}</td>
-                                                <td ng-if="trabajo.estatusProvision == 1">
+                                                <td ng-class="{'rowAzul': trabajo.estatusBPRO=='No provisionada'}">{{trabajo.estatusBPRO}}</td>
+<!--                                                 <td ng-if="trabajo.estatusProvision == 1">
                                                     Provisionada
                                                 </td>
                                                 <td class="rowAzul" ng-if="trabajo.estatusProvision == 0">
                                                     No provisionada
-                                                </td>
+                                                </td> -->
                                                 <td ng-hide="userData.idTipoUsuario == 3">{{trabajo.precioOrden | currency: "$"}}</td>
                                                 <td>{{trabajo.fecha | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">{{trabajo.fechaServicio}}
@@ -161,12 +162,13 @@
                                                 <td>{{trabajo.trabajo}}</td>
                                                 <td>{{trabajo.observacion}}</td>
                                                 <td>{{trabajo.descripcionLarga}}</td>
-                                                <td ng-if="trabajo.estatusProvision == 1">
+                                                <td ng-class="{'rowAzul': trabajo.estatusBPRO=='No provisionada'}">{{trabajo.estatusBPRO}}</td>
+                                               <!--  <td ng-if="trabajo.estatusProvision == 1">
                                                     Provisionada
                                                 </td>
                                                 <td class="rowAzul" ng-if="trabajo.estatusProvision == 0">
                                                     No provisionada
-                                                </td>
+                                                </td> -->
                                                 <td ng-hide="userData.idTipoUsuario == 3">{{trabajo.precioOrden | currency: "$"}}</td>
                                                 <td>{{trabajo.fechaFin | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>

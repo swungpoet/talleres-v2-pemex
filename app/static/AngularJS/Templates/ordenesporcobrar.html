@@ -51,12 +51,13 @@
                                                 <td>{{ordenverificada.folio}}</td>
                                                 <td>{{ordenverificada.trabajo}}</td>
                                                 <td>{{ordenverificada.descripcionLarga }}</td>
-                                                <td ng-if="ordenverificada.estatusProvision == 1">
+                                                <td ng-class="{'rowAzul': ordenverificada.estatusBPRO=='No provisionada'}">{{ordenverificada.estatusBPRO}}</td>
+                                                <!-- <td ng-if="ordenverificada.estatusProvision == 1">
                                                     Provisionada
                                                 </td>
                                                 <td class="rowAzul" ng-if="ordenverificada.estatusProvision == 0">
                                                     No provisionada
-                                                </td>
+                                                </td> -->
                                                 <td>{{ordenverificada.montoOrden | currency}}</td>
                                                 <td>{{ordenverificada.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{ordenverificada.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
