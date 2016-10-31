@@ -79,6 +79,9 @@
                 </div>
                 <br>
                 <div class="modal-body">
+                    <div class="row utlidad">
+                        <label class="control-label">¿Desea aprobar la orden con el margen de utilidad actual?</label>
+                    </div>
                    
                     <div class="form-group row">
                         <label class="col-sm-3 control-label">No. Token</label>
@@ -113,13 +116,13 @@
 
                     </div>
                     <div class="table-responsive m-t">
-                        <table class="table invoice-table">
+                         <table class="table invoice-table">
                             <thead>
                                 <tr>
                                     <th>Artículos</th>
                                     <th>Cantidad</th>
-                                    <th>Precio Total Taller</th>
-                                    <th>Precio Total Cliente</th>
+                                    <th>Precio Taller</th>
+                                    <th>Precio Cliente</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,10 +132,10 @@
                                         <small>{{articulo.item}}</small></td>
                                     <td>{{ articulo.cantidad }}</td>
                                     <td>
-                                        {{  ((articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100))))  | currency: "$" }}
+                                        {{  (articulo.cantidad * articulo.precio)  | currency: "$" }}
                                     </td>
                                     <td>
-                                        {{ ((articulo.cantidad * articulo.precioCliente) + (articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100)))) | currency: "$" }}
+                                        {{ (articulo.cantidad * articulo.precioCliente) | currency: "$" }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -142,12 +145,12 @@
                     <table class="table invoice-total">
                         <tbody>
                             <tr>
-                                <td><strong>Sub Total Taller :</strong></td>
+                                <td><strong>TOTAL Taller :</strong></td>
                                 <td>{{ sumaPrecioTotal  | currency: "$"}}</td>
                                 
                             </tr>
                             <tr>
-                                <td><strong>Sub Total Cliente:</strong></td>
+                                <td><strong>TOTAL Cliente:</strong></td>
                                 <td>{{sumaPrecioTotalCliente | currency: "$"}}</td>
                             </tr>
                         </tbody>

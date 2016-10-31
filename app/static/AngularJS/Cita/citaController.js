@@ -1039,17 +1039,6 @@ var getidCita = function (idCita) {
                                     if (estatusUtilidad.data[0].estatus == 1) {
 
                                          $('#insertarToken').appendTo("body").modal('show');
-                                         // $scope.insertarToken = true;
-
-                                        /*swal({
-                                            title: "Advertencia",
-                                            text: "La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.",
-                                            type: "warning",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#67BF11",
-                                            confirmButtonText: "Aceptar",
-                                            closeOnConfirm: true
-                                        });*/
 
                                     } else {
                                           $scope.aprobacionCita(cita);
@@ -1136,8 +1125,8 @@ var getidCita = function (idCita) {
                  ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo).then(function (mail) {
 
                     if (mail.data[0].enviado == 1) {
-                        //token
-                        alertFactory.success("La orden se mandó a aprobación por margen de utilidad bajo a lo esperado. ");
+                        swal("La orden se envió  a aprobación por margen de utilidad de bajo a lo esperado.");
+                        //alertFactory.success("La orden se mandó a aprobación por margen de utilidad bajo a lo esperado. ");
                        
                     }
                 }, function (error) {
