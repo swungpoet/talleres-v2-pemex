@@ -8,7 +8,7 @@
 // -- Fecha: 08/07/2016
 // -- =============================================
 
-registrationModule.controller('citaController', function ($scope, $route, $rootScope, localStorageService, alertFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
+registrationModule.controller('citaController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
     var idTrabajoNew = '';
     $scope.message = 'Buscando...';
     $scope.userData = localStorageService.get('userData');
@@ -1015,6 +1015,8 @@ var getidCita = function (idCita) {
 
     //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion = function (cita) {
+
+        $scope.cita=cita;
      
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
        // var uitilidad = 100;
@@ -1037,11 +1039,11 @@ var getidCita = function (idCita) {
                                 if (estatusUtilidad.data.length > 0) {
 
                                     if (estatusUtilidad.data[0].estatus == 1) {
-
-                                         $('#insertarToken').appendTo("body").modal('show');
+                                        
+                                          modal_tiket($scope, $modal, $scope.idAprobacionUtilidad, 'Cita', $scope.aprobacionCita, '');
 
                                     } else {
-                                          $scope.aprobacionCita(cita);
+                                          $scope.aprobacionCita();
                                     }
                                 }else{
 
@@ -1071,14 +1073,15 @@ var getidCita = function (idCita) {
                                             //Total Cliente
                                             $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
                                             $('.modal-dialog').css('width','1000px'); 
-                                            $('#cotizacionDetalle').appendTo("body").modal('show');
+                                           // $('#cotizacionDetalle').appendTo("body").modal('show');
+                                           modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
 
                                         }, function (error) {
                                            alertFactory.error("Error al cargar la orden");
                                         });
 
                                     }else{
-                                        $scope.aprobacionCita(cita); 
+                                        $scope.aprobacionCita(); 
                                     }
                                 }  
                                     
@@ -1101,8 +1104,9 @@ var getidCita = function (idCita) {
     }
 
 
-    $scope.aprobacionCita = function(cita){
-        citaRepository.enviaAprobacion(cita.idCita).then(function (result) {
+    $scope.aprobacionCita = function(){
+        debugger;
+        citaRepository.enviaAprobacion($scope.cita.idCita).then(function (result) {
                 
             if (result.data[0].respuesta != 0) {
                alertFactory.success('Cotizaciones enviadas a aprobación');
@@ -1117,7 +1121,7 @@ var getidCita = function (idCita) {
 
     //UTILIDAD
     $scope.saveUtilidad = function (){
-         $('#cotizacionDetalle').modal('hide');
+        // $('#cotizacionDetalle').modal('hide');
          $('.modal-dialog').css('width','600px'); 
         ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
             if (aprobacionUtilidad.data[0].id > 0) {
@@ -1126,7 +1130,6 @@ var getidCita = function (idCita) {
 
                     if (mail.data[0].enviado == 1) {
                         swal("La orden se envió  a aprobación por margen de utilidad de bajo a lo esperado.");
-                        //alertFactory.success("La orden se mandó a aprobación por margen de utilidad bajo a lo esperado. ");
                        
                     }
                 }, function (error) {
@@ -1138,37 +1141,6 @@ var getidCita = function (idCita) {
         });
 
     }
-
-       $scope.saveToken = function () {
-        ordenServicioRepository.estatusToken($scope.token).then(function (estatus) {
-      
-            if (estatus.data.length > 0) {
-                if (estatus.data[0].estatus == 1) {
-                   // swal("Token disponible"); 
-                  // $scope.insertarToken = false;
-                   $('#insertarToken').modal('hide');
-                    ordenServicioRepository.putAprobacionUtilidadRespuesta($scope.idAprobacionUtilidad,$scope.userData.idUsuario, $scope.token).then(function (aprobacionUtilidad) {
-                    
-                        if (aprobacionUtilidad.data[0].id > 0) {
-                            
-                             $scope.procesarCompra();
-                             //alertFactory.success("Proceso Realizado!");                               
-                        }
-                    }, function (error) {
-                        alertFactory.error("Error al cargar la orden");
-                    });
-                }else{
-                    alertFactory.error("El token se ha utilizado previamente."); 
-                }
-                                               
-            }else{
-                 alertFactory.error("El token es incorrecto");  
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar la orden.");
-        });
-    }
-
 
 
     //valida si existe alguna precotización

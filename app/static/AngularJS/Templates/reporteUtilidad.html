@@ -117,6 +117,7 @@
                                         <th>Fecha de Cita</th>
                                         <th>Estatus Órden Servicio</th>
                                         <th>Tipo Orden</th>
+                                        <th>Estatus provisión</th>
                                         <th>Costo Orden</th>
                                         <th>Precio Orden</th>
                                         <th>Utilidad</th>
@@ -135,6 +136,7 @@
                                         <td>{{margenes.descripcionLarga}}</td>
                                         <td ng-if="margenes.idTipoCita == 1">Servicio</td>
                                         <td ng-if="margenes.idTipoCita == 2">Refaccion</td>
+                                        <td ng-class="{'rowAzul': margenes.estatusBPRO=='No provisionada'}">{{margenes.estatusBPRO}}</td>
                                         <td>{{margenes.costoOrden | currency }}</td>
                                         <td>{{margenes.precioOrden | currency }}</td>
                                         <td>{{margenes.utilidad | currency }}</td>
