@@ -1,0 +1,38 @@
+<div class="modal-header barra_popup" ng-init="init()">
+    <div class="modal-title">
+        <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="close()">×</button>
+        <h4 class="modal-title">Token</h4>
+        
+    </div>
+</div>
+<div class="modal-body">
+    <div id="content_popDrag">
+       <div class="modal-body">
+            <div class="row utlidad" ng-show="show_Aprobacion">
+                <label class="control-label">¿Desea aprobar la orden con el margen de utilidad actual?</label>
+            </div>
+
+            <div class="row utlidad" ng-show="!show_Aprobacion">
+                <label class="control-label">La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.</label>
+            </div>          
+            <div class="row aprobacion" ng-show="!show_Aprobacion">
+                <label class="control-label">¿Desea aprobar la orden con el margen de utilidad actual?</label>
+            </div>
+           
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">No. Token</label>
+                <div class="col-sm-7">
+                    <div class="m-b">
+                        <input type="text" class="form-control" ng-model="token">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="close()">Cancelar</button>
+    <button type="button" class="btn btn-success" ng-click="saveToken()">Aceptar</button>
+</div>
+
+      
