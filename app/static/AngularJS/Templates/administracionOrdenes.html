@@ -3,9 +3,6 @@
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Gestión de Compras Unificadas<span class="subtitle">Administrador</span></span>
-        <div class="col-lg-offset-10 col-lg-2">
-            <button class="btn btn-success" type="button" ng-click="modalCertificado()" data-toggle="tooltip" tooltip="Genera Certificados" tooltip-placement="left"><span class="glyphicon glyphicon-cog"></span></button>
-        </div>
     </div>
     <br>
     <div class="wrapper wrapper-content">
@@ -46,6 +43,7 @@
                                         <th>Anticipo</th>
                                         <th>Factura</th>
                                         <th>Comprar</th>
+                                        <th>Generar Certificado</th>
                                         <th>Eliminar Orden</th>
                                     </tr>
                                 </thead>
@@ -177,6 +175,9 @@
                                         <td>
                                             <button class="btn btn-informa" type="button" ng-click="verificaOrden(orden.idTrabajo,orden.sinProveedor, orden.montoOrden, orden.precioOrden, orden.numeroTrabajo)" data-toggle="tooltip" tooltip="Realizar compra" tooltip-placement="left"><span class="glyphicon glyphicon-shopping-cart"></span></button>
 
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" type="button" ng-click="Generar(orden.idTrabajo)" data-toggle="tooltip" tooltip="Genera Certificados" tooltip-placement="left"><span class="glyphicon glyphicon-cog"></span></button>
                                         </td>
                                         <td>
                                             <button ng-show="userData.idTipoUsuario == 1" class="btn btn-danger btnCancelarOrden" type="button" tooltip="Cancelar Orden" ng-click="cancelarOrden(orden.idCita, orden.numeroTrabajo)" tooltip-placement="left">

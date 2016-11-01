@@ -355,13 +355,13 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
     $scope.verificaOrden = function (idTrabajo, sinProveedor, montoOrden, precioOrden, numeroTrabajo) {
         //LQMA 14092016
-        
-        $scope.idTrabajo=idTrabajo;
+
+        $scope.idTrabajo = idTrabajo;
 
         if (sinProveedor > 0) {
             swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
         } else {
-             $('.btnVerificarOrden').ready(function () {
+            $('.btnVerificarOrden').ready(function () {
                 ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
                     if (result.data.length > 0) {
                         swal({
@@ -371,37 +371,37 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                             showCancelButton: false,
                             confirmButtonColor: "#67BF11",
                             confirmButtonText: "Aceptar",
-                             closeOnConfirm: true
+                            closeOnConfirm: true
                         });
                     } else {
 
                         swal({
-                            title: "Advertencia",
-                            text: "¿Está seguro de procesar la compra?",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#67BF11",
-                            confirmButtonText: "Si",
-                            cancelButtonText: "No",
-                            closeOnConfirm: false,
-                            closeOnCancel: true
-                         },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                    if (ordenVerificada.data[0].idHistorialProceso == 1) {
-                                        swal("Orden Provisionada!");
-                                        //location.href = '/ordenesporcobrar';
-                                    }else{
-                                        swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
-                                        // alertFactory.error("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
-                                    }
-                                }, function (error) {
-                                    alertFactory.error("Error al verificar la orden");
-                                });
-                                swal("Orden Provisionada!");
-                            }
-                         });
+                                title: "Advertencia",
+                                text: "¿Está seguro de procesar la compra?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#67BF11",
+                                confirmButtonText: "Si",
+                                cancelButtonText: "No",
+                                closeOnConfirm: false,
+                                closeOnCancel: true
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
+                                        if (ordenVerificada.data[0].idHistorialProceso == 1) {
+                                            swal("Orden Provisionada!");
+                                            //location.href = '/ordenesporcobrar';
+                                        } else {
+                                            swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                                            // alertFactory.error("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                                        }
+                                    }, function (error) {
+                                        alertFactory.error("Error al verificar la orden");
+                                    });
+                                    swal("Orden Provisionada!");
+                                }
+                            });
 
                     }
                 }, function (error) {
@@ -445,8 +445,51 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
 
     }
-    
-    $scope.modalCertificado = function(){
-        $('#modalGeneraCertificado').appendTo("body").modal('show'); 
+
+    $scope.Generar = function (idTrabajo) {
+        if (idTrabajo != '' || idTrabajo != undefined || idTrabajo != null) {
+            trabajoRepository.postGeneraCertificado(idTrabajo).then(function (certificadoGenerado) {
+                if (certificadoGenerado.data[0].noReporte != 'KO') {
+                    $scope.generaCertificado = true;
+                    $scope.noReporte = certificadoGenerado.data[0].noReporte;
+                    $scope.gerencia = certificadoGenerado.data[0].region;
+                    $scope.tad = certificadoGenerado.data[0].tad;
+                    $scope.solpe = certificadoGenerado.data[0].solpe;
+                    $scope.ordenSurtimiento = certificadoGenerado.data[0].osur;
+                    $scope.montoOS = certificadoGenerado.data[0].montoOs;
+                    $scope.nombreEmisor = '';
+                    $scope.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
+                    $scope.puestoProveedor = certificadoGenerado.data[0].puestoProveedor;
+                    $scope.idTrabajo = idTrabajo;
+
+                    trabajoRepository.getReporteDummy(idTrabajo, $scope.noReporte, $scope.gerencia, $scope.tad, $scope.solpe, $scope.ordenSurtimiento, $scope.montoOS, $scope.nombreProveedor, $scope.puestoProveedor).then(function (respuesta) {
+                        var algo = ''
+                        $scope.certificadoParams = {
+                            noReporte: "",
+                            gerencia: "",
+                            tad: "",
+                            solpe: "",
+                            ordenSurtimiento: "",
+                            montoOS: "",
+                            nombreEmisor: "",
+                            nombreProveedor: "",
+                            puestoProveedor: ""
+                        }                        
+                        alertFactory.success('Certificado regenerado correctamente');
+                    }, function (error) {
+                        alertFactory.error('El certificado no se pudo regenerar');
+                    });
+
+                } else {
+                    alertFactory.error('El certificado no se pudo regenerar');
+                }
+            }, function (error) {
+                alertFactory.error('El certificado no se pudo regenerar');
+            });
+
+        } else {
+            alertFactory.error('Debe especificar un número de trabajo');
+        }
+
     }
 });

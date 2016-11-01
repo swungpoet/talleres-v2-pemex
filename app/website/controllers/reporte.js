@@ -354,11 +354,15 @@ function generateConfomidadReporte(data) {
     })
 
     var dirCertificado = 'app/static/uploads/files/' + data.idTrabajo;
+    if (!fs.existsSync(dirCertificado + '/documentos')) {
+        fs.mkdirSync(dirCertificado + '/documentos');
+    }
+    
     if (!fs.existsSync(dirCertificado + '/documentos' + '/certificadoConformidad')) {
         fs.mkdirSync(dirCertificado + '/documentos' + '/certificadoConformidad');
     }
 
-    doc.pipe(fs.createWriteStream(dirCertificado + '/documentos/certificadoConformidad/' + 'CertificadoConformidad.pdf'));
+    doc.pipe(fs.createWriteStream(dirCertificado + '/documentos/certificadoConformidad/' + 'CertificadoConformidadOriginal.pdf'));
 
     /*doc.pipe(res)*/
     doc.fontSize(7)

@@ -556,6 +556,29 @@ Trabajo.prototype.post_eliminaOrden = function (req, res, next) {
             result: result
         });
     });
-}
+}  
+
+
+//Genera un Certificado de Conformidad sin alterar su estatus
+Trabajo.prototype.post_generaCertificado = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.post('SEL_GENERA_CERTIFICADO_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+} 
 
 module.exports = Trabajo;
