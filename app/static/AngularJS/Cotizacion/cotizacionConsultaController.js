@@ -83,6 +83,32 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
                 });
     }
 
+           //espera que el documento se pinte para llenar el dataTable
+    var waitDrawDocument = function (dataTable) {
+        setTimeout(function () {
+            $('.' + dataTable).DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        title: 'OrdenporCobrar'
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        }, 2500);
+    }
+
     //Redirige los parametros de la cotización para su aprobación
     $scope.Autorizacion = function (idCita1, idCotizacion1, idUnidad1, numeroCotizacion, idTrabajo1, taller1) {
         localStorageService.set('cita', idCita1);

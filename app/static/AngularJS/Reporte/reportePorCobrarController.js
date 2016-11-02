@@ -20,6 +20,7 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
             porcobrar.data.forEach(function (sumatoria) {
                 if (sumatoria.ID == 6) $scope.cobrarsinfactura = sumatoria.total;
                 if (sumatoria.ID == 7) $scope.cobrarsincopade = sumatoria.total;
+                if (sumatoria.ID == 8) $scope.ordenfacturadas = sumatoria.total;
             });
             $scope.obtenPorcentaje();
             if (porcobrar.data.length > 0) {
@@ -63,6 +64,9 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
         } else if ($scope.tipoPorCobrar == 1) {
             $scope.ordensinCopade();
             $scope.getNumeroPorCobrar();
+        } else if ($scope.tipoPorCobrar == 2) {
+            $scope.facturada();
+            $scope.getNumeroPorCobrar();
         } else {
             $scope.ordensinFactura();
             $scope.getNumeroPorCobrar();
@@ -104,6 +108,12 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
                 ]
             });
         }, 2500);
+    }
+
+        //Muestra el historico de ordenes sin factura
+    $scope.facturada = function () {
+        $('.dataTableFacturado').DataTable().destroy();
+        $scope.tipoPorCobrar = 2;
     }
 
     //Muestra el historico de ordenes sin copade

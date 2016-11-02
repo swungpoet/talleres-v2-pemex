@@ -143,6 +143,12 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
+        getFacturados: function () {
+            return $http({
+                url: ordenUrl + 'facturados',
+                method: "GET"
+            });
+        }
 
     };
 });

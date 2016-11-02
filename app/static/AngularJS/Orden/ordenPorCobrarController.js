@@ -13,6 +13,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
         if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
             $scope.preFacturas();
+            $scope.trabajosFacturados();
         }
         if ($scope.userData.idTipoUsuario == 1) {
             $scope.getCopades();
@@ -425,6 +426,28 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
+    $scope.trabajosFacturados = function () {
+        var sumatoria= 0;
+        $('.dataTableFacturados').DataTable().destroy();
+        ordenPorCobrarRepository.getFacturados().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.facturados = result.data;
+                
+                for(var i=0;i<result.data.length;i++){
+                    sumatoria += parseFloat(result.data[i].total);
+                };
+                $scope.sumatoriafacturadas=sumatoria;
+
+                waitDrawDocument("dataTableFacturados");
+            } else {
+                alertFactory.info('No se encontraron trabajos por cobrar');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener trabajos por cobrar");
+        });
+    }
+
+
     //valida (+-)1 del monto de la copa contrar la orden seleccionada
     var validaMontoCapadeOrden = function(montoOrdenSeleccionado){
         if($scope.monto != null && $scope.monto != '' && $scope.monto > 0){
@@ -435,9 +458,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 return false;
         }
     }
-});
 
-   //espera que el documento se pinte para llenar el dataTable
+       //espera que el documento se pinte para llenar el dataTable
     var waitDrawDocument = function (dataTable) {
         setTimeout(function () {
             $('.' + dataTable).DataTable({
@@ -462,3 +484,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             });
         }, 2500);
     }
+
+});
+
+
+

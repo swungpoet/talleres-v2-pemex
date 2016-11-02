@@ -223,7 +223,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
             if (ordenesCobrar.data.length > 0) {
                 $('#morris-donut-cobrar').empty();
                 var sinFactura = 0;
-                var revision = 0;
+                var facturado = 0;
                 var esperaCopade = 0;
 
                 $scope.ordenesCobrarD = ordenesCobrar.data;
@@ -234,13 +234,14 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 ordenesCobrar.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'Ordenes sin COPADE') sinFactura = sumatoria.total;
                         if (sumatoria.estatus == 'PreFactura generada') esperaCopade = sumatoria.total;
+                        if (sumatoria.estatus == 'Facturado') facturado = sumatoria.total;
                         /*if (sumatoria.estatus == 'ESPERA COPADE') revision = sumatoria.total;*/
                         $scope.totalHorasOrdenesCobrar = $scope.totalHorasOrdenesCobrar + sumatoria.promedio;
                     }
 
                 );
 
-                $scope.totalOrdenesPorCobrar = sinFactura + revision + esperaCopade;
+                $scope.totalOrdenesPorCobrar = sinFactura + facturado + esperaCopade;
 
                 Morris.Donut({
                     element: 'morris-donut-cobrar',
@@ -256,10 +257,14 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         {
                             label: "PreFactura generada",
                             value: esperaCopade
+                        },
+                        {
+                            label: "Facturado",
+                            value: facturado
                         }
                     ],
                     resize: true,
-                    colors: ['#64AE27', '#B7CC1B', '#B7CC1B'],
+                    colors: ['#64AE27', '#B7CC1B', '#FF8000'],
                 }).on('click', function (i, row) {
                     location.href = '/reporteporcobrar?tipoPorCobrar=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });

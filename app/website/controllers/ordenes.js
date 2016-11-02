@@ -1272,4 +1272,18 @@ Orden.prototype.get_trbajoCobrado = function (req, res, next) {
             });
         });
     }
+
+    //Devuelve los trabajos cobrados y listos para facturar
+Orden.prototype.get_facturados = function (req, res, next) {
+    var self = this;
+    var params = [];
+
+    this.model.query('SEL_TRABAJOS_FACTURADOS_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Orden;
