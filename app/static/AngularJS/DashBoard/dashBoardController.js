@@ -167,7 +167,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 $scope.ordenesServicio = ordenes.data;
                 $scope.totalHorasOrdenesServicio = 0;
 
-                $scope.ordenesServicio.splice(5, 2);
+                $scope.ordenesServicio.splice(5, 3);
 
                 ordenes.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'En proceso de reparación') proceso = sumatoria.total;
