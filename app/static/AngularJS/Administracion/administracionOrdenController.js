@@ -31,7 +31,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
             if (admonOrden.data.length > 0) {
                 alertFactory.success("Orden encontrada");
                 $scope.admonOrdenes = admonOrden.data;
-                waitDrawDocument("dataTableOrdenServicio");
+               /* waitDrawDocument("dataTableOrdenServicio");*/
             } else {
                 alertFactory.info("No se encontró el número de órden especificado");
             }
@@ -460,9 +460,10 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                     $scope.nombreEmisor = '';
                     $scope.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
                     $scope.puestoProveedor = certificadoGenerado.data[0].puestoProveedor;
+                    $scope.fechaGeneracion = certificadoGenerado.data[0].fechaGeneracion;
                     $scope.idTrabajo = idTrabajo;
 
-                    trabajoRepository.getReporteDummy(idTrabajo, $scope.noReporte, $scope.gerencia, $scope.tad, $scope.solpe, $scope.ordenSurtimiento, $scope.montoOS, $scope.nombreProveedor, $scope.puestoProveedor).then(function (respuesta) {
+                    trabajoRepository.getReporteDummy(idTrabajo, $scope.noReporte, $scope.gerencia, $scope.tad, $scope.solpe, $scope.ordenSurtimiento, $scope.montoOS, $scope.nombreProveedor, $scope.puestoProveedor, $scope.fechaGeneracion).then(function (respuesta) {
                         var algo = ''
                         $scope.certificadoParams = {
                             noReporte: "",

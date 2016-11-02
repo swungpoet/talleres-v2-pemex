@@ -375,7 +375,7 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        getReporteDummy: function (idTrabajo, noReporte, gerencia, tad, solpe, ordenSurtimiento, montoOS, nombreProveedor, puestoProveedor) {
+        getReporteDummy: function (idTrabajo, noReporte, gerencia, tad, solpe, ordenSurtimiento, montoOS, nombreProveedor, puestoProveedor, fechaGeneracion) {
             return $http({
                 url: reporteDummyUrl + 'conformidadpdf/',
                 method: "GET",
@@ -388,7 +388,8 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     ordenSurtimiento: ordenSurtimiento,
                     montoOS: montoOS,
                     nombreProveedor: nombreProveedor,
-                    puestoProveedor: puestoProveedor
+                    puestoProveedor: puestoProveedor,
+                    fechaGeneracion: fechaGeneracion.substring(0,10)
                 },
                 headers: {
                     'Content-Type': 'application/json'

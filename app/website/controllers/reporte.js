@@ -6,7 +6,7 @@ var TrabajoView = require('../views/ejemploVista'),
 var fs = require('fs');
 
 fecha.i18n = {
-    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviember', 'Diciembre']
+    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 }
 
 var Reporte = function (conf) {
@@ -95,9 +95,15 @@ Reporte.prototype.get_conformidadpdf = function (req, res, next) {
             name: 'idTrabajo',
             value: req.query.idTrabajo,
             type: self.model.types.INT
+        },
+        {
+            name: 'fechaGeneracion',
+            value: req.query.fechaGeneracion,
+            type: self.model.types.STRING
         }
     ];
     var data = {};
+    var fechaFinal = Date.parse(req.query.fechaGeneracion + 'T10:20:30Z');
     data = {
         noReporte: req.query.noReporte,
         gerencia: req.query.gerencia,
@@ -108,7 +114,7 @@ Reporte.prototype.get_conformidadpdf = function (req, res, next) {
         nombreEmisor: '',
         nombreProveedor: req.query.nombreProveedor,
         puestoProveedor: req.query.puestoProveedor,
-        fecha: new Date(),
+        fecha: new Date(fechaFinal),
         idTrabajo: req.query.idTrabajo
     }
 
@@ -362,7 +368,7 @@ function generateConfomidadReporte(data) {
         fs.mkdirSync(dirCertificado + '/documentos' + '/certificadoConformidad');
     }
 
-    doc.pipe(fs.createWriteStream(dirCertificado + '/documentos/certificadoConformidad/' + 'CertificadoConformidadOriginal.pdf'));
+    doc.pipe(fs.createWriteStream(dirCertificado + '/documentos/certificadoConformidad/' + 'CConformidadOriginal.pdf'));
 
     /*doc.pipe(res)*/
     doc.fontSize(7)
