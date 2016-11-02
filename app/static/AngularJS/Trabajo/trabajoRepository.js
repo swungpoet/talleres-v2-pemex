@@ -406,6 +406,18 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
+        },
+        postGeneraCertificado: function (idTrabajo) {
+            return $http({
+                url: trabajoUrl + 'generaCertificado/',
+                method: "POST",
+                data: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });

@@ -8,7 +8,7 @@
 // -- Fecha:
 // -- =============================================
 
-registrationModule.controller('aprobacionutilidadController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository ) {
+registrationModule.controller('aprobacionutilidadController', function ($scope, $modal, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository ) {
         $scope.idTipoCotizacion=0;
         $scope.ideTaller=0;
     //init del controller
@@ -18,6 +18,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     }
 
     $scope.getAprobacionUtilidad = function () {
+
 
         $('.dataTableAprobacionUtilidad').DataTable().destroy();
         ordenServicioRepository.getAprobacionUtilidad().then(function (aprobacionUtilidad) {
@@ -46,79 +47,15 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     }
 
      $scope.aprobar = function (utilidad) {
-       
-       $scope.idAprobacionUtilidad=utilidad.idAprobacionUtilidad;
-     
-       ordenServicioRepository.getDetalleOrden(parseInt(utilidad.idTrabajo)).then(function (detalle) {
-            $scope.detalleOrden=detalle.data;
-            $scope.sumaIvaTotal = 0;
-            $scope.sumaPrecioTotal =0;
-            $scope.sumaIvaTotalCliente =0;
-            $scope.sumaPrecioTotalCliente =0;
-            $scope.sumaGranTotal =0;
-            $scope.sumaGranTotalCliente =0;
-            $scope.detalleOrden=detalle.data;
-             for (var i = 0; i < detalle.data.length; i++) {
-                //Sumatoria Taller
-                $scope.sumaIvaTotal += (detalle.data[i].cantidad * detalle.data[i].precio) * (detalle.data[i].valorIva / 100);
-                $scope.sumaPrecioTotal += (detalle.data[i].cantidad * detalle.data[i].precio);
+    
+       $scope.idAprobacionUtilidad=utilidad.idAprobacionUtilidad; 
 
-                //Sumatoria Cliente
-                $scope.sumaIvaTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente) * (detalle.data[i].valorIva / 100);
-                $scope.sumaPrecioTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente);
-            }
-            //Total Taller
-            $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
-
-            //Total Cliente
-            $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
-
-            $('.modal-dialog').css('width','1000px'); 
-            $('#cotizacionDetalle').modal('show');
-
-
-
-        }, function (error) {
-           alertFactory.error("Error al cargar la orden");
-        });
-
-                
+        modal_detalle_cotizacion($scope, $modal, utilidad.idTrabajo, 'Aprobacion', $scope.aprobarUtilidad, '');  
     }
 
     $scope.aprobarUtilidad = function (){
-         $('#cotizacionDetalle').modal('hide');
          $('.modal-dialog').css('width','600px'); 
-         $scope.token='';
-         $('#insertarToken').modal('show');          
-    }
-
-    $scope.saveToken = function () {
-        ordenServicioRepository.estatusToken($scope.token).then(function (estatus) {
-      
-            if (estatus.data.length > 0) {
-                if (estatus.data[0].estatus == 1) {
-                   // swal("Token disponible"); 
-                   $('#insertarToken').modal('hide');
-                    ordenServicioRepository.putAprobacionUtilidadRespuesta($scope.idAprobacionUtilidad,$scope.userData.idUsuario, $scope.token).then(function (aprobacionUtilidad) {
-                    
-                        if (aprobacionUtilidad.data[0].id > 0) {
-                            
-                             $scope.getAprobacionUtilidad();
-                             //alertFactory.success("Proceso Realizado!");                               
-                        }
-                    }, function (error) {
-                        alertFactory.error("Error al cargar la orden");
-                    });
-                }else{
-                    alertFactory.error("El token se ha utilizado previamente."); 
-                }
-                                               
-            }else{
-                 alertFactory.error("El token es incorrecto");  
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar la orden.");
-        });
+         modal_tiket($scope, $modal, $scope.idAprobacionUtilidad, 'Aprobacion', $scope.getAprobacionUtilidad, '');         
     }
 
 });
