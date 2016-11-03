@@ -234,7 +234,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                 ordenesCobrar.data.forEach(function (sumatoria) {
                         if (sumatoria.estatus == 'Ordenes sin COPADE') sinFactura = sumatoria.total;
                         if (sumatoria.estatus == 'PreFactura generada') esperaCopade = sumatoria.total;
-                        if (sumatoria.estatus == 'Facturado') facturado = sumatoria.total;
+                        if (sumatoria.estatus == 'Factura enviada al cliente') facturado = sumatoria.total;
                         /*if (sumatoria.estatus == 'ESPERA COPADE') revision = sumatoria.total;*/
                         $scope.totalHorasOrdenesCobrar = $scope.totalHorasOrdenesCobrar + sumatoria.promedio;
                     }
@@ -259,7 +259,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                             value: esperaCopade
                         },
                         {
-                            label: "Facturado",
+                            label: "Factura enviada al cliente",
                             value: facturado
                         }
                     ],
