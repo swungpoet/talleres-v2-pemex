@@ -62,7 +62,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#591FCE', '#0C9CEE', '#A1F480'],
+                    colors: ['#00BFFF', '#074F7D', '#5B86A6'],
                     /*colors: ['#591FCE', '#0C9CEE', '#3DBDC2', '#A1F480'],*/
                 }).on('click', function (i, row) {
                     location.href = '/reportecita?tipoCita=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
@@ -106,7 +106,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }*/
                     ],
                     resize: true,
-                    colors: ['#CA4B7C'],
+                    colors: ['#2EE9FF'],
                     /*colors: ['#FF889A', '#CA4B7C', '#7A2E7A'],*/
                 }).on('click', function (i, row) {
                     location.href = '/reportecotizacion?tipoCotizacion=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
@@ -208,7 +208,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#65AFFF', '#333333', '#666666', '#E1D052', '#FFC300'],
+                    colors: ['#4D4040', '#E3D494', '#FFBF75', '#F09090', '#C45C75'],
                 }).on('click', function (i, row) {
                     location.href = '/reporteorden?tipoOrden=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
@@ -264,7 +264,7 @@ registrationModule.controller('dashBoardController', function ($scope, alertFact
                         }
                     ],
                     resize: true,
-                    colors: ['#64AE27', '#B7CC1B', '#FF8000'],
+                    colors: ['#ECDCCC', '#CB6501', '#C03427'],
                 }).on('click', function (i, row) {
                     location.href = '/reporteporcobrar?tipoPorCobrar=' + i + '&idZona=' + $scope.zonaSelected + '&idTar=' + $scope.tarSelected;
                 });
