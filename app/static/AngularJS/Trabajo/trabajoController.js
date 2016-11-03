@@ -362,14 +362,10 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                                 $scope.certificadoParams.nombreProveedor = certificadoGenerado.data[0].nombreProveedor;
                                 $scope.certificadoParams.puestoProveedor = certificadoGenerado.data[0].puestoProveedor;
                                 $scope.idTrabajo = idTrabajo;
-                                //if(certificadoGenerado.data[0].idHistorialProceso > 0){
-                                //alertFactory.success("Certificado de conformidad generado");
-                                /*getTrabajo($scope.userData.idUsuario);
-                                getTrabajoTerminado($scope.userData.idUsuario);
-                                getTrabajoAprobado($scope.userData.idUsuario);
-                                $scope.getAdmonOrdenes();*/
+                                var fechaGeneracion = new Date();
+                                fechaGeneracion = formatDate(fechaGeneracion);
 
-                                trabajoRepository.getReporteDummy(idTrabajo, $scope.certificadoParams.noReporte, $scope.certificadoParams.gerencia, $scope.certificadoParams.tad, $scope.certificadoParams.solpe, $scope.certificadoParams.ordenSurtimiento, $scope.certificadoParams.montoOS, $scope.certificadoParams.nombreProveedor, $scope.certificadoParams.puestoProveedor).then(function (respuesta) {
+                                trabajoRepository.getReporteDummy(idTrabajo, $scope.certificadoParams.noReporte, $scope.certificadoParams.gerencia, $scope.certificadoParams.tad, $scope.certificadoParams.solpe, $scope.certificadoParams.ordenSurtimiento, $scope.certificadoParams.montoOS, $scope.certificadoParams.nombreProveedor, $scope.certificadoParams.puestoProveedor, fechaGeneracion).then(function (respuesta) {
                                     var algo = ''
                                     $scope.certificadoParams = {
                                         noReporte: "",
@@ -906,7 +902,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
             alertFactory.error("Error al procesar la informacion Temporal");
         })
     }
-    
+
     $scope.cancelarOrden = function (idCita, numeroOrden) {
         swal({
                 title: "Advertencia",
@@ -931,6 +927,18 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                     });
                 }
             });
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
     }
 
 });
