@@ -35,9 +35,10 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
 
     //obtiene el procentaje de las ordenes por cobrar
     $scope.obtenPorcentaje = function () {
-        var totalPorCobrar = $scope.cobrarsinfactura + $scope.cobrarsincopade;
+        var totalPorCobrar = $scope.cobrarsinfactura + $scope.cobrarsincopade + $scope.ordenfacturadas ;
         $scope.porcentajesinfactura = ($scope.cobrarsinfactura * 100) / totalPorCobrar;
         $scope.porcentajecopade = ($scope.cobrarsincopade * 100) / totalPorCobrar;
+        $scope.porcentajefacturadas = ($scope.ordenfacturadas * 100) / totalPorCobrar;
     }
 
     //Regresa la variable de la url
@@ -81,9 +82,11 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
             if (dataTable == 'dataTableSinFactura') {
                 indicePorOrdenar = 11;
             } else if (dataTable == 'dataTableSinCopade') {
-                indicePorOrdenar = 11;
+                indicePorOrdenar = 6;
+            } else if (dataTable == 'dataTableFacturados') {
+                indicePorOrdenar = 6;
             } else {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 6;
             }
 
             $('.' + dataTable).DataTable({
@@ -110,23 +113,34 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
         }, 2500);
     }
 
-        //Muestra el historico de ordenes sin factura
+        //Muestra el historico de ordenes facturadas
     $scope.facturada = function () {
-        $('.dataTableFacturado').DataTable().destroy();
         $scope.tipoPorCobrar = 2;
+        reportePorCobrarRepository.getHistorialPorCobrar(2, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (facturadas) {
+            $('.dataTableFacturados').DataTable().destroy();
+            $scope.datafacturada = facturadas.data;
+            waitDrawDocument("dataTableFacturados");
+            if (facturadas.data.length > 0) {
+                alertFactory.success('Exito al obtener las ordenes Facturadas');
+            } else {
+                alertFactory.info('No se encontraron las ordenes Facturadas');
+            }
+        }, function (error) {
+            alertFactory.error('Error al obtener los datos');
+        });
     }
 
     //Muestra el historico de ordenes sin copade
     $scope.ordensinCopade = function () {
         $scope.tipoPorCobrar = 1;
-        reportePorCobrarRepository.getHistorialPorCobrar(16, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sincopade) {
+        reportePorCobrarRepository.getHistorialPorCobrar(1, $scope.userData.idUsuario,$scope.idZona,$scope.idTar).then(function (sincopade) {
             $('.dataTableSinCopade').DataTable().destroy();
             $scope.datasincopade = sincopade.data;
             waitDrawDocument("dataTableSinCopade");
             if (sincopade.data.length > 0) {
-                alertFactory.success('Exito al obtener las copades pendientes');
+                alertFactory.success('Exito al obtener las ordenes preFacturadas');
             } else {
-                alertFactory.info('No se encontraron las copades pendientes');
+                alertFactory.info('No se encontraron las ordenes preFacturadas');
             }
         }, function (error) {
             alertFactory.error('Error al obtener los datos');
@@ -141,9 +155,9 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
             $scope.datasinfactura = sinfactura.data;
             waitDrawDocument("dataTableSinFactura");
             if (sinfactura.data.length > 0) {
-                alertFactory.success('Exito al obtener las facturas pendientes');
+                alertFactory.success('Exito al obtener las ordenes sin COPADE');
             } else {
-                alertFactory.info('No se encontraron las facturas pendientes');
+                alertFactory.info('No se encontraron las ordenes sin COPADE');
             }
         }, function (error) {
             alertFactory.error('Error al obtener los datos');
