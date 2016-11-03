@@ -1072,7 +1072,7 @@ var getidCita = function (idCita) {
 
                                             //Total Cliente
                                             $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
-                                            $('.modal-dialog').css('width','1000px'); 
+                                            $('.modal-dialog').css('width','1050px'); 
                                            // $('#cotizacionDetalle').appendTo("body").modal('show');
                                            modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
 
@@ -1083,7 +1083,7 @@ var getidCita = function (idCita) {
                                     }else{
                                         $scope.aprobacionCita(); 
                                     }
-                                }  
+                                } 5
                                     
                              }, function (error) {
                                 alertFactory.error("Error al cargar la orden");
@@ -1105,7 +1105,7 @@ var getidCita = function (idCita) {
 
 
     $scope.aprobacionCita = function(){
-        debugger;
+      
         citaRepository.enviaAprobacion($scope.cita.idCita).then(function (result) {
                 
             if (result.data[0].respuesta != 0) {
@@ -1126,10 +1126,22 @@ var getidCita = function (idCita) {
         ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
             if (aprobacionUtilidad.data[0].id > 0) {
                //CORREO
-                 ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo).then(function (mail) {
+                 ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (mail) {
 
                     if (mail.data[0].enviado == 1) {
-                        swal("La orden se envió  a aprobación por margen de utilidad de bajo a lo esperado.");
+
+                        swal({
+                            title: "Advertencia",
+                            text: "La orden se envió a aprobación por que el margen de utilidad es menor a lo esperado.",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#67BF11",
+                            confirmButtonText: "Aceptar",
+                            cancelButtonText: "No",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        });
+                       // swal("La orden se envió  a aprobación por margen de utilidad de bajo a lo esperado.");
                        
                     }
                 }, function (error) {

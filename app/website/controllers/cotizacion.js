@@ -1218,6 +1218,22 @@ Cotizacion.prototype.get_tipoCotizaciones = function (req, res, next) {
     });
 }
 
+//Obtiene el precio del cliente  de un Item 
+Cotizacion.prototype.get_precioItemCliente = function (req, res, next) {
+    var self = this;
+    var params = [{
+            name: 'idItem',
+            value: req.query.idItem,
+            type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_PRECIO_ITEM_CLIENTE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 //Obtiene los talleres disponibles 
 Cotizacion.prototype.get_tallerCotizacion = function (req, res, next) {
     //Referencia a la clase para callback

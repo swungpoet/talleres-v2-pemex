@@ -35,7 +35,7 @@ registrationModule.controller('cotizacionDetalle_controller', function ($scope, 
             //Total Cliente
             $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
 
-            $('.modal-dialog').css('width','1000px'); 
+            $('.modal-dialog').css('width','1050px'); 
 
         }, function (error) {
            alertFactory.error("Error al cargar la orden");

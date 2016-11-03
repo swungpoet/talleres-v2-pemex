@@ -1240,6 +1240,11 @@ Orden.prototype.get_enviarnotificacionutilidad = function (req, res, next) {
         name: 'idTrabajo',
         value: req.query.idTrabajo,
         type: self.model.types.INT
+    },
+    {
+        name: 'idUsuario',
+        value: req.query.idUsuario,
+        type: self.model.types.INT
     }];
 
    // req.query.tipoCorreo == 4 ? storeName = 'SEL_NOTIFICACION_CITA_SIN_TALLER_SP' : storeName = 'SEL_NOTIFICACION_CITA_SP';

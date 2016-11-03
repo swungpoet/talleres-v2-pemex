@@ -1,7 +1,7 @@
 <div class="modal-header barra_popup" ng-init="init()">
     <div class="modal-title">
         <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="close()">×</button>
-        <h4 class="modal-title">Token</h4>
+        <h4 class="modal-title">Token de Autorización</h4>
         
     </div>
 </div>
@@ -9,14 +9,14 @@
     <div id="content_popDrag">
        <div class="modal-body">
             <div class="row utlidad" ng-show="show_Aprobacion">
-                <label class="control-label">¿Desea aprobar la orden con el margen de utilidad actual?</label>
+                <label class="control-label">Introduzca token proporcionado por el administrador.</label>
             </div>
 
             <div class="row utlidad" ng-show="!show_Aprobacion">
-                <label class="control-label">La uitilidad debe ser minima de 5%, ya se encuentra en espera de aprobación.</label>
+                <label class="control-label">La orden se encuentra en espera de autorización, porque el margen de utilidad es menor a lo esperado.</label>
             </div>          
             <div class="row aprobacion" ng-show="!show_Aprobacion">
-                <label class="control-label">¿Desea aprobar la orden con el margen de utilidad actual?</label>
+                <label class="control-label">Introduzca token proporcionado por el administrador.</label>
             </div>
            
             <div class="form-group row">

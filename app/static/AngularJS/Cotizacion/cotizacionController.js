@@ -5,7 +5,7 @@
 // -- Modificó: Mario Mejía
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionController', function ($scope, $rootScope, alertFactory, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository) {
+registrationModule.controller('cotizacionController', function ($scope, $route, $rootScope, alertFactory, uploadRepository, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository) {
     $scope.arrayItem = [];
     $scope.arrayCambios = [];
     var valor = '';
@@ -604,7 +604,43 @@ registrationModule.controller('cotizacionController', function ($scope, $rootSco
     }
 
     $scope.precioEditado = function (pieza) {
+       
+       cotizacionRepository.precioItemCliente(pieza.idItem).then(function (result) {
+       
+            var uitilidad = (result.data[0].precioCliente - $scope.precioActual)/result.data[0].precioCliente ;
 
+            if (uitilidad<result.data[0].valor) {
+               swal({
+                    title: "Advertencia",
+                    text: "El precio unitario de esta partida es $"+result.data[0].precioCliente +", el margen de utilidad  es menor de 5% tomando en cuenta el precio de captura  $"+$scope.precioActual+". ¿Desea continuar?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#67BF11",
+                    confirmButtonText: "Si",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $scope.$apply( function () {
+                            $scope.actualizaPrecio(pieza);
+                        });
+                    }
+                });
+
+            }else{
+                $scope.actualizaPrecio(pieza);
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo obtener precio cliente');
+        });
+
+
+        
+    }
+
+    $scope.actualizaPrecio = function (pieza){
         if ($scope.arrayItem.length != 0) {
             if (existsItem(pieza) == true) {
                 $scope.arrayItem.forEach(function (item, i) {

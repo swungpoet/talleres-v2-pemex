@@ -295,12 +295,13 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                 }
             })
         },
-         enviarNotificacionUtilidad: function (idTrabajo) {
+         enviarNotificacionUtilidad: function (idTrabajo, idUsuario) {
             return $http({
                 url: ordenUrl + 'enviarnotificacionutilidad/',
                 method: "GET",
                 params: {
-                    idTrabajo: idTrabajo
+                    idTrabajo: idTrabajo,
+                    idUsuario: idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

@@ -156,6 +156,18 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 }
             });
         },
+        precioItemCliente: function (idItem) {
+            return $http({
+                url: searchUrl + 'precioItemCliente',
+                method: "GET",
+                params: {
+                    idItem: idItem
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
         obtieneTallerCotizaciones: function (datoTaller, isPreCotizacion, idCita) {
             return $http({
                 url: searchUrl + 'tallerCotizacion',
