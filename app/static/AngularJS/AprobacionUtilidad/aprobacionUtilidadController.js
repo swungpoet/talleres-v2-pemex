@@ -26,7 +26,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
             if (aprobacionUtilidad.data.length > 0) {
                // alertFactory.success("Orden encontrada");
                 $scope.aprobacionUtilidades = aprobacionUtilidad.data;
-                waitDrawDocument("dataTableAprobacionUtilidad");
+               waitDrawDocument("dataTableAprobacionUtilidad");
             } else {
                 alertFactory.info("No se encontrarón datos");
             }
@@ -56,6 +56,31 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     $scope.aprobarUtilidad = function (){
          $('.modal-dialog').css('width','600px'); 
          modal_tiket($scope, $modal, $scope.idAprobacionUtilidad, 'Aprobacion', $scope.getAprobacionUtilidad, '');         
+    }
+
+    var waitDrawDocument = function (dataTable) {
+        setTimeout(function () {
+            $('.' + dataTable).DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        title: 'Utilidad'
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        }, 2500);
     }
 
 });
