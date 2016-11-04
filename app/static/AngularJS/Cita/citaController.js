@@ -1015,7 +1015,7 @@ var getidCita = function (idCita) {
 
     //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion = function (cita) {
-
+         var validaUtilidad= false;
         $scope.cita=cita;
      
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
@@ -1047,7 +1047,8 @@ var getidCita = function (idCita) {
                                     }
                                 }else{
 
-                                     if (UtilidadNeta >uitilidad) {    
+                                     //if (UtilidadNeta >uitilidad) {    
+                                         if (validaUtilidad) {    
                                      
                                         //Detalle de la cotiazacion
                                         ordenServicioRepository.getDetalleOrden(parseInt(cita.idTrabajo)).then(function (detalle) {
