@@ -54,7 +54,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                         waitDrawDocument("dataTableOsur");
                     } else {
                         $scope.datosOsur = [];
-                        autocloseertFactory.info("No existe información con los criterios de búsqueda");
+                        alertFactory.info("No existe información con los criterios de búsqueda");
                     }
                 },
                 function (error) {
@@ -163,9 +163,10 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                 
             };
         };
-
+       
         osurRepository.putNuevaOsur($scope.presupuestoSumaTotal, $scope.selectedTar.idTAR, $scope.folio, dateStringInicial, dateStringFinal, $scope.solpe ).then(function (result) {
-                if (result.data.length > 0) {
+               
+                if (result.data[0].ID !=null) {
                     alertFactory.info("Se generó correctamente la Osur");
                     $('#newOsurModal').modal('hide');
                     if ($scope.selectedTar != null) {
