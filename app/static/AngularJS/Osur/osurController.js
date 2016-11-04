@@ -109,9 +109,10 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
         var indice= 0;
 
         $scope.sumaOsur=[];
+
                          
         for(var i=0;i<$scope.datosOsur.length;i++){
-        
+       
             if ($scope.datosOsur[i].estatus === 'Utilizado'  && $scope.datosOsur[i].idAplicacion === null ) {
 
                 obj = new Object();
@@ -218,6 +219,31 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
             alertFactory.error("Error al obtener la información");
         });
         
+    }
+
+     var waitDrawDocument = function (dataTable) {
+        setTimeout(function () {
+            $('.' + dataTable).DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        title: 'Utilidad'
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        }, 2500);
     }
 });
 
