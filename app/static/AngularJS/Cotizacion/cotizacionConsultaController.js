@@ -10,6 +10,9 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
     $scope.userData.idTipoUsuario != 4 ? $scope.vistaPrecio = 1 : $scope.vistaPrecio = 2;
+    $scope.datosCita = {
+            idCita: ''
+        }
 
     $scope.init = function () {
         $scope.Maestro();
@@ -119,6 +122,8 @@ registrationModule.controller('cotizacionConsultaController', function ($scope, 
         localStorageService.set('work', idTrabajo1);
         localStorageService.set('taller', taller1);
         localStorageService.set('citaMsg', idCita1);
+        $scope.datosCita.idCita = idCita1;
+        localStorageService.set('citaRefacciones', $scope.datosCita);
         location.href = '/cotizacionautorizacion';
     }
 

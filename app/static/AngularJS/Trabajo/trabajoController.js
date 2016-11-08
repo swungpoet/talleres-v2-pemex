@@ -177,7 +177,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                     }
                 ]
             });
-        }, 2500);
+        }, 10000);
     }
 
     //actualiza el trabajo a estatus terminado

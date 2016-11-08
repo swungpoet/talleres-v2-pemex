@@ -10,7 +10,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         Dropzone.autoDiscover = false;
         $scope.dzOptionsOrdenCobrar = uploadRepository.getDzOptions("application/pdf,text/xml", 2);
         $scope.fecha = '';
-
+        $scope.trabajosporCOPADE = '';
         if ($scope.userData.idTipoUsuario == 1 || $scope.userData.idTipoUsuario == 2) {
             $scope.preFacturas();
             $scope.trabajosFacturados();
