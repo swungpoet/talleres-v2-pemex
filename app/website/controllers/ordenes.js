@@ -463,6 +463,11 @@ Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) 
             name: 'idUsuario',
             value: req.body.idUsuario,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'tipoAprobacion',
+            value: req.body.tipoAprobacion,
+            type: self.model.types.DECIMAL
         }]; 
 
     this.model.post('INS_DATOS_APROBACION_UTILIDAD_SP', params, function (error, result) {
@@ -480,6 +485,11 @@ Orden.prototype.get_getestatusutilidad = function (req, res, next) {
         name: 'idTrabajo',
         value: req.query.idTrabajo,
         type: self.model.types.STRING
+        },
+        {
+        name: 'tipoAprobacion',
+        value: req.query.tipoAprobacion,
+        type: self.model.types.DECIMAL
         }];
 
     this.model.query('[SEL_ESTATUS_APROBACION_UTILIDAD_SP]', params, function (error, result) {

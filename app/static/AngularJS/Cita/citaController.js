@@ -1034,13 +1034,13 @@ var getidCita = function (idCita) {
                       UtilidadNeta = parametro.data[0].valor;
                       //  UtilidadNeta = 120;
                             //verifica si la unidad ya llegó al taller
-                             ordenServicioRepository.getEstatusUtilidad(cita.idTrabajo).then(function (estatusUtilidad) {
+                             ordenServicioRepository.getEstatusUtilidad(cita.idTrabajo, 1).then(function (estatusUtilidad) {
                                
                                 if (estatusUtilidad.data.length > 0) {
 
                                     if (estatusUtilidad.data[0].estatus == 1) {
                                         
-                                          modal_tiket($scope, $modal, $scope.idAprobacionUtilidad, 'Cita', $scope.aprobacionCita, '');
+                                          modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Cita', $scope.aprobacionCita, '');
 
                                     } else {
                                           $scope.aprobacionCita();
@@ -1124,7 +1124,7 @@ var getidCita = function (idCita) {
     $scope.saveUtilidad = function (){
         // $('#cotizacionDetalle').modal('hide');
          $('.modal-dialog').css('width','600px'); 
-        ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (aprobacionUtilidad) {
+        ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 1).then(function (aprobacionUtilidad) {
             if (aprobacionUtilidad.data[0].id > 0) {
                //CORREO
                  ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (mail) {

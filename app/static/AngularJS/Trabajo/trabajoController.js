@@ -5,7 +5,7 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $rootScope, localStorageService, alertFactory, trabajoRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository) {
+registrationModule.controller('trabajoController', function ($scope, $modal, $rootScope, localStorageService, alertFactory, trabajoRepository, ordenServicioRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository) {
     //this is the first method executed in the view
     $scope.init = function () {
         //configuraciones de dropzone
@@ -193,43 +193,78 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
 
     //abre el modal para la finalización del trabajo
     $scope.openFinishingTrabajoModal = function (idTrabajo) {
-        $scope.trabajos.forEach(function (p, i) {
-            if (p.idTrabajo == idTrabajo) {
-                if (p.fechaServicio != null) {
-                    $('#finalizarTrabajoModal').appendTo("body").modal('show');
-                    $scope.idTrabajo = idTrabajo;
+       
+       ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
+                           
+            if (estatus.data.length > 0) {
+
+                if (estatus.data[0].estatus == 1) {
+                                        
+                      modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer , '');
+
                 } else {
-                    alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                     $scope.trabajoTer ();
                 }
-            }
-        });
+
+            } else{
+
+                $scope.trabajos.forEach(function (p, i) {
+                    if (p.idTrabajo == idTrabajo) {
+                        if (p.fechaServicio != null) {
+                            $('#finalizarTrabajoModal').appendTo("body").modal('show');
+                            $scope.idTrabajo = idTrabajo;
+                        } else {
+                            alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                        }
+                    }
+                });
+            }   
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden");
+        });      
 
     }
 
-    //confirm del trabajo para su terminación
+    $scope.trabajoTer = function (){
+        $scope.updTerminaTrabajo($scope.observacionTrabajo);
+        swal("Trabajo Terminado!", "El trabajo se ha terminado", "success");
+        $scope.observacionTrabajo = null;
+    }
+    //  title: "¿Está seguro de terminar el trabajo?",
+    //             text: "Se cambiará el estatus del trabajo a TERMINADO",
+    // //confirm del trabajo para su terminación
     $('.btnTerminarTrabajo').click(function () {
+
         swal({
-                title: "¿Está seguro de terminar el trabajo?",
-                text: "Se cambiará el estatus del trabajo a TERMINADO",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Si",
-                cancelButtonText: "No",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    $scope.updTerminaTrabajo($scope.observacionTrabajo);
-                    swal("Trabajo terminado!", "El trabajo se ha terminado", "success");
-                    $scope.observacionTrabajo = null;
-                } else {
-                    swal("Cancelado", "", "error");
+            title: "Advertencia",
+            text: "La orden se enviará a aprobación para permitir la salida de la unidad. ¿Está seguro?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#67BF11",
+            confirmButtonText: "Si",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2).then(function (aprobacionUtilidad) {
+                  
                     $('#finalizarTrabajoModal').modal('hide');
-                    $scope.observacionTrabajo = null;
-                }
-            });
+                    if (aprobacionUtilidad.data[0].id > 0) {
+                        //$scope.updTerminaTrabajo($scope.observacionTrabajo);
+                        swal("Éxito", "El trabajo se ha enviado a autorización", "success");
+                        //$scope.observacionTrabajo = null;
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al cargar la orden");
+                });  
+             } else {
+                swal("Cancelado", "", "error");
+                $scope.observacionTrabajo = null;
+            }
+        });
+        
     });
 
     //muestra el modal para la carga de archivos
@@ -681,7 +716,7 @@ registrationModule.controller('trabajoController', function ($scope, $rootScope,
                         }
                         $scope.cleanfecha();
                         $('#finalizarTrabajoModal').modal('hide');
-                        location.href = '/trabajo';
+                        //location.href = '/trabajo';
                     }, function (error) {
                         alertFactory.error("Error al insertar la fecha");
                     });

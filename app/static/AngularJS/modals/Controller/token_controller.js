@@ -5,10 +5,16 @@ registrationModule.controller('token_controller', function ($scope, $modalInstan
 	$scope.init= function (){
 		$scope.token='';
 
+        $scope.show_Aprobacion= false; 
+        $scope.show_cita= false; 
+        $scope.show_trabajo= false;
+
         if (origen == 'Aprobacion') {
             $scope.show_Aprobacion= true;
-        }else{
-            $scope.show_Aprobacion= false; 
+        }else if (origen == 'Cita'){
+            $scope.show_cita= true; 
+        }else if (origen == 'Trabajo'){
+            $scope.show_trabajo= true; 
         }
 	}
 	 $scope.close = function () {

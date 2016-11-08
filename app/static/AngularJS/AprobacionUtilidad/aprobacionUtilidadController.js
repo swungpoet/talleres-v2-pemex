@@ -19,13 +19,22 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
 
     $scope.getAprobacionUtilidad = function () {
 
-
+        $scope.aprobacionUtilidades =[];
+         $scope.aprobacionTrabajos =[];
         $('.dataTableAprobacionUtilidad').DataTable().destroy();
         ordenServicioRepository.getAprobacionUtilidad().then(function (aprobacionUtilidad) {
      
             if (aprobacionUtilidad.data.length > 0) {
                // alertFactory.success("Orden encontrada");
-                $scope.aprobacionUtilidades = aprobacionUtilidad.data;
+               for (var i = 0; i < aprobacionUtilidad.data.length; i++) {
+                   if (aprobacionUtilidad.data[i].tipoAprobacion == 1) {
+                        //$scope.aprobacionUtilidades += aprobacionUtilidad.data[i];
+                        $scope.aprobacionUtilidades.push(aprobacionUtilidad.data[i]);
+                   }else{
+                        $scope.aprobacionTrabajos.push(aprobacionUtilidad.data[i]);
+                   }
+               };
+                
                waitDrawDocument("dataTableAprobacionUtilidad");
             } else {
                 alertFactory.info("No se encontrarón datos");
@@ -56,6 +65,11 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     $scope.aprobarUtilidad = function (){
          $('.modal-dialog').css('width','600px'); 
          modal_tiket($scope, $modal, $scope.idAprobacionUtilidad, 'Aprobacion', $scope.getAprobacionUtilidad, '');         
+    }
+
+    $scope.aprobarTrabajo = function (trabajo){
+        debugger;
+         modal_tiket($scope, $modal, trabajo.idAprobacionUtilidad, 'Aprobacion', $scope.getAprobacionUtilidad, '');    
     }
 
     var waitDrawDocument = function (dataTable) {

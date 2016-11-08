@@ -121,12 +121,13 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             })
         },
 
-         getEstatusUtilidad: function (idTrabajo) {
+         getEstatusUtilidad: function (idTrabajo, tipoAprobacion) {
             return $http({
                 url: ordenUrl + 'getestatusutilidad/',
                 method: "GET",
                 params: {
-                    idTrabajo: idTrabajo
+                    idTrabajo: idTrabajo,
+                    tipoAprobacion: tipoAprobacion
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -171,13 +172,14 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             })
         },
 
-        putAprobacionUtilidad: function (idTrabajo,idUsuario) {             
+        putAprobacionUtilidad: function (idTrabajo,idUsuario,tipoAprobacion) {             
             return $http({        
                 url: ordenUrl + 'insertaDatosAprobacionUtilidad',
                         method: "POST",
                          data: {
                            idTrabajo: idTrabajo,
-                           idUsuario: idUsuario
+                           idUsuario: idUsuario,
+                           tipoAprobacion: tipoAprobacion
                         },
 
                         headers: {          
