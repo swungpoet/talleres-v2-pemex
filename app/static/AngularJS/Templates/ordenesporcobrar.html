@@ -198,6 +198,7 @@
                                                 <th>Total</th>
                                                 <th>Fecha COPADE</th>
                                                 <th>Folio Factura</th>
+                                                <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
@@ -209,7 +210,8 @@
                                                 <td>{{facturado.descripcion}}</td>
                                                 <td>{{facturado.total | currency}}</td>
                                                 <td>{{facturado.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
-                                                <td>Folio Factura</td>
+                                                <td>{{facturado.COP_IDDOCTO}}</td>
+                                                <td ng-show="trabajosporCOPADE==1">{{facturado.numeroTrabajo}}</td>
                                                      <td ng-hide="userData.idTipoUsuario == 4"> 
                                                          <button class="btn btn-success" type="button" ng-click="verOrdenes(facturado.idDatosCopade)" data-toggle="tooltip" tooltip="Detalle copade" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
 
