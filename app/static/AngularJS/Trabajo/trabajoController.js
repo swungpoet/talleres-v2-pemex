@@ -248,7 +248,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         },
         function (isConfirm) {
             if (isConfirm) {
-                ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2).then(function (aprobacionUtilidad) {
+                ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2, null).then(function (aprobacionUtilidad) {
                   
                     $('#finalizarTrabajoModal').modal('hide');
                     if (aprobacionUtilidad.data[0].id > 0) {
@@ -716,6 +716,9 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                         }
                         $scope.cleanfecha();
                         $('#finalizarTrabajoModal').modal('hide');
+                        $('#cargafechainIciorealTrabajo').appendTo("body").modal('hide');
+                        getTrabajo($scope.userData.idUsuario);
+                        getTrabajoTerminado($scope.userData.idUsuario);
                         //location.href = '/trabajo';
                     }, function (error) {
                         alertFactory.error("Error al insertar la fecha");

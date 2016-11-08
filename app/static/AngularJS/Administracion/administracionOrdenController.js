@@ -8,7 +8,7 @@
 // -- Fecha:
 // -- =============================================
 
-registrationModule.controller('administracionOrdenController', function ($scope, $route, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository) {
+registrationModule.controller('administracionOrdenController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository) {
     $scope.idTipoCotizacion = 0;
     $scope.ideTaller = 0;
     //init del controller
@@ -357,12 +357,16 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         //LQMA 14092016
 
         $scope.idTrabajo = idTrabajo;
+        var uitilidad = (precioOrden - montoOrden)/precioOrden ;
+        $scope.margen = ((precioOrden -montoOrden)*100)/ precioOrden;
+        var UtilidadNeta = 0;
 
-        if (sinProveedor > 0) {
+        /*if (sinProveedor > 0) {
             swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
-        } else {
+        } else {*/
             $('.btnVerificarOrden').ready(function () {
                 ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
+                   
                     if (result.data.length > 0) {
                         swal({
                             title: "Advertencia",
@@ -375,40 +379,120 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                         });
                     } else {
 
-                        swal({
-                                title: "Advertencia",
-                                text: "¿Está seguro de procesar la compra?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#67BF11",
-                                confirmButtonText: "Si",
-                                cancelButtonText: "No",
-                                closeOnConfirm: false,
-                                closeOnCancel: true
-                            },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    trabajoRepository.cotizacionespago(idTrabajo).then(function (ordenVerificada) {
-                                        if (ordenVerificada.data[0].idHistorialProceso == 1) {
-                                            swal("Orden Provisionada!");
-                                            //location.href = '/ordenesporcobrar';
-                                        } else {
-                                            swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
-                                            // alertFactory.error("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
-                                        }
-                                    }, function (error) {
-                                        alertFactory.error("Error al verificar la orden");
-                                    });
-                                    swal("Orden Provisionada!");
+                         ordenServicioRepository.getParametro(1, 'MV').then(function (parametro) {
+                    if (parametro.data.length > 0) {
+                         UtilidadNeta = parametro.data[0].valor;
+                          //  UtilidadNeta = 120;
+                            //verifica si la unidad ya llegó al taller
+                         ordenServicioRepository.getEstatusUtilidad(idTrabajo, 1).then(function (estatusUtilidad) {
+                           
+                            if (estatusUtilidad.data.length > 0) {
+
+                                if (estatusUtilidad.data[0].estatus == 1) {
+                                    
+                                      modal_tiket($scope, $modal, estatusUtilidad.data[0].idAprobacionUtilidad, 'Cita', $scope.procesarOrden, '');
+
+                                } else {
+                                      $scope.procesarOrden();
                                 }
-                            });
+                            }else{
+
+                                 if (UtilidadNeta >uitilidad) {      
+                                 
+                                    //Detalle de la cotiazacion
+                                     $('.modal-dialog').css('width','1050px'); 
+                                     modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
+
+                                }else{
+                                    $scope.procesarOrden(); 
+                                }
+                            } 
+                                
+                         }, function (error) {
+                            alertFactory.error("Error al cargar la orden");
+                        });    
+                    }   
+                }, function (error) {
+                    alertFactory.error("Error en la consulta");
+                }); 
+
+
+
+                        
 
                     }
                 }, function (error) {
                     alertFactory.error("Error al verificar la orden");
                 });
             });
-        }
+      //  }
+
+    }
+
+    //UTILIDAD
+    $scope.saveUtilidad = function (){
+        // $('#cotizacionDetalle').modal('hide');
+         $('.modal-dialog').css('width','600px'); 
+        ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 1, $scope.margen).then(function (aprobacionUtilidad) {
+            if (aprobacionUtilidad.data[0].id > 0) {
+               //CORREO
+                 ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (mail) {
+
+                    if (mail.data[0].enviado == 1) {
+
+                        swal({
+                            title: "Advertencia",
+                            text: "La orden se envió a aprobación por que el margen de utilidad es menor a lo esperado.",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#67BF11",
+                            confirmButtonText: "Aceptar",
+                            cancelButtonText: "No",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        });
+                       // swal("La orden se envió  a aprobación por margen de utilidad de bajo a lo esperado.");
+                       
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al enviar mail");
+                });
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar la orden");
+        });
+
+    }
+
+    $scope.procesarOrden = function(){
+
+        swal({
+            title: "Advertencia",
+            text: "¿Está seguro de procesar la compra?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#67BF11",
+            confirmButtonText: "Si",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                trabajoRepository.cotizacionespago($scope.idTrabajo).then(function (ordenVerificada) {
+                    if (ordenVerificada.data[0].idHistorialProceso == 1) {
+                        swal("Orden Provisionada!");
+                        //location.href = '/ordenesporcobrar';
+                    } else {
+                        swal("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                        // alertFactory.error("No se puede procesar la provisión porque algunas cotizaciones no tienen facturas.");
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al verificar la orden");
+                });
+                swal("Orden Provisionada!");
+            }
+        });
 
     }
 

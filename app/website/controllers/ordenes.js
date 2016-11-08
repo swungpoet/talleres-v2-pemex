@@ -468,6 +468,11 @@ Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) 
             name: 'tipoAprobacion',
             value: req.body.tipoAprobacion,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'margen',
+            value: req.body.margen,
+            type: self.model.types.DECIMAL
         }]; 
 
     this.model.post('INS_DATOS_APROBACION_UTILIDAD_SP', params, function (error, result) {

@@ -172,14 +172,15 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             })
         },
 
-        putAprobacionUtilidad: function (idTrabajo,idUsuario,tipoAprobacion) {             
+        putAprobacionUtilidad: function (idTrabajo,idUsuario,tipoAprobacion, margen) {             
             return $http({        
                 url: ordenUrl + 'insertaDatosAprobacionUtilidad',
                         method: "POST",
                          data: {
                            idTrabajo: idTrabajo,
                            idUsuario: idUsuario,
-                           tipoAprobacion: tipoAprobacion
+                           tipoAprobacion: tipoAprobacion,
+                           margen:margen
                         },
 
                         headers: {          

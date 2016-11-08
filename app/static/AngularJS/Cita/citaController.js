@@ -1017,8 +1017,9 @@ var getidCita = function (idCita) {
     $scope.enviaAprobacion = function (cita) {
          var validaUtilidad= false;
         $scope.cita=cita;
-     
+         debugger;
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
+        $scope.margen = ((cita.precioOrden -cita.montoOrden)*100)/ cita.precioOrden;
        // var uitilidad = 100;
         var UtilidadNeta = 0;
         $scope.idTrabajo=cita.idTrabajo;   
@@ -1040,51 +1041,24 @@ var getidCita = function (idCita) {
 
                                     if (estatusUtilidad.data[0].estatus == 1) {
                                         
-                                          modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Cita', $scope.aprobacionCita, '');
+                                          modal_tiket($scope, $modal, estatusUtilidad.data[0].idAprobacionUtilidad, 'Cita', $scope.aprobacionCita, '');
 
                                     } else {
                                           $scope.aprobacionCita();
                                     }
                                 }else{
 
-                                     //if (UtilidadNeta >uitilidad) {    
-                                         if (validaUtilidad) {    
+                                     if (UtilidadNeta >uitilidad) {    
+                                        // if (validaUtilidad) {    
                                      
                                         //Detalle de la cotiazacion
-                                        ordenServicioRepository.getDetalleOrden(parseInt(cita.idTrabajo)).then(function (detalle) {
-                                            $scope.sumaIvaTotal = 0;
-                                            $scope.sumaPrecioTotal =0;
-                                            $scope.sumaIvaTotalCliente =0;
-                                            $scope.sumaPrecioTotalCliente =0;
-                                            $scope.sumaGranTotal =0;
-                                            $scope.sumaGranTotalCliente =0;
-                                            $scope.detalleOrden=detalle.data;
-                                             for (var i = 0; i < detalle.data.length; i++) {
-                                                //Sumatoria Taller
-                                                $scope.sumaIvaTotal += (detalle.data[i].cantidad * detalle.data[i].precio) * (detalle.data[i].valorIva / 100);
-                                                $scope.sumaPrecioTotal += (detalle.data[i].cantidad * detalle.data[i].precio);
-
-                                                //Sumatoria Cliente
-                                                $scope.sumaIvaTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente) * (detalle.data[i].valorIva / 100);
-                                                $scope.sumaPrecioTotalCliente += (detalle.data[i].cantidad * detalle.data[i].precioCliente);
-                                            }
-                                            //Total Taller
-                                            $scope.sumaGranTotal = ($scope.sumaPrecioTotal + $scope.sumaIvaTotal);
-
-                                            //Total Cliente
-                                            $scope.sumaGranTotalCliente = ($scope.sumaPrecioTotalCliente + $scope.sumaIvaTotalCliente);
-                                            $('.modal-dialog').css('width','1050px'); 
-                                           // $('#cotizacionDetalle').appendTo("body").modal('show');
-                                           modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
-
-                                        }, function (error) {
-                                           alertFactory.error("Error al cargar la orden");
-                                        });
+                                         $('.modal-dialog').css('width','1050px'); 
+                                         modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
 
                                     }else{
                                         $scope.aprobacionCita(); 
                                     }
-                                } 5
+                                } 
                                     
                              }, function (error) {
                                 alertFactory.error("Error al cargar la orden");
@@ -1124,7 +1098,7 @@ var getidCita = function (idCita) {
     $scope.saveUtilidad = function (){
         // $('#cotizacionDetalle').modal('hide');
          $('.modal-dialog').css('width','600px'); 
-        ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 1).then(function (aprobacionUtilidad) {
+        ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 1, $scope.margen).then(function (aprobacionUtilidad) {
             if (aprobacionUtilidad.data[0].id > 0) {
                //CORREO
                  ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (mail) {

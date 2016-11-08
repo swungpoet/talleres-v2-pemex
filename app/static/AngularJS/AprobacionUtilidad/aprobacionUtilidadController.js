@@ -68,7 +68,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     }
 
     $scope.aprobarTrabajo = function (trabajo){
-        debugger;
+        
          modal_tiket($scope, $modal, trabajo.idAprobacionUtilidad, 'Aprobacion', $scope.getAprobacionUtilidad, '');    
     }
 
