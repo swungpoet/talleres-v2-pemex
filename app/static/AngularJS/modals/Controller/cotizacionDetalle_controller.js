@@ -1,14 +1,21 @@
 
-registrationModule.controller('cotizacionDetalle_controller', function ($scope, $modalInstance, $modal, idTrabajo, origen, callback, error, $http, $sce, $window, ordenServicioRepository, alertFactory) {
+registrationModule.controller('cotizacionDetalle_controller', function ($scope, $modalInstance, $modal, idTrabajo, origen, utilidad, callback, error, $http, $sce, $window, ordenServicioRepository, alertFactory) {
 
 	
     $scope.init = function(){
-        
+        $scope.show_Aprobacion= false; 
+        $scope.show_cita= false; 
+        $scope.show_orden= false; 
+
          if (origen == 'Aprobacion') {
             $scope.show_Aprobacion= true;
-        }else{
-            $scope.show_Aprobacion= false; 
+        }else if (origen == 'Cita') {
+            $scope.show_cita= true; 
+        }else if (origen == 'Orden') {
+            $scope.show_orden= true; 
         }
+
+        $scope.utilidad=utilidad;
 
          ordenServicioRepository.getDetalleOrden(parseInt(idTrabajo)).then(function (detalle) {
           

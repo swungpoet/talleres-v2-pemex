@@ -10,8 +10,13 @@
         <label class="control-label">¿Desea aprobar la orden con el margen de utilidad?.</label>
 
     </div>
-    <div class="row utlidad" ng-show="!show_Aprobacion">
+    <div class="row utlidad" ng-show="show_cita">
         <label class="control-label">La utilidad de la orden debe ser mínima del 5%</label>
+
+    </div>
+
+    <div class="row utlidad" ng-show="show_orden">
+        <label class="control-label">La utilidad promedio de la orden es menor a la autorizada previamente de {{utilidad | currency: "%" }}</label>
 
     </div>
     <div class="table-responsive m-t">

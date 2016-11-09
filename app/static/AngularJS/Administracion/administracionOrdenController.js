@@ -393,7 +393,15 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                       modal_tiket($scope, $modal, estatusUtilidad.data[0].idAprobacionUtilidad, 'Cita', $scope.procesarOrden, '');
 
                                 } else {
+
+                                    if ($scope.margen < estatusUtilidad.data[0].margen) {
+
+                                        $('.modal-dialog').css('width','1050px'); 
+                                        modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Orden', $scope.margen , $scope.saveUtilidad, '');
+
+                                    }else{
                                       $scope.procesarOrden();
+                                    }
                                 }
                             }else{
 
@@ -401,7 +409,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                  
                                     //Detalle de la cotiazacion
                                      $('.modal-dialog').css('width','1050px'); 
-                                     modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
+                                     modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.margen , $scope.saveUtilidad, '');
 
                                 }else{
                                     $scope.procesarOrden(); 
@@ -415,25 +423,24 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                 }, function (error) {
                     alertFactory.error("Error en la consulta");
                 }); 
-
-
-
-                        
+  
 
                     }
                 }, function (error) {
                     alertFactory.error("Error al verificar la orden");
                 });
             });
-      //  }
+        //}
 
     }
 
     //UTILIDAD
     $scope.saveUtilidad = function (){
         // $('#cotizacionDetalle').modal('hide');
+   
          $('.modal-dialog').css('width','600px'); 
         ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 1, $scope.margen).then(function (aprobacionUtilidad) {
+          
             if (aprobacionUtilidad.data[0].id > 0) {
                //CORREO
                  ordenServicioRepository.enviarNotificacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario).then(function (mail) {

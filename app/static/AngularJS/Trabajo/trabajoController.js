@@ -229,6 +229,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         $scope.updTerminaTrabajo($scope.observacionTrabajo);
         swal("Trabajo Terminado!", "El trabajo se ha terminado", "success");
         $scope.observacionTrabajo = null;
+        getTrabajo($scope.userData.idUsuario);
+        getTrabajoTerminado($scope.userData.idUsuario);
     }
     //  title: "¿Está seguro de terminar el trabajo?",
     //             text: "Se cambiará el estatus del trabajo a TERMINADO",

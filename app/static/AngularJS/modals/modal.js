@@ -24,7 +24,7 @@ function modal_tiket($scope, $modal, idAprobacionUtilidad, origen, callback, err
     });
 }
 
-function modal_detalle_cotizacion($scope, $modal, idTrabajo, origen, callback, error)
+function modal_detalle_cotizacion($scope, $modal, idTrabajo, origen, utilidad, callback, error)
 {
     var modalInstance = $modal.open({
         templateUrl: '../AngularJS/modals/Template/cotizacionDetalle.html',
@@ -37,6 +37,9 @@ function modal_detalle_cotizacion($scope, $modal, idTrabajo, origen, callback, e
             },
             origen: function () {
                 return origen;
+            },
+            utilidad: function () {
+                return utilidad;
             },
             callback: function () {
                 return callback;

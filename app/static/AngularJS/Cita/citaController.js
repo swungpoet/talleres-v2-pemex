@@ -1017,7 +1017,6 @@ var getidCita = function (idCita) {
     $scope.enviaAprobacion = function (cita) {
          var validaUtilidad= false;
         $scope.cita=cita;
-         debugger;
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
         $scope.margen = ((cita.precioOrden -cita.montoOrden)*100)/ cita.precioOrden;
        // var uitilidad = 100;
