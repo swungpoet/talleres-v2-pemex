@@ -4,7 +4,7 @@
 // -- Description: Reporte Unidad Controller
 // -- =============================================
 
-registrationModule.controller('reporteUnidadController', function ($scope, alertFactory, $rootScope, localStorageService, reporteUnidadRepository) {
+registrationModule.controller('reporteUnidadController', function ($scope, alertFactory, globalFactory, $rootScope, localStorageService, reporteUnidadRepository) {
 
     //Inicializa la pagina
     $scope.init = function () {
@@ -20,7 +20,7 @@ registrationModule.controller('reporteUnidadController', function ($scope, alert
                 if(citasUnidad.data.length > 0){
                     $scope.citasUnidad = citasUnidad.data;
                     alertFactory.success("Citas cargadas");
-                    waitDrawDocument("dataTableCita");
+                    globalFactory.waitDrawDocument("dataTableCita", "OrdenServicio");
                 } 
                 else{
                     alertFactory.info("No existen citas en el historial de la unidad requerida");
@@ -35,7 +35,7 @@ registrationModule.controller('reporteUnidadController', function ($scope, alert
                 if(cotizacionesUnidad.data.length > 0){
                     $scope.cotizacionesUnidad = cotizacionesUnidad.data;
                     alertFactory.success("Cotizaciones cargadas");
-                    waitDrawDocument("dataTableCotizacion");
+                    globalFactory.waitDrawDocument("dataTableCotizacion", "OrdenServicio");
                 } 
                 else{
                     alertFactory.info("No existen cotizaciones en el historial de la unidad requerida");
@@ -50,7 +50,7 @@ registrationModule.controller('reporteUnidadController', function ($scope, alert
                 if(ordenesUnidad.data.length > 0){
                     $scope.ordenesUnidad = ordenesUnidad.data;
                     alertFactory.success("Órdenes cargadas");
-                    waitDrawDocument("dataTableOrden");
+                    globalFactory.waitDrawDocument("dataTableOrden", "OrdenServicio");
                 } 
                 else{
                     alertFactory.info("No existen órdenes en el historial de la unidad requerida");
@@ -68,29 +68,4 @@ registrationModule.controller('reporteUnidadController', function ($scope, alert
         //$scope.ordenesUnidad = [];
     }
     
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'OrdenServicio'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
-    }
 });

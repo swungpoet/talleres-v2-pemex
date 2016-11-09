@@ -4,7 +4,7 @@
 // -- Description: Reporte Certificado Conformidad Controller
 // -- =============================================
 
-registrationModule.controller('reporteCertificadoConformidadController', function ($scope, alertFactory, $rootScope, localStorageService, reporteCertificadoConformidadRepository, dashBoardRepository) {
+registrationModule.controller('reporteCertificadoConformidadController', function ($scope, alertFactory, globalFactory, $rootScope, localStorageService, reporteCertificadoConformidadRepository, dashBoardRepository) {
     $scope.zonaSelected = null;
     $scope.tarSelected = null;
     $scope.userData = localStorageService.get('userData');
@@ -23,7 +23,7 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
             if (certificados.data.length > 0) {
                 $scope.certificados = certificados.data;
                 alertFactory.success("Certificados Cargados");
-                waitDrawDocument("dataTableCertificadoConformidad");
+                globalFactory.waitDrawDocument("dataTableCertificadoConformidad", "CertificadoConformidad");
             } else {
                 $scope.certificados = [];
                 alertFactory.info("No se encontraron certificados generados con los criterios de búsqueda");
@@ -64,31 +64,6 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
         $scope.getCertificados($scope.zonaSelected, $scope.tarSelected, $scope.fInicialSelected, $scope.fFinalSelected);
     }
 
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'CertificadoConformidad'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
-    }
 
     //Fechas
     $('#fechaFinal .input-group.date').datepicker({

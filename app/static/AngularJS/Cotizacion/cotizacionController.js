@@ -5,7 +5,7 @@
 // -- Modificó: Mario Mejía
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionController', function ($scope, $route, $rootScope, alertFactory, uploadRepository, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository) {
+registrationModule.controller('cotizacionController', function ($scope, $route, $rootScope, alertFactory, globalFactory, uploadRepository, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository) {
     $scope.arrayItem = [];
     $scope.arrayCambios = [];
     var valor = '';
@@ -852,7 +852,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {
-                    waitDrawDocument("dataTableTaller");
+                    globalFactory.waitDrawDocument("dataTableTaller", "Citas");
                     alertFactory.success('Datos encontrados');
                 } else {
                     alertFactory.info('No se encontraron datos');
@@ -863,32 +863,6 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         } else {
             alertFactory.info('Llene el campo de búsqueda');
         }
-    }
-
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'Citas'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
     }
 
     //Obtiene el taller seleccionado

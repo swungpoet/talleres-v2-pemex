@@ -8,7 +8,7 @@
 // -- Fecha: 08/07/2016
 // -- =============================================
 
-registrationModule.controller('citaController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
+registrationModule.controller('citaController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, globalFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
     var idTrabajoNew = '';
     $scope.message = 'Buscando...';
     $scope.userData = localStorageService.get('userData');
@@ -93,7 +93,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
             $('.dataTableUnidad').DataTable().destroy();
             $scope.unidades = unidadInfo.data;
             if (unidadInfo.data.length > 0) {
-                waitDrawDocument("dataTableUnidad");
+                globalFactory.waitDrawDocument("dataTableUnidad", "Citas");
                 alertFactory.success('Datos encontrados');
                 $('#btnBuscar').button('reset');
             } else {
@@ -112,7 +112,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         $scope.promise = citaRepository.getCita(idUnidad, idUsuario).then(function (cita) {
             $scope.citas = cita.data;
             if (cita.data.length > 0) {
-                waitDrawDocument("dataTableCita");
+                globalFactory.waitDrawDocument("dataTableCita", "Citas");
                 alertFactory.success('Datos encontrados');
             } else {
                 alertFactory.info('No se encontraron datos');
@@ -170,7 +170,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         $scope.promise = citaRepository.getCitaTaller(fecha, idCita, idUsuario).then(function (cita) {
             if (cita.data.length > 0) {
                 $scope.listaCitas = cita.data;
-                waitDrawDocument("dataTableCitaTaller");
+                globalFactory.waitDrawDocument("dataTableCitaTaller", "Citas");
                 alertFactory.success('Datos de citas cargados.');
             } else {
                 $scope.listaCitas = '';
@@ -192,7 +192,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {
-                    waitDrawDocument("dataTableTaller");
+                    globalFactory.waitDrawDocument("dataTableTaller", "Citas");
                     alertFactory.success('Datos encontrados');
                 } else {
                     alertFactory.info('No se encontraron datos');
@@ -412,7 +412,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
             $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza, $scope.procesAutotanque).then(function (pieza) {
                 $scope.piezas = pieza.data;
                 if (pieza.data.length > 0) {
-                    waitDrawDocument("dataTablePiezaTaller");
+                    globalFactory.waitDrawDocument("dataTablePiezaTaller", "Citas");
                     alertFactory.success("Datos obtenidos");
                 } else {
                     $scope.piezas = [];
@@ -535,31 +535,6 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         startDate: new Date()
     });
 
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'Citas'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
-    }
 
     //muestra el modal para la linea de tiempo
     $scope.showLineTime = function (idCita) {

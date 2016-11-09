@@ -6,7 +6,7 @@
 // -- Fecha: 
 // -- =============================================
 
-registrationModule.controller('ordenAnticipoController', function ($scope,$rootScope, localStorageService, alertFactory, ordenAnticipoRepository) {
+registrationModule.controller('ordenAnticipoController', function ($scope,$rootScope, localStorageService, alertFactory, globalFactory, ordenAnticipoRepository) {
 
     //método de inicio en la pantalla en relación
     $scope.init = function () {
@@ -20,7 +20,7 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
             if(anticipoPendiente.data.length){
                 $('.dataTablePendienteAnticipo').DataTable().destroy();
                 $scope.ordenesAticipoPendiente = anticipoPendiente.data;
-                waitDrawDocument("dataTablePendienteAnticipo");
+                globalFactory.waitDrawDocument("dataTablePendienteAnticipo", "ÓrdenAnticipo");
                 alertFactory.success("Órdenes con anticipos pendientes cargados");
             }
             else{
@@ -37,7 +37,7 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
             if(anticipoAplicado.data.length){
                 $('.dataTableAnticipoAplicado').DataTable().destroy();
                 $scope.ordenesAticipoAplicado = anticipoPendiente.data;
-                waitDrawDocument("dataTableAnticipoAplicado");
+                globalFactory.waitDrawDocument("dataTableAnticipoAplicado", "ÓrdenAnticipo");
                 alertFactory.success("Órdenes con anticipos aplicados cargados");
             }
             else{
@@ -46,32 +46,6 @@ registrationModule.controller('ordenAnticipoController', function ($scope,$rootS
         }, function(error){
             alertFactory.error("Error al obtener órdenes con anticipo aplicado");
         });
-    }
-    
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'ÓrdenAnticipo'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
     }
     
     //visualiza las prefacturas del anticipo

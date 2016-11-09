@@ -5,7 +5,7 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $modal, $rootScope, localStorageService, alertFactory, trabajoRepository, ordenServicioRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository) {
+registrationModule.controller('trabajoController', function ($scope, $modal, $rootScope, localStorageService, alertFactory, globalFactory, trabajoRepository, ordenServicioRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository) {
     //this is the first method executed in the view
     $scope.init = function () {
         //configuraciones de dropzone
@@ -66,7 +66,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
             $scope.sumatoriaProceso = sumatoria;
             if (trabajo.data.length > 0) {
-                waitDrawDocument("dataTableTrabajo");
+                globalFactory.waitDrawDocument("dataTableTrabajo", "OrdenServicio");
                 alertFactory.success("Trabajos cargados");
             } else {
                 alertFactory.info("No se encontraron trabajos");
@@ -118,7 +118,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
             $scope.sumatoriaEntrega = sumatoria;
 
             if (trabajoTerminado.data.length > 0) {
-                waitDrawDocument("dataTableTrabajoTerminado");
+                globalFactory.waitDrawDocument("dataTableTrabajoTerminado", "OrdenServicio");
                 alertFactory.success("Trabajos terminados cargados");
             } else {
                 alertFactory.info("No se encontraron trabajos terminados");
@@ -135,7 +135,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
             $scope.trabajosAprobados = trabajoAprobado.data;
 
             if (trabajoAprobado.data.length > 0) {
-                waitDrawDocument("dataTableTrabajoAprobado");
+                globalFactory.waitDrawDocument("dataTableTrabajoAprobado", "OrdenServicio");
                 alertFactory.success("Trabajos aprobados cargados");
             } else {
                 alertFactory.info("No se encontraron trabajos aprobados");
@@ -152,32 +152,6 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         localStorageService.set('objTrabajo', trabajo);
         localStorageService.set("botonera", objBotonera);
         location.href = '/ordenservicio';
-    }
-
-    //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'OrdenServicio'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 10000);
     }
 
     //actualiza el trabajo a estatus terminado
@@ -746,7 +720,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         trabajoRepository.getAdmonOrdenes().then(function (admonOrden) {
             $scope.admonOrdenes = admonOrden.data;
             if (admonOrden.data.length > 0) {
-                waitDrawDocument("dataTableOrdenporVerificar");
+                globalFactory.waitDrawDocument("dataTableOrdenporVerificar", "OrdenServicio");
                 alertFactory.success("Ordenes por verificar cargados");
             } else {
                 alertFactory.info("No se encontraron Ordenes por verificar");

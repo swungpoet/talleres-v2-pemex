@@ -4,7 +4,7 @@
 // -- CREATE DESC: Controlador para el mantenimiento de las Osur por TAR
 // -- ==================================================================================
 
-registrationModule.controller('osurController', function ($scope, alertFactory, osurRepository) {
+registrationModule.controller('osurController', function ($scope, alertFactory, globalFactory, osurRepository) {
      $scope.presupuestoTotal=0.00;
      $scope.utilizadoTotal=0.00;
      $scope.saldoTotal=0.00;
@@ -51,7 +51,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                             $scope.saldoTotal += parseFloat(result.data[i].saldo);
                         };
 
-                        waitDrawDocument("dataTableOsur");
+                        globalFactory.waitDrawDocument("dataTableOsur", "Utilidad");
                     } else {
                         $scope.datosOsur = [];
                         alertFactory.info("No existe información con los criterios de búsqueda");
@@ -252,30 +252,6 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
          
     }
 
-     var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'Utilidad'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
-    }
 });
 
 

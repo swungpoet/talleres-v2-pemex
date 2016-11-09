@@ -1,4 +1,4 @@
-registrationModule.controller('ordenPorCobrarController', function ($scope, localStorageService, alertFactory, ordenPorCobrarRepository, $rootScope, uploadRepository, ordenServicioRepository) {
+registrationModule.controller('ordenPorCobrarController', function ($scope, localStorageService, alertFactory, globalFactory, ordenPorCobrarRepository, $rootScope, uploadRepository, ordenServicioRepository) {
 
     $scope.message = "Buscando...";
     $scope.userData = localStorageService.get('userData');
@@ -74,7 +74,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     sumatoria += parseFloat(result.data[i].total);
                 };
                 $scope.sumatoriaPrefactura=sumatoria;
-                waitDrawDocument("dataTablePreFacturas");
+                globalFactory.waitDrawDocument("dataTablePreFacturas", "OrdenporCobrar");
             } else {
                 alertFactory.info('No se encontraron trabajos por cobrar');
             }
@@ -90,7 +90,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             if (result.data.length > 0) {
                 $scope.trabajosCobrados = result.data;
                  $scope.numeroCopadeOrden = $scope.trabajosCobrados[0].numeroCopade;
-                waitDrawDocument("dataTableTrabajosCobrados");
+                globalFactory.waitDrawDocument("dataTableTrabajosCobrados", "OrdenporCobrar");
             }
         }, function (error) {
             alertFactory.error("Error al obtener trabajos por cobrar");
@@ -228,7 +228,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     sumatoria += parseFloat(result.data[i].subTotal);
                 };
                 $scope.sumatoriaCOPADE=sumatoria;
-                waitDrawDocument("dataTableCopades");
+                globalFactory.waitDrawDocument("dataTableCopades", "OrdenporCobrar");
             } else {
                 alertFactory.info('No se encontró ninguna COPADE');
             }
@@ -417,7 +417,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     sumatoria += parseFloat(result.data[i].montoOrden);
                 };
                 $scope.sumatoriaOrdenes=sumatoria;
-                waitDrawDocument("dataTableOrdenesVerificadas");
+                globalFactory.waitDrawDocument("dataTableOrdenesVerificadas", "OrdenporCobrar");
             } else {
                 alertFactory.info('No se encontró ninguna Orden Verificada');
             }
@@ -438,7 +438,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 };
                 $scope.sumatoriafacturadas=sumatoria;
 
-                waitDrawDocument("dataTableFacturados");
+                globalFactory.waitDrawDocument("dataTableFacturados", "OrdenporCobrar");
             } else {
                 alertFactory.info('No se encontraron trabajos por cobrar');
             }
@@ -457,32 +457,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             else
                 return false;
         }
-    }
-
-       //espera que el documento se pinte para llenar el dataTable
-    var waitDrawDocument = function (dataTable) {
-        setTimeout(function () {
-            $('.' + dataTable).DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        title: 'OrdenporCobrar'
-                    },
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        }, 2500);
     }
 
 });
