@@ -146,6 +146,7 @@
                                                 <th>Descripción de la Orden</th>
                                                 <th>Total</th>
                                                 <th>Fecha COPADE</th>
+                                                <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                 <!--th>Estatus</th>
                                                 <th>Precio venta sin IVA</th>
                                                 <th>Fecha</th> 
@@ -168,6 +169,7 @@
                                                 <td>{{cita.descripcion}}</td>
                                                 <td>{{cita.total | currency}}</td>
                                                 <td>{{cita.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
+                                                <td ng-show="trabajosporCOPADE==1">{{cita.numeroTrabajo}}</td>
                                                 <!--td>{{cita.estatus}}</td>
                                                 <td>{{cita.montoOrden | currency}}</td>
                                                 <td>{{cita.fecha | date:'dd-MM-yyyy HH:mm'}}</td>     
