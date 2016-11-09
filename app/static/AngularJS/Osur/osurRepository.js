@@ -23,6 +23,20 @@ registrationModule.factory('osurRepository', function ($http) {
                 }
             });
         },
+        putEstatusOsurTar: function (idOsur, idTAR) {            
+            return $http({        
+                url: osurUrl + 'estatusOsurTar',
+                        method: "POST",
+                         data: {
+                           idOsur: idOsur,
+                           idTAR: idTAR
+                        },
+
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
         putNuevaOsur: function (presupuesto,idTAR,folio,fechaInicial,fechaFinal,solpe) {             
             return $http({        
                 url: osurUrl + 'nuevaosur',

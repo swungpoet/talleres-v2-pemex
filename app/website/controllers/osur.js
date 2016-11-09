@@ -115,6 +115,35 @@ Osur.prototype.post_nuevaosur = function (req, res, next) {
     });
 }
 
+Osur.prototype.post_estatusOsurTar = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'idOsur',
+            value: req.body.idOsur,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTAR',
+            value: req.body.idTAR,
+            type: self.model.types.INT
+        }];
+
+
+    this.model.post('UPD_ESTATUS_OSUR_TAR_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 //Inserta nueva Osur
 Osur.prototype.post_osuraplicacion = function (req, res, next) {
     //Objeto que almacena la respuesta

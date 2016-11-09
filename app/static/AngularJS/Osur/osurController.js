@@ -29,7 +29,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
     }
 
     $scope.GetMonto = function () {
-
+ 
         $scope.presupuestoTotal=0.00;
         $scope.utilizadoTotal=0.00;
         $scope.saldoTotal=0.00;
@@ -213,13 +213,43 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                     confirmButtonColor: "#67BF11",
                     confirmButtonText: "Aceptar",
                     closeOnConfirm: true
-                });
+                });;
             }
         },
         function (error) {
             alertFactory.error("Error al obtener la información");
         });
         
+    }
+
+    $scope.activarOsur = function (osur){
+
+        swal({
+                title: "Advertencia",
+                text: "Se activara la Osur seleccionada y pondrá como pendiente la activa.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#67BF11",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    osurRepository.putEstatusOsurTar(osur.idOsur, osur.idTAR).then(function (result) {;
+                        if (result.data[0].ID == 0) {
+                            alertFactory.success("Se actualizo el estatus correctamente");
+                            $scope.GetMonto();
+                        }
+                       
+                    },
+                    function (error) {
+                        alertFactory.error("Error al procesar la información");
+                    });
+                }
+            });
+         
     }
 
      var waitDrawDocument = function (dataTable) {

@@ -94,6 +94,7 @@
                             <th>Estatus</th>
                             <th>Saldo</th>
                             <th>Orden</th>
+                            <th>Activar</th>
                             
                         </tr>
                     </thead>
@@ -106,10 +107,15 @@
                             <td>{{info.fechaFinal | date:'dd-MM-yyyy HH:mm'}} </td>
                             <td>{{info.presupuesto | currency: "$"}}</td>
                             <td>{{info.utilizado | currency: "$"}}</td>
-                            <td><button class="btn btn-info" type="button" ng-click="verAplicacion(info)" ><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                            <td>
+                                <button class="btn btn-info" type="button" ng-click="verAplicacion(info)" ><span class="glyphicon glyphicon-eye-open"></span></button>
+                            </td>
                             <td>{{info.estatus}}</td>
                             <td>{{info.saldo | currency: "$"}}</td>
                             <td>{{info.orden}}</td>
+                            <td>
+                                <button ng-show="info.estatus == 'Utilizado'" class="btn btn-informa" type="button" ng-click="activarOsur(info)" ><span class="glyphicon glyphicon-refresh" ></span></button>
+                            </td>
                             
                         </tr>
                     </tbody>
