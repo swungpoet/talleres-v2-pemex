@@ -62,8 +62,7 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
      $scope.aprobar = function (utilidad) {
     
        $scope.idAprobacionUtilidad=utilidad.idAprobacionUtilidad; 
-
-        modal_detalle_cotizacion($scope, $modal, utilidad.idTrabajo, 'Aprobacion', $scope.aprobarUtilidad, '');  
+        modal_detalle_cotizacion($scope, $modal, utilidad.idTrabajo, 'Aprobacion', '', $scope.aprobarUtilidad, '');  
     }
 
     $scope.aprobarUtilidad = function (){

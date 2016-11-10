@@ -230,6 +230,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                     if (aprobacionUtilidad.data[0].id > 0) {
                         //$scope.updTerminaTrabajo($scope.observacionTrabajo);
                         swal("Éxito", "El trabajo se ha enviado a autorización", "success");
+                        getTrabajo($scope.userData.idUsuario);
+                        getTrabajoTerminado($scope.userData.idUsuario);
                         //$scope.observacionTrabajo = null;
                     }
                 }, function (error) {
