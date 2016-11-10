@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="../../css/administracionOrden.css">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
-        <span class="title"> Aprobaciones<span class="subtitle">Administrador</span></span>
+        <span class="title"> {{titulo}}<span class="subtitle">Administrador</span></span>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -16,7 +16,7 @@
                         </div-->
                         <br/>
                     <tabset>    
-                    <tab heading="Margen de Utilidad" index="0">
+                    <md-tab heading="Margen de Utilidad" md-selected="selectedMargen" ng-show="userData.idUsuario == 190">
                         <br/>
                         <br/>
                         <div class="table-responsive">
@@ -36,6 +36,7 @@
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
                                         <th>Horas en espera</th>
+                                        <th>No. Intentos</th>
                                         <th>Aprobación</th>
                                     </tr>
                                 </thead>
@@ -55,6 +56,7 @@
                                         <td>{{utilidad.trabajo}}</td>
                                         <td>{{utilidad.descripcionLarga }}</td>
                                         <td>{{utilidad.tiempo }}</td>
+                                        <td>{{utilidad.intentos }}</td>
                                         <td>
                                             <button class="btn btn-informa btn-aprobar" type="button" ng-click="aprobar(utilidad)" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>
 
@@ -65,8 +67,8 @@
 
                             
                         </div>
-                     </tab> 
-                     <tab heading="Salida de Unidades" index="1">
+                     </md-tab> 
+                     <md-tab heading="Salida de Unidades" md-selected="selectedSalida" ng-show="userData.idUsuario == 47">
                         <br/>
                         <br/>
                         <div class="table-responsive">
@@ -111,7 +113,7 @@
 
                             
                         </div>
-                     </tab> 
+                     </md-tab> 
                      </tabset> 
                     </div>
                 </div>
