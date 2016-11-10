@@ -361,9 +361,9 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         $scope.margen = ((precioOrden -montoOrden)*100)/ precioOrden;
         var UtilidadNeta = 0;
 
-        /*if (sinProveedor > 0) {
+        if (sinProveedor > 0) {
             swal("Existen proveedores sin asignar para todas o algunas de las cotizaciones");
-        } else {*/
+        } else {
             $('.btnVerificarOrden').ready(function () {
                 ordenServicioRepository.getOrdenServicio(numeroTrabajo).then(function (result) {
                    
@@ -430,7 +430,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                     alertFactory.error("Error al verificar la orden");
                 });
             });
-        //}
+        }
 
     }
 

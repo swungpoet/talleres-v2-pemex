@@ -13,8 +13,19 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
         $scope.ideTaller=0;
     //init del controller
     $scope.init = function () {
+
+        if ($scope.userData.idUsuario == 190) {
+            $scope.selectedMargen=0;
+            $scope.selectedSalida=1;
+            $scope.titulo="Aprobación de Margen de Utilidad";
+        }else if ($scope.userData.idUsuario == 47) {
+            $scope.selectedMargen=1;
+            $scope.selectedSalida=0;
+            $scope.titulo="Aprobación de Salida de Unidades";
+        }
+
         $scope.getAprobacionUtilidad();
-        
+
     }
 
     $scope.getAprobacionUtilidad = function () {
@@ -60,10 +71,14 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     }
 
      $scope.aprobar = function (utilidad) {
-    
        $scope.idAprobacionUtilidad=utilidad.idAprobacionUtilidad; 
 
-        modal_detalle_cotizacion($scope, $modal, utilidad.idTrabajo, 'Aprobacion', $scope.aprobarUtilidad, '');  
+       if (utilidad.intentos>1) {
+            modal_detalle_cotizacion($scope, $modal, utilidad.idTrabajo, 'Orden', utilidad.margenAnterior, $scope.aprobarUtilidad, '');  
+       }else{
+            modal_detalle_cotizacion($scope, $modal, utilidad.idTrabajo, 'Aprobacion', '', $scope.aprobarUtilidad, '');  
+       }
+        
     }
 
     $scope.aprobarUtilidad = function (){

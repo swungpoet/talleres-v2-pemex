@@ -1027,7 +1027,7 @@ var getidCita = function (idCita) {
                                      
                                         //Detalle de la cotiazacion
                                          $('.modal-dialog').css('width','1050px'); 
-                                         modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.saveUtilidad, '');
+                                         modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.margen , $scope.saveUtilidad, '');
 
                                     }else{
                                         $scope.aprobacionCita(); 
