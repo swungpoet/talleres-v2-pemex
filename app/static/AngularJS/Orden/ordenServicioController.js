@@ -1,9 +1,9 @@
-registrationModule.controller('ordenServicioController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository, ordenServicioRepository) {
+registrationModule.controller('ordenServicioController', function ($scope, $rootScope, localStorageService, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository, ordenServicioRepository, commonService, $location) {
 
     var cDetalles = [];
     var cPaquetes = [];
     $scope.chat = [];
-
+    $scope.newCotizacion = commonService.idEstatusTrabajo;
     $scope.userData = localStorageService.get('userData');
     $scope.objBotonera = localStorageService.get('botonera');
     $scope.idTrabajoOrden = localStorageService.get('objTrabajo');
@@ -20,11 +20,11 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
     $scope.isSelected = 'yep';
     $scope.inverse = true;
     localStorageService.get('actualizaCosto') != null ? $scope.urlReturn = 1 : $scope.urlReturn = 0;
-    if(window.location.href.indexOf('state') > -1) {
-           $scope.vistaEditaPrecio=1;
-      }else{
-            $scope.vistaEditaPrecio=0;
-      }
+    if (window.location.href.indexOf('state') > -1) {
+        $scope.vistaEditaPrecio = 1;
+    } else {
+        $scope.vistaEditaPrecio = 0;
+    }
 
     $scope.init = function () {
         $scope.cargaFicha();
@@ -208,7 +208,7 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
 
     //Redirige a pantalla de Nueva Cotización
     $scope.nuevaCotizacion = function () {
-        var objOrden = {};
+        /*var objOrden = {};
         objOrden.idTaller = 1;
         objOrden.idUsuario = $scope.userData.idUsuario;
         objOrden.idTrabajo = $scope.idTrabajoOrden.idTrabajo;
@@ -220,9 +220,15 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
         }
         if (localStorageService.get('cita') != null) {
             localStorageService.remove('cita');
-        }
-        localStorageService.set('orden', objOrden);
-        location.href = '/cotizacionnueva';
+        }        
+        localStorageService.set('orden', objOrden);*/
+
+        localStorageService.set('isNuevaCotizacion', 1);
+        $scope.getDatosCita();
+        setTimeout(function () {
+            $location.path('/cotizacionnueva');
+        }, 2500)
+
     }
 
     $scope.Adjuntar = function () {
@@ -362,6 +368,17 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
             }
         }, function (error) {
             alertFactory.error(error);
+        });
+    }
+
+    //Devuelve la información de una Cita
+    $scope.getDatosCita = function () {
+        citaRepository.getDatosCita(commonService.idCita).then(function (result) {
+            if (result.data.length > 0) {
+                localStorageService.set('cita', result.data[0]);
+            }
+        }, function (error) {
+
         });
     }
 });

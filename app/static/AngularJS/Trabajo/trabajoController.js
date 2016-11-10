@@ -5,7 +5,7 @@
 // -- Modificó: Vladimir Juárez Juárez
 // -- Fecha: 10/04/2016
 // -- =============================================
-registrationModule.controller('trabajoController', function ($scope, $modal, $rootScope, localStorageService, alertFactory, globalFactory, trabajoRepository, ordenServicioRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository) {
+registrationModule.controller('trabajoController', function ($scope, $modal, $rootScope, localStorageService, alertFactory, globalFactory, trabajoRepository, ordenServicioRepository, cotizacionRepository, uploadRepository, cotizacionAutorizacionRepository, ordenAnticipoRepository, commonService, $location) {
     //this is the first method executed in the view
     $scope.init = function () {
         //configuraciones de dropzone
@@ -150,8 +150,10 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         objBotonera.accion = valBotonera;
         objBotonera.idCita = trabajo.idCita;
         localStorageService.set('objTrabajo', trabajo);
-        localStorageService.set("botonera", objBotonera);
-        location.href = '/ordenservicio';
+        localStorageService.set("botonera", objBotonera);        
+        commonService.idEstatusTrabajo = 5;  
+        commonService.idCita = trabajo.idCita;
+        $location.path ('/ordenservicio');
     }
 
     //actualiza el trabajo a estatus terminado
