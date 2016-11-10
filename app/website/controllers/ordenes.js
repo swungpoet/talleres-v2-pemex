@@ -971,7 +971,10 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                     (result['cfdi:Comprobante'].$['folio'] == undefined ||
                                         result['cfdi:Comprobante'].$['folio'] == ''
                                     )) {
-                                    numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                   numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                var values = numFactura.split('-');
+                                var tamaño = values.length;
+                                numFactura = values[tamaño-1];
                                 } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
                                     numFactura = result['cfdi:Comprobante'].$['folio'];
                                 } else {
