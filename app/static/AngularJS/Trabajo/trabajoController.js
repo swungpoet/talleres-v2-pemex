@@ -167,9 +167,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
     //abre el modal para la finalización del trabajo
     $scope.openFinishingTrabajoModal = function (idTrabajo) {
-        idTrabajo=11;
         trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
-            debugger;
             if (resp.data[0].estatus>0) {
                 swal("No se puede terminar el trabajo porque hay cotizaciones pendientes de autorizar.");
             }else{
