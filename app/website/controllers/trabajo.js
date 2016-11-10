@@ -59,6 +59,32 @@ Trabajo.prototype.get_trabajoterminado = function(req, res, next){
     });
 }
 
+//obtiene estatus de la cotizacón
+Trabajo.prototype.get_estusCotizacion = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Obtención de valores de los parámetros del request
+    var params = [
+    {
+        name: 'idTrabajo',
+        value: req.query.idTrabajo, 
+        type: self.model.types.INT
+    }];
+    
+    this.model.query('SEL_ESTATUS_COTIZACION_SP', params, function(error, result) {
+                //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 
 //obtiene el saldo de un TAR
 Trabajo.prototype.get_saldotar = function (req, res, next) {

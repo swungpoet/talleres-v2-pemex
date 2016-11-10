@@ -167,35 +167,47 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
     //abre el modal para la finalización del trabajo
     $scope.openFinishingTrabajoModal = function (idTrabajo) {
-       
-       ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
+        idTrabajo=11;
+        trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
+            debugger;
+            if (resp.data[0].estatus>0) {
+                swal("No se puede terminar el trabajo porque hay cotizaciones pendientes de autorizar.");
+            }else{
+                 ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
                            
-            if (estatus.data.length > 0) {
+                    if (estatus.data.length > 0) {
 
-                if (estatus.data[0].estatus == 1) {
-                                        
-                      modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer , '');
+                        if (estatus.data[0].estatus == 1) {
+                                                
+                              modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer , '');
 
-                } else {
-                     $scope.trabajoTer ();
-                }
-
-            } else{
-
-                $scope.trabajos.forEach(function (p, i) {
-                    if (p.idTrabajo == idTrabajo) {
-                        if (p.fechaServicio != null) {
-                            $('#finalizarTrabajoModal').appendTo("body").modal('show');
-                            $scope.idTrabajo = idTrabajo;
                         } else {
-                            alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                             $scope.trabajoTer ();
                         }
-                    }
-                });
-            }   
+
+                    } else{
+
+                        $scope.trabajos.forEach(function (p, i) {
+                            if (p.idTrabajo == idTrabajo) {
+                                if (p.fechaServicio != null) {
+                                    $('#finalizarTrabajoModal').appendTo("body").modal('show');
+                                    $scope.idTrabajo = idTrabajo;
+                                } else {
+                                    alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                                }
+                            }
+                        });
+                    }   
+                }, function (error) {
+                    alertFactory.error("Error al cargar la orden");
+                });    
+            }
+
         }, function (error) {
             alertFactory.error("Error al cargar la orden");
-        });      
+        }); 
+       
+        
 
     }
 
