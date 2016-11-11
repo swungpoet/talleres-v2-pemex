@@ -100,6 +100,7 @@
                                                     <th>Número Copade</th>
                                                     <th>Órden de Surtimiento</th>
                                                     <th>No. Estimación</th>
+                                                    <th>Total</th>
                                                     <th>Subtotal</th>
                                                     <th>Fecha Carga de ASE</th>
                                                     <th>Fecha Llegada Copade</th>
@@ -111,6 +112,7 @@
                                                     <td>{{copade.numeroCopade}}</td>
                                                     <td>{{copade.ordenSurtimiento}}</td>
                                                     <td>{{copade.numeroEstimacion}}</td>
+                                                    <td>{{copade.total | currency}}</td>
                                                     <td>{{copade.subTotal | currency}}</td>
                                                     <td>{{copade.fechaCarga | date:'dd-MM-yyyy HH:mm'}}</td>
                                                     <td>{{copade.fechaRecepcionCopade}}</td>
@@ -145,6 +147,7 @@
                                                 <th>No. Estimación</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Total</th>
+                                                <th>Subtotal</th>
                                                 <th>Fecha COPADE</th>
                                                 <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                 <!--th>Estatus</th>
@@ -168,6 +171,7 @@
                                                 <td>{{cita.numeroEstimacion}}</td>
                                                 <td>{{cita.descripcion}}</td>
                                                 <td>{{cita.total | currency}}</td>
+                                                <td>{{cita.subTotal | currency}}</td>
                                                 <td>{{cita.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
                                                 <td ng-show="trabajosporCOPADE==1">{{cita.numeroTrabajo}}</td>
                                                 <!--td>{{cita.estatus}}</td>
@@ -198,6 +202,7 @@
                                                 <th>No. Estimación</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Total</th>
+                                                <th>Subtotal</th>
                                                 <th>Fecha COPADE</th>
                                                 <th>Folio Factura</th>
                                                 <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
@@ -211,6 +216,7 @@
                                                 <td>{{facturado.numeroEstimacion}}</td>
                                                 <td>{{facturado.descripcion}}</td>
                                                 <td>{{facturado.total | currency}}</td>
+                                                <td>{{facturado.subTotal | currency}}</td>
                                                 <td>{{facturado.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
                                                 <td>{{facturado.COP_IDDOCTO}}</td>
                                                 <td ng-show="trabajosporCOPADE==1">{{facturado.numeroTrabajo}}</td>
