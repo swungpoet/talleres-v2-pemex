@@ -260,6 +260,18 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getDatosCita: function (idCita) {
+            return $http({
+                url: citaUrl + 'datosCita',
+                method: "GET",
+                params: {
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

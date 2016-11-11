@@ -5,7 +5,7 @@
 // -- Modificó: Mario Mejía
 // -- Fecha: 
 // -- =============================================
-registrationModule.controller('cotizacionController', function ($scope, $route, $rootScope, alertFactory, globalFactory, uploadRepository, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository) {
+registrationModule.controller('cotizacionController', function ($scope, $route, $rootScope, alertFactory, globalFactory, uploadRepository, localStorageService, cotizacionRepository, cotizacionMailRepository, exampleRepo, uploadRepository, citaRepository, commonService) {
     $scope.arrayItem = [];
     $scope.arrayCambios = [];
     var valor = '';
@@ -69,7 +69,9 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         });
     }
     $scope.init = function () {
-        $scope.verificaRefaccion();
+        if (commonService.idEstatusTrabajo == undefined) {
+            $scope.verificaRefaccion();
+        } 
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT", 20);
@@ -604,32 +606,32 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
     }
 
     $scope.precioEditado = function (pieza) {
-       
-       cotizacionRepository.precioItemCliente(pieza.idItem).then(function (result) {
-       
-            var uitilidad = (result.data[0].precioCliente - $scope.precioActual)/result.data[0].precioCliente ;
 
-            if (uitilidad<result.data[0].valor) {
-               swal({
-                    title: "Advertencia",
-                    text: "El precio unitario de esta partida es $"+result.data[0].precioCliente +", el margen de utilidad  es menor de 5% tomando en cuenta el precio de captura  $"+$scope.precioActual+". ¿Desea continuar?",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#67BF11",
-                    confirmButtonText: "Si",
-                    cancelButtonText: "No",
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                },
-                function (isConfirm) {
-                    if (isConfirm) {
-                        $scope.$apply( function () {
-                            $scope.actualizaPrecio(pieza);
-                        });
-                    }
-                });
+        cotizacionRepository.precioItemCliente(pieza.idItem).then(function (result) {
 
-            }else{
+            var uitilidad = (result.data[0].precioCliente - $scope.precioActual) / result.data[0].precioCliente;
+
+            if (uitilidad < result.data[0].valor) {
+                swal({
+                        title: "Advertencia",
+                        text: "El precio unitario de esta partida es $" + result.data[0].precioCliente + ", el margen de utilidad  es menor de 5% tomando en cuenta el precio de captura  $" + $scope.precioActual + ". ¿Desea continuar?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#67BF11",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $scope.$apply(function () {
+                                $scope.actualizaPrecio(pieza);
+                            });
+                        }
+                    });
+
+            } else {
                 $scope.actualizaPrecio(pieza);
             }
         }, function (error) {
@@ -637,10 +639,10 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         });
 
 
-        
+
     }
 
-    $scope.actualizaPrecio = function (pieza){
+    $scope.actualizaPrecio = function (pieza) {
         if ($scope.arrayItem.length != 0) {
             if (existsItem(pieza) == true) {
                 $scope.arrayItem.forEach(function (item, i) {
@@ -890,11 +892,11 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         cotizacionRepository.getcitaRefaccion($scope.datosRefaccion.idCita).then(function (result) {
             localStorageService.remove('citaRefacciones');
             if (result.data.length > 0) {
-                $scope.verificaRefaccion =result.data[0].idTipoCita;
+                $scope.verificaRefaccion = result.data[0].idTipoCita;
             }
         }, function (error) {
             alertFactory.error('Error al obtener la informacion');
         });
-    }
+    }    
 
 });

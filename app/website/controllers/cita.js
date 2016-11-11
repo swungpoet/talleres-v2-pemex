@@ -627,4 +627,28 @@ Cita.prototype.post_enviaAprobacion = function (req, res, next) {
     });
 }
 
+//Devuelve la inforción de una cita
+Cita.prototype.get_datosCita = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Asigno a params el valor de mis variables    
+    var params = [
+        {
+            name: 'idCita',
+            value: req.query.idCita,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_DATOS_CITA_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Cita;
