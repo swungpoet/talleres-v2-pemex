@@ -17,7 +17,7 @@ registrationModule.controller('token_controller', function ($scope, $modalInstan
             $scope.idUsuario= 190;
         }else if (origen == 'Trabajo'){
             $scope.show_trabajo= true; 
-            $scope.idUsuario= 47;
+            $scope.idUsuario= 213;
         }
 	}
 	 $scope.close = function () {
