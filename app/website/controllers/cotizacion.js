@@ -142,7 +142,13 @@ Cotizacion.prototype.post_cotizacionMaestro = function (req, res, next) {
             name: 'idTaller',
             value: req.body.idTaller,
             type: self.model.types.DECIMAL
-        }];
+        },
+        {
+            name: 'idEstatus',
+            value: req.body.idEstatus,
+            type: self.model.types.INT
+        }
+        ];
 
 
     this.model.post('INS_COTIZACION_MAESTRO_SP', params, function (error, result) {
@@ -193,6 +199,11 @@ Cotizacion.prototype.post_cotizacionDetalle = function (req, res, next) {
             name: 'idNivelAutorizacion',
             value: req.body.idNivelAutorizacion,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idEstatus',
+            value: req.body.idEstatus,
+            type: self.model.types.INT
         }];
 
     this.model.post('INS_COTIZACION_DETALLE_SP', params, function (error, result) {
@@ -527,24 +538,24 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     if (!fs.existsSync(dirname + idTrabajo + '/documentos/preFactura'))
                         fs.mkdirSync(dirname + idTrabajo + '/documentos/preFactura');
                 } else {
-                 if (idNombreEspecial == 3 || idNombreEspecial == 7){
-                    if (!fs.existsSync(dirname + idTrabajo)) {
-                        fs.mkdirSync(dirname + idTrabajo);
+                    if (idNombreEspecial == 3 || idNombreEspecial == 7) {
+                        if (!fs.existsSync(dirname + idTrabajo)) {
+                            fs.mkdirSync(dirname + idTrabajo);
+                        }
+                        if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion)) {
+                            fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion)
+                        }
+                        if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/multimedia')) {
+                            fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/multimedia')
+                            fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos')
+                        }
+                        if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')) {
+                            fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')
+                        }
+                        if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')) {
+                            fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')
+                        }
                     }
-                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion)) {
-                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion)
-                    }
-                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/multimedia')) {
-                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/multimedia')
-                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos')
-                    }
-                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')) {
-                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/factura')
-                    }
-                    if (!fs.existsSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')) {
-                        fs.mkdirSync(dirname + idTrabajo + '/' + carpetaCotizacion + '/documentos/preFactura')
-                    }
-                 }
                 }
 
                 if (idNombreEspecial == 1) {
@@ -1220,21 +1231,21 @@ Cotizacion.prototype.get_tipoCotizaciones = function (req, res, next) {
 
 //Obtiene el precio del cliente  de un Item 
 Cotizacion.prototype.get_precioItemCliente = function (req, res, next) {
-    var self = this;
-    var params = [{
+        var self = this;
+        var params = [{
             name: 'idItem',
             value: req.query.idItem,
             type: self.model.types.INT
         }];
 
-    this.model.query('SEL_PRECIO_ITEM_CLIENTE_SP', params, function (error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
+        this.model.query('SEL_PRECIO_ITEM_CLIENTE_SP', params, function (error, result) {
+            self.view.expositor(res, {
+                error: error,
+                result: result
+            });
         });
-    });
-}
-//Obtiene los talleres disponibles 
+    }
+    //Obtiene los talleres disponibles 
 Cotizacion.prototype.get_tallerCotizacion = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
