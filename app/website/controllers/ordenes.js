@@ -473,6 +473,11 @@ Orden.prototype.post_insertaDatosAprobacionUtilidad = function (req, res, next) 
             name: 'margen',
             value: req.body.margen,
             type: self.model.types.DECIMAL
+        },
+        {
+            name: 'observacionTrabajo',
+            value: req.body.observacionTrabajo,
+            type: self.model.types.STRING
         }]; 
 
     this.model.post('INS_DATOS_APROBACION_UTILIDAD_SP', params, function (error, result) {

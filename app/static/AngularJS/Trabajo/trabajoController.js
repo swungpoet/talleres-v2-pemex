@@ -169,6 +169,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
     //abre el modal para la finalización del trabajo
     $scope.openFinishingTrabajoModal = function (idTrabajo) {
+        $scope.idTrabajo = idTrabajo;
+
         trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
             if (resp.data[0].estatus>0) {
                 swal("No se puede terminar el trabajo porque hay cotizaciones pendientes de autorizar.");
@@ -236,7 +238,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         },
         function (isConfirm) {
             if (isConfirm) {
-                ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2, null).then(function (aprobacionUtilidad) {
+                ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2, null, $scope.observacionTrabajo).then(function (aprobacionUtilidad) {
                   
                     $('#finalizarTrabajoModal').modal('hide');
                     if (aprobacionUtilidad.data[0].id > 0) {
