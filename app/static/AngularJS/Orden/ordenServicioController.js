@@ -225,10 +225,7 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
 
         localStorageService.set('isNuevaCotizacion', 1);
         $scope.getDatosCita();
-        setTimeout(function () {
-            $location.path('/cotizacionnueva');
-        }, 2500)
-
+        $location.path('/cotizacionnueva');
     }
 
     $scope.Adjuntar = function () {

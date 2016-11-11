@@ -71,7 +71,10 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
     $scope.init = function () {
         if (commonService.idEstatusTrabajo == undefined) {
             $scope.verificaRefaccion();
-        } 
+            $scope.newEstatus = 25;
+        } else {
+            $scope.newEstatus = 8;
+        }
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
         $scope.dzOptionsCotizacion = uploadRepository.getDzOptions("image/*,application/pdf,.mp4,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/docx,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/xml,.docX,.DOCX,.ppt,.PPT", 20);
@@ -308,7 +311,8 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                     $scope.observaciones,
                     idUnidad,
                     $scope.selectedTipo.idTipoCotizacion,
-                    $scope.selectedTaller)
+                    $scope.selectedTaller,
+                    $scope.newEstatus)
                 .then(function (resultado) {
                     alertFactory.success('Guardando Cotización Maestro');
                     $scope.idCotizacion = resultado.data[0].idCotizacion;
@@ -319,7 +323,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                                 item.idItem,
                                 item.precio,
                                 item.cantidad,
-                                item.idEstatus,
+                                $scope.newEstatus,
                                 item.idNivelAutorizacion)
                             .then(function (result) {
                                 alertFactory.success('Guardando Cotización Detalle');
@@ -897,6 +901,6 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         }, function (error) {
             alertFactory.error('Error al obtener la informacion');
         });
-    }    
+    }
 
 });
