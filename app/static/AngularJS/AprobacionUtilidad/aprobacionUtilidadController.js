@@ -15,12 +15,8 @@ registrationModule.controller('aprobacionutilidadController', function ($scope, 
     $scope.init = function () {
 
         if ($scope.userData.idUsuario == 190) {
-            $scope.selectedMargen=0;
-            $scope.selectedSalida=1;
-            $scope.titulo="Aprobación de Margen de Utilidad";
+            $scope.titulo="Aprobaciones";
         }else if ($scope.userData.idUsuario == 213) {
-            $scope.selectedMargen=1;
-            $scope.selectedSalida=0;
             $scope.titulo="Aprobación de Salida de Unidades";
         }
 

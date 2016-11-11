@@ -15,8 +15,55 @@
                             </div>
                         </div-->
                         <br/>
-                    <tabset>    
-                    <md-tab heading="Margen de Utilidad" md-selected="selectedMargen" ng-show="userData.idUsuario == 190">
+                    <tabset>  
+
+                    <tab heading="Salida de Unidades" index="0">
+                        <br/>
+                        <br/>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTableSalidaTrabajo" cg-busy="{promise:promise,message:message}">
+                                <thead>
+                                    <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Número de la Orden</th>
+                                        <th>Número Económico</th>
+                                        <th>Zona</th>
+                                        <th>TAR</th>
+                                        <th>Taller</th>
+                                        <th>Precio Taller</th>
+                                        <th>Precio Cliente</th>
+                                        <th>Descripción de la Orden</th>
+                                        <th>Estatus</th>
+                                        <th>Horas en espera</th>
+                                        <th>Aprobación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="trabajo in aprobacionTrabajos | filter:searchText ">
+
+                                         <td>{{trabajo.idCita}}</td>
+                                        <td>{{trabajo.numeroTrabajo}}</td>
+                                        <td>{{trabajo.numEconomico}}</td>
+                                        <td>{{trabajo.zona}}</td>
+                                        <td>{{trabajo.TAR}}</td>
+                                        <td>{{trabajo.razonSocial}}</td>
+                                        <td>{{trabajo.montoOrden |  currency: "$"}}</td>
+                                        <td>{{trabajo.precioOrden | currency: "$"}}</td>
+                                        <td>{{trabajo.trabajo}}</td>
+                                        <td>{{trabajo.descripcionLarga }}</td>
+                                        <td>{{trabajo.tiempo }}</td>
+                                        <td>
+                                            <button class="btn btn-informa btn-aprobar" type="button" ng-click="aprobarTrabajo(trabajo)" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            
+                        </div>
+                     </tab>   
+                    <tab heading="Margen de Utilidad" index="1" ng-show="userData.idUsuario == 190">
                         <br/>
                         <br/>
                         <div class="table-responsive">
@@ -67,53 +114,8 @@
 
                             
                         </div>
-                     </md-tab> 
-                     <md-tab heading="Salida de Unidades" md-selected="selectedSalida" ng-show="userData.idUsuario == 213 || userData.idUsuario == 190">
-                        <br/>
-                        <br/>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTableSalidaTrabajo" cg-busy="{promise:promise,message:message}">
-                                <thead>
-                                    <tr>
-                                        <th>Consecutivo</th>
-                                        <th>Número de la Orden</th>
-                                        <th>Número Económico</th>
-                                        <th>Zona</th>
-                                        <th>TAR</th>
-                                        <th>Taller</th>
-                                        <th>Precio Taller</th>
-                                        <th>Precio Cliente</th>
-                                        <th>Descripción de la Orden</th>
-                                        <th>Estatus</th>
-                                        <th>Horas en espera</th>
-                                        <th>Aprobación</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="trabajo in aprobacionTrabajos | filter:searchText ">
-
-                                         <td>{{trabajo.idCita}}</td>
-                                        <td>{{trabajo.numeroTrabajo}}</td>
-                                        <td>{{trabajo.numEconomico}}</td>
-                                        <td>{{trabajo.zona}}</td>
-                                        <td>{{trabajo.TAR}}</td>
-                                        <td>{{trabajo.razonSocial}}</td>
-                                        <td>{{trabajo.montoOrden |  currency: "$"}}</td>
-                                        <td>{{trabajo.precioOrden | currency: "$"}}</td>
-                                        <td>{{trabajo.trabajo}}</td>
-                                        <td>{{trabajo.descripcionLarga }}</td>
-                                        <td>{{trabajo.tiempo }}</td>
-                                        <td>
-                                            <button class="btn btn-informa btn-aprobar" type="button" ng-click="aprobarTrabajo(trabajo)" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            
-                        </div>
-                     </md-tab> 
+                     </tab> 
+                     
                      </tabset> 
                     </div>
                 </div>

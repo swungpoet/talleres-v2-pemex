@@ -77,7 +77,7 @@ Osur.prototype.post_nuevaosur = function (req, res, next) {
     var params = [{
             name: 'presupuesto',
             value: req.body.presupuesto,
-            type: self.model.types.INT
+            type: self.model.types.DECIMAL
         },
         {
             name: 'idTAR',
