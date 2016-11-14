@@ -129,7 +129,10 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <div class="rol" ng-class="{ 'roladmin' : userData.idTipoUsuario == 1, 'rolcall' : userData.idTipoUsuario == 2, 'roltaller' : userData.idTipoUsuario == 3, 'rolcliente' : userData.idTipoUsuario == 4  }"> Rol - {{ userData.tipoUsuario}} </div>
+                        <div class="rol" ng-class="{ 'roladmin' : userData.idTipoUsuario == 1, 'rolcall' : userData.idTipoUsuario == 2, 'roltaller' : userData.idTipoUsuario == 3, 'rolcliente' : userData.idTipoUsuario == 4, 'rolproveedor' : userData.esProveedor == 1  }">
+                            <span ng-show="userData.esProveedor==0">Rol - {{ userData.tipoUsuario}}</span>
+                            <span ng-show="userData.esProveedor==1">Rol - Proveedor</span>
+                        </div>
                     </li>
                     <li>
                         <span class="m-r-sm text-muted welcome-message">Talleres Externos</span>
