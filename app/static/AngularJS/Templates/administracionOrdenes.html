@@ -39,7 +39,7 @@
                                         <!--  <th>Ver Factura</th>  -->
                                         <!-- <th>Generar txt</th> -->
                                         <th>Id Proveedor</th>
-                                        <th>Editar Costos</th>
+                                        <th ng-show="userData.esProveedor == 0" >Editar Costos</th>
                                         <th>Anticipo</th>
                                         <th>Factura</th>
                                         <th>Comprar</th>
@@ -96,7 +96,7 @@
                                                 </div>
                                             </script>
                                         </td>
-                                        <td>
+                                        <td ng-show="userData.esProveedor == 0">
                                             <button class="btn btn-success" type="button" ng-click="lookAt(orden, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                         </td>
                                         <td>

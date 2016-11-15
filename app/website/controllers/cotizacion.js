@@ -87,12 +87,17 @@ Cotizacion.prototype.get_buscarPieza = function (req, res, next) {
         {
             name: 'nombrePieza',
             value: req.query.nombrePieza,
-            type: self.model.types.STRING
+            type: self.model.types.STRING 
         },
         {
             name: 'refaccion',
             value: req.query.refaccion,
             type: self.model.types.STRING
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
         }];
 
     this.model.query('SEL_BUSQUEDA_PIEZA_SP', params, function (error, result) {
