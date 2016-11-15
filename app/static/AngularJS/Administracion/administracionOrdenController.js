@@ -9,6 +9,7 @@
 // -- =============================================
 
 registrationModule.controller('administracionOrdenController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository) {
+    $scope.userData = localStorageService.get('userData');
     $scope.idTipoCotizacion = 0;
     $scope.ideTaller = 0;
     //init del controller
@@ -21,13 +22,13 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         if (localStorageService.get('actualizaCosto') != null) {
             $scope.numeroTrabajo = localStorageService.get('actualizaCosto');
             localStorageService.remove('actualizaCosto');
-            $scope.getAdmonOrdenes($scope.numeroTrabajo);
+            $scope.getAdmonOrdenes($scope.numeroTrabajo, $scope.userData.idUsuario);
         }
     }
 
     $scope.getAdmonOrdenes = function (numeroTrabajo) {
         $('.dataTableOrdenServicio').DataTable().destroy();
-        ordenServicioRepository.getAdmonOrdenes(numeroTrabajo).then(function (admonOrden) {
+        ordenServicioRepository.getAdmonOrdenes(numeroTrabajo, $scope.userData.idUsuario).then(function (admonOrden) {
             if (admonOrden.data.length > 0) {
                 alertFactory.success("Orden encontrada");
                 $scope.admonOrdenes = admonOrden.data;

@@ -369,6 +369,11 @@ Orden.prototype.get_getadmonordenes = function (req, res, next) {
         name: 'numeroTrabajo',
         value: req.query.numeroTrabajo,
         type: self.model.types.STRING
+        },
+        {
+        name: 'idUsuario',
+        value: req.query.idUsuario,
+        type: self.model.types.INT
         }];
 
     this.model.query('SEL_ADMINISTRACION_ORDENES_SP', params, function (error, result) {

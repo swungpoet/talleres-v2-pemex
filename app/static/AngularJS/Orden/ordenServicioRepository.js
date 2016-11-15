@@ -95,12 +95,13 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             });
         },
 
-        getAdmonOrdenes: function (numeroTrabajo) {
+        getAdmonOrdenes: function (numeroTrabajo,idUsuario) {
             return $http({
                 url: ordenUrl + 'getadmonordenes/',
                 method: "GET",
                 params: {
-                    numeroTrabajo: numeroTrabajo
+                    numeroTrabajo: numeroTrabajo,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'
