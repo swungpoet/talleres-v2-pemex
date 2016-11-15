@@ -111,11 +111,18 @@ Cita.prototype.get_taller = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{
-        name: 'datoTaller',
-        value: req.query.datoTaller,
-        type: self.model.types.STRING
-    }];
+    var params = [
+        {
+            name: 'datoTaller',
+            value: req.query.datoTaller,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }
+    ];
 
     this.model.query('SEL_TALLER_SP', params, function (error, result) {
         self.view.expositor(res, {

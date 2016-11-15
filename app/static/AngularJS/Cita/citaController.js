@@ -188,7 +188,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
     $scope.lookUpTaller = function (datoTaller) {
         if (datoTaller !== '' && datoTaller !== undefined) {
             $('.dataTableTaller').DataTable().destroy();
-            $scope.promise = citaRepository.getTaller(datoTaller).then(function (taller) {
+            $scope.promise = citaRepository.getTaller(datoTaller, $scope.userData.idUsuario).then(function (taller) {
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {

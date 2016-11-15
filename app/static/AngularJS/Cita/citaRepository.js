@@ -43,12 +43,13 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                 }
             });
         },
-        getTaller: function (datoTaller) {
+        getTaller: function (datoTaller, idUsuario) {
             return $http({
                 url: citaUrl + 'taller/',
                 method: "GET",
                 params: {
-                    datoTaller: datoTaller
+                    datoTaller: datoTaller,
+                    idUsuario: idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'
