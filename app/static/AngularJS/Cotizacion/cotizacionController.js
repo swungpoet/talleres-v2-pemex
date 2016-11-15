@@ -159,7 +159,8 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
             $('.dataTableItem').DataTable().destroy();
             $scope.selectedTipo.idTipoCotizacion == 2 ? $scope.refaccion = 4 : $scope.refaccion = 1;
             /* $('.dataTableCotizacion').DataTable().destroy();*/
-            $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza, $scope.refaccion).then(function (result) {
+            $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza, $scope.refaccion, $scope.userData.idUsuario).then(function (result) {
+              
                 $scope.listaPiezas = result.data;
                 if (result.data.length > 0) {
                     setTimeout(function () {
