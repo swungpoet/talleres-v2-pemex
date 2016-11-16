@@ -81,6 +81,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         var sumatoria = 0
         $scope.trabajosTerminados = [];
         $('.dataTableTrabajoTerminado').DataTable().destroy();
+        $('.dataTableTrabajo').DataTable().destroy();
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
 
             for (var i = 0; i < trabajoTerminado.data.length; i++) {
@@ -219,6 +220,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         $scope.observacionTrabajo = null;
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
+
+
     }
     //  title: "¿Está seguro de terminar el trabajo?",
     //             text: "Se cambiará el estatus del trabajo a TERMINADO",
