@@ -209,6 +209,11 @@ Cotizacion.prototype.post_cotizacionDetalle = function (req, res, next) {
             name: 'idEstatus',
             value: req.body.idEstatus,
             type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.INT
         }];
 
     this.model.post('INS_COTIZACION_DETALLE_SP', params, function (error, result) {

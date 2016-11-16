@@ -325,7 +325,8 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                                 item.precio,
                                 item.cantidad,
                                 $scope.newEstatus,
-                                item.idNivelAutorizacion)
+                                item.idNivelAutorizacion,
+                                $scope.userData.idUsuario)
                             .then(function (result) {
                                 alertFactory.success('Guardando Cotización Detalle');
                                 if (($scope.arrayItem.length - i) === 1) {
@@ -531,7 +532,8 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                             item.precio,
                             item.cantidad,
                             item.idEstatus,
-                            item.idNivelAutorizacion)
+                            item.idNivelAutorizacion,
+                            $scope.userData.idUsuario)
                         .then(function (result) {
                             alertFactory.success('Guardando Cotización Detalle');
                             if (($scope.arrayItem.length - i) === 1) {
