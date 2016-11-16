@@ -125,10 +125,16 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }      
             });    
         },
-        getOrdenesVerificadas: function () {
+        getOrdenesVerificadas: function (idUsuario) {
             return $http({
                 url: ordenUrl + 'ordenesverificadas',
-                method: "GET"
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         },
         getTrbajoCobrado: function (idDatosCopade) {

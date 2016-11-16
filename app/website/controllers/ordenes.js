@@ -917,8 +917,16 @@ Orden.prototype.post_mueveCopade = function (req, res, next) {
 
 //Obtiene las copades que aún no han sido asignadas
 Orden.prototype.get_ordenesverificadas = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
     var self = this;
-    var params = [];
+    //Objeto que envía los parámetros
+    var params = [{
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }];
 
     this.model.query('SEL_ORDEN_VERIFICADA_SP', params, function (error, result) {
         self.view.expositor(res, {

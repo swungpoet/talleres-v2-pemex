@@ -410,7 +410,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.getOrdenesPorCobrar = function () {
         var sumatoria= 0;
         $('.dataTableOrdenesVerificadas').DataTable().destroy();
-        ordenPorCobrarRepository.getOrdenesVerificadas().then(function (result) {
+        ordenPorCobrarRepository.getOrdenesVerificadas($scope.userData.idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.verificadas = result.data;
                  for(var i=0;i<result.data.length;i++){
