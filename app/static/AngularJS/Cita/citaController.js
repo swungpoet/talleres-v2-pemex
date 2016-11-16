@@ -409,7 +409,10 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         if (nombrePieza !== '' && nombrePieza !== undefined) {
             $('#btnBuscarPieza').button('Buscando...');
             $('.dataTablePiezaTaller').DataTable().destroy();
-            $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza, $scope.procesAutotanque).then(function (pieza) {
+            if ($scope.userData.idTipoUsuario==4) {
+                $scope.datosCita.idTaller=0;
+            };
+            $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza, $scope.procesAutotanque, $scope.userData.idUsuario).then(function (pieza) {
                 $scope.piezas = pieza.data;
                 if (pieza.data.length > 0) {
                     globalFactory.waitDrawDocument("dataTablePiezaTaller", "Citas");
