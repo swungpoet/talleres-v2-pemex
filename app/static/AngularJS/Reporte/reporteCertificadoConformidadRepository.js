@@ -2,7 +2,7 @@ var reporteUnidadUrl = global_settings.urlCORS + '/api/reporte/';
 
 registrationModule.factory('reporteCertificadoConformidadRepository', function ($http) {
     return {
-        getReporteCertificadoConformidad: function (idZona, idTar, fechaInicial, fechaFinal) {
+        getReporteCertificadoConformidad: function (idZona, idTar, fechaInicial, fechaFinal, idUsuario) {
             return $http({
                 url: reporteUnidadUrl + 'reporteCertificadoConformidad/',
                 method: "GET",
@@ -10,7 +10,8 @@ registrationModule.factory('reporteCertificadoConformidadRepository', function (
                     idZona: idZona,
                     idTar: idTar,
                     fechaInicial: fechaInicial,
-                    fechaFinal: fechaFinal
+                    fechaFinal: fechaFinal,
+                    idUsuario: idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

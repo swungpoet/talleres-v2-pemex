@@ -19,7 +19,7 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
     //Obtiene todas las citas no canceladas generadas para cierta unidad
     $scope.getCertificados = function (idZona, idTar, fechaInicial, fechaFinal) {
         $('.dataTableCertificadoConformidad').DataTable().destroy();
-        reporteCertificadoConformidadRepository.getReporteCertificadoConformidad(idZona, idTar, fechaInicial, fechaFinal).then(function (certificados) {
+        reporteCertificadoConformidadRepository.getReporteCertificadoConformidad(idZona, idTar, fechaInicial, fechaFinal, $scope.userData.idUsuario).then(function (certificados) {
             if (certificados.data.length > 0) {
                 $scope.certificados = certificados.data;
                 alertFactory.success("Certificados Cargados");
