@@ -172,14 +172,15 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 }
             });
         },
-        obtieneTallerCotizaciones: function (datoTaller, isPreCotizacion, idCita) {
+        obtieneTallerCotizaciones: function (datoTaller, isPreCotizacion, idCita, idUsuario) {
             return $http({
                 url: searchUrl + 'tallerCotizacion',
                 method: "GET",
                 params: {
                     datoTaller: datoTaller,
                     isPrecotizacion: isPreCotizacion,
-                    idCita: idCita
+                    idCita: idCita,
+                    idUsuario:idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

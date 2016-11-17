@@ -857,7 +857,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
     $scope.lookUpTaller = function (datoTaller) {
         if (datoTaller !== '' && datoTaller !== undefined) {
             $('.dataTableTaller').DataTable().destroy();
-            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, $scope.isPrecotizacion, $scope.citaDatos.idCita).then(function (taller) {
+            $scope.promise = cotizacionRepository.obtieneTallerCotizaciones(datoTaller, $scope.isPrecotizacion, $scope.citaDatos.idCita, $scope.userData.idUsuario).then(function (taller) {
                 $scope.talleres = taller.data;
                 //  $scope.arrayCambios = $scope.talleres.slice();
                 if (taller.data.length > 0) {
