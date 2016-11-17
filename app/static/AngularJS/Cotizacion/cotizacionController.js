@@ -96,7 +96,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         //Nueva cotización
         if (localStorageService.get('isNuevaCotizacion') != null) {
             $scope.citaDatos = localStorageService.get('cita');
-            localStorageService.remove('cita');
+            $scope.selectedTaller = $scope.citaDatos.idTaller;
             localStorageService.remove('isNuevaCotizacion');
             $scope.estado = 1;
             $scope.editar = 0;
@@ -104,6 +104,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
             localStorageService.remove('cotizacionEdit');
         } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
+            $scope.selectedTaller = $scope.citaDatos.idTaller;
             localStorageService.remove('cita');
             $scope.cotizacionEdit = localStorageService.get('objEditCotizacion');
             $scope.estado = 1;
@@ -126,6 +127,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         //Se valida si la cotización es para editar
         if (localStorageService.get('objEditCotizacion') != null) {
             $scope.editCotizacion = localStorageService.get('objEditCotizacion'); //objeto de la pagina autorizacion
+            $scope.selectedTaller = $scope.editCotizacion.idTaller;
             localStorageService.remove('objEditCotizacion');
             datosUnidad($scope.editCotizacion.idCotizacion, null);
             $scope.editar = 1;
@@ -141,6 +143,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         //Objeto de la pagina de orden servicio
         if (localStorageService.get('orden') != null) {
             $scope.orden = localStorageService.get('orden');
+            $scope.selectedTaller = $scope.orden.idTaller;
             localStorageService.remove('orden');
             $scope.estado = 3;
             $scope.idTaller = $scope.orden.idTaller;
