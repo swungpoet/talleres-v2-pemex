@@ -474,9 +474,17 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
     $scope.procesarOrden = function(){
 
+        var mensaje='';
+
+        if ($scope.userData.esProveedor==1) {
+            mensaje='¿Está seguro de enviarla a aprobación?';
+        }else{
+            mensaje='¿Está seguro de procesar la compra?';
+        }
+
         swal({
             title: "Advertencia",
-            text: "¿Está seguro de procesar la compra?",
+            text: mensaje,
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#67BF11",
