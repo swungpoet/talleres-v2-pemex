@@ -335,7 +335,13 @@ Reporte.prototype.get_reporteCertificadoConformidad = function (req, res, next) 
             name: 'fechaFinal',
             value: req.query.fechaFinal,
             type: self.model.types.STRING
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.fechaFinal,
+            type: self.model.types.INT
         }
+
     ];
 
     this.model.query('SEL_REPORTE_CERTIFICADO_CONFORMIDAD_SP', params, function (error, result) {
