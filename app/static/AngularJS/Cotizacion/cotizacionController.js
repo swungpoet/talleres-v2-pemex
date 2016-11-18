@@ -96,7 +96,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         //Nueva cotización
         if (localStorageService.get('isNuevaCotizacion') != null) {
             $scope.citaDatos = localStorageService.get('cita');
-            $scope.selectedTaller = $scope.citaDatos.idTaller;
+            $scope.selectedTaller = '';
             localStorageService.remove('isNuevaCotizacion');
             $scope.estado = 1;
             $scope.editar = 0;
@@ -156,49 +156,55 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
 
     //Busqueda de item (servicio/pieza/refacción)
     $scope.buscarPieza = function (pieza) {
-        if (pieza == '' || pieza == null) {
-            alertFactory.info("Ingrese un dato para búsqueda");
-        } else {
-            $('.dataTableItem').DataTable().destroy();
-            $scope.selectedTipo.idTipoCotizacion == 2 ? $scope.refaccion = 4 : $scope.refaccion = 1;
-            /* $('.dataTableCotizacion').DataTable().destroy();*/
-            $scope.promise = cotizacionRepository.buscarPieza($scope.idTaller, pieza, $scope.refaccion, $scope.userData.idUsuario).then(function (result) {
-              
-                $scope.listaPiezas = result.data;
-                if (result.data.length > 0) {
-                    setTimeout(function () {
-                        $('.dataTableItem').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp',
-                            buttons: [
-                                {
-                                    extend: 'excel',
-                                    title: 'CotizacionNueva'
-                                    },
+        if ($scope.selectedTaller == '' || $scope.selectedTaller == null) {
+            alertFactory.info("Debe seleccionar primero un taller.");
 
-                                {
-                                    extend: 'print',
-                                    customize: function (win) {
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
+        }else{
+            if (pieza == '' || pieza == null) {
+                alertFactory.info("Ingrese un dato para búsqueda");
+            } else {
+                $('.dataTableItem').DataTable().destroy();
+                $scope.selectedTipo.idTipoCotizacion == 2 ? $scope.refaccion = 4 : $scope.refaccion = 1;
+                /* $('.dataTableCotizacion').DataTable().destroy();*/
+                $scope.promise = cotizacionRepository.buscarPieza($scope.selectedTaller, pieza, $scope.refaccion, $scope.userData.idUsuario).then(function (result) {
+                  
+                    $scope.listaPiezas = result.data;
+                    if (result.data.length > 0) {
+                        setTimeout(function () {
+                            $('.dataTableItem').DataTable({
+                                dom: '<"html5buttons"B>lTfgitp',
+                                buttons: [
+                                    {
+                                        extend: 'excel',
+                                        title: 'CotizacionNueva'
+                                        },
 
-                                        $(win.document.body).find('table')
-                                            .addClass('compact')
-                                            .css('font-size', 'inherit');
-                                    }
-                                                }
-                                            ]
-                        });
-                    }, 2000);
-                    alertFactory.success('Datos encontrados');
-                } else {
-                    alertFactory.info('No existe pieza con esa descripción');
-                    $scope.listaPiezas = '';
-                }
-            }, function (error) {
-                alertFactory.error('Error');
-            });
+                                    {
+                                        extend: 'print',
+                                        customize: function (win) {
+                                            $(win.document.body).addClass('white-bg');
+                                            $(win.document.body).css('font-size', '10px');
+
+                                            $(win.document.body).find('table')
+                                                .addClass('compact')
+                                                .css('font-size', 'inherit');
+                                        }
+                                                    }
+                                                ]
+                            });
+                        }, 2000);
+                        alertFactory.success('Datos encontrados');
+                    } else {
+                        alertFactory.info('No existe pieza con esa descripción');
+                        $scope.listaPiezas = '';
+                    }
+                }, function (error) {
+                    alertFactory.error('Error');
+                });
+            }
+            pieza = '';
+
         }
-        pieza = '';
     }
 
     //Se agregan los items para el calculo de la cotización
