@@ -2,7 +2,7 @@
 <link href="../../css/dashBoardTables.css" rel="stylesheet">
 <div ng-init="init()">
     <div class="wrapper wrapper-content">
-        <div class="row">
+        <div class="row" ng-hide="userData.esProveedor == 1">
             <div class="col-lg-5">
                 <select class="form-control m-b" id="zona" ng-model="zonaSelected" ng-options="zona.idZona as zona.descripcionZona for zona in zonas" ng-change="devuelveTars()">
                     <option value="">Seleccione una Zona</option>
