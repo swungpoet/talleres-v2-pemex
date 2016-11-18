@@ -338,7 +338,7 @@ Reporte.prototype.get_reporteCertificadoConformidad = function (req, res, next) 
         },
         {
             name: 'idUsuario',
-            value: req.query.fechaFinal,
+            value: req.query.idUsuario,
             type: self.model.types.INT
         }
 

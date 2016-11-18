@@ -27,10 +27,11 @@ registrationModule.controller('administracionOrdenController', function ($scope,
     }
 
     $scope.getAdmonOrdenes = function (numeroTrabajo) {
-        $('.dataTableOrdenServicio').DataTable().destroy();
+        $scope.admonOrdenes=[];
         ordenServicioRepository.getAdmonOrdenes(numeroTrabajo, $scope.userData.idUsuario).then(function (admonOrden) {
             if (admonOrden.data.length > 0) {
                 alertFactory.success("Orden encontrada");
+
                 $scope.admonOrdenes = admonOrden.data;
                /* waitDrawDocument("dataTableOrdenServicio");*/
             } else {
