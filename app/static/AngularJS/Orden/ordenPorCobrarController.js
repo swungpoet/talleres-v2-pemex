@@ -67,7 +67,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.preFacturas = function () {
         var sumatoria= 0;
         $('.dataTablePreFacturas').DataTable().destroy();
-        ordenPorCobrarRepository.getPreFacturas().then(function (result) {
+        ordenPorCobrarRepository.getPreFacturas($scope.userData.idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.facturas = result.data;
                 for(var i=0;i<result.data.length;i++){
@@ -429,7 +429,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.trabajosFacturados = function () {
         var sumatoria= 0;
         $('.dataTableFacturados').DataTable().destroy();
-        ordenPorCobrarRepository.getFacturados().then(function (result) {
+        ordenPorCobrarRepository.getFacturados($scope.userData.idUsuario).then(function (result) {
             if (result.data.length > 0) {
                 $scope.facturados = result.data;
                 

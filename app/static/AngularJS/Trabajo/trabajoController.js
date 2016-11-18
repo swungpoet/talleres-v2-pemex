@@ -80,8 +80,12 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     var getTrabajoTerminado = function (idUsuario) {
         var sumatoria = 0
         $scope.trabajosTerminados = [];
-        $('.dataTableTrabajoTerminado').DataTable().destroy();
-        $('.dataTableTrabajo').DataTable().destroy();
+
+            setTimeout(function () {
+                $('.dataTableTrabajoTerminado').DataTable().destroy();
+                $('.dataTableTrabajo').DataTable().destroy();
+            }, 1000);
+
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
 
             for (var i = 0; i < trabajoTerminado.data.length; i++) {

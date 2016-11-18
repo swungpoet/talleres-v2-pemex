@@ -30,10 +30,16 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getPreFacturas: function () {
+        getPreFacturas: function (idUsuario) {
             return $http({
                 url: ordenUrl + 'prefacturas',
-                method: "GET"
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         },
         getGeneraTXT: function (idTrabajo) {
@@ -149,10 +155,16 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getFacturados: function () {
+        getFacturados: function (idUsuario) {
             return $http({
                 url: ordenUrl + 'facturados',
-                method: "GET"
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         }
 
