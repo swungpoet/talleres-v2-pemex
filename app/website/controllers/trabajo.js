@@ -551,6 +551,11 @@ Trabajo.prototype.post_insertBpro = function(req, res, next){
                 name: 'idTrabajo',
                 value: req.query.idTrabajo,
                 type: self.model.types.INT
+                },
+                {
+                name: 'idUsuario',
+                value: req.query.idUsuario,
+                type: self.model.types.INT
                 }];
     
     this.model.post('UPD_ORDEN_PAGO_SP',params, function (error, result) {

@@ -160,6 +160,16 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
             })
         },
 
+        getAprobacionProvision: function () {
+            return $http({
+                url: ordenUrl + 'getaprobacionprovision/',
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+
         getOrdenServicio: function (orden) {
             return $http({
                 url: ordenUrl + 'getordenservicio/',
@@ -199,6 +209,22 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                            idAprobacionUtilidad: idAprobacionUtilidad,
                            idUsuario: idUsuario,
                            token: token
+                        },
+
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
+        },
+
+        putAprobacionProvision: function (idTrabajo,idUsuario) {
+                       
+            return $http({        
+                url: ordenUrl + 'aprobacionprovision',
+                        method: "POST",
+                         data: {
+                           idTrabajo: idTrabajo,
+                           idUsuario: idUsuario
                         },
 
                         headers: {          

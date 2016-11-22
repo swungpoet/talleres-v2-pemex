@@ -119,11 +119,17 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/aprobacionutilidad.html',
             controller: 'aprobacionutilidadController'
         });
+         
          $routeProvider.when('/Tutorial', {
             templateUrl: 'AngularJS/Templates/tutorial.html',
             controller: 'tutorialController'
         });
         
+        $routeProvider.when('/aprobacionProvision', {
+            templateUrl: 'AngularJS/Templates/aprobacionProvision.html',
+            controller: 'aprobacionProvisionController'
+        });
+
         $routeProvider.when('/dashboardgeneral', {
             templateUrl: 'AngularJS/Templates/dashBoardGeneral.html',
             controller: 'dashBoardController'

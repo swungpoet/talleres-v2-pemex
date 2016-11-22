@@ -409,8 +409,6 @@ Orden.prototype.get_getdetalleorden = function (req, res, next) {
     });
 }
 
-
-
 //obtiene todas las órdenes de servicio que no están canceladas, pero están auntorizadas
 Orden.prototype.get_getaprobacionutilidad = function (req, res, next) {
     var self = this;
@@ -423,6 +421,18 @@ Orden.prototype.get_getaprobacionutilidad = function (req, res, next) {
     });
 }
  
+ //obtiene todas las órdenes en espera de aprobación de provisión
+Orden.prototype.get_getaprobacionprovision = function (req, res, next) {
+    var self = this;
+
+    this.model.query('SEL_APROBACION_PROVISION_SP', "", function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //Valiada si ya se encuentra procesada la orden 
 Orden.prototype.get_getordenservicio = function (req, res, next) {
     var self = this;
@@ -571,6 +581,35 @@ Orden.prototype.post_insertaDatosAprobacionUtilidadRespuesta = function (req, re
         }]; 
 
     this.model.post('[PROC_RESPUESTA_APROBACION_UTILIDAD_SP]', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+    //Inserta los datos de aprobacion de utilidad  respuesta en db y actualiza estatus
+Orden.prototype.post_aprobacionprovision = function (req, res, next) { 
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.INT
+        }]; 
+
+    this.model.post('[UPD_APROBACION_PROVISION_SP]', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

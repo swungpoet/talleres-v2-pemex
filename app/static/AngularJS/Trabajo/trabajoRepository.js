@@ -374,9 +374,11 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        cotizacionespago: function (idTrabajo) {
+        cotizacionespago: function (idTrabajo, idUsuario) {
+            debugger;
             var objTrabajo = {
-                idTrabajo: idTrabajo
+                idTrabajo: idTrabajo,
+                idUsuario: idUsuario
             };
             return $http({
                 url: trabajoUrl + 'insertBpro',

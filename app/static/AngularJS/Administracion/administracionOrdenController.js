@@ -496,7 +496,8 @@ registrationModule.controller('administracionOrdenController', function ($scope,
         },
         function (isConfirm) {
             if (isConfirm) {
-                trabajoRepository.cotizacionespago($scope.idTrabajo).then(function (ordenVerificada) {
+                trabajoRepository.cotizacionespago($scope.idTrabajo, $scope.userData.idUsuario).then(function (ordenVerificada) {
+                  
                     if (ordenVerificada.data[0].idHistorialProceso == 1) {
                         swal("Orden Provisionada!");
                         //location.href = '/ordenesporcobrar';
