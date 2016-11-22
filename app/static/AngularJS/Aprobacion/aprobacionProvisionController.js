@@ -8,7 +8,8 @@
 // -- Fecha:
 // -- =============================================
 
-registrationModule.controller('aprobacionProvisionController', function ($scope, $modal, $route, $rootScope, localStorageService, alertFactory, globalFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, ordenAnticipoRepository, trabajoRepository ) {
+
+registrationModule.controller('aprobacionProvisionController', function ($scope, $modal, $route, $rootScope, $location, localStorageService, alertFactory, globalFactory, ordenServicioRepository, uploadRepository, ordenPorCobrarRepository, commonService, ordenAnticipoRepository, trabajoRepository ) {
   	
 
   	$scope.init =function(){
@@ -58,6 +59,18 @@ registrationModule.controller('aprobacionProvisionController', function ($scope,
         localStorageService.set('actualizaCosto', trabajo.numeroTrabajo)
         location.href = '/ordenservicio?state=1';
     }
+
+    $scope.aprobarTrabajo = function (trabajo, valBotonera) {
+        var objBotonera = {};
+        objBotonera.accion = valBotonera;
+        objBotonera.idCita = trabajo.idCita;
+        localStorageService.set('objTrabajo', trabajo);
+        localStorageService.set("botonera", objBotonera);        
+        commonService.idEstatusTrabajo = 5;  
+        commonService.idCita = trabajo.idCita;
+        $location.path ('/ordenservicio');
+    }
+
 
 
   });
