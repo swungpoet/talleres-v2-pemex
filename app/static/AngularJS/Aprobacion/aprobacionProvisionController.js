@@ -36,17 +36,36 @@ registrationModule.controller('aprobacionProvisionController', function ($scope,
 
 
     $scope.aprobarProvision = function (provision){
-    	 ordenServicioRepository.putAprobacionProvision(provision.idTrabajo, $scope.userData.idUsuario ).then(function (res) {
+
+    	swal({
+            title: "Advertencia",
+            text: "¿Está seguro de aprobar la provisión de la orden?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#67BF11",
+            confirmButtonText: "Si",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+         function (isConfirm) {
+            if (isConfirm) {
+
+            	ordenServicioRepository.putAprobacionProvision(provision.idTrabajo, $scope.userData.idUsuario ).then(function (res) {
         
-            if (res.data[0].id == 1) {
-            	alertFactory.success("Proceso Realizado!"); 
-            	$scope.getAprobacionProvision();
-            }else if (res.data[0].id  == 2) {
-            	alertFactory.info("Ya se encuentra procesada"); 
+		            if (res.data[0].id == 1) {
+		            	 swal("Proceso Realizado!");
+		            	$scope.getAprobacionProvision();
+		            }else if (res.data[0].id  == 2) {
+		            	 swal("Ya se encuentra procesada");
+		            }
+		        }, function (error) {
+		            alertFactory.error("Error al cargar la orden");
+		        });
             }
-        }, function (error) {
-            alertFactory.error("Error al cargar la orden");
         });
+
+    	 
     }
 
      //visualiza la orden de servicio
