@@ -11,7 +11,6 @@
 registrationModule.controller('tutorialController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, globalFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
  
 	$scope.videoTutorial = function () {
-		debugger;
         window.open($rootScope.vIpServer + '/uploads/tutorial/consulta_de_citas.mp4', '_blank', 'Cita');
      }
 });

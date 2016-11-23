@@ -375,7 +375,6 @@ registrationModule.factory('trabajoRepository', function ($http) {
             });
         },
         cotizacionespago: function (idTrabajo, idUsuario) {
-            debugger;
             var objTrabajo = {
                 idTrabajo: idTrabajo,
                 idUsuario: idUsuario

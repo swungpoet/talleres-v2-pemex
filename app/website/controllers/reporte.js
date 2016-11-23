@@ -403,7 +403,7 @@ function generateConfomidadReporte(data) {
 
     doc.text("CONTRATO: 5400027380 ", 50, 198)
     doc.text("SOLPE: " + data.solpe, 50, 210)
-    doc.text("ORDEN DE SURTIMEINTO: " + data.ordenSurtimiento, 50, 222)
+    doc.text("ORDEN DE SURTIMEINTO: " + data.ordenSurtimiento.trim(), 50, 222)
     doc.text("MONTO DEL CONTRATO: $382,427,879.00 M.N. ", 50, 234)
     doc.text("MONTO OS: " + data.montoOS, 50, 246)
     doc.text("PEDIDO ASOCIADO: " + data.data[0].noRemFac, 50, 258)

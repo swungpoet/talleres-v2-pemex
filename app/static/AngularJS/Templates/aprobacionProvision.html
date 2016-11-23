@@ -26,6 +26,7 @@
                                         <th>Descripción de la Orden</th>
                                         <th>Estatus</th>
                                         <th>Horas en espera</th>
+                                        <th>Acción</th>
                                         <th>Aprobación</th>
                                     </tr>
                                 </thead>
@@ -43,6 +44,9 @@
                                         <td>{{provision.trabajo}}</td>
                                         <td>{{provision.descripcionLarga }}</td>
                                         <td>{{provision.tiempo }}</td>
+                                        <td>
+                                            <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(provision, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                        </td>
                                         <td>
                                             <button class="btn btn-informa btn-aprobar" type="button" ng-click="aprobarProvision(provision)" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>
 
