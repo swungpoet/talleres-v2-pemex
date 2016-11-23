@@ -161,8 +161,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     $scope.updTerminaTrabajo = function (observacion) {
         trabajoRepository.terminaTrabajo(7, $scope.idTrabajo, observacion).then(function (trabajoTerminado) {
             if (trabajoTerminado.data[0].idHistorialProceso != 0) {
-                getTrabajo($scope.userData.idUsuario);
-                getTrabajoTerminado($scope.userData.idUsuario);
+               // getTrabajo($scope.userData.idUsuario);
+               // getTrabajoTerminado($scope.userData.idUsuario);
                 $('#finalizarTrabajoModal').modal('hide');
             }
         });
@@ -220,9 +220,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         $scope.observacionTrabajo = null;
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
-
-
     }
+
     //  title: "¿Está seguro de terminar el trabajo?",
     //             text: "Se cambiará el estatus del trabajo a TERMINADO",
     // //confirm del trabajo para su terminación
