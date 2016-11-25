@@ -6,6 +6,7 @@ registrationModule.factory('globalFactory', function () {
             setTimeout(function () {
                 $('.' + dataTable).DataTable({
                     dom: '<"html5buttons"B>lTfgitp',
+                    "iDisplayLength": 100,
                     buttons: [
                         {
                             extend: 'excel',
