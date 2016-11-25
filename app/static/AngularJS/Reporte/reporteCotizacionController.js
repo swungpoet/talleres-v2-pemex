@@ -85,6 +85,7 @@ registrationModule.controller('reporteCotizacionController', function ($scope, a
 
             $('.' + dataTable).DataTable({
                 dom: '<"html5buttons"B>lTfgitp',
+                "iDisplayLength": 100,
                 buttons: [
                     {
                         extend: 'excel',

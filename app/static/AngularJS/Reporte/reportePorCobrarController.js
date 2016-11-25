@@ -92,6 +92,7 @@ registrationModule.controller('reportePorCobrarController', function ($scope, al
             $('.' + dataTable).DataTable({
                 order: [[indicePorOrdenar, 'desc']],
                 dom: '<"html5buttons"B>lTfgitp',
+                "iDisplayLength": 100,
                 buttons: [
                     {
                         extend: 'excel',
