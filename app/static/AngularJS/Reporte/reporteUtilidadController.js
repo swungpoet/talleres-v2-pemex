@@ -249,6 +249,7 @@ registrationModule.controller('reporteUtilidadController', function ($scope, ale
                     $('.' + dataTable).DataTable({
                         order: [[indicePorOrdenar, 'desc']],
                         dom: '<"html5buttons"B>lTfgitp',
+                        "iDisplayLength": 100,
                         buttons: [
                             {
                                 extend: 'excel',
