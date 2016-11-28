@@ -338,6 +338,33 @@ registrationModule.factory('ordenServicioRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+               getNotas: function (idTrabajo) {
+            return $http({
+                url: ordenUrl + 'getNotasTrabajo/',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+        enviarNotas: function (idTrabajo,idUsuario,texto) {             
+            return $http({        
+                url: ordenUrl + 'insertaNotas',
+                        method: "POST",
+                         data: {
+                           idTrabajo: idTrabajo,
+                           idUsuario: idUsuario,
+                           texto: texto
+                        },
+                        headers: {          
+                    'Content-Type': 'application/json'        
+                }      
+            });    
         }
+
     };
 });

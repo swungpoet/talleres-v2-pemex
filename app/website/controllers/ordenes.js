@@ -1382,4 +1382,56 @@ Orden.prototype.get_facturados = function (req, res, next) {
     });
 }
 
+//Obtiene las ordenes pendientes por cobrar
+Orden.prototype.get_getNotasTrabajo = function (req, res, next) {
+    var self = this;
+    var params = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_NOTA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+    //Inserta los datos en las notas
+Orden.prototype.post_insertaNotas = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idTrabajo',
+            value: req.body.idTrabajo,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.INT
+        },
+        {
+            name: 'texto',
+            value: req.body.texto,
+            type: self.model.types.STRING
+        },
+    ];
+
+    this.model.post('INS_NOTA_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Orden;
