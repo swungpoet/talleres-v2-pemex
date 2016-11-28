@@ -392,21 +392,22 @@ registrationModule.controller('ordenServicioController', function ($scope, $root
     }
      //Envia las notas para cada conversacion
     $scope.enviaNota = function () {
-        if($scope.texto != null && $scope.texto != '' && $scope.texto != undefined){
-        ordenServicioRepository.enviarNotas($scope.idTrabajoOrden.idTrabajo, $scope.userData.idUsuario, $scope.texto).then(function (result) {
-            if (result.data.length > 0) {
-                alertFactory.success('Nota enviada correctamente');
-                $scope.obtieneNota();
-                $scope.texto = '';
-            } else {
-                alertFactory.info('No se envio la nota correctamente');
-            }
-        }, function (error) {
-            alertFactory.error('No se pudo enviar la nota, porfavor intente mas tarde');
-        });
-    }else{
-         alertFactory.info('Porfavor ingrese algun texto para porder enviar la Nota');
+            if($scope.texto != null && $scope.texto != '' && $scope.texto != undefined){
+            ordenServicioRepository.enviarNotas($scope.idTrabajoOrden.idTrabajo, $scope.userData.idUsuario, $scope.texto).then(function (result) {
+                if (result.data.length > 0) {
+                    alertFactory.success('Nota enviada correctamente');
+                    $scope.obtieneNota();
+                    $scope.texto = '';
+                } else {
+                    alertFactory.info('No se envio la nota correctamente');
+                }
+            }, function (error) {
+                alertFactory.error('No se pudo enviar la nota, porfavor intente mas tarde');
+            });
+        }else{
+             alertFactory.info('Porfavor ingrese algun texto para porder enviar la Nota');
+        }
     }
-    }
+
 
 });
