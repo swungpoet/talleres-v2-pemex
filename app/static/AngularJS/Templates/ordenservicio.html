@@ -14,103 +14,104 @@
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="ibox-content p-xl">
                 <div class="row">
-                    <div class="col-lg-12">
-
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <span>Cliente:</span>
-                                <address>
-                                    <strong>{{ClienteData.nombre}}</strong><br>
-                                    {{ClienteData.direccion}}<br>
-                                    <abbr title="Phone">Tel:</abbr>{{ClienteData.telefono}}<br>
-                                </address>
-                                <span>Unidad:</span>
-                                <address>
-                                    <strong>{{unidadInfo.marca}} - {{unidadInfo.modelo}}</strong><br>
-                                    No. Económico: {{unidadInfo.clienteNumEconomico}}<br>
-                                    No. Inventario: {{unidadInfo.clienteNumInventario}}<br>
-                                    No. TAR: {{unidadInfo.numTAR}}<br>
-                                    TAR:  {{unidadInfo.TAR}}<br>
-                                    GAR:  {{unidadInfo.GAR[0]}}
-                                </address>
-                            </div>
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-5 text-right">
-                                <h4>Orden de Servicio No.</h4>
-                                <h4 class="text-navy">{{idTrabajoOrden.numeroTrabajo}}</h4>
-                                <span>Taller: </span>
-                                <address>
-                                 {{unidadInfo.razonSocial}}
-                                 <br>
-                                 <!-- {{unidadInfo.direccion[1]}} -->
-                             </address>
-
-                             <p>
-                                <span><strong>Fecha: </strong>{{articulos[0].fecha |  date:'dd-MM-yyyy HH:mm'}}</span>
-                                <br/>
-                            </p>
+                    <div class="col-md-12">
+                        <div class="col-sm-6">
+                            <span>Cliente:</span>
+                            <address>
+                                <strong>{{ClienteData.nombre}}</strong><br>
+                                {{ClienteData.direccion}}<br>
+                                <abbr title="Phone">Tel:</abbr>{{ClienteData.telefono}}<br>
+                            </address>
+                            <span>Unidad:</span>
+                            <address>
+                                <strong>{{unidadInfo.marca}} - {{unidadInfo.modelo}}</strong><br>
+                                No. Económico: {{unidadInfo.clienteNumEconomico}}<br>
+                                No. Inventario: {{unidadInfo.clienteNumInventario}}<br>
+                                No. TAR: {{unidadInfo.numTAR}}<br>
+                                TAR:  {{unidadInfo.TAR}}<br>
+                                GAR:  {{unidadInfo.GAR[0]}}
+                            </address>
                         </div>
-
-                        <br>
-                        <div class="row" ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
-                            <div class="col-md-offset-10 col-md-2">
-                                <form role="form">
-                                    <input bs-switch ng-model="isSelected" type="checkbox" switch-active="{{ isActive }}" switch-on-text="{{ onText }}" switch-off-text="{{ offText }}" switch-on-color="{{ onColor }}" switch-off-color="{{ offColor }}" switch-animate="{{ animate }}" switch-size="{{ size }}" switch-label="{{ label }}" switch-icon="{{ icon }}" switch-radio-off="{{ radioOff }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}" switch-wrapper="{{ wrapper }}" ng-true-value="'yep'" ng-false-value="'nope'" switch-inverse="{{ !inverse }}">
-                                </form>
-                            </div>
-                        </div>
-                        <div class="table-responsive m-t">
-                            <table class="table invoice-table" style="text-align:left;">
-                                <thead>
-                                    <tr>
-                                        <th>No. Cotización</th>
-                                        <th style="text-align:left;">Estatus</th>
-                                        <th style="text-align:left;">Artículos</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <th>I.V.A</th>
-                                        <th>Precio Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="articulo in articulos" ng-class="{'rowGris': articulo.idEstatus==8}">
-                                        <td>{{ articulo.numeroCotizacion }}</td>
-                                        <td style="text-align:left;">{{ articulo.estatus }}</td>
-                                        <td style="text-align:left;">
-                                            <div><strong>Número de Partida: {{ articulo.numeroPartida }}</strong></div>
-                                            <small>{{articulo.item}}</small></td>
-                                            <td>{{articulo.cantidad}}</td>
-                                            <td>{{ vistaPrecio == 1 ? articulo.precio : articulo.precioCliente | currency }}
-                                                <!--<div ng-show="vistaPrecio == 1">-->
-                                                <button class="btn btn-success" type="button" id="btnCotizar" ng-click="editarPrecio(articulo)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-show="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 1" ng-if="vistaEditaPrecio == 1" ng-hide="vistaPrecio != 1">
-                                                    <span class="glyphicon glyphicon-edit"></span>
-                                                </button>
-                                                <!--</div>-->
-                                            </td>
-                                            <td>{{ vistaPrecio == 1 ? (articulo.cantidad * (articulo.precio *(articulo.valorIva / 100))) : (articulo.cantidad * (articulo.precioCliente *(articulo.valorIva / 100))) | currency}}</td>
-                                            <td>{{ vistaPrecio == 1 ? ((articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100)))): ((articulo.cantidad * articulo.precioCliente) + (articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100)))) | currency }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <div class="col-sm-6 text-right">
+                            <h4>Orden de Servicio No.</h4>
+                            <h4 class="text-navy">{{idTrabajoOrden.numeroTrabajo}}</h4>
+                            <span>Taller: </span>
+                            <address>
+                               {{unidadInfo.razonSocial}}
+                               <br>
+                           </address>
+                           <p>
+                            <span><strong>Fecha: </strong>{{articulos[0].fecha |  date:'dd-MM-yyyy HH:mm'}}</span>
+                            <br/>
+                        </p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-7">  
-                        <div ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
-                            <div class="my-scroll-nota"> 
-                            <div class="chat-activity-list">
-                                    <div ng-repeat="notas in notaTrabajo">
-                                        <div class="chat-element">
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <div ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
+                    <div class="col-md-offset-10 col-md-2">
+                        <form role="form">
+                            <input bs-switch ng-model="isSelected" type="checkbox" switch-active="{{ isActive }}" switch-on-text="{{ onText }}" switch-off-text="{{ offText }}" switch-on-color="{{ onColor }}" switch-off-color="{{ offColor }}" switch-animate="{{ animate }}" switch-size="{{ size }}" switch-label="{{ label }}" switch-icon="{{ icon }}" switch-radio-off="{{ radioOff }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}" switch-wrapper="{{ wrapper }}" ng-true-value="'yep'" ng-false-value="'nope'" switch-inverse="{{ !inverse }}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive m-t">
+                <table class="table invoice-table" style="text-align:left;">
+                    <thead>
+                        <tr>
+                            <th>No. Cotización</th>
+                            <th style="text-align:left;">Estatus</th>
+                            <th style="text-align:left;">Artículos</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>I.V.A</th>
+                            <th>Precio Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="articulo in articulos" ng-class="{'rowGris': articulo.idEstatus==8}">
+                            <td>{{ articulo.numeroCotizacion }}</td>
+                            <td style="text-align:left;">{{ articulo.estatus }}</td>
+                            <td style="text-align:left;">
+                                <div><strong>Número de Partida: {{ articulo.numeroPartida }}</strong></div>
+                                <small>{{articulo.item}}</small></td>
+                                <td>{{articulo.cantidad}}</td>
+                                <td>{{ vistaPrecio == 1 ? articulo.precio : articulo.precioCliente | currency }}
+                                    <button class="btn btn-success" type="button" id="btnCotizar" ng-click="editarPrecio(articulo)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-show="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 1" ng-if="vistaEditaPrecio == 1" ng-hide="vistaPrecio != 1">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                    <!--</div>-->
+                                </td>
+                                <td>{{ vistaPrecio == 1 ? (articulo.cantidad * (articulo.precio *(articulo.valorIva / 100))) : (articulo.cantidad * (articulo.precioCliente *(articulo.valorIva / 100))) | currency}}</td>
+                                <td>{{ vistaPrecio == 1 ? ((articulo.cantidad * articulo.precio) + (articulo.cantidad * (articulo.precio * (articulo.valorIva / 100)))): ((articulo.cantidad * articulo.precioCliente) + (articulo.cantidad * (articulo.precioCliente * (articulo.valorIva / 100)))) | currency }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-7">  
+                <div ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">
+                    <div class="my-scroll-nota"> 
+                        <div class="chat-activity-list">
+                                        <div ng-repeat="notas in notaTrabajo">
+                                            <div class="chat-element">
                                                 <a href="#" ng-class="notas.idUsuario === userData.idUsuario ? 'pull-left' : 'pull-right'">
                                                     <img alt="image" class="img-circle" src="image/profile/man2.jpg">
                                                 </a> 
-                                            <div class="media-body">
-                                            <small ng-class="notas.idUsuario === userData.idUsuario ? 'pull-right' : 'pull-left'">{{notas.tiempoTranscurrido}}</small> 
-                                                 <div ng-class="notas.idUsuario === userData.idUsuario ? 'pull-left' : 'pull-right'">
-                                                     <strong>{{notas.nombreCompleto}}</strong>
-                                                     <p class="m-b-xs">
+                                                <div class="media-body">
+                                                    <small ng-class="notas.idUsuario === userData.idUsuario ? 'pull-right' : 'pull-left'">{{notas.tiempoTranscurrido}}</small> 
+                                                    <div ng-class="notas.idUsuario === userData.idUsuario ? 'pull-left' : 'pull-right'">
+                                                       <strong>{{notas.nombreCompleto}}</strong>
+                                                       <p class="m-b-xs">
                                                         {{notas.texto}}
                                                     </p>
                                                     <small class="text-muted">{{notas.fecha |  date:'medium'}}</small>
@@ -118,19 +119,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="chat-element right">
-                                        <a href="#" class="pull-right">
-                                            <img alt="image" class="img-circle" src="image/profile/man2.jpg">
-                                        </a>
-                                        <div class="media-body text-right ">
-                                            <small class="pull-left">5m ago</small>
-                                            <strong>John Smith</strong>
-                                            <p class="m-b-xs">
-                                                El usuario contesta cosas sin sentido
-                                            </p>
-                                            <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="chat-form">
@@ -175,7 +163,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <br>
