@@ -10,11 +10,11 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     $scope.init = function () {
         //configuraciones de dropzone
         Dropzone.autoDiscover = false;
-        $scope.dzOptionsFactura = uploadRepository.getDzOptions('text/xml,application/pdf', 2);
+        $scope.dzOptionsFactura = uploadRepository.getDzOptions('text/xml,application/pdf,image/bmp,image/gif,image/jpeg,image/png', 2);
         $scope.userData = localStorageService.get('userData');
         getTrabajo($scope.userData.idUsuario);
         getTrabajoTerminado($scope.userData.idUsuario);
-       // getTrabajoAprobado($scope.userData.idUsuario);
+        // getTrabajoAprobado($scope.userData.idUsuario);
         $scope.habilitaBtnAprobar = true;
 
         $scope.certificadoParams = {
@@ -43,7 +43,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                         getTrabajo($scope.userData.idUsuario);
                         getTrabajoTerminado($scope.userData.idUsuario);
                         //getTrabajoAprobado($scope.userData.idUsuario);
-                       // $scope.getAdmonOrdenes();
+                        // $scope.getAdmonOrdenes();
                     }
                 }, function (error) {
                     alertFactory.error("Error al cambiar la orden a estatus Certificado descargado");
@@ -80,8 +80,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     var getTrabajoTerminado = function (idUsuario) {
         var sumatoria = 0
         $scope.trabajosTerminados = [];
-                $('.dataTableTrabajoTerminado').DataTable().destroy();
-                $('.dataTableTrabajo').DataTable().destroy();
+        $('.dataTableTrabajoTerminado').DataTable().destroy();
+        $('.dataTableTrabajo').DataTable().destroy();
         trabajoRepository.getTrabajoTerminado(idUsuario).then(function (trabajoTerminado) {
 
             for (var i = 0; i < trabajoTerminado.data.length; i++) {
@@ -130,39 +130,39 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     }
 
     //obtiene los trabajos aprobados
-/*    var getTrabajoAprobado = function (idUsuario) {
-        $('.dataTableTrabajoAprobado').DataTable().destroy();
-        trabajoRepository.getTrabajoAprobado(idUsuario).then(function (trabajoAprobado) {
-            $scope.trabajosAprobados = trabajoAprobado.data;
+    /*    var getTrabajoAprobado = function (idUsuario) {
+            $('.dataTableTrabajoAprobado').DataTable().destroy();
+            trabajoRepository.getTrabajoAprobado(idUsuario).then(function (trabajoAprobado) {
+                $scope.trabajosAprobados = trabajoAprobado.data;
 
-            if (trabajoAprobado.data.length > 0) {
-                globalFactory.waitDrawDocument("dataTableTrabajoAprobado", "OrdenServicio");
-                alertFactory.success("Trabajos aprobados cargados");
-            } else {
-                alertFactory.info("No se encontraron trabajos aprobados");
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar trabajos aprobados");
-        });
-    }*/
+                if (trabajoAprobado.data.length > 0) {
+                    globalFactory.waitDrawDocument("dataTableTrabajoAprobado", "OrdenServicio");
+                    alertFactory.success("Trabajos aprobados cargados");
+                } else {
+                    alertFactory.info("No se encontraron trabajos aprobados");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar trabajos aprobados");
+            });
+        }*/
 
     $scope.aprobarTrabajo = function (trabajo, valBotonera) {
         var objBotonera = {};
         objBotonera.accion = valBotonera;
         objBotonera.idCita = trabajo.idCita;
         localStorageService.set('objTrabajo', trabajo);
-        localStorageService.set("botonera", objBotonera);        
-        commonService.idEstatusTrabajo = 5;  
+        localStorageService.set("botonera", objBotonera);
+        commonService.idEstatusTrabajo = 5;
         commonService.idCita = trabajo.idCita;
-        $location.path ('/ordenservicio');
+        $location.path('/ordenservicio');
     }
 
     //actualiza el trabajo a estatus terminado
     $scope.updTerminaTrabajo = function (observacion) {
         trabajoRepository.terminaTrabajo(7, $scope.idTrabajo, observacion).then(function (trabajoTerminado) {
             if (trabajoTerminado.data[0].idHistorialProceso != 0) {
-               // getTrabajo($scope.userData.idUsuario);
-               // getTrabajoTerminado($scope.userData.idUsuario);
+                // getTrabajo($scope.userData.idUsuario);
+                // getTrabajoTerminado($scope.userData.idUsuario);
                 $('#finalizarTrabajoModal').modal('hide');
             }
         });
@@ -173,22 +173,22 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         $scope.idTrabajo = idTrabajo;
 
         trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
-            if (resp.data[0].estatus>0) {
+            if (resp.data[0].estatus > 0) {
                 swal("No se puede terminar el trabajo porque hay cotizaciones pendientes de autorizar.");
-            }else{
-                 ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
-                           
+            } else {
+                ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
+
                     if (estatus.data.length > 0) {
 
                         if (estatus.data[0].estatus == 1) {
-                                                
-                              modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer , '');
+
+                            modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer, '');
 
                         } else {
-                             $scope.trabajoTer ();
+                            $scope.trabajoTer();
                         }
 
-                    } else{
+                    } else {
 
                         $scope.trabajos.forEach(function (p, i) {
                             if (p.idTrabajo == idTrabajo) {
@@ -200,21 +200,21 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                 }
                             }
                         });
-                    }   
+                    }
                 }, function (error) {
                     alertFactory.error("Error al cargar la orden");
-                });    
+                });
             }
 
         }, function (error) {
             alertFactory.error("Error al cargar la orden");
-        }); 
-       
-        
+        });
+
+
 
     }
 
-    $scope.trabajoTer = function (){
+    $scope.trabajoTer = function () {
         $scope.updTerminaTrabajo($scope.observacionTrabajo);
         swal("Trabajo Terminado!", "El trabajo se ha terminado", "success");
         $scope.observacionTrabajo = null;
@@ -228,37 +228,37 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     $('.btnTerminarTrabajo').click(function () {
 
         swal({
-            title: "Advertencia",
-            text: "La orden se enviará a aprobación para permitir la salida de la unidad. ¿Está seguro?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#67BF11",
-            confirmButtonText: "Si",
-            cancelButtonText: "No",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function (isConfirm) {
-            if (isConfirm) {
-                ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2, null, $scope.observacionTrabajo).then(function (aprobacionUtilidad) {
-                  
-                    $('#finalizarTrabajoModal').modal('hide');
-                    if (aprobacionUtilidad.data[0].id > 0) {
-                        //$scope.updTerminaTrabajo($scope.observacionTrabajo);
-                        swal("Éxito", "El trabajo se ha enviado a autorización", "success");
-                        getTrabajo($scope.userData.idUsuario);
-                        getTrabajoTerminado($scope.userData.idUsuario);
-                        //$scope.observacionTrabajo = null;
-                    }
-                }, function (error) {
-                    alertFactory.error("Error al cargar la orden");
-                });  
-             } else {
-                swal("Cancelado", "", "error");
-                $scope.observacionTrabajo = null;
-            }
-        });
-        
+                title: "Advertencia",
+                text: "La orden se enviará a aprobación para permitir la salida de la unidad. ¿Está seguro?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#67BF11",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 2, null, $scope.observacionTrabajo).then(function (aprobacionUtilidad) {
+
+                        $('#finalizarTrabajoModal').modal('hide');
+                        if (aprobacionUtilidad.data[0].id > 0) {
+                            //$scope.updTerminaTrabajo($scope.observacionTrabajo);
+                            swal("Éxito", "El trabajo se ha enviado a autorización", "success");
+                            getTrabajo($scope.userData.idUsuario);
+                            getTrabajoTerminado($scope.userData.idUsuario);
+                            //$scope.observacionTrabajo = null;
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al cargar la orden");
+                    });
+                } else {
+                    swal("Cancelado", "", "error");
+                    $scope.observacionTrabajo = null;
+                }
+            });
+
     });
 
     //muestra el modal para la carga de archivos
@@ -317,7 +317,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                     }, 1000);
                     getTrabajo($scope.userData.idUsuario);
                     getTrabajoTerminado($scope.userData.idUsuario);
-                   // getTrabajoAprobado($scope.userData.idUsuario);
+                    // getTrabajoAprobado($scope.userData.idUsuario);
                     //$scope.getAdmonOrdenes();
                 }
             }, function (error) {
@@ -733,20 +733,20 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
     $('.clockpicker').clockpicker();
 
-/*    $scope.getAdmonOrdenes = function () {
-        $('.dataTableOrdenporVerificar').DataTable().destroy();
-        trabajoRepository.getAdmonOrdenes().then(function (admonOrden) {
-            $scope.admonOrdenes = admonOrden.data;
-            if (admonOrden.data.length > 0) {
-                globalFactory.waitDrawDocument("dataTableOrdenporVerificar", "OrdenServicio");
-                alertFactory.success("Ordenes por verificar cargados");
-            } else {
-                alertFactory.info("No se encontraron Ordenes por verificar");
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar la orden");
-        });
-    }*/
+    /*    $scope.getAdmonOrdenes = function () {
+            $('.dataTableOrdenporVerificar').DataTable().destroy();
+            trabajoRepository.getAdmonOrdenes().then(function (admonOrden) {
+                $scope.admonOrdenes = admonOrden.data;
+                if (admonOrden.data.length > 0) {
+                    globalFactory.waitDrawDocument("dataTableOrdenporVerificar", "OrdenServicio");
+                    alertFactory.success("Ordenes por verificar cargados");
+                } else {
+                    alertFactory.info("No se encontraron Ordenes por verificar");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar la orden");
+            });
+        }*/
 
     //visualizacion de facturas ADOLFO 15092016
     $scope.verFactura = function (idCotizacion, idTrabajo, numeroCotizacion) {
