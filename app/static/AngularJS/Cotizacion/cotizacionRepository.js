@@ -91,7 +91,7 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 }
             });
         },
-        updateCotizacion: function (idCotizacion, idTipoElemento, idElemento, precio, cantidad, observaciones, idEstatus, idTipo , idTaller, idTipoCotizacion) {
+        updateCotizacion: function (idCotizacion, idTipoElemento, idElemento, precio, cantidad, observaciones, idEstatus, idTaller, idTipoCotizacion) {
             var msgObj = {
                 idCotizacion: idCotizacion,
                 idTipoElemento: idTipoElemento,
@@ -100,7 +100,6 @@ registrationModule.factory('cotizacionRepository', function ($http) {
                 cantidad: cantidad,
                 observaciones: observaciones,
                 idEstatus: idEstatus,
-                idTipo: idTipo,
                 idTaller : idTaller,
                 idTipoCotizacion : idTipoCotizacion
             }

@@ -732,17 +732,17 @@ Cotizacion.prototype.post_updateCotizacion = function (req, res, next) {
     var params = [{
             name: 'idCotizacion',
             value: req.body.idCotizacion,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
                         },
         {
             name: 'idTipoElemento',
             value: req.body.idTipoElemento,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
                         },
         {
             name: 'idElemento',
             value: req.body.idElemento,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
                         },
         {
             name: 'precio',
@@ -752,7 +752,7 @@ Cotizacion.prototype.post_updateCotizacion = function (req, res, next) {
         {
             name: 'cantidad',
             value: req.body.cantidad,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
                         },
         {
             name: 'observaciones',
@@ -762,22 +762,17 @@ Cotizacion.prototype.post_updateCotizacion = function (req, res, next) {
         {
             name: 'idEstatus',
             value: req.body.idEstatus,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
         },
-        {
-            name: 'idTipo',
-            value: req.body.idTipo,
-            type: self.model.types.DECIMAL
-                        },
         {
             name: 'idTaller',
             value: req.body.idTaller,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
                         },
         {
             name: 'idTipoCotizacion',
             value: req.body.idTipoCotizacion,
-            type: self.model.types.DECIMAL
+            type: self.model.types.INT
                         }];
 
     this.model.post('UPD_COTIZACION_SP', params, function (error, result) {

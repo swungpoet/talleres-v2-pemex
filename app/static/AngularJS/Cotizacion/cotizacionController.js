@@ -371,6 +371,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
 
     //Carga los datos de la cotizacion a editar
     $scope.editarCotizacion = function (idCotizacion, idTaller, idUsuario) {
+       
         cotizacionRepository.editarCotizacion(idCotizacion, idTaller, idUsuario)
             .then(function (result) {
                 $scope.preArticulos = [];
@@ -381,7 +382,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                     }).ToArray();
 
                     $scope.arrayItem = preArticulos;
-
+                    $scope.arrayPar= preArticulos;
                     $scope.arrayCambios = $scope.arrayItem.slice();
                     $scope.observaciones = result.data[0].observaciones;
                     $scope.total = calculaTotalEditar();
@@ -427,34 +428,9 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
             alertFactory.info('Debe seleccionar un taller');
         } else {
             eliminarElementos();
+            
             $scope.class_btnUpdateCotizacion = 'fa fa-circle-o-notch fa-spin';
-            $scope.arrayCambios.forEach(function (item, i) {
-                cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
-                        item.idTipoElemento,
-                        item.idItem,
-                        item.precio,
-                        item.cantidad,
-                        $scope.observaciones,
-                        item.idEstatus,
-                        0,
-                        $scope.selectedTaller,
-                        $scope.selectedTipo.idTipoCotizacion)
-                    .then(function (result) {
-                        if (result.data[0].idCotizacion > 0)
-                            $scope.class_btnUpdateCotizacion = '';
-                            alertFactory.success('Cotización Actualizada ');
-                    }, function (error) {
-                        $scope.class_btnUpdateCotizacion = '';
-                        alertFactory.error('Error');
-                       // btnCotizacionUpdLoading.ladda('stop');
-                        //alertFactory.error('Error');
 
-                    });
-            }, function (error) {
-                 $scope.class_btnUpdateCotizacion = '';
-                alertFactory.error('Error');
-               // btnCotizacionUpdLoading.ladda('stop');
-            });
             $scope.arrayItem.forEach(function (item, i) {
                 cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
                         item.idTipoElemento,
@@ -463,7 +439,6 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                         item.cantidad,
                         $scope.observaciones,
                         item.idEstatus,
-                        1,
                         $scope.selectedTaller,
                         $scope.selectedTipo.idTipoCotizacion)
                     .then(function (result) {
@@ -477,15 +452,15 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                             } else {
                                 $scope.dzMethods.processQueue();
                             }
-                            btnCotizacionUpdLoading.ladda('stop');
+                             $scope.class_btnUpdateCotizacion = '';
                         }
                     }, function (error) {
                         alertFactory.error('Error');
-                        btnCotizacionUpdLoading.ladda('stop');
+                        $scope.class_btnUpdateCotizacion = '';
                     });
             }, function (error) {
                 alertFactory.error('Error');
-                btnCotizacionUpdLoading.ladda('stop');
+                 $scope.class_btnUpdateCotizacion = '';
             });
         }
     });
