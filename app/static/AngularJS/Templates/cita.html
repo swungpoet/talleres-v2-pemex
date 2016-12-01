@@ -9,11 +9,11 @@
                     <div class="ibox-content">
                         <div class="row">
                              <!--<label class="col-xs-1 control-label">Select</label>-->
-                            <div class="col-xs-4">
+                            <!--div class="col-xs-4">
                                 <select class="form-control" name="cliente" ng-model="selectedCliente" ng-options="cliente.nombre for cliente in clientes" ng-enter="lookUpUnidad(selectedCliente.idCliente, datoUnidad)">
                                     <option value="">Selecionar cliente</option><!--default option -->
-                                </select>
-                            </div>
+                                <!--/select>
+                            </div-->
                             <div class="col-xs-4">
                                 <input type="text" placeholder="Buscar unidad" ng-model="datoUnidad" ng-change="habilitaBuscar(datoUnidad)" class="form-control" ng-enter="lookUpUnidad(selectedCliente.idCliente, datoUnidad)">
                             </div>

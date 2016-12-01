@@ -19,9 +19,10 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
     $scope.isPreCotizacion = false;
     localStorageService.remove('idCotizacionEdit');
     obtieneFechaActual();
+    $scope.selectedCliente='';
 
     $scope.init = function () {
-        getCliente();
+       // getCliente();
     }
 
     //init de la pantalla citaTrabajo
@@ -35,6 +36,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
     $scope.initNuevaCita = function () {
         $scope.edita = localStorageService.get('ModoEdicion');
         localStorageService.remove('ModoEdicion');
+        getCliente();
 
         $scope.idEstadoAutotanque = '';
         $scope.procesAutotanque = '';
@@ -87,9 +89,9 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
     }
 
     //obtiene la unidad mediante el dato buscado
-    var getUnidad = function (selectedCliente, datoUnidad) {
+    var getUnidad = function (datoUnidad) {
         $('#btnBuscar').button('Buscando...');
-        $scope.promise = citaRepository.getUnidadInformation(selectedCliente, datoUnidad, $scope.userData.idUsuario).then(function (unidadInfo) {
+        $scope.promise = citaRepository.getUnidadInformation(datoUnidad, $scope.userData.idUsuario).then(function (unidadInfo) {
             $('.dataTableUnidad').DataTable().destroy();
             $scope.unidades = unidadInfo.data;
             if (unidadInfo.data.length > 0) {
@@ -129,8 +131,9 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
 
     //Obtiene información de la unidad
     $scope.lookUpUnidad = function (selectedCliente, datoUnidad) {
-        if (selectedCliente != '' && selectedCliente != undefined && datoUnidad !== '' && datoUnidad !== undefined) {
-            getUnidad(selectedCliente, datoUnidad);
+       // if (selectedCliente != '' && selectedCliente != undefined && datoUnidad !== '' && datoUnidad !== undefined) {
+        if (datoUnidad !== '' && datoUnidad !== undefined) {
+            getUnidad(datoUnidad);
         } else {
             alertFactory.info('Todos los campos son obligatorios');
         }
@@ -208,9 +211,10 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
 
     //inserta una nueva cita
     $scope.addCita = function () {
+
         if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") &&
             ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && ($scope.labelItems > 0) &&
-            ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "")) {
+            ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "") && ($scope.selectedCliente != "") && ($scope.selectedCliente != undefined)) {
 
             if (($scope.procesAutotanque == "1" && $scope.requiereGrua == undefined) || ($scope.procesAutotanque == "1" && $scope.clasificacionCita == "")) {
                 alertFactory.info("Llene todos los campos");
@@ -236,6 +240,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
                     $scope.procesAutotanque == "4" ? citaTaller.idTipoCita = $scope.procesAutotanque : citaTaller.idTipoCita;
                     citaTaller.idTrasladoUnidad = $scope.requiereGrua;
                     citaTaller.idEstadoAutotanque = $scope.idEstadoAutotanque;
+                    citaTaller.idCliente= $scope.selectedCliente.idCliente;
                     //citaTaller.idTipoCita = $scope.tipoCita; check
                     //citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque; check       
                     //citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad; check
@@ -412,7 +417,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
             if ($scope.userData.idTipoUsuario==4) {
                 $scope.datosCita.idTaller=0;
             };
-            $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza, $scope.procesAutotanque, $scope.userData.idUsuario).then(function (pieza) {
+            $scope.promise = cotizacionRepository.buscarPieza($scope.datosCita.idTaller, nombrePieza, $scope.procesAutotanque, $scope.userData.idUsuario, $scope.selectedCliente.idCliente).then(function (pieza) {
                 $scope.piezas = pieza.data;
                 if (pieza.data.length > 0) {
                     globalFactory.waitDrawDocument("dataTablePiezaTaller", "Citas");

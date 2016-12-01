@@ -25,11 +25,7 @@ Cita.prototype.get_unidad = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //Obtención de valores de los parámetros del request
-    var params = [{
-            name: 'idCliente',
-            value: req.query.idCliente,
-            type: self.model.types.INT
-        },
+    var params = [
         {
             name: 'datoUnidad',
             value: req.query.datoUnidad,
@@ -260,6 +256,11 @@ Cita.prototype.post_addcita = function (req, res, next) {
         {
             name: 'idTrasladoUnidad',
             value: req.body.idTrasladoUnidad,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idCliente',
+            value: req.body.idCliente,
             type: self.model.types.INT
         }];
 
