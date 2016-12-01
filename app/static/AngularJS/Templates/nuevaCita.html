@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Cliente: </label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="clientes" ng-model="datosCita.selectedCliente" ng-options="cliente.selectedCliente as cliente.nombre for cliente in clientes" ng-disabled="edita == 1">
+                                    <select class="form-control" name="cliente" ng-model="datosCita.idCliente" ng-options="cliente.idCliente as cliente.nombre for cliente in clientes" ng-disabled="edita == 1">
                                         <option value="">Selecionar cliente</option><!--default option -->
                                     </select>
                                 </div>
