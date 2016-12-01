@@ -241,6 +241,17 @@ h5 {
   right: 6px;
   top: 12px;
 }
+
+.alerta-form .letter-labal {
+  line-height: 12px;
+  padding: 2px 5px;
+  position: absolute;
+  right: 6px;
+  top: 12px;
+  font-size: 10px;
+  border-radius: 6px;
+}
+
 .arrow {
   float: right;
 }
@@ -1099,6 +1110,13 @@ button.dim:active:before {
   background-color: #f8ac59;
   color: #ffffff;
 }
+
+.alerta-color {
+  background-color: #1ab394;
+  margin-right: 10px;
+  color: #FFFFFF;
+}
+
 .label-danger,
 .badge-danger {
   background-color: #ed5565;
