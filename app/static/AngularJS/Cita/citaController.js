@@ -723,6 +723,9 @@ var getidCita = function (idCita) {
                 $scope.datosCita.horaCita = citaDato[0].horaCita;
                 $scope.datosCita.trabajoCita = citaDato[0].trabajo;
                 $scope.datosCita.observacionCita = citaDato[0].observacion;
+
+                $scope.datosCita.selectedCliente = citaDato[0].idCliente;
+
                 //localStorageService.set('citaTipo', $scope.datosCita.tipoCita);
                 //$scope.datosCita.tipoCita = parseInt(localStorageService.get('citaTipo'));
                 //localStorageService.remove('citaTipo');

@@ -45,7 +45,14 @@
                                         <td>{{provision.descripcionLarga }}</td>
                                         <td>{{provision.tiempo }}</td>
                                         <td>
-                                            <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(provision, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                           <!--  <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(provision, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button> -->
+                                        <div class="alerta"> 
+                                            <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(provision, 1)">
+                                            <i class="glyphicon glyphicon-sunglasses"></i>  <span ng-hide="provision.numeroNotas == 0" class="letter-labal alerta-color">{{provision.numeroNotas}}</span>
+                                            </button>
+                                                <ul class="dropdown-menu dropdown-messages">
+                                                </ul>
+                                        </div> 
                                         </td>
                                         <td>
                                             <button class="btn btn-informa btn-aprobar" type="button" ng-click="aprobarProvision(provision)" data-toggle="tooltip" tooltip="Realizar aprobación" tooltip-placement="left"><span class="glyphicon glyphicon-check"></span></button>

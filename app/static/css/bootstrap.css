@@ -54,6 +54,10 @@ a:hover {
 abbr[title] {
   border-bottom: 1px dotted;
 }
+.alerta {
+  position: relative;
+  padding-top: 12px;
+}
 b,
 strong {
   font-weight: bold;
