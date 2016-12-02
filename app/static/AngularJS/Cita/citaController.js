@@ -38,6 +38,8 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         localStorageService.remove('ModoEdicion');
         getCliente();
 
+        
+
         $scope.idEstadoAutotanque = '';
         $scope.procesAutotanque = '';
         //requiereGrua
@@ -564,6 +566,9 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         citaRepository.getCliente($scope.userData.idUsuario).then(function (cliente) {
             if (cliente.data.length > 0) {
                 $scope.clientes = cliente.data;
+                if ($scope.userData.idTipoUsuario==4) {
+                    $scope.selectedCliente=$scope.clientes[0];
+                };
                 alertFactory.success("Clientes cargados");
             } else {
                 alertFactory.info("No se encontraron clientes");
@@ -606,6 +611,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
 
     //realiza la actualización de partidas de la cita
     $scope.updateCita = function () {
+
         if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") &&
             ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && ($scope.labelItems > 0) &&
             ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "")) {
@@ -723,8 +729,16 @@ var getidCita = function (idCita) {
                 $scope.datosCita.horaCita = citaDato[0].horaCita;
                 $scope.datosCita.trabajoCita = citaDato[0].trabajo;
                 $scope.datosCita.observacionCita = citaDato[0].observacion;
+                $scope.datosCita.selectedCliente = citaDato[0].idCliente;
+            
+                for (var i = 0; i < $scope.clientes.length; i++) {
+                    if ($scope.clientes[i].idCliente == citaDato[0].idCliente ) {
+                        $scope.selectedCliente = $scope.clientes[i];
+                    };
+                    
+                };
 
-                $scope.datosCita.idCliente = citaDato[0].idCliente;
+               // $scope.datosCita.idCliente = citaDato[0].idCliente;
 
                 //localStorageService.set('citaTipo', $scope.datosCita.tipoCita);
                 //$scope.datosCita.tipoCita = parseInt(localStorageService.get('citaTipo'));

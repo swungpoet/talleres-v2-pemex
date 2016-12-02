@@ -1,6 +1,6 @@
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
-        <span class="title"> Nueva Cita<span class="subtitle">Call Center</span></span>
+        <span class="title"> Búsqueda de Unidad <span class="subtitle">Call Center</span></span>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -26,7 +26,7 @@
                             <table class="table table-striped table-bordered table-hover dataTableUnidad" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <tr>
-                                        <th>Cliente</th>
+                                        <!--th>Cliente</th-->
                                         <th>Número Económico</th>
                                         <th>Número Económico Cliente</th>
                                         <th>Número de Inventario</th>
@@ -41,7 +41,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="unidad in unidades ">
-                                        <td>{{unidad.nombre}}</td>
+                                        <!--td>{{unidad.nombre}}</td-->
                                         <td>{{unidad.numEconomico}}</td>
                                         <td>{{unidad.clienteNumEconomico}}</td>
                                         <td>{{unidad.clienteNumInventario}}</td>
