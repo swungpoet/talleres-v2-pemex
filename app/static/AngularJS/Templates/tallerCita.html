@@ -39,7 +39,7 @@
                                         <th>Taller</th>
                                         <th>Tipo Orden</th>
                                         <th>Fecha</th>
-                                        <th>Dirección Taller</th>
+                                        <!-- <th>Dirección Taller</th> -->
                                         <th>Comentarios Adicionales</th>
                                         <!-- <th>Observaciones</th> -->
                                         <th>Estatus</th>
@@ -57,7 +57,7 @@
                                         <td ng-class="{'rowRojo': cita.razonSocial=='SIN TALLER'}">{{ cita.razonSocial }}</td>
                                         <td>{{cita.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
                                         <td>{{ cita.Fecha | date:'dd-MM-yyyy HH:mm'}} </td>
-                                        <td ng-class="{'rowRojo': cita.direccion=='SIN TALLER'}">{{ cita.direccion }}</td>
+                                        <!-- <td ng-class="{'rowRojo': cita.direccion=='SIN TALLER'}">{{ cita.direccion }}</td> -->
                                         <td>{{ cita.trabajo }}</td>
                                         <!-- <td>{{ cita.observacion }}</td> -->
                                         <td ng-class="{'rowRojo': cita.idEstatus==22}">{{ cita.estatus }}</td>
