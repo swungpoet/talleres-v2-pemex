@@ -287,13 +287,20 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                     if ($scope.editar == 1) {
                         $scope.arrayCambios.forEach(function (item, i) {
                             if (item.idItem == pieza.idItem && item.idTipoElemento == pieza.idTipoElemento)
-                                $scope.arrayCambios[i].idEstatus = 13; //Estatus Eliminado 
+                                $scope.arrayCambios[i].idEstatus = 10; //Estatus Eliminado 
                         })
                     }
 
                 }
             }
         })
+
+         for (var i = 0; i < $scope.arrayItem.length; i++) {
+           if ($scope.arrayItem[i].idItem == pieza.idItem ) {
+               $scope.arrayItem[i].idEstatus=10;
+            }
+
+        };
 
     };
 
@@ -430,6 +437,33 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
             eliminarElementos();
             
             $scope.class_btnUpdateCotizacion = 'fa fa-circle-o-notch fa-spin';
+
+            $scope.arrayCambios.forEach(function (item, i) {
+                cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
+                        item.idTipoElemento,
+                        item.idItem,
+                        item.precio,
+                        item.cantidad,
+                        $scope.observaciones,
+                        item.idEstatus,
+                        $scope.selectedTaller,
+                        $scope.selectedTipo.idTipoCotizacion)
+                    .then(function (result) {
+                        if (result.data[0].idCotizacion > 0)
+                            $scope.class_btnUpdateCotizacion = '';
+                            alertFactory.success('Cotización Actualizada ');
+                    }, function (error) {
+                        $scope.class_btnUpdateCotizacion = '';
+                        alertFactory.error('Error');
+                       // btnCotizacionUpdLoading.ladda('stop');
+                        //alertFactory.error('Error');
+
+                    });
+            }, function (error) {
+                 $scope.class_btnUpdateCotizacion = '';
+                alertFactory.error('Error');
+               // btnCotizacionUpdLoading.ladda('stop');
+            });
 
             $scope.arrayItem.forEach(function (item, i) {
                 cotizacionRepository.updateCotizacion($scope.editCotizacion.idCotizacion,
