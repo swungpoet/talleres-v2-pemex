@@ -105,6 +105,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         } else if (localStorageService.get('cita') != null) { //Objeto de la pagina de tallerCita 
             $scope.citaDatos = localStorageService.get('cita');
             $scope.selectedTaller = $scope.citaDatos.idTaller;
+            $scope.idCliente = $scope.citaDatos.idCliente;
             localStorageService.remove('cita');
             $scope.cotizacionEdit = localStorageService.get('objEditCotizacion');
             $scope.estado = 1;
@@ -166,7 +167,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
                 $('.dataTableItem').DataTable().destroy();
                 $scope.selectedTipo.idTipoCotizacion == 2 ? $scope.refaccion = 4 : $scope.refaccion = 1;
                 /* $('.dataTableCotizacion').DataTable().destroy();*/
-                $scope.promise = cotizacionRepository.buscarPieza($scope.selectedTaller, pieza, $scope.refaccion, $scope.userData.idUsuario).then(function (result) {
+                $scope.promise = cotizacionRepository.buscarPieza($scope.selectedTaller, pieza, $scope.refaccion, $scope.userData.idUsuario, $scope.idCliente).then(function (result) {
                   
                     $scope.listaPiezas = result.data;
                     if (result.data.length > 0) {
