@@ -567,7 +567,12 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
             if (cliente.data.length > 0) {
                 $scope.clientes = cliente.data;
                 if ($scope.userData.idTipoUsuario==4) {
-                    $scope.selectedCliente=$scope.clientes[0];
+                    for (var i = 0; i < $scope.clientes.length; i++) {
+                        if ($scope.clientes[i].idCliente == $scope.userData.idCliente) {
+                            $scope.selectedCliente = $scope.clientes[i];
+                        };
+                        
+                    };
                 };
                 alertFactory.success("Clientes cargados");
             } else {
