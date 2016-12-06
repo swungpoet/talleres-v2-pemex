@@ -96,6 +96,8 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         //Nueva cotización
         if (localStorageService.get('isNuevaCotizacion') != null) {
             $scope.citaDatos = localStorageService.get('cita');
+            $scope.idCliente = $scope.citaDatos.idCliente;
+            localStorageService.remove('cita');
             $scope.selectedTaller = '';
             localStorageService.remove('isNuevaCotizacion');
             $scope.estado = 1;
