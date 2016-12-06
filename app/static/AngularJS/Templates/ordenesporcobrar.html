@@ -21,6 +21,7 @@
                                     <table class="table table-striped table-bordered table-hover dataTableOrdenesVerificadas" cg-busy="{promise:promise,message:message, minDuration: minDuration,delay:delay}">
                                         <thead>
                                             <tr>
+                                                <th>Cliente</th>
                                                 <th>Consecutivo</th>
                                                 <th>Número de la Orden</th>
                                                 <th>Número Económico</th>
@@ -41,6 +42,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="ordenverificada in verificadas">
+                                                <td>{{ordenverificada.cliente}}</td>
                                                 <td>{{ordenverificada.idCita}}</td>
                                                 <td>{{ordenverificada.numeroTrabajo}}</td>
                                                 <td>{{ordenverificada.numEconomico}}</td>
@@ -105,6 +107,7 @@
                                         <table class="table table-striped table-bordered table-hover dataTableCopades" cg-busy="{promise:promise,message:message, minDuration: minDuration, delay:delay}">
                                             <thead>
                                                 <tr>
+                                                    <!--th>Cliente</th-->
                                                     <th>Número Copade</th>
                                                     <th>Órden de Surtimiento</th>
                                                     <th>No. Estimación</th>
@@ -117,6 +120,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="copade in copades">
+                                                    <!--td>{{copade.cliente}}</td-->
                                                     <td>{{copade.numeroCopade}}</td>
                                                     <td>{{copade.ordenSurtimiento}}</td>
                                                     <td>{{copade.numeroEstimacion}}</td>
@@ -150,6 +154,7 @@
                                                 <th>TAR</th>
                                                 <th>Taller</th>
                                                 <th>Tipo Orden</th-->
+                                                <th>Cliente</th>
                                                 <th>No. COPADE</th>
                                                 <th>Orden de Surtimiento</th>
                                                 <th>No. Estimación</th>
@@ -174,6 +179,7 @@
                                                 <td>{{cita.TAR}}</td>
                                                 <td>{{cita.razonSocial}}</td>
                                                 <td>{{cita.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td-->
+                                                <td>{{cita.cliente}}</td>
                                                 <td>{{cita.numeroCopade}}</td>
                                                 <td>{{cita.folio}}</td>
                                                 <td>{{cita.numeroEstimacion}}</td>
@@ -205,6 +211,7 @@
                                     <table class="table table-striped table-bordered table-hover dataTableFacturados" cg-busy="{ promise:promise,message:message } ">
                                         <thead>
                                             <tr>
+                                                <th>Cliente</th>
                                                 <th>No. COPADE</th>
                                                 <th>Orden de Surtimiento</th>
                                                 <th>No. Estimación</th>
@@ -219,6 +226,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="facturado in facturados">
+                                                <td>{{facturado.cliente}}</td>
                                                 <td>{{facturado.numeroCopade}}</td>
                                                 <td>{{facturado.folio}}</td>
                                                 <td>{{facturado.numeroEstimacion}}</td>

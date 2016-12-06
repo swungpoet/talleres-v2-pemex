@@ -52,6 +52,18 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             })
         },
+        getCosecutivoZona: function (idTrabajo) {
+            return $http({
+                url: trabajoUrl + 'consecutivozona/',
+                method: "GET",
+                params: {
+                    idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
         postEstatusOsur: function (idTAR) {
             return $http({
                 url: trabajoUrl + 'estatusosur/',

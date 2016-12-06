@@ -82,7 +82,8 @@
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered table-hover dataTableSinFactura" cg-busy="{promise:promise,message:message}">
                                                 <thead>
-                                                    <tr><th>Consecutivo</th>
+                                                    <tr><th>Cliente</th>
+                                                        <th>Consecutivo</th>
                                                         <th>Número de la Orden</th>
                                                         <th>Número Económico</th>
                                                         <th>Zona</th>
@@ -98,6 +99,7 @@
                                                 </thead>
                                                 <tbody>
                                                    <tr ng-repeat="sinfacturas in datasinfactura">
+                                                        <td>{{sinfacturas.cliente}}</td>
                                                         <td>{{sinfacturas.idCita}}</td>
                                                         <td>{{sinfacturas.numeroTrabajo}}</td>
                                                         <td>{{sinfacturas.numEconomico}}</td>
@@ -123,6 +125,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTableSinCopade" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Cliente</th>
                                                         <th>No. COPADE</th>
                                                         <th>Orden de Surtimiento</th>
                                                         <th>No. Estimación</th>
@@ -135,6 +138,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="sincopade in datasincopade">
+                                                        <td>{{sincopade.cliente}}</td>
                                                         <td>{{sincopade.numeroCopade}}</td>
                                                         <td>{{sincopade.folio}}</td>
                                                         <td>{{sincopade.numeroEstimacion}}</td>
@@ -155,6 +159,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTableFacturados" cg-busy="{ promise:promise,message:message } ">
                                                 <thead>
                                                     <tr>
+                                                        <th>Cliente</th>
                                                         <th>No. COPADE</th>
                                                         <th>Orden de Surtimiento</th>
                                                         <th>No. Estimación</th>
@@ -167,6 +172,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="facturado in datafacturada">
+                                                        <td>{{facturado.cliente}}</td>
                                                         <td>{{facturado.numeroCopade}}</td>
                                                         <td>{{facturado.folio}}</td>
                                                         <td>{{facturado.numeroEstimacion}}</td>

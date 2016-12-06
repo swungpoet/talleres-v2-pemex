@@ -103,6 +103,23 @@ Trabajo.prototype.get_saldotar = function (req, res, next) {
     });
 }
 
+//obtiene el saldo de un TAR
+Trabajo.prototype.get_consecutivozona = function (req, res, next) {
+    var self = this;
+     var params = [{
+        name: 'idTrabajo',
+        value: req.query.idTrabajo,
+        type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_CONSECUTIVO_ZONA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //Actualiza estatus del osur
 Trabajo.prototype.post_estatusosur = function (req, res, next) {
     var self = this;

@@ -51,6 +51,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTablePendiente" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Cliente</th>
                                                         <th>Consecutivo</th>
                                                         <th>Número de cotización</th>
                                                         <th>Número Económico</th>
@@ -69,6 +70,7 @@
                                                 </thead>
                                                 <tbody>
                                                    <tr ng-repeat="pendientes in datapendiente">
+                                                        <td>{{pendientes.cliente}}</td>
                                                         <td>{{pendientes.idCita}}</td>
                                                         <td>{{pendientes.numeroCotizacion}}</td>
                                                         <td>{{pendientes.numEconomico}}</td>
@@ -95,6 +97,7 @@
                                             <table class="table table-striped table-bordered table-hover dataTableSinCotizar" cg-busy="{promise:promise,message:message}">
                                                 <thead>
                                                     <tr>
+                                                        <th>Cliente</th>
                                                         <th>Consecutivo</th>
                                                         <th>Número de cotización</th>
                                                         <th>Número Económico</th>
@@ -113,6 +116,7 @@
                                                 </thead>
                                                 <tbody>
                                                      <tr ng-repeat="sincotizaciones in datasincotizacion">
+                                                        <td>{{sincotizaciones.cliente}}</td>
                                                         <td>{{sincotizaciones.idCita}}</td>
                                                         <td>{{sincotizaciones.numeroCotizacion}}</td>
                                                         <td>{{sincotizaciones.numEconomico}}</td>

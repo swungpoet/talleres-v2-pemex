@@ -31,6 +31,7 @@
                                     <table class="table table-striped table-bordered table-hover dataTableCita" cg-busy="{promise:promise,message:message}">
                                         <thead>
                                             <tr>
+                                                <th>Cliente</th>
                                                 <th>Consecutivo</th>
                                                 <th>Número económico</th>
                                                 <th>Zona</th>
@@ -47,6 +48,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="cita in citasUnidad">
+                                               <td>{{cita.cliente}}</td>
                                                <td>{{cita.Consecutivo}}</td>
                                                <td>{{cita.numEconomico}}</td>
                                                <td>{{cita.zona}}</td>
@@ -73,6 +75,7 @@
                                     <table class="table table-striped table-bordered table-hover dataTableCotizacion" cg-busy="{promise:promise,message:message}">
                                         <thead>
                                             <tr>
+                                                <th>Cliente</th>
                                                 <th>Consecutivo</th>
                                                 <th>Número de orden</th>
                                                 <th>Número de cotización</th>
@@ -89,6 +92,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="cotizacion in cotizacionesUnidad">
+                                                <td>{{cotizacion.cliente}}</td>
                                                 <td>{{cotizacion.Consecutivo}}</td>
                                                 <td>{{cotizacion.numeroTrabajo}}</td>
                                                 <td>{{cotizacion.numeroCotizacion}}</td>
@@ -115,6 +119,7 @@
                                     <table class="table table-striped table-bordered table-hover dataTableOrden" cg-busy="{promise:promise,message:message}">
                                         <thead>
                                             <tr>
+                                                <th>Cliente</th>
                                                 <th>Consecutivo</th>
                                                 <th>Número de orden</th>
                                                 <th>Número económico</th>
@@ -139,6 +144,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="orden in ordenesUnidad">
+                                                <td>{{orden.cliente}}</td>
                                                 <td>{{orden.Consecutivo}}</td>
                                                 <td>{{orden.numeroTrabajo}}</td>
                                                 <td>{{orden.numEconomico}}</td>

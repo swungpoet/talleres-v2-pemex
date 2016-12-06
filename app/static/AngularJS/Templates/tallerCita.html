@@ -31,6 +31,7 @@
                             <table class="table table-bordered dataTableCitaTaller">
                                 <thead>
                                     <tr>
+                                        <th>Cliente</th>
                                         <th>Consecutivo</th>
                                         <th>Número de la Orden</th>
                                         <th>Número Económico</th>
@@ -49,6 +50,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="cita in listaCitas">
+                                        <td>{{cita.cliente}}</td>
                                         <td>{{cita.idCita}}</td>
                                         <td>{{cita.numeroTrabajo}}</td>
                                         <td>{{cita.numEconomico}}</td>
