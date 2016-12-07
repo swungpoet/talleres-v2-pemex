@@ -53,6 +53,11 @@ Osur.prototype.get_datosOsur = function (req, res, next) {
         name: 'idTAR',
         value: req.query.idTAR,
         type: self.model.types.INT
+        },
+        {
+        name: 'idCliente',
+        value: req.query.idCliente,
+        type: self.model.types.INT
         }];
 
     this.model.query('SEL_DATOS_OSUR_BY_TAR_SP', params, function (error, result) {
@@ -102,6 +107,11 @@ Osur.prototype.post_nuevaosur = function (req, res, next) {
         {
             name: 'solpe',
             value: req.body.solpe,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idCliente',
+            value: req.body.idCliente,
             type: self.model.types.INT
         }];
 

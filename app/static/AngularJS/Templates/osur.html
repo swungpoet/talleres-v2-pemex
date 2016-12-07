@@ -6,12 +6,26 @@
     <div class="wrapper wrapper-content">
 
          <div class="row col-cm-12">
-            <div class="col-md-10">
+
+            <div class="col-md-5">
+                <form method="get" class="form-horizontal">
+                    <div >
+                        <label class="col-sm-1 control-label">Cliente </label>
+                        <div class="col-sm-5">
+                             <select class="form-control" name="cliente" ng-model="selectedCliente" ng-options="cliente.nombre for cliente in clientes" ng-change="changeCliente()">
+                                        <option value=''>Selecionar cliente</option><!--default option -->
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>   
+
+            <div class="col-md-5">
                 <form method="get" class="form-horizontal">
                     <div >
                         <label class="col-sm-1 control-label">TAR</label>
                         <div class="col-sm-5">
-                            <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()">
+                            <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()"   ng-disabled="validateCliente()==false">
                                 <option value="">Seleccione una TAR</option>
                             </select>
                         </div>
@@ -83,14 +97,14 @@
                 <table class="table table-bordered table-striped table-hover dataTableOsur">
                     <thead>
                         <tr>
-                            <th>TAR</th>
+                            <th ng-show="validateCliente()==true">TAR</th>
                             <th>No. OSUR</th>
                              <th>Solpe</th>
                             <th>Fecha Inicial</th>
                             <th>Fecha Final</th>
                             <th>Presupuesto</th>
                             <th>Utilizado</th>
-                            <th>+ Fondos</th>
+                            <th ng-show="validateCliente()==true">+ Fondos</th>
                             <th>Estatus</th>
                             <th>Saldo</th>
                             <th>Orden</th>
@@ -100,14 +114,14 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="info in datosOsur">
-                            <td>{{info.TAR}}</td>
+                            <td ng-show="validateCliente()==true">{{info.TAR}}</td>
                             <td>{{info.folio}}</td>
                             <td>{{info.solpe}}</td>
                             <td>{{info.fechaInicial | date:'dd-MM-yyyy HH:mm'}} </td>
                             <td>{{info.fechaFinal | date:'dd-MM-yyyy HH:mm'}} </td>
                             <td>{{info.presupuesto | currency: "$"}}</td>
                             <td>{{info.utilizado | currency: "$"}}</td>
-                            <td>
+                            <td ng-show="validateCliente()==true">
                                 <button class="btn btn-info" type="button" ng-click="verAplicacion(info)" ><span class="glyphicon glyphicon-eye-open"></span></button>
                             </td>
                             <td>{{info.estatus}}</td>
@@ -134,6 +148,12 @@
                 <br>
                 <div class="modal-body">
                     <div class="form-group row">
+                        <label class="col-sm-2 control-label">Cliente</label>
+                        <div class="col-sm-7">
+                             <input type="text" class="form-control"  ng-model="cliente" disabled="disabled">  
+                        </div>
+                    </div>
+                    <div class="form-group row" ng-show="validateCliente()==true">
                         <label class="col-sm-2 control-label">TAR</label>
                         <div class="col-sm-7">
                              <input type="text" class="form-control" type="number" ng-model="tarNuevo" disabled="disabled">  

@@ -11,12 +11,13 @@ registrationModule.factory('osurRepository', function ($http) {
                 },
             });
         },
-        getDatosOsur: function (idTAR) {
+        getDatosOsur: function (idTAR, idCliente) {
             return $http({
                 url: osurUrl + 'datosOsur',
                 method: "GET",
                 params: {
-                    idTAR: idTAR
+                    idTAR: idTAR,
+                    idCliente: idCliente
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -37,7 +38,7 @@ registrationModule.factory('osurRepository', function ($http) {
                 }      
             });    
         },
-        putNuevaOsur: function (presupuesto,idTAR,folio,fechaInicial,fechaFinal,solpe) {             
+        putNuevaOsur: function (presupuesto,idTAR,folio,fechaInicial,fechaFinal,solpe,idCliente) {             
             return $http({        
                 url: osurUrl + 'nuevaosur',
                         method: "POST",
@@ -47,7 +48,8 @@ registrationModule.factory('osurRepository', function ($http) {
                            folio: folio,
                            fechaInicial: fechaInicial,
                            fechaFinal: fechaFinal,
-                           solpe: solpe
+                           solpe: solpe,
+                           idCliente: idCliente
                         },
 
                         headers: {          
