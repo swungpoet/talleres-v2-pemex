@@ -368,7 +368,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         var saldo = 0;
 
         trabajoRepository.getCosecutivoZona(idTrabajo).then(function (res) {
-           debugger;
+          
             if (res.data.length > 0) {
 
                 $scope.trabajosTerminados[indice].class_buttonCeritficado = 'fa fa-circle-o-notch fa-spin';
@@ -541,7 +541,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                 showCancelButton: false,
                                 confirmButtonColor: "#67BF11",
                                 confirmButtonText: "Aceptar",
-                                closeOnConfirm: false
+                                closeOnConfirm: true
                             },
                             function (isConfirm) {
                                 if (isConfirm) {

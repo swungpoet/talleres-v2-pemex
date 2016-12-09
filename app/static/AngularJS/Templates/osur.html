@@ -10,8 +10,8 @@
             <div class="col-md-5">
                 <form method="get" class="form-horizontal">
                     <div >
-                        <label class="col-sm-1 control-label">Cliente </label>
-                        <div class="col-sm-5">
+                        <label class="col-sm-2 control-label">Cliente </label>
+                        <div class="col-sm-10">
                              <select class="form-control" name="cliente" ng-model="selectedCliente" ng-options="cliente.nombre for cliente in clientes" ng-change="changeCliente()">
                                         <option value=''>Selecionar cliente</option><!--default option -->
                             </select>
@@ -23,8 +23,8 @@
             <div class="col-md-5">
                 <form method="get" class="form-horizontal">
                     <div >
-                        <label class="col-sm-1 control-label">TAR</label>
-                        <div class="col-sm-5">
+                        <label class="col-sm-2 control-label">TAR</label>
+                        <div class="col-sm-10">
                             <select class="form-control m-b" name="tar" ng-model="selectedTar" ng-options="tar.nombreTar for tar in tars" ng-change="GetMonto()"   ng-disabled="validateCliente()==false">
                                 <option value="">Seleccione una TAR</option>
                             </select>
