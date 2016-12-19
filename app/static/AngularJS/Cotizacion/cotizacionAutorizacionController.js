@@ -6,6 +6,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     var idCotizacion = localStorageService.get('cotizacion');
     var idTrabajo = localStorageService.get('work');
     var idTaller = localStorageService.get('taller');
+    var idClienteCita = localStorageService.get('idCliente1');
     // $rootScope.idUsuario;
     var idUsuario = localStorageService.get('usuario');
     $scope.idTrabajoOrden = localStorageService.get('objTrabajo');
@@ -268,7 +269,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         var objEditCotizacion = {
             idCotizacion: idCotizacion,
             idTaller: idTaller,
-            idTrabajo: idTrabajo
+            idTrabajo: idTrabajo,
+            idClienteCita: idClienteCita
         };
 
         if (localStorageService.get('cita') != null) {

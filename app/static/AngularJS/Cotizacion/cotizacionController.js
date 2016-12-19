@@ -131,6 +131,7 @@ registrationModule.controller('cotizacionController', function ($scope, $route, 
         if (localStorageService.get('objEditCotizacion') != null) {
             $scope.editCotizacion = localStorageService.get('objEditCotizacion'); //objeto de la pagina autorizacion
             $scope.selectedTaller = $scope.editCotizacion.idTaller;
+             $scope.idCliente = $scope.editCotizacion.idClienteCita;
             localStorageService.remove('objEditCotizacion');
             datosUnidad($scope.editCotizacion.idCotizacion, null);
             $scope.editar = 1;

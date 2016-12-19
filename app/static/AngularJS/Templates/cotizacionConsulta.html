@@ -56,7 +56,7 @@
                                             </button>
                                         </td> -->
                                         <td>
-                                            <button class="btn btn-success" type="button" id="btnEnviar" tooltip="Ver Cotizacion" ng-click="Autorizacion(cotizacion.idCita, cotizacion.idCotizacion, cotizacion.idUnidad, cotizacion.numeroCotizacion, cotizacion.idTrabajo, cotizacion.idTaller)">
+                                            <button class="btn btn-success" type="button" id="btnEnviar" tooltip="Ver Cotizacion" ng-click="Autorizacion(cotizacion.idCita, cotizacion.idCotizacion, cotizacion.idUnidad, cotizacion.numeroCotizacion, cotizacion.idTrabajo, cotizacion.idTaller, cotizacion.idCliente)">
                                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true" data-toggle="modal"></span>
                                             </button>
                                             <button ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3" class="btn btn-danger btnTerminarTrabajo" type="button" tooltip="Cancelar Aprobación" ng-click="cancelarAprobacion(cotizacion.idTrabajo,cotizacion.idCotizacion)">
