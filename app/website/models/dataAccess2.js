@@ -12,7 +12,7 @@ var DataAccess2 = function (config) {
         server: this.config.parameters.SQL_server, // You can use 'localhost\\instance' to connect to named instance
         database: this.config.parameters.SQL_database,
         connectionTimeout: this.config.parameters.SQL_connectionTimeout,
-        requestTimeout:60000
+        requestTimeout:80000
     };
     this.types = {
         INT: sql.Int,
