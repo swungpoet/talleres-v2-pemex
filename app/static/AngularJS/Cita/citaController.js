@@ -735,13 +735,23 @@ var getidCita = function (idCita) {
                 $scope.datosCita.trabajoCita = citaDato[0].trabajo;
                 $scope.datosCita.observacionCita = citaDato[0].observacion;
                 $scope.datosCita.selectedCliente = citaDato[0].idCliente;
-            
-                for (var i = 0; i < $scope.clientes.length; i++) {
-                    if ($scope.clientes[i].idCliente == citaDato[0].idCliente ) {
-                        $scope.selectedCliente = $scope.clientes[i];
-                    };
-                    
-                };
+                
+                citaRepository.getCliente($scope.userData.idUsuario).then(function (cliente) {
+                    if (cliente.data.length > 0) {
+                        $scope.clientes = cliente.data;
+                        for (var i = 0; i < $scope.clientes.length; i++) {
+                            if ($scope.clientes[i].idCliente == citaDato[0].idCliente ) {
+                                $scope.selectedCliente = $scope.clientes[i];
+                            };
+                            
+                        };
+                    } else {
+                        alertFactory.info("No se encontraron clientes");
+                    }
+                }, function (error) {
+                    alertFactory.error("Error al cargar clientes");
+                });
+                
 
                // $scope.datosCita.idCliente = citaDato[0].idCliente;
 
