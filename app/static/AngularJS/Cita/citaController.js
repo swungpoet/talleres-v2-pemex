@@ -354,7 +354,8 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
                 idCotizacion: preCotizacion.idCotizacion,
                 idTaller: preCotizacion.idTaller,
                 idTrabajo: preCotizacion.idTrabajo,
-                idTipoCotizacion: preCotizacion.idTipoCotizacion
+                idTipoCotizacion: preCotizacion.idTipoCotizacion,
+                idClienteCita: preCotizacion.idCliente
             };
             localStorageService.set('objEditCotizacion', objEditCotizacion); 
         }
