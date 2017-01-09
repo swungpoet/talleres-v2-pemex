@@ -105,7 +105,7 @@
                                                 <td>{{cotizacion.fechaAutorizacionCot | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>{{cotizacion.descripcionLarga}}</td>
                                                 <td>
-                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver la cotización" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                   <button class="btn btn-info" type="button" data-toggle="tooltip" tooltip="Ver la cotización" tooltip-placement="left" ng-click="verOrden(cotizacion, 1)"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -166,7 +166,7 @@
                                                 <td>{{orden.fechaGarantia | date:"dd-MM-yy HH:mm"}}</td>
                                                 <td>{{orden.descripcionLarga}}</td>
                                                 <td>
-                                                   <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                   <button class="btn btn-info" type="button" ng-click="verOrden(orden, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                 </td>  
                                             </tr>
                                         </tbody>
