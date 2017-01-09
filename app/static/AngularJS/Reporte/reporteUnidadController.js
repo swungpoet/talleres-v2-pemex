@@ -4,11 +4,22 @@
 // -- Description: Reporte Unidad Controller
 // -- =============================================
 
-registrationModule.controller('reporteUnidadController', function ($scope, alertFactory, globalFactory, $rootScope, localStorageService, reporteUnidadRepository) {
+registrationModule.controller('reporteUnidadController', function ($scope, alertFactory, globalFactory, commonService, $location, $rootScope, localStorageService, reporteUnidadRepository) {
 
     //Inicializa la pagina
     $scope.init = function () {
-        
+       
+    }
+
+    $scope.verOrden = function (trabajo, valBotonera) {
+        var objBotonera = {};
+        objBotonera.accion = valBotonera;
+        objBotonera.idCita = trabajo.idCita;
+        localStorageService.set('objTrabajo', trabajo);
+        localStorageService.set("botonera", objBotonera);        
+        commonService.idEstatusTrabajo = 5;  
+        commonService.idCita = trabajo.idCita;
+        $location.path ('/ordenservicio');
     }
     
     //Obtiene todas las citas no canceladas generadas para cierta unidad
