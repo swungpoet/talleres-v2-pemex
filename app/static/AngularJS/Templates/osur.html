@@ -128,7 +128,7 @@
                             <td>{{info.saldo | currency: "$"}}</td>
                             <td>{{info.orden}}</td>
                             <td>
-                                <button ng-show="info.estatus == 'Utilizado'" class="btn btn-informa" type="button" ng-click="activarOsur(info)" ><span class="glyphicon glyphicon-refresh" ></span></button>
+                                <button ng-show="info.estatus == 'Utilizado' || info.estatus == 'Pendiente' " class="btn btn-informa" type="button" ng-click="activarOsur(info)" ><span class="glyphicon glyphicon-refresh" ></span></button>
                             </td>
                             
                         </tr>
