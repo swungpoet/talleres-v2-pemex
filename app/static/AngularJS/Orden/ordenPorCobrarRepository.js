@@ -166,6 +166,30 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getAbonos: function (idUsuario) {
+            return $http({
+                url: ordenUrl + 'abonados',
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getCotizacionesAbonos: function (idUsuario) {
+            return $http({
+                url: ordenUrl + 'cotizacionesabonados',
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
 
     };

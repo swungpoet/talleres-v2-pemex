@@ -1382,6 +1382,48 @@ Orden.prototype.get_facturados = function (req, res, next) {
     });
 }
 
+//Devuelve los trabajos cobrados y listos para facturar con abonos
+Orden.prototype.get_abonados = function (req, res, next) {
+        //Objeto que almacena la respuesta
+        var object = {};
+        //Referencia a la clase para callback
+        var self = this;
+        //Objeto que envía los parámetros
+        var params = [{
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_FACTURAS_ABONOS_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
+   //Devuelve los cotizaciones cobrados y listos para facturar con abonos
+Orden.prototype.get_cotizacionesabonados = function (req, res, next) {
+        //Objeto que almacena la respuesta
+        var object = {};
+        //Referencia a la clase para callback
+        var self = this;
+        //Objeto que envía los parámetros
+        var params = [{
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }];
+
+    this.model.query('SEL_COTIZACION_ABONADOS_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //Obtiene las ordenes pendientes por cobrar
 Orden.prototype.get_getNotasTrabajo = function (req, res, next) {
     var self = this;

@@ -5,6 +5,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.stories= [];
     $scope.checkedTrabajos=[];
     $scope.fechaRecepcionCopade = localStorageService.get("fechaRecepcion");
+    $scope.onText = 'Copade';
+    $scope.offText = 'Cotización';
+    $scope.size = 'mini';
+    $scope.showCopade = 1
+    $scope.isSelected = 'yep';
+    $scope.inverse = true;
+   
 
     $scope.init = function () {
         Dropzone.autoDiscover = false;
@@ -21,7 +28,16 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         //$scope.limpiaFecha();
         $scope.cleanDatos();
         $scope.getOrdenesPorCobrar(); 
+        $scope.trabajosAbonados();
     }
+
+     $scope.change_switch = function () {
+        if ($scope.showCopade == 2) {
+            $scope.showCopade = 1;
+        } else {
+            $scope.showCopade = 2;
+        }
+    };
 
     //Carga Adenda y Copade
     $scope.subir = function (idTrabajo) {
@@ -439,6 +455,50 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 $scope.sumatoriafacturadas=sumatoria;
 
                 globalFactory.waitDrawDocument("dataTableFacturados", "OrdenporCobrar");
+            } else {
+                alertFactory.info('No se encontraron trabajos por cobrar');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener trabajos por cobrar");
+        });
+    }
+
+    $scope.trabajosAbonados = function () {
+        var sumatoria= 0;
+        $('.dataTableAbonos').DataTable().destroy();
+        ordenPorCobrarRepository.getAbonos($scope.userData.idUsuario).then(function (result) {
+
+            if (result.data.length > 0) {
+                $scope.abonos = result.data;
+                
+                for(var i=0;i<result.data.length;i++){
+                    sumatoria += parseFloat(result.data[i].total);
+                };
+                $scope.sumatoriaAbonos=sumatoria;
+
+                globalFactory.waitDrawDocument("dataTableAbonos", "OrdenporCobrar");
+            } else {
+                alertFactory.info('No se encontraron trabajos por cobrar');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener trabajos por cobrar");
+        });
+    }
+
+    $scope.trabajosFacturados = function () {
+        var sumatoria= 0;
+        $('.dataTableCotAbonos').DataTable().destroy();
+        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario).then(function (result) {
+            if (result.data.length > 0) {
+                debugger; 
+                $scope.cotizaciones = result.data;
+                
+                for(var i=0;i<result.data.length;i++){
+                    sumatoria += parseFloat(result.data[i].total);
+                };
+                $scope.sumatoriaCotizaciones=sumatoria;
+
+                globalFactory.waitDrawDocument("dataTableCotAbonos", "OrdenporCobrar");
             } else {
                 alertFactory.info('No se encontraron trabajos por cobrar');
             }
