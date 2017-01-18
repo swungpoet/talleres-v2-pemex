@@ -1437,7 +1437,7 @@ Orden.prototype.get_cotizacionesabonados = function (req, res, next) {
 }
 
 //Detalle facturas cobradas
-Reporte.prototype.get_facturascobradas = function (req, res, next) {
+Orden.prototype.get_facturascobradas = function (req, res, next) {
     //Objeto que almacena la respuesta
     var object = {};
     //Objeto que envía los parámetros

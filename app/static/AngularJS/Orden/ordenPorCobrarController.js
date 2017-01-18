@@ -509,7 +509,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 $scope.cotizaciones = result.data;
                 
                 for(var i=0;i<result.data.length;i++){
-                    sumatoria += parseFloat(result.data[i].total);
+                    sumatoria += parseFloat(result.data[i].COP_CARGO);
                 };
                 $scope.sumatoriaCotizaciones=sumatoria;
 
@@ -524,7 +524,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //obtiene los scope necesarios para el reporte de utilidad 
     $scope.buscaFiltros = function () {
-        debugger;
         $scope.bandera = 1;
         $scope.fechaInicio == '' ? $scope.fechaInicio = null : $scope.fechaInicio;
         $scope.fechaFin == '' ? $scope.fechaFin = null : $scope.fechaFin;
@@ -536,7 +535,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $scope.zona;
         $scope.tar;
         $scope.idTipoCita == '' ? $scope.idTipoCita = null : $scope.idTipoCita;
-        $scope.estatus == '' ? $scope.bandera = 1 : $scope.bandera = 2;
+        //$scope.estatus == '' ? $scope.bandera = 1 : $scope.bandera = 2;
         $scope.numeroTrabajo;
         $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.rangoInicial,$scope.rangoFinal,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera);
     }
@@ -561,7 +560,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //obtiene el resultado de reporte de utilidad 
     $scope.getMargenUtilidad = function (fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera) {
-        debugger;
+      
         $('.dataTableUtilidad').DataTable().destroy();
         if(fechaMes != '' && fechaMes != null && fechaMes != undefined){
             var fechaPartida = fechaMes.split('-');
@@ -604,15 +603,15 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }
 
         ordenPorCobrarRepository.getFacturasPagadas(fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera).then(function (utilidad) { 
-           debugger;
-           $scope.sumatoriaCosto = 0.00;
+       
+           $scope.sumatoriaFacturasPagadas = 0.00;
             $scope.sumatoriaPrecio = 0.00;
             $scope.sumatoriaUtilidad = 0.00;
             if (utilidad.data.length > 0) {
                 $scope.margenUtilidad = utilidad.data;
             
                  for(var i=0;i<utilidad.data.length;i++){
-                    $scope.sumatoriaCosto += parseFloat(utilidad.data[i].costoOrden);
+                    $scope.sumatoriaFacturasPagadas += parseFloat(utilidad.data[i].COP_CARGO);
                     $scope.sumatoriaPrecio += parseFloat(utilidad.data[i].precioOrden);
                     $scope.sumatoriaUtilidad += parseFloat(utilidad.data[i].utilidad);
                 };
@@ -626,21 +625,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
-     //Devuelve todas las zonas correspondientes
-    $scope.devuelveZonas = function () {
-        dashBoardRepository.getZonas($scope.userData.idUsuario).then(function (zonas) {
-            if (zonas.data.length > 0) {
-                $scope.zonas = zonas.data;
-
-            }
-        }, function (error) {
-            alertFactory.error('No se pudo recuperar información de las zonas');
-        });
-    }
-    //Devuelve todas las tars de su zona correspondiente
-    $scope.devuelveTars = function () {
-        if ($scope.zona != null) {
-            dashBoardRepository.getTars($scope.zona).then(function (tars) {
+    $scope.devuelveTars = function (zona) {
+        if (zona != null) {
+            dashBoardRepository.getTars(zona).then(function (tars) {
                 if (tars.data.length > 0) {
                     $scope.tars = tars.data;
 
@@ -652,6 +639,19 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             $scope.tar = null;
         }
     }
+
+     //Devuelve todas las zonas correspondientes
+    $scope.devuelveZonas = function () {
+        dashBoardRepository.getZonas($scope.userData.idUsuario).then(function (zonas) {
+            if (zonas.data.length > 0) {
+                $scope.zonas = zonas.data;
+
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de las zonas');
+        });
+    }
+  
 
 
     //valida (+-)1 del monto de la copa contrar la orden seleccionada

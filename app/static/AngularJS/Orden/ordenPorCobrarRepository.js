@@ -195,7 +195,7 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
         },
         getFacturasPagadas: function (fechaInicio, fechaFin, fechaMes, rangoInicial, rangoFinal, zona, tar, idTipoCita, estatus, numeroTrabajo, bandera) {
             return $http({
-                url: reporteUtilidadUrl + 'facturascobradas/',
+                url: ordenUrl + 'facturascobradas/',
                 method: "GET",
                 params: {
                     fechaInicio:fechaInicio,
