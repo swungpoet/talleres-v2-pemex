@@ -179,12 +179,36 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getCotizacionesAbonos: function (idUsuario) {
+        getCotizacionesAbonos: function (idUsuario, fechaInicio, fechaFin) {
             return $http({
                 url: ordenUrl + 'cotizacionesabonados',
                 method: "GET",
                 params: {
-                    idUsuario: idUsuario
+                    idUsuario: idUsuario,
+                    fechaInicio:fechaInicio,
+                    fechaFin:fechaFin
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getFacturasPagadas: function (fechaInicio, fechaFin, fechaMes, rangoInicial, rangoFinal, zona, tar, idTipoCita, estatus, numeroTrabajo, bandera) {
+            return $http({
+                url: reporteUtilidadUrl + 'facturascobradas/',
+                method: "GET",
+                params: {
+                    fechaInicio:fechaInicio,
+                    fechaFin:fechaFin,
+                    fechaMes:fechaMes,
+                    rangoInicial:rangoInicial,
+                    rangoFinal:rangoFinal,
+                    zona:zona,
+                    tar:tar,
+                    idTipoCita:idTipoCita,
+                    estatus:estatus,
+                    numeroTrabajo:numeroTrabajo,
+                    bandera:bandera
                 },
                 headers: {
                     'Content-Type': 'application/json'
