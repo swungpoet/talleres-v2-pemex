@@ -493,7 +493,10 @@
                                      <br/>
 
                                     <div class="row col-md-12 ">
-
+                                        <div class="col-md-4">
+                                            <label class="font-noraml">Taller</label>
+                                            <input type="text" placeholder="Buscar Taller" ng-model="proveedorFac" class="form-control">
+                                        </div>
                                         <div class="col-xs-3">
                                             <label class="font-noraml">Tipo Orden</label>
                                             <select class="form-control" name="tipoCita" ng-model="idTipoCita">
@@ -505,7 +508,7 @@
                                         <div class="col-xs-0">
                                             <label class="font-noraml">Buscar</label>
                                             <br>
-                                            <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="buscaFiltros(fechaInicio, fechaFin, fechaMes, zona, tar, idTipoCita)"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="buscaFiltros(fechaInicio, fechaFin, fechaMes, zona, tar, idTipoCita, proveedorFac)"><span class="glyphicon glyphicon-search"></span></button>
                                         </div>
                                     </div>
 
@@ -520,9 +523,7 @@
                                             <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="buscaOrden(numeroTrabajo)"><span class="glyphicon glyphicon-search"></span></button>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <input type="text" placeholder="Buscar Taller" ng-model="proveedorFac" class="form-control">
-                                        </div>
+                                        
 
                                     </div>
 
@@ -553,7 +554,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="pagada in pagadas | filter:{ razonSocial:proveedorFac}">
+                                                <tr ng-repeat="pagada in pagadas">
                                                     <td>{{pagada.cliente}}</td>
                                                     <td>{{pagada.idCita}}</td>
                                                     <td>{{pagada.numeroTrabajo}}</td>

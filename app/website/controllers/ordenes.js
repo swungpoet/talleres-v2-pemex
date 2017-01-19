@@ -1426,6 +1426,12 @@ Orden.prototype.get_cotizacionesabonados = function (req, res, next) {
             value: req.query.fechaFin,
             type: self.model.types.STRING
                         
+        },
+        {
+            name: 'razonSocial',
+            value: req.query.razonSocial,
+            type: self.model.types.STRING
+                        
         }];
 
     this.model.query('SEL_COTIZACION_ABONADOS_SP', params, function (error, result) {
@@ -1500,6 +1506,12 @@ Orden.prototype.get_facturascobradas = function (req, res, next) {
             name: 'bandera',
             value: req.query.bandera,
             type: self.model.types.STRING
+        },
+        {
+            name: 'razonSocial',
+            value: req.query.razonSocial,
+            type: self.model.types.STRING
+                        
         }
     ];
 
