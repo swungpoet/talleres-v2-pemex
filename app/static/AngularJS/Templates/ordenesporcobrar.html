@@ -277,6 +277,7 @@
                                                     <th>Precio venta con IVA</th>
                                                     <th>Precio venta sin IVA</th>
                                                     <th>Abono</th>
+                                                    <th>Saldo</th>
                                                     <th>Fecha COPADE</th>
                                                     <th>Folio Factura</th>
                                                     <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
@@ -292,7 +293,8 @@
                                                     <td>{{abono.descripcion}}</td>
                                                     <td>{{abono.total | currency}}</td>
                                                     <td>{{abono.subTotal | currency}}</td>
-                                                    <td></td>
+                                                    <td>{{abono.abono | currency}}</td>
+                                                    <td>{{abono.COP_SALDO | currency}}</td>
                                                     <td>{{abono.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
                                                     <td>{{abono.COP_IDDOCTO}}</td>
                                                     <td ng-show="trabajosporCOPADE==1">{{abono.numeroTrabajo}}</td>
@@ -310,7 +312,7 @@
 
                                 <div ng-show="showCopade == 2">
 
-                                    <div class=" row etiquetaTotales">Precio total: <span class="totales"> {{sumatoriaCotizaciones| currency: "$"}}</span></div>
+                                    <!--div class=" row etiquetaTotales">Precio total: <span class="totales"> {{sumatoriaCotizaciones| currency: "$"}}</span></div-->
                                     <br/>
                                     <br/>
                                     <br/>
@@ -331,14 +333,15 @@
                                         <div class="col-md-6" id="data_5">
                                             <label class="col-sm-4 control-label">Fecha Inicio a Fecha Fin</label>
                                             <div class="input-daterange input-group" id="datepicker">
-                                                <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fechaInicio" ng-change="fechaRango" calendar/>
+                                                <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fecIniCot"  calendar/>
                                                 <span class="input-group-addon">a</span>
-                                                <input type="text" placeholder="Fecha Fin" class="input-sm form-control" name="end" ng-model="fechaFin" ng-change="fechaRango()" calendar/>
+                                                <input type="text" placeholder="Fecha Fin" class="input-sm form-control" name="end" ng-model="fecFinCot"  calendar/>
                                             </div>
                                         
                                         </div>
+
                                         <div class="col-md-1">
-                                            <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="cotizacionesAbonos()"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="cotizacionesAbonos(fecIniCot, fecFinCot)"><span class="glyphicon glyphicon-search"></span></button>
                                         </div>
                                         
                                     </div>
@@ -361,6 +364,7 @@
                                                 <th>Precio venta con IVA</th>
                                                 <th>Abono</th>
                                                 <th>Saldo</th>
+                                                <th>Fecha COPADE</th>
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
                                                 <th>Fecha Fin Trabajo</th>
@@ -390,6 +394,7 @@
                                                 <td>{{cotizacion.COP_CARGO | currency}}</td>
                                                 <td>{{cotizacion.abono | currency}}</td>
                                                 <td>{{cotizacion.COP_SALDO | currency}}</td>
+                                                <td>{{cotizacion.COP_FECHOPE| date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>

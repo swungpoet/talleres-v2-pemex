@@ -497,13 +497,29 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
-    $scope.cotizacionesAbonos = function () {
-        var sumatoria= 0;
-        $('.dataTableCotAbonos').DataTable().destroy();
-        $scope.fechaInicio== '' ? $scope.fechaInicio = null : $scope.fechaI;
-        $scope.fechaFin == '' ? $scope.fechaF = null : $scope.fechaF;
+    $scope.changeFecha = function (fecha, tipo){
 
-        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, $scope.fechaInicio,  $scope.fechaFin).then(function (result) {
+        if (tipo =='iniCotizacion') {
+            $scope.fecIniCot=fecha;
+        }else if (tipo == 'finCotizacion') {
+             $scope.fecFinCot=fecha;
+        };
+
+
+    }
+
+    $scope.cotizacionesAbonos = function (fechaInicio, fechaFinal) {
+   
+        var sumatoria= 0;
+        var fechaInicio = fechaInicio;
+        var fechaFinal = fechaFinal;
+        $('.dataTableCotAbonos').DataTable().destroy();
+        $scope.cotizaciones=[];
+
+        fechaInicio== '' ? fechaInicio = null : fechaInicio;
+        fechaFinal == '' ? fechaFinal = null : fechaFinal;
+
+        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, fechaInicio,  fechaFinal).then(function (result) {
             if (result.data.length > 0) {
               
                 $scope.cotizaciones = result.data;
