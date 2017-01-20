@@ -725,7 +725,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 }, 2500);
             }
 
-
+            $scope.change_switchFacturas = function () {
+                    if ($scope.showCopadeFacturas == 2) {
+                        $scope.showCopadeFacturas = 1;
+                    } else {
+                        $scope.showCopadeFacturas = 2;
+                    }
+                };
 
     
 });
