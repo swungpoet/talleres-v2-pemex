@@ -455,6 +455,11 @@
                                 <div class=" row etiquetaTotales">Precio total: <span class="totales">{{sumatoriaFacturasPagadas| currency: "$"}} </span></div>
                                 <br/>
                                 <br/>
+                                 <div class="col-md-offset-10 col-md-2">
+                                    <form role="form">
+                                        <input bs-switch ng-model="isSelected" type="checkbox" switch-active="{{ isActive }}" switch-on-text="{{ onText }}" switch-off-text="{{ offText }}" switch-on-color="{{ onColor }}" switch-off-color="{{ offColor }}" switch-animate="{{ animate }}" switch-size="{{ size }}" switch-label="{{ label }}" switch-icon="{{ icon }}" switch-radio-off="{{ radioOff }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}" switch-wrapper="{{ wrapper }}" ng-true-value="'yep'" ng-false-value="'nope'" switch-inverse="{{ !inverse }}" ng-change ="change_switchFacturas()">
+                                    </form>
+                                </div>
                                 <br/>
                                 <br/>
                                 <div>
