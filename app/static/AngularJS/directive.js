@@ -140,7 +140,27 @@ registrationModule.directive('calendar', function () {
         }
     };
 
-});
+}); 
+
+registrationModule.directive('mes', function () {
+
+
+    return {
+        require: 'ngModel',
+        link: function (scope, el, attr, ngModel) {
+            $(el).datepicker({
+                minViewMode: 1,
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                todayHighlight: true,
+                format: 'MM-yyyy'
+          });
+        }
+    };
+
+}); 
+        
 
 function isValidName(strToEvaluate) {
     var onlyLetters = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]*$/;

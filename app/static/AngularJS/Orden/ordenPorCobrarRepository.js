@@ -179,21 +179,22 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getCotizacionesAbonos: function (idUsuario, fechaInicio, fechaFin) {
+        getCotizacionesAbonos: function (idUsuario, fechaInicio, fechaFin, razonSocial) {
             return $http({
                 url: ordenUrl + 'cotizacionesabonados',
                 method: "GET",
                 params: {
                     idUsuario: idUsuario,
                     fechaInicio:fechaInicio,
-                    fechaFin:fechaFin
+                    fechaFin:fechaFin,
+                    razonSocial:razonSocial
                 },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        getFacturasPagadas: function (fechaInicio, fechaFin, fechaMes, rangoInicial, rangoFinal, zona, tar, idTipoCita, estatus, numeroTrabajo, bandera) {
+        getFacturasPagadas: function (fechaInicio, fechaFin, fechaMes, rangoInicial, rangoFinal, zona, tar, idTipoCita, estatus, numeroTrabajo, bandera, razonSocial) {
             return $http({
                 url: ordenUrl + 'facturascobradas/',
                 method: "GET",
@@ -208,7 +209,8 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     idTipoCita:idTipoCita,
                     estatus:estatus,
                     numeroTrabajo:numeroTrabajo,
-                    bandera:bandera
+                    bandera:bandera,
+                    razonSocial:razonSocial
                 },
                 headers: {
                     'Content-Type': 'application/json'
