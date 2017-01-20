@@ -312,7 +312,7 @@
 
                                 <div ng-show="showCopade == 2">
 
-                                    <!--div class=" row etiquetaTotales">Precio total: <span class="totales"> {{sumatoriaCotizaciones| currency: "$"}}</span></div-->
+                                    <div class=" row etiquetaTotales">Precio total: <span class="totales"> {{sumatoriaCotizaciones| currency: "$"}}</span></div>
                                     <br/>
                                     <br/>
                                     <br/>
@@ -360,8 +360,8 @@
                                                 <th>Tipo Orden</th>
                                                 <th>Orden de Surtimiento</th>
                                                 <th>Descripción de la Orden</th>
-                                                <th>Precio venta sin IVA</th>
-                                                <th>Precio venta con IVA</th>
+                                                <th>Precio Cotización con IVA</th>
+                                                <th>Precio Copade con IVA</th>
                                                 <th>Abono</th>
                                                 <th>Saldo</th>
                                                 <th>Fecha Ingreso Unidad</th>
@@ -389,7 +389,7 @@
                                                 <td class="rowAzul" ng-if="ordenverificada.estatusProvision == 0">
                                                     No provisionada
                                                 </td> -->
-                                                <td>{{cotizacion.precioCliente | currency}}</td>
+                                                <td>{{cotizacion.precioCotizacion | currency}}</td>
                                                 <td>{{cotizacion.COP_CARGO | currency}}</td>
                                                 <td>{{cotizacion.abono | currency}}</td>
                                                 <td>{{cotizacion.COP_SALDO | currency}}</td>
@@ -471,7 +471,7 @@
                                         <div class="col-xs-2" id="fechaMes">
                                             <label class="font-noraml">Mes</label>
                                             <div class="input-group date">
-                                                <input type="text" placeholder="Elija Mes" class="form-control" value="" ng-model="fechaMes" ng-change="fechaMess()" calendar>
+                                                <input type="text" placeholder="Elija Mes" class="form-control" value="" ng-model="fechaMes" ng-change="fechaMess()" mes>
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>

@@ -35,11 +35,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $scope.devuelveZonas();
         $scope.devuelveTars();
 
-        $('#data_5 .input-daterange').datepicker({
-            keyboardNavigation: false,
-            forceParse: false,
-            autoclose: true
-        });
 
     }
 
@@ -508,8 +503,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     }
 
-    $scope.cotizacionesAbonos = function (fechaInicio, fechaFinal) {
-    
+    $scope.cotizacionesAbonos = function (fechaInicio, fechaFinal, proveedor) {
+       
         var sumatoria= 0;
         var fechaInicio = fechaInicio;
         var fechaFinal = fechaFinal;
@@ -529,13 +524,14 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
        
 
-        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, dateStringInicial,  dateStringFinal).then(function (result) {
+        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, dateStringInicial,  dateStringFinal, proveedor).then(function (result) {
             if (result.data.length > 0) {
               
                 $scope.cotizaciones = result.data;
-                
+              
                 for(var i=0;i<result.data.length;i++){
-                    sumatoria += parseFloat(result.data[i].COP_CARGO);
+                   // sumatoria += parseFloat(result.data[i].precioCotizacion);
+                   sumatoria += result.data[i].precioCotizacion;
                 };
                 $scope.sumatoriaCotizaciones=sumatoria;
 
@@ -728,6 +724,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     });
                 }, 2500);
             }
+
+
 
     
 });
