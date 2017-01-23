@@ -33,7 +33,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $scope.cleanDatos();
         $scope.getOrdenesPorCobrar(); 
         $scope.trabajosAbonados();
-        $scope.cotizacionesAbonos ();
+       // $scope.cotizacionesAbonos ();
         $scope.devuelveZonas();
         $scope.devuelveTars();
 

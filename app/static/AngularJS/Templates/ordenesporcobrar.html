@@ -217,9 +217,9 @@
                                                 <th>No. Estimación</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Precio venta sin IVA</th>
+                                                <th>Folio Factura</th>
                                                 <th>Precio venta con IVA</th>
                                                 <th>Fecha COPADE</th>
-                                                <th>Folio Factura</th>
                                                 <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                 <th>Acción</th>
                                             </tr>
@@ -232,9 +232,9 @@
                                                 <td>{{facturado.numeroEstimacion}}</td>
                                                 <td>{{facturado.descripcion}}</td>
                                                 <td>{{facturado.subTotal | currency}}</td>
+                                                <td>{{facturado.COP_IDDOCTO}}</td>
                                                 <td>{{facturado.total | currency}}</td>
                                                 <td>{{facturado.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
-                                                <td>{{facturado.COP_IDDOCTO}}</td>
                                                 <td ng-show="trabajosporCOPADE==1">{{facturado.numeroTrabajo}}</td>
                                                      <td ng-hide="userData.idTipoUsuario == 4"> 
                                                          <button class="btn btn-success" type="button" ng-click="verOrdenes(facturado.idDatosCopade)" data-toggle="tooltip" tooltip="Detalle copade" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button>
@@ -282,12 +282,12 @@
                                                     <th>Orden de Surtimiento</th>
                                                     <th>No. Estimación</th>
                                                     <th>Descripción de la Orden</th>
-                                                    <th>Precio venta sin IVA</th>
-                                                    <th>Precio venta con IVA</th>
+                                                    <th>Precio Venta sin IVA</th>
+                                                    <th>Folio Factura</th>
+                                                    <th>Precio Venta con IVA</th>
                                                     <th>Abono</th>
                                                     <th>Saldo</th>
                                                     <th>Fecha COPADE</th>
-                                                    <th>Folio Factura</th>
                                                     <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                     <th>Acción</th>
                                                 </tr>
@@ -300,11 +300,11 @@
                                                     <td>{{abono.numeroEstimacion}}</td>
                                                     <td>{{abono.descripcion}}</td>
                                                     <td>{{abono.subTotal | currency}}</td>
+                                                    <td>{{abono.COP_IDDOCTO}}</td>
                                                     <td>{{abono.total | currency}}</td>
                                                     <td>{{abono.abono | currency}}</td>
                                                     <td>{{abono.COP_SALDO | currency}}</td>
                                                     <td>{{abono.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
-                                                    <td>{{abono.COP_IDDOCTO}}</td>
                                                     <td ng-show="trabajosporCOPADE==1">{{abono.numeroTrabajo}}</td>
                                                     <td ng-hide="userData.idTipoUsuario == 4"> 
                                                          <!--button class="btn btn-success" type="button" ng-click="verOrdenes(abono.idDatosCopade)" data-toggle="tooltip" tooltip="Detalle copade" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button-->
@@ -363,21 +363,23 @@
                                                 <th>Consecutivo</th>
                                                 <th>Número de la Orden</th>
                                                 <th>Número de Cotización</th>
-                                                <th>Estatus</th>
+                                                <th>Taller</th>
+                                                <th>Factura Taller</th>
+                                                <th>Monto Factura Taller</th>
+                                                <th>Saldo Factura Taller</th>
                                                 <th>Número Económico</th>
                                                 <th>Zona</th>
                                                 <th>TAR</th>
-                                                <th>Taller</th>
                                                 <th>Tipo Orden</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Precio Cotización con IVA</th>
+                                                <th>Factura COPADE</th>
                                                 <th>Precio Copade con IVA</th>
-                                                <th>Abono</th>
-                                                <th>Saldo</th>
+                                                <th>Abono COPADE</th>
+                                                <th>Saldo COPADE</th>
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
                                                 <th>Fecha Fin Trabajo</th>
-                                                <th>Folio Factura</th>
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
@@ -389,21 +391,23 @@
                                                 <td>{{cotizacion.idCita}}</td>
                                                 <td>{{cotizacion.numeroTrabajo}}</td>
                                                 <td>{{cotizacion.numeroCotizacion}}</td>
-                                                <td>{{cotizacion.estatusPago}}</td>
+                                                <td>{{cotizacion.razonSocial}}</td>
+                                                <td>{{cotizacion.numFactura}}</td>
+                                                <td>{{cotizacion.total | currency}}</td>
+                                                <td>{{cotizacion.saldoProveedor | currency}}</td>
                                                 <td>{{cotizacion.numEconomico}}</td>
                                                 <td>{{cotizacion.zona}}</td>
                                                 <td>{{cotizacion.TAR}}</td>
-                                                <td>{{cotizacion.razonSocial}}</td>
                                                 <td>{{cotizacion.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
                                                 <td>{{cotizacion.trabajo}}</td>
                                                 <td>{{cotizacion.precioCotizacion | currency}}</td>
+                                                <td>{{cotizacion.COP_IDDOCTO}}</td>
                                                 <td>{{cotizacion.COP_CARGO | currency}}</td>
                                                 <td>{{cotizacion.abono | currency}}</td>
                                                 <td>{{cotizacion.COP_SALDO | currency}}</td>
                                                 <td>{{cotizacion.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                <td>{{cotizacion.COP_IDDOCTO}}</td>
                                                 <td>
 
                                                     <div class="alerta"> 
@@ -515,10 +519,10 @@
                                                     <th>Orden de Surtimiento</th>
                                                     <th>No. Estimación</th>
                                                     <th>Descripción de la Orden</th>
-                                                    <th>Precio venta sin IVA</th>
-                                                    <th>Precio venta con IVA</th>
-                                                    <th>Fecha COPADE</th>
+                                                    <th>Precio Venta sin IVA</th>
                                                     <th>Folio Factura</th>
+                                                    <th>Precio Venta con IVA</th>
+                                                    <th>Fecha COPADE</th>
                                                     <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                     <th>Acción</th>
 
@@ -532,9 +536,9 @@
                                                     <td>{{pagadaCopade.numeroEstimacion}}</td>
                                                     <td>{{pagadaCopade.descripcion}}</td>
                                                     <td>{{pagadaCopade.subTotal | currency}}</td>
+                                                    <td>{{pagadaCopade.COP_IDDOCTO}}</td>
                                                     <td>{{pagadaCopade.total | currency}}</td>
                                                     <td>{{pagadaCopade.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
-                                                    <td>{{pagadaCopade.COP_IDDOCTO}}</td>
                                                     <td ng-show="trabajosporCOPADE==1">{{abono.numeroTrabajo}}</td>
                                                     <td ng-hide="userData.idTipoUsuario == 4"> 
 
@@ -554,22 +558,22 @@
                                                     <th>Orden de Surtimiento</th>
                                                     <th>Consecutivo</th>
                                                     <th>Número de la Orden</th>
-                                                    <th>Número deCotización</th>
-                                                    <th>Folio Factura</th>
-                                                    <th>Estatus</th>
+                                                    <th>Número de Cotización</th>
+                                                    <th>Taller</th>
+                                                    <th>Factura Taller</th>
+                                                    <th>Monto Factura Taller</th>
                                                     <th>Número Económico</th>
                                                     <th>Zona</th>
                                                     <th>TAR</th>
-                                                    <th>Taller</th>
                                                     <th>Tipo Orden</th>
                                                     <th>Orden de Surtimiento</th>
                                                     <th>Descripción de la Orden</th>
                                                     <th>Precio Cotización con IVA</th>
+                                                    <th>Factura COPADE</th>
                                                     <th>Precio Copade con IVA</th>
                                                     <th>Fecha Ingreso Unidad</th>
                                                     <th>Fecha Inicio Trabajo</th>
                                                     <th>Fecha Fin Trabajo</th>
-                                                    <th>Folio Factura</th>
                                                     <th>Acción</th>
                                                 </tr>
                                             </thead>
@@ -581,21 +585,21 @@
                                                     <td>{{pagada.idCita}}</td>
                                                     <td>{{pagada.numeroTrabajo}}</td>
                                                     <td>{{pagada.numeroCotizacion}}</td>
-                                                    <td>{{pagada.folioFactura}}</td>
-                                                    <td>{{pagada.estatusPago}}</td>
+                                                    <td>{{pagada.razonSocial}}</td>
+                                                    <td>{{pagada.numFactura}}</td>
+                                                    <td>{{pagada.total | currency}}</td>
                                                     <td>{{pagada.numEconomico}}</td>
                                                     <td>{{pagada.zona}}</td>
                                                     <td>{{pagada.TAR}}</td>
-                                                    <td>{{pagada.razonSocial}}</td>
                                                     <td>{{pagada.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
                                                     <td>{{pagada.folio}}</td>
                                                     <td>{{pagada.trabajo}}</td>
                                                     <td>{{pagada.precioCotizacion | currency}}</td>
+                                                    <td>{{pagada.COP_IDDOCTO}}</td>
                                                     <td>{{pagada.COP_CARGO | currency}}</td>
                                                     <td>{{pagada.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                     <td>{{pagada.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                     <td>{{pagada.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
-                                                    <td>{{pagada.COP_IDDOCTO}}</td>
                                                     <td>
 
                                                         <div class="alerta"> 
