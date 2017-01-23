@@ -1468,16 +1468,6 @@ Orden.prototype.get_facturascobradas = function (req, res, next) {
             type: self.model.types.STRING
         },
         {
-            name: 'rangoInicial',
-            value: req.query.rangoInicial,
-            type: self.model.types.STRING
-        },
-        {
-            name: 'rangoFinal',
-            value: req.query.rangoFinal,
-            type: self.model.types.STRING
-        },
-        {
             name: 'zona',
             value: req.query.zona,
             type: self.model.types.STRING

@@ -194,7 +194,7 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getFacturasPagadas: function (fechaInicio, fechaFin, fechaMes, rangoInicial, rangoFinal, zona, tar, idTipoCita, estatus, numeroTrabajo, bandera, razonSocial) {
+        getFacturasPagadas: function (fechaInicio, fechaFin, fechaMes, zona, tar, idTipoCita, estatus, numeroTrabajo, bandera, razonSocial) {
             return $http({
                 url: ordenUrl + 'facturascobradas/',
                 method: "GET",
@@ -202,8 +202,6 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     fechaInicio:fechaInicio,
                     fechaFin:fechaFin,
                     fechaMes:fechaMes,
-                    rangoInicial:rangoInicial,
-                    rangoFinal:rangoFinal,
                     zona:zona,
                     tar:tar,
                     idTipoCita:idTipoCita,

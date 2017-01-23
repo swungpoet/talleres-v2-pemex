@@ -358,17 +358,17 @@
                                         <thead>
                                             <tr>
                                                 <th>Cliente</th>
+                                                <th>No. COPADE</th>
+                                                <th>Orden de Surtimiento</th>
                                                 <th>Consecutivo</th>
                                                 <th>Número de la Orden</th>
                                                 <th>Número de Cotización</th>
-                                                <th>Folio Factura</th>
                                                 <th>Estatus</th>
                                                 <th>Número Económico</th>
                                                 <th>Zona</th>
                                                 <th>TAR</th>
                                                 <th>Taller</th>
                                                 <th>Tipo Orden</th>
-                                                <th>Orden de Surtimiento</th>
                                                 <th>Descripción de la Orden</th>
                                                 <th>Precio Cotización con IVA</th>
                                                 <th>Precio Copade con IVA</th>
@@ -377,23 +377,24 @@
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
                                                 <th>Fecha Fin Trabajo</th>
+                                                <th>Folio Factura</th>
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="cotizacion in cotizaciones">
                                                 <td>{{cotizacion.cliente}}</td>
+                                                <td>{{cotizacion.numeroCopade}}</td>
+                                                <td>{{cotizacion.folio}}</td>
                                                 <td>{{cotizacion.idCita}}</td>
                                                 <td>{{cotizacion.numeroTrabajo}}</td>
                                                 <td>{{cotizacion.numeroCotizacion}}</td>
-                                                <td>{{cotizacion.folioFactura}}</td>
                                                 <td>{{cotizacion.estatusPago}}</td>
                                                 <td>{{cotizacion.numEconomico}}</td>
                                                 <td>{{cotizacion.zona}}</td>
                                                 <td>{{cotizacion.TAR}}</td>
                                                 <td>{{cotizacion.razonSocial}}</td>
                                                 <td>{{cotizacion.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
-                                                <td>{{cotizacion.folio}}</td>
                                                 <td>{{cotizacion.trabajo}}</td>
                                                 <td>{{cotizacion.precioCotizacion | currency}}</td>
                                                 <td>{{cotizacion.COP_CARGO | currency}}</td>
@@ -402,10 +403,11 @@
                                                 <td>{{cotizacion.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                <td>{{cotizacion.COP_IDDOCTO}}</td>
                                                 <td>
 
                                                     <div class="alerta"> 
-                                                        <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(cotizacion, 1)">
+                                                        <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(ordenverificada, 1)">
                                                         <i class="glyphicon glyphicon-sunglasses"></i> 
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-messages">
@@ -423,14 +425,18 @@
                                 
                             </tab>
                             <tab heading="Facturas Pagadas" index="5">
-                                <div class=" row etiquetaTotales">Precio Cotización con IVA: <span class="totales">{{sumatoriaFacturasPagadas| currency: "$"}} </span></div>
+                                <div class=" row etiquetaTotales" ng-show="showCopadeFacturas == 1">Precio venta con IVA: <span class="totales" >{{sumatoriaFacturasPagadas| currency: "$"}} </span></div>
+                                <div class=" row etiquetaTotales" ng-show="showCopadeFacturas == 2">Precio Cotización con IVA: <span class="totales" >{{sumatoriaPagadas| currency: "$"}} </span></div>
                                 <br/>
                                 <br/>
-                                 <!--div class="col-md-offset-10 col-md-2">
+                                <br/>
+                                <br/>
+                                 <div class="col-md-offset-10 col-md-2">
                                     <form role="form">
-                                        <input bs-switch ng-model="isSelectedFactura" type="checkbox" switch-active="{{ isActive }}" switch-on-text="{{ onTextFactura}}" switch-off-text="{{ offTextFactura }}" switch-on-color="{{ onColor }}" switch-off-color="{{ offColor }}" switch-animate="{{ animate }}" switch-size="{{ size }}" switch-label="{{ label }}" switch-icon="{{ icon }}" switch-radio-off="{{ radioOff }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}" switch-wrapper="{{ wrapper }}" ng-true-value="'yep_factura'" ng-false-value="'nope'" switch-inverse="{{ !inverseFactura }}" ng-change ="change_switchFacturas()">
+                                        <input bs-switch ng-model="isSelectedFactura" type="checkbox" switch-active="{{ isActive }}" switch-on-text="{{ onText }}" switch-off-text="{{ offText }}" switch-on-color="{{ onColor }}" switch-off-color="{{ offColor }}" switch-animate="{{ animate }}" switch-size="{{ size }}" switch-label="{{ label }}" switch-icon="{{ icon }}" switch-radio-off="{{ radioOff }}" switch-label-width="{{ labelWidth }}" switch-handle-width="{{ handleWidth }}" switch-wrapper="{{ wrapper }}" ng-true-value="'yep'" ng-false-value="'nope'" switch-inverse="{{ !inverse }}" ng-change ="change_switchFacturas()">
                                     </form>
-                                </div-->
+                                </div>
+
                                 <br/>
                                 <br/>
                                 <div id="tabllas">
@@ -515,6 +521,7 @@
                                                     <th>Folio Factura</th>
                                                     <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                     <th>Acción</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -543,6 +550,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>Cliente</th>
+                                                    <th>No. COPADE</th>
+                                                    <th>Orden de Surtimiento</th>
                                                     <th>Consecutivo</th>
                                                     <th>Número de la Orden</th>
                                                     <th>Número deCotización</th>
@@ -560,19 +569,22 @@
                                                     <th>Fecha Ingreso Unidad</th>
                                                     <th>Fecha Inicio Trabajo</th>
                                                     <th>Fecha Fin Trabajo</th>
+                                                    <th>Folio Factura</th>
                                                     <th>Acción</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="pagada in pagadas">
                                                     <td>{{pagada.cliente}}</td>
+                                                    <td>{{pagada.numeroCopade}}</td>
+                                                    <td>{{pagada.folio}}</td>
                                                     <td>{{pagada.idCita}}</td>
                                                     <td>{{pagada.numeroTrabajo}}</td>
                                                     <td>{{pagada.numeroCotizacion}}</td>
                                                     <td>{{pagada.folioFactura}}</td>
                                                     <td>{{pagada.estatusPago}}</td>
                                                     <td>{{pagada.numEconomico}}</td>
-                                                    <td>{{pagada.Zona}}</td>
+                                                    <td>{{pagada.zona}}</td>
                                                     <td>{{pagada.TAR}}</td>
                                                     <td>{{pagada.razonSocial}}</td>
                                                     <td>{{pagada.idTipoCita == 4 ? "Refacciones" : "Servicio"}}</td>
@@ -583,10 +595,11 @@
                                                     <td>{{pagada.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                     <td>{{pagada.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                     <td>{{pagada.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
+                                                    <td>{{pagada.COP_IDDOCTO}}</td>
                                                     <td>
 
                                                         <div class="alerta"> 
-                                                            <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(pagada, 1)">
+                                                            <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(ordenverificada, 1)">
                                                             <i class="glyphicon glyphicon-sunglasses"></i> 
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-messages">

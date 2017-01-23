@@ -10,14 +10,11 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.size = 'mini';
     $scope.showCopade = 1
     $scope.isSelected = 'yep';
+    $scope.isSelectedFactura = 'yep';
     $scope.inverse = true;
-    $scope.isSelectedFactura = 'yepFactura';
-    $scope.inverseFactura = true;
     $scope.fechaInicio= '';
     $scope.fechaFin = '';
-    $scope.showCopadeFacturas = 2;
-    $scope.onTextFactura = 'Copade';
-    $scope.offTextFactura = 'Cotización';
+    $scope.showCopadeFacturas = 1;
    
 
     $scope.init = function () {
@@ -564,14 +561,17 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $scope.tar=tar;
         $scope.idTipoCita =idTipoCita;
         $scope.fechaMes =fechaMes;
-        $scope.bandera = 1;
+        
+        if ($scope.showCopadeFacturas==1) {
+            $scope.bandera = 3;
+        }else{
+            $scope.bandera = 1;
+        }
         $scope.proveedorFac= proveedorFac;
 
         $scope.fechaInicio == '' ? $scope.fechaInicio = null : $scope.fechaInicio;
         $scope.fechaFin == '' ? $scope.fechaFin = null : $scope.fechaFin;
         $scope.fechaMes == '' ? $scope.fechaMes = null : $scope.fechaMes;
-        $scope.rangoInicial = $('#rangoi').val();
-        $scope.rangoFinal = $('#rangof').val();
         $scope.rangoInicial == '' ? $scope.rangoInicial = null : $scope.rangoInicial;
         $scope.rangoFinal == '' ? $scope.rangoFinal = null : $scope.rangoFinal;
         $scope.zona;
@@ -579,18 +579,21 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $scope.idTipoCita == '' ? $scope.idTipoCita = null : $scope.idTipoCita;
         //$scope.estatus == '' ? $scope.bandera = 1 : $scope.bandera = 2;
         $scope.numeroTrabajo;
-        $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.rangoInicial,$scope.rangoFinal,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera, $scope.proveedorFac);
+        $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera, $scope.proveedorFac);
     }
 
     //obtiene los scope necesarios para el reporte de utilidad 
     $scope.buscaOrden = function (numeroTrabajo) {
         if (numeroTrabajo != null || numeroTrabajo != undefined){
-            $scope.bandera = 3;
+            if ($scope.showCopadeFacturas==1) {
+                $scope.bandera = 4;
+            }else{
+                $scope.bandera = 2;
+            }
             $scope.fechaInicio == '' ? $scope.fechaInicio = null : $scope.fechaInicio;
             $scope.fechaFin == '' ? $scope.fechaFin = null : $scope.fechaFin;
             $scope.fechaMes == '' ? $scope.fechaMes = null : $scope.fechaMes;
-            $scope.rangoInicial = $('#rangoi').val();
-            $scope.rangoFinal = $('#rangof').val();
+            
             $scope.rangoInicial == '' ? $scope.rangoInicial = null : $scope.rangoInicial;
             $scope.rangoFinal == '' ? $scope.rangoFinal = null : $scope.rangoFinal;
             $scope.zona;
@@ -598,16 +601,24 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             $scope.idTipoCita == '' ? $scope.idTipoCita = null : $scope.idTipoCita;
            // $scope.estatus == '' ? $scope.estatus == null : $scope.estatus;
             $scope.numeroTrabajo= numeroTrabajo;
-            $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.rangoInicial,$scope.rangoFinal,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera, $scope.proveedorFac);
+            $scope.getMargenUtilidad($scope.fechaInicio,$scope.fechaFin,$scope.fechaMes,$scope.zona,$scope.tar,$scope.idTipoCita,$scope.estatus,$scope.numeroTrabajo, $scope.bandera, $scope.proveedorFac);
         }else{
             alertFactory.error('Debe de ingrsar un número de orden ');
         }
     }
 
     //obtiene el resultado de reporte de utilidad 
-    $scope.getMargenUtilidad = function (fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac) {
+    $scope.getMargenUtilidad = function (fechaInicio,fechaFin,fechaMes,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac) {
       
-        $('.dataTablePagadas').DataTable().destroy();
+       if ($scope.showCopadeFacturas==1) {
+           $scope.sumatoriaFacturasPagadas = 0.00;
+           $('.dataTablePagadaCopade').DataTable().destroy();
+        }else{
+            $scope.sumatoriaPagadas = 0.00;
+            $('.dataTablePagadas').DataTable().destroy();
+        }
+
+
         if(fechaMes != '' && fechaMes != null && fechaMes != undefined){
             var fechaPartida = fechaMes.split('-');
             if(fechaPartida[0] == 'Enero'){
@@ -647,18 +658,36 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 fechaMes = '12/01/' + fechaPartida[1];
             }
         }
+             
+        ordenPorCobrarRepository.getFacturasPagadas(fechaInicio,fechaFin,fechaMes,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac).then(function (utilidad) { 
        
-        ordenPorCobrarRepository.getFacturasPagadas(fechaInicio,fechaFin,fechaMes,rangoInicial,rangoFinal,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac).then(function (utilidad) { 
-       
-           $scope.sumatoriaFacturasPagadas = 0.00;
+
+           var sumatoria = 0.00;
             if (utilidad.data.length > 0) {
-                $scope.pagadas = utilidad.data;
+                
+                        
             
                  for(var i=0;i<utilidad.data.length;i++){
-                    $scope.sumatoriaFacturasPagadas += parseFloat(utilidad.data[i].precioCotizacion);
+                    
+                    if ($scope.showCopadeFacturas==1) {
+                       sumatoria += parseFloat(utilidad.data[i].total);
+                    }else{
+                       sumatoria += parseFloat(utilidad.data[i].precioCotizacion);
+                    }
                 };
+
+                if ($scope.showCopadeFacturas==1) {
+                   $scope.pagadasCopades = utilidad.data;
+                   $scope.sumatoriaFacturasPagadas += sumatoria;
+                   waitDrawDocument("dataTablePagadaCopade");
+                }else{
+                    $scope.pagadas = utilidad.data;
+                    $scope.sumatoriaPagadas += sumatoria;
+                    waitDrawDocument("dataTablePagadas");
+                }
+                console.log(sumatoria);
+
                 alertFactory.success('Datos encontrados');
-                waitDrawDocument("dataTablePagadas");
             } else {
                 alertFactory.info('No se encontraron datos');
             }
@@ -741,12 +770,13 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
 
             $scope.change_switchFacturas = function () {
-                    if ($scope.showCopadeFacturas == 2) {
-                        $scope.showCopadeFacturas = 1;
-                    } else {
-                        $scope.showCopadeFacturas = 2;
-                    }
-                };
+
+                if ($scope.showCopadeFacturas == 2) {
+                    $scope.showCopadeFacturas = 1;
+                } else {
+                    $scope.showCopadeFacturas = 2;
+                }
+            };
 
     
 });
