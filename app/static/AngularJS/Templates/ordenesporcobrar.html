@@ -309,7 +309,7 @@
                                                     <td ng-hide="userData.idTipoUsuario == 4"> 
                                                          <!--button class="btn btn-success" type="button" ng-click="verOrdenes(abono.idDatosCopade)" data-toggle="tooltip" tooltip="Detalle copade" tooltip-placement="left"><span class="glyphicon glyphicon-eye-open"></span></button-->
 
-                                                         <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver Factura" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                         <button class="btn btn-info" type="button" ng-click="verOrdenes(abono.idDatosCopade)" data-toggle="tooltip" tooltip="Ver Factura" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -411,7 +411,7 @@
                                                 <td>
 
                                                     <div class="alerta"> 
-                                                        <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(ordenverificada, 1)">
+                                                        <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(cotizacion, 1)">
                                                         <i class="glyphicon glyphicon-sunglasses"></i> 
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-messages">
@@ -542,7 +542,7 @@
                                                     <td ng-show="trabajosporCOPADE==1">{{abono.numeroTrabajo}}</td>
                                                     <td ng-hide="userData.idTipoUsuario == 4"> 
 
-                                                         <button class="btn btn-info" type="button" ng-click="" data-toggle="tooltip" tooltip="Ver Factura" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
+                                                         <button class="btn btn-info" type="button" ng-click="verOrdenes(pagadaCopade.idDatosCopade)" data-toggle="tooltip" tooltip="Ver Factura" tooltip-placement="left"><span class="glyphicon glyphicon-sunglasses"></span></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -603,7 +603,7 @@
                                                     <td>
 
                                                         <div class="alerta"> 
-                                                            <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(ordenverificada, 1)">
+                                                            <button class="dropdown-toggle alerta-form btn btn-info" tooltip="Ver órden de servicio" data-toggle="dropdown" href="#" aria-expanded="true" ng-click="aprobarTrabajo(pagada, 1)">
                                                             <i class="glyphicon glyphicon-sunglasses"></i> 
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-messages">
