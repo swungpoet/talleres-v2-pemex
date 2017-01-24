@@ -194,7 +194,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                             ordenPorCobrarRepository.putInsertaDatosCopade(result.data).then(function (resp) {
                                 if (resp.data.length > 0) {
 
-                                    if (resp.data[0].id=0) {
+                                    if (resp.data[0].id==0) {
                                         alertFactory.error('Ya existe un archivo para la COPADE');
                                     }else{
                                         ordenPorCobrarRepository.putRenombraCopade(nombreCopades, resp.data).then(function (respuesta) {
