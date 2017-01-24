@@ -193,16 +193,22 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                         if (result.data.length > 0) {
                             ordenPorCobrarRepository.putInsertaDatosCopade(result.data).then(function (resp) {
                                 if (resp.data.length > 0) {
-                                    ordenPorCobrarRepository.putRenombraCopade(nombreCopades, resp.data).then(function (respuesta) {
-                                        if (respuesta.data > 0) {
-                                            alertFactory.success('Copade cargada satisfactoriamente');
-                                            //$scope.limpiaFecha();
-                                            $scope.cleanDatos();
-                                            $scope.getCopades();
-                                        }
-                                    }, function (error) {
-                                        alertFactory.error('No se pudo cargar la copade');
-                                    });
+
+                                    if (resp.data[0].id=0) {
+                                        alertFactory.error('Ya existe un archivo para la COPADE');
+                                    }else{
+                                        ordenPorCobrarRepository.putRenombraCopade(nombreCopades, resp.data).then(function (respuesta) {
+                                            if (respuesta.data > 0) {
+                                                alertFactory.success('Copade cargada satisfactoriamente');
+                                                //$scope.limpiaFecha();
+                                                $scope.cleanDatos();
+                                                $scope.getCopades();
+                                            }
+                                        }, function (error) {
+                                            alertFactory.error('No se pudo cargar la copade');
+                                        }); 
+                                    }
+                                    
                                 } else {
                                     alertFactory.error('No se pudieron extraer los datos de la copade');
                                 }            
