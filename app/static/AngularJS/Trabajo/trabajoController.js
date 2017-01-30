@@ -364,7 +364,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     }
 
     //genera el formato para el certificado de conformidad
-    $scope.generaCertificadoConformidadPDF = function (idTrabajo, idTAR, montoOrden, indice) {
+    $scope.generaCertificadoConformidadPDF = function (idTrabajo, idTAR, montoOrden, indice, idCita) {
         var saldo = 0;
 
         trabajoRepository.getCosecutivoZona(idTrabajo).then(function (res) {
@@ -424,7 +424,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
             }else{
 
-                 trabajoRepository.getSaldoTar(idTAR).then(function (saldoRes) {
+                 trabajoRepository.getSaldoTar(idTAR, idCita).then(function (saldoRes) {
 
                     if (saldoRes.data.length > 0) {
                         saldo = saldoRes.data[0].saldo;
@@ -486,7 +486,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
                         } else {
 
-                            trabajoRepository.postEstatusOsur(idTAR).then(function (estatusOsur) {
+                            trabajoRepository.postEstatusOsur(idTAR, idCita).then(function (estatusOsur) {
 
                                 if (estatusOsur.data[0].id = 1) {
 
@@ -507,7 +507,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                         },
                                         function (isConfirm) {
                                             if (isConfirm) {
-                                                trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
+                                                trabajoRepository.enviarMailOsur(idTAR, idCita).then(function (mail) {
 
                                                     if (mail.data[0].enviado == 1) {
                                                         swal("Proceso Realizado!");
@@ -545,7 +545,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                             },
                             function (isConfirm) {
                                 if (isConfirm) {
-                                    trabajoRepository.enviarMailOsur(idTAR).then(function (mail) {
+                                    trabajoRepository.enviarMailOsur(idTAR, idCita).then(function (mail) {
 
                                         if (mail.data[0].enviado == 1) {
                                             swal("Proceso Realizado!");

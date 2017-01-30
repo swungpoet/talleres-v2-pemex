@@ -93,7 +93,13 @@ Trabajo.prototype.get_saldotar = function (req, res, next) {
         name: 'idTAR',
         value: req.query.idTAR,
         type: self.model.types.INT
-        }];
+        },
+        {
+        name: 'idCita',
+        value: req.query.idCita,
+        type: self.model.types.INT
+        }
+        ];
 
     this.model.query('SEL_SALDO_TAR_SP', params, function (error, result) {
         self.view.expositor(res, {
@@ -127,6 +133,11 @@ Trabajo.prototype.post_estatusosur = function (req, res, next) {
         name: 'idTAR',
         value: req.body.idTAR,
         type: self.model.types.INT
+        },
+        {
+        name: 'idCita',
+        value: req.body.idCita,
+        type: self.model.types.INT
         }];
 
     this.model.post('UPD_ESTATUS_OSUR_SP', params, function (error, result) {
@@ -150,6 +161,11 @@ Trabajo.prototype.get_enviaremailosur = function (req, res, next) {
     var params = [{
         name: 'idTAR',
         value: req.query.idTAR,
+        type: self.model.types.INT
+    },
+    {
+        name: 'idCita',
+        value: req.query.idCita,
         type: self.model.types.INT
     }];
 

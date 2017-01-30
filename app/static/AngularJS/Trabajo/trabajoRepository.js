@@ -40,12 +40,13 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        getSaldoTar: function (idTAR) {
+        getSaldoTar: function (idTAR, idCita) {
             return $http({
                 url: trabajoUrl + 'saldotar/',
                 method: "GET",
                 params: {
-                    idTAR: idTAR
+                    idTAR: idTAR,
+                    idCita: idCita
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -64,24 +65,26 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             })
         },
-        postEstatusOsur: function (idTAR) {
+        postEstatusOsur: function (idTAR, idCita) {
             return $http({
                 url: trabajoUrl + 'estatusosur/',
                 method: "POST",
                 data: {
-                    idTAR: idTAR
+                    idTAR: idTAR,
+                    idCita: idCita
                 },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
         },
-         enviarMailOsur: function (idTAR) {
+         enviarMailOsur: function (idTAR, idCita) {
             return $http({
                 url: trabajoUrl + 'enviaremailosur/',
                 method: "GET",
                 params: {
-                    idTAR: idTAR
+                    idTAR: idTAR,
+                    idCita: idCita
                 },
                 headers: {
                     'Content-Type': 'application/json'
