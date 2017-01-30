@@ -262,6 +262,11 @@ Cita.prototype.post_addcita = function (req, res, next) {
             name: 'idCliente',
             value: req.body.idCliente,
             type: self.model.types.INT
+        },
+        {
+            name: 'altace',
+            value: req.body.altace,
+            type: self.model.types.INT
         }];
 
     this.model.post('INS_CITA_SP', params, function (error, result) {

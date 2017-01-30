@@ -146,6 +146,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" ng-show="unidadInfo.idZona==2">
+                            <label class="col-sm-3 control-label">Altace: </label>
+                            <div class="col-sm-9">
+                                <div class="input-group m-b">
+                                    <div class="radio radio-info radio-inline">
+                                        <input type="radio" id="inlineRadio3" value="1" name="radioInline3" checked="" ng-model="altace">
+                                        <label for="inlineRadio3"> Si </label>
+                                    </div>
+                                    <div class="radio radio-inline">
+                                        <input type="radio" id="inlineRadio4" value="0" name="radioInline4" ng-model="altace">
+                                        <label for="inlineRadio4"> No </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Comentarios Adicionales: </label>
                             <div class="col-sm-9">
@@ -158,7 +173,7 @@
                                 <textarea class="form-control" rows="4" ng-model="datosCita.observacionCita"></textarea>
                             </div>
                         </div> -->
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label class="col-sm-3 control-label"></label>
                             <div class="col-sm-9">
                                 <div>
