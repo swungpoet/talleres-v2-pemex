@@ -233,6 +233,10 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
                         if (localStorageService.get('stgListaPiezas', $scope.listaPiezas) != undefined) {
                             $scope.datosCita.pieza = localStorageService.get('stgListaPiezas', $scope.listaPiezas).slice(0);
                         }
+
+                        if ($scope.altace == undefined) {
+                            $scope.altace =0;
+                        }
                         var citaTaller = {};
                         citaTaller.idCita = 0;
                         citaTaller.idUnidad = localStorageService.get('unidad').idUnidad;
