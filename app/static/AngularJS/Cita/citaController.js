@@ -599,11 +599,11 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
 
     //Modal Adjuntar Formato
     $scope.formatoRecepcion = function (cita) {
-        debugger;
-        $scope.idTrabajoUpl = cita.idTrabajo;
-        $scope.idCitaUpld = cita.idCita;
-        $scope.idUnidadUpl = cita.idUnidad;
-        location.href = '/comprobanteRecepcion?state=1';
+        //$scope.idTrabajoUpl = cita.idTrabajo;
+        //$scope.idCitaUpld = cita.idCita;
+        //$scope.idUnidadUpl = cita.idUnidad;
+        localStorageService.set('cita', cita);
+        location.href = '/comprobanteRecepcion';
        // $('#evidencia').appendTo('body').modal('show');
     }
 

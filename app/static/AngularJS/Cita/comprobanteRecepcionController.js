@@ -1,3 +1,62 @@
 registrationModule.controller('comprobanteRecepcionController', function ($scope, $route, $modal, $rootScope, localStorageService, alertFactory, globalFactory, citaRepository, ordenServicioRepository, cotizacionRepository, trabajoRepository, uploadRepository) {
-   
-  });
+
+	$scope.init = function(){
+		
+		$scope.infoCita=localStorageService.get('cita');
+		$scope.ext_Claxon='';
+		$scope.ext_TaponGasolina='';
+		$scope.ext_TaponLlantas='';
+		$scope.ext_FarosDelanteros='';
+		$scope.ext_Antena='';
+		$scope.ext_Emblemas='';
+		$scope.ext_Cristales='';
+		$scope.int_EspejoRetrovisor='';
+		$scope.int_Radio='';
+		$scope.int_CinturonSeguridad='';
+		$scope.int_ManijasSeguros='';
+		$scope.int_Encendedor='';
+		$scope.doc_ManualesUnidadint_Cenicero='';
+		$scope.int_Tapetes='';
+		$scope.int_Ac='';
+		$scope.int_Lector='';
+		$scope.int_BolsaAireDelantera='';
+		$scope.int_BolsaAireLateral='';
+		$scope.int_Usb='';
+		$scope.int_LlavesUnidad='';
+		$scope.acs_Gato='';
+		$scope.acs_ManeralGato='';
+		$scope.acs_LlaveRuedas='';
+		$scope.acs_Reflejantes='';
+		$scope.acs_Extintor='';
+		$scope.acs_LlantaRefaccion='';
+		$scope.acs_CableCorriente='';
+		$scope.acs_PeliculaAntiasalto='';
+		$scope.acs_BirlosTuercas='';
+		$scope.acs_ProteccionEspejoLateral='';
+		$scope.acs_Gps='';
+		$scope.com_TaponAceite='';
+		$scope.com_TaponRadiador='';
+		$scope.com_VarillaAceite='';
+		$scope.com_Bateria='';
+		$scope.com_TaponMotor='';
+		$scope.doc_PolizaSeguro='';
+		$scope.doc_TarjetaCirculacion='';
+		$scope.doc_Engomado='';
+		$scope.doc_Verificacion='';
+		$scope.doc_ManualesUnidad='';
+		$scope.doc_PermisoProvisional='';
+		$scope.tab_Descripcion='';
+		$scope.tab_Odometro='';
+		$scope.ubi_Delantera='';
+		$scope.ubi_DelanteraDesc='';
+		$scope.ubi_Trasera='';
+		$scope.ubi_TraseraDesc='';
+		$scope.ubi_ParteDerecha='';
+		$scope.ubi_ParteDerechaDesc='';
+		$scope.ubi_ParteIzquierda='';
+		$scope.ubi_ParteIzquierdaDesc='';
+		$scope.ubi_Techo='';
+		$scope.ubi_TechoDesc='';
+	}   
+
+});

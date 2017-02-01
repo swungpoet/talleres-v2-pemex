@@ -24,20 +24,19 @@
                             </address-->
                             <h4>Unidad:</h4>
                             <address>
-                                <strong>{{unidadInfo.marca}} - {{unidadInfo.modelo}}</strong><br>
-                                No. Económico: {{unidadInfo.clienteNumEconomico}}<br>
-                                No. Inventario: {{unidadInfo.clienteNumInventario}}<br>
-                                No. TAR: {{unidadInfo.numTAR}}<br>
-                                TAR:  {{unidadInfo.TAR}}<br>
-                                GAR:  {{unidadInfo.GAR[0]}}
+                                <strong>{{infoCita.marca}} - {{infoCita.modelo}}</strong><br>
+                                No. Económico: {{infoCita.clienteNumEconomico}}<br>
+                                No. Inventario: {{infoCita.clienteNumInventario}}<br>
+                                No. TAR: {{infoCita.numTAR}}<br>
+                                TAR:  {{infoCita.TAR}}<br>
+                                GAR:  {{infoCita.GAR}}
                             </address>
                         </div>
                         <div class="col-sm-6 text-right">
-                            <h4>Orden de Servicio No.</h4>
-                            <h4 class="text-navy">{{idTrabajoOrden.numeroTrabajo}}</h4>
+                            <h4 class="text-navy">{{infoCita.numeroTrabajo}}</h4>
                             <h4>Taller: </h4>
                             <address>
-                               {{unidadInfo.razonSocial}}
+                               {{infoCita.razonSocial}}
                                <br>
                            </address>
                            
@@ -59,29 +58,29 @@
                                 <tr>
                                     <td>Claxon</td>
                                     <td>
-                                        <div class="input-group m-b">
+                                        <div class="input-group m-b center">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_Claxon1" value="1" name="ext_Claxon" checked="" ng-model="ext_Claxon">
+                                                <label for="ext_Claxon1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_Claxon2" value="0" name="ext_Claxon" ng-model="ext_Claxon">
+                                                <label for="ext_Claxon2"> No </label>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Tapon Gazolina</td>
+                                    <td>Tapón Gasolina</td>
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_TaponGasolina1" value="1" name="ext_TaponGasolina" checked="" ng-model="ext_TaponGasolina">
+                                                <label for="ext_TaponGasolina1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_TaponGasolina2" value="0" name="ext_TaponGasolina" ng-model="ext_TaponGasolina">
+                                                <label for="ext_TaponGasolina2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -91,12 +90,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_TaponLlantas1" value="1" name="ext_TaponLlantas" checked="" ng-model="ext_TaponLlantas">
+                                                <label for="ext_TaponLlantas1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_TaponLlantas2" value="0" name="ext_TaponLlantas" ng-model="ext_TaponLlantas">
+                                                <label for="ext_TaponLlantas2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -106,12 +105,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_FarosDelanteros1" value="1" name="ext_FarosDelanteros" checked="" ng-model="ext_FarosDelanteros">
+                                                <label for="ext_FarosDelanteros1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_FarosDelanteros2" value="0" name="ext_FarosDelanteros" ng-model="ext_FarosDelanteros">
+                                                <label for="ext_FarosDelanteros2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -121,12 +120,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_Antena1" value="1" name="ext_Antena" checked="" ng-model="ext_Antena">
+                                                <label for="ext_Antena1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_Antena2" value="0" name="ext_Antena" ng-model="ext_Antena">
+                                                <label for="ext_Antena2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -136,12 +135,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_Emblemas1" value="1" name="ext_Emblemas" checked="" ng-model="ext_Emblemas">
+                                                <label for="ext_Emblemas1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_Emblemas2" value="0" name="ext_Emblemas" ng-model="ext_Emblemas">
+                                                <label for="ext_Emblemas2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -151,12 +150,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="ext_Cristales1" value="1" name="ext_Cristales" checked="" ng-model="ext_Cristales">
+                                                <label for="ext_Cristales1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="ext_Cristales2" value="0" name="ext_Cristales" ng-model="ext_Cristales">
+                                                <label for="ext_Cristales2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -180,12 +179,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_EspejoRetrovisor1" value="1" name="int_EspejoRetrovisor" checked="" ng-model="int_EspejoRetrovisor">
+                                                <label for="int_EspejoRetrovisor1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_EspejoRetrovisor2" value="0" name="int_EspejoRetrovisor" ng-model="int_EspejoRetrovisor">
+                                                <label for="int_EspejoRetrovisor2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -195,12 +194,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Radio1" value="1" name="int_Radio" checked="" ng-model="int_Radio1">
+                                                <label for="int_Radio"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Radio2" value="0" name="int_Radio" ng-model="int_Radio">
+                                                <label for="int_Radio2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -210,12 +209,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_CinturonSeguridad1" value="1" name="int_CinturonSeguridad" checked="" ng-model="int_CinturonSeguridad">
+                                                <label for="int_CinturonSeguridad1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_CinturonSeguridad2" value="0" name="int_CinturonSeguridad" ng-model="int_CinturonSeguridad">
+                                                <label for="int_CinturonSeguridad2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -225,12 +224,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_ManijasSeguros1" value="1" name="int_ManijasSeguros" checked="" ng-model="int_ManijasSeguros">
+                                                <label for="int_ManijasSeguros1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_ManijasSeguros2" value="0" name="int_ManijasSeguros" ng-model="int_ManijasSeguros">
+                                                <label for="int_ManijasSeguros2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -240,12 +239,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Encendedor1" value="1" name="int_Encendedor" checked="" ng-model="int_Encendedor">
+                                                <label for="int_Encendedor1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Encendedor2" value="0" name="int_Encendedor" ng-model="int_Encendedor">
+                                                <label for="int_Encendedor2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -255,12 +254,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Cenicero1" value="1" name="int_Cenicero" checked="" ng-model="int_Cenicero">
+                                                <label for="int_Cenicero1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Cenicero2" value="0" name="int_Cenicero" ng-model="int_Cenicero">
+                                                <label for="int_Cenicero2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -270,12 +269,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Tapetes1" value="1" name="int_Tapetes" checked="" ng-model="int_Tapetes">
+                                                <label for="int_Tapetes1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Tapetes2" value="0" name="int_Tapetes" ng-model="int_Tapetes">
+                                                <label for="int_Tapetes2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -285,12 +284,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Ac1" value="1" name="int_Ac" checked="" ng-model="int_Ac">
+                                                <label for="int_Ac1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Ac2" value="0" name="int_Ac" ng-model="int_Ac">
+                                                <label for="int_Ac2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -300,12 +299,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Lector1" value="1" name="int_Lector" checked="" ng-model="int_Lector">
+                                                <label for="int_Lector1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Lector2" value="0" name="int_Lector" ng-model="int_Lector">
+                                                <label for="int_Lector2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -315,12 +314,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_BolsaAireDelantera1" value="1" name="int_BolsaAireDelantera" checked="" ng-model="int_BolsaAireDelantera">
+                                                <label for="int_BolsaAireDelantera1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_BolsaAireDelantera2" value="0" name="int_BolsaAireDelantera" ng-model="int_BolsaAireDelantera">
+                                                <label for="int_BolsaAireDelantera2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -330,12 +329,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_BolsaAireLateral1" value="1" name="int_BolsaAireLateral" checked="" ng-model="int_BolsaAireLateral">
+                                                <label for="int_BolsaAireLateral1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_BolsaAireLateral2" value="0" name="int_BolsaAireLateral" ng-model="int_BolsaAireLateral">
+                                                <label for="int_BolsaAireLateral2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -345,12 +344,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_Usb1" value="1" name="int_Usb" checked="" ng-model="int_Usb">
+                                                <label for="int_Usb1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_Usb2" value="0" name="int_Usb" ng-model="int_Usb">
+                                                <label for="int_Usb2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -360,12 +359,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="int_LlavesUnidad1" value="1" name="int_LlavesUnidad" checked="" ng-model="int_LlavesUnidad">
+                                                <label for="int_LlavesUnidad1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="int_LlavesUnidad2" value="0" name="int_LlavesUnidad" ng-model="int_LlavesUnidad">
+                                                <label for="int_LlavesUnidad2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -390,12 +389,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_Gato1" value="1" name="acs_Gato" checked="" ng-model="acs_Gato">
+                                                <label for="acs_Gato1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_Gato2" value="0" name="acs_Gato" ng-model="acs_Gato">
+                                                <label for="acs_Gato2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -405,12 +404,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_ManeralGato1" value="1" name="acs_ManeralGato" checked="" ng-model="acs_ManeralGato">
+                                                <label for="acs_ManeralGato1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_ManeralGato2" value="0" name="acs_ManeralGato" ng-model="acs_ManeralGato">
+                                                <label for="acs_ManeralGato2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -420,12 +419,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_LlaveRuedas1" value="1" name="acs_LlaveRuedas" checked="" ng-model="acs_LlaveRuedas">
+                                                <label for="acs_LlaveRuedas1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_LlaveRuedas2" value="0" name="acs_LlaveRuedas" ng-model="acs_LlaveRuedas">
+                                                <label for="acs_LlaveRuedas2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -435,12 +434,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_Reflejantes1" value="1" name="acs_Reflejantes" checked="" ng-model="acs_Reflejantes">
+                                                <label for="acs_Reflejantes1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_Reflejantes2" value="0" name="acs_Reflejantes" ng-model="acs_Reflejantes">
+                                                <label for="acs_Reflejantes2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -450,12 +449,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_Extintor1" value="1" name="acs_Extintor" checked="" ng-model="acs_Extintor">
+                                                <label for="acs_Extintor1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_Extintor2" value="0" name="acs_Extintor" ng-model="acs_Extintor">
+                                                <label for="acs_Extintor2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -465,12 +464,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_LlantaRefaccion1" value="1" name="acs_LlantaRefaccion" checked="" ng-model="acs_LlantaRefaccion">
+                                                <label for="acs_LlantaRefaccion1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_LlantaRefaccion2" value="0" name="acs_LlantaRefaccion" ng-model="acs_LlantaRefaccion">
+                                                <label for="acs_LlantaRefaccion2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -480,12 +479,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_CableCorriente1" value="1" name="acs_CableCorriente" checked="" ng-model="acs_CableCorriente">
+                                                <label for="acs_CableCorriente1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_CableCorriente2" value="0" name="acs_CableCorriente" ng-model="acs_CableCorriente">
+                                                <label for="acs_CableCorriente2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -495,12 +494,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_PeliculaAntiasalto1" value="1" name="acs_PeliculaAntiasalto" checked="" ng-model="acs_PeliculaAntiasalto">
+                                                <label for="acs_PeliculaAntiasalto1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_PeliculaAntiasalto2" value="0" name="acs_PeliculaAntiasalto" ng-model="acs_PeliculaAntiasalto">
+                                                <label for="acs_PeliculaAntiasalto2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -510,12 +509,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_BirlosTuercas1" value="1" name="acs_BirlosTuercas" checked="" ng-model="acs_BirlosTuercas">
+                                                <label for="acs_BirlosTuercas1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_BirlosTuercas2" value="0" name="acs_BirlosTuercas" ng-model="acs_BirlosTuercas">
+                                                <label for="acs_BirlosTuercas2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -525,12 +524,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_ProteccionEspejoLateral1" value="1" name="acs_ProteccionEspejoLateral" checked="" ng-model="acs_ProteccionEspejoLateral">
+                                                <label for="acs_ProteccionEspejoLateral1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_ProteccionEspejoLateral2" value="0" name="acs_ProteccionEspejoLateral" ng-model="acs_ProteccionEspejoLateral">
+                                                <label for="acs_ProteccionEspejoLateral2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -540,12 +539,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="acs_Gps1" value="1" name="acs_Gps" checked="" ng-model="acs_Gps">
+                                                <label for="acs_Gps1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="acs_Gps2" value="0" name="acs_Gps" ng-model="acs_Gps">
+                                                <label for="acs_Gps2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -571,12 +570,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="com_TaponAceite1" value="1" name="com_TaponAceite" checked="" ng-model="com_TaponAceite">
+                                                <label for="com_TaponAceite1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="com_TaponAceite2" value="0" name="com_TaponAceite" ng-model="com_TaponAceite">
+                                                <label for="com_TaponAceite2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -586,12 +585,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="com_TaponRadiador1" value="1" name="com_TaponRadiador" checked="" ng-model="com_TaponRadiador">
+                                                <label for="com_TaponRadiador1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="com_TaponRadiador2" value="0" name="com_TaponRadiador" ng-model="com_TaponRadiador">
+                                                <label for="com_TaponRadiador2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -601,12 +600,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="com_VarillaAceite1" value="1" name="com_VarillaAceite" checked="" ng-model="com_VarillaAceite">
+                                                <label for="com_VarillaAceite1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="com_VarillaAceite2" value="0" name="com_VarillaAceite" ng-model="com_VarillaAceite">
+                                                <label for="com_VarillaAceite2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -615,13 +614,13 @@
                                     <td>Batería</td>
                                     <td>
                                         <div class="input-group m-b">
-                                            <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                            <div class="radio radio-info radio-inline1">
+                                                <input type="radio" id="com_Bateria" value="1" name="com_Bateria" checked="" ng-model="com_Bateria">
+                                                <label for="com_Bateria1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="com_Bateria2" value="0" name="com_Bateria" ng-model="com_Bateria">
+                                                <label for="com_Bateria2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -631,12 +630,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="com_TaponMotor1" value="1" name="com_TaponMotor" checked="" ng-model="com_TaponMotor">
+                                                <label for="com_TaponMotor1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="com_TaponMotor2" value="0" name="com_TaponMotor" ng-model="com_TaponMotor">
+                                                <label for="com_TaponMotor2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -660,12 +659,27 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="doc_PolizaSeguro1" value="1" name="doc_PolizaSeguro" checked="" ng-model="doc_PolizaSeguro">
+                                                <label for="doc_PolizaSeguro1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="doc_PolizaSeguro2" value="0" name="doc_PolizaSeguro" ng-model="doc_PolizaSeguro">
+                                                <label for="doc_PolizaSeguro2"> No </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                  <tr>
+                                    <td>Tarjeta de Circulación </td>
+                                    <td>
+                                        <div class="input-group m-b">
+                                            <div class="radio radio-info radio-inline">
+                                                <input type="radio" id="doc_TarjetaCirculacion1" value="1" name="doc_TarjetaCirculacion" checked="" ng-model="doc_TarjetaCirculacion">
+                                                <label for="doc_TarjetaCirculacion1"> Si </label>
+                                            </div>
+                                            <div class="radio radio-inline">
+                                                <input type="radio" id="doc_TarjetaCirculacion2" value="0" name="doc_TarjetaCirculacion" ng-model="doc_TarjetaCirculacion">
+                                                <label for="doc_TarjetaCirculacion2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -675,12 +689,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="doc_Engomado1" value="1" name="doc_Engomado" checked="" ng-model="doc_Engomado">
+                                                <label for="doc_Engomado1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="doc_Engomado2" value="0" name="doc_Engomado" ng-model="doc_Engomado">
+                                                <label for="doc_Engomado2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -690,12 +704,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="doc_Verificacion1" value="1" name="doc_Verificacion" checked="" ng-model="doc_Verificacion">
+                                                <label for="doc_Verificacion1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="doc_Verificacion2" value="0" name="doc_Verificacion" ng-model="doc_Verificacion">
+                                                <label for="doc_Verificacion2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -705,12 +719,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="doc_ManualesUnidad1" value="1" name="doc_ManualesUnidad" checked="" ng-model="doc_ManualesUnidad">
+                                                <label for="doc_ManualesUnidad1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="doc_ManualesUnidad2" value="0" name="doc_ManualesUnidad" ng-model="doc_ManualesUnidad">
+                                                <label for="doc_ManualesUnidad2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -720,12 +734,12 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="inlineRadio1" value="1" name="radioInline" checked="" ng-model="requiereGrua">
-                                                <label for="inlineRadio1"> Si </label>
+                                                <input type="radio" id="doc_PermisoProvisional1" value="1" name="doc_PermisoProvisional" checked="" ng-model="doc_PermisoProvisional">
+                                                <label for="doc_PermisoProvisional1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="inlineRadio2" value="0" name="radioInline" ng-model="requiereGrua">
-                                                <label for="inlineRadio2"> No </label>
+                                                <input type="radio" id="doc_PermisoProvisional2" value="0" name="doc_PermisoProvisional" ng-model="doc_PermisoProvisional">
+                                                <label for="doc_PermisoProvisional2"> No </label>
                                             </div>
                                         </div>
                                     </td>
@@ -745,8 +759,8 @@
                                 <div class="col-md-4">
                                     <img  src="image/comprobanteRecepcion/MEDIDOR.jpg"></img>
                                  </div>   
-                                <div class="col-md-4">
-                                    <select class="form-control" name="clasificacionCita" ng-model="clasificacionCita">
+                                <div class="col-md-5">
+                                    <select class="form-control" name="tab_Descripcion" ng-model="tab_Descripcion">
                                         <option value="">Seleccione Combustible</option>
                                         <option value="Lleno">Lleno</option>
                                         <option value="Tres Cuartos">Tres Cuartos</option>
@@ -761,7 +775,7 @@
                                     <img  src="image/comprobanteRecepcion/ODOMETRO.jpg"></img>
                                 </div>
                                 <div class="col-md-3">
-                                  <input type="text" placeholder="Kilometraje" ng-model="numeroTrabajo" class="form-control">  
+                                  <input type="text" placeholder="Kilometraje" ng-model="tab_Odometro" class="form-control">  
                                 </div>
                                 
                             </div>
@@ -777,28 +791,33 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <img  src="image/comprobanteRecepcion/PIPA-DER.png"></img>
-                                <input type="checkbox" id="acepta" value="0" name="acepta" ng-model="acepta">
-                                <textarea class="descTxt" placeholder="Descripción Lateral Derecha" ></textarea>
+                                <input type="checkbox" id="ubi_ParteDerecha" value="0" name="ubi_ParteDerecha" ng-model="ubi_ParteDerecha">
+                                <textarea class="descTxt" placeholder="Descripción Lateral Derecha" ng-model="ubi_ParteDerechaDesc" ></textarea>
                             </div>
                         </div>
                         <div class="row col-md-12 center">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <img  src="image/comprobanteRecepcion/PIPA-FRENTE.png"></img>
-                                <input type="checkbox" id="acepta" value="0" name="acepta" ng-model="acepta">
-                                <textarea class="descTxt" placeholder="Descripción Frontal" ></textarea>
+                                <input type="checkbox" id="ubi_Delantera" value="0" name="ubi_Delantera" ng-model="ubi_Delantera">
+                                <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_DelanteraDesc"></textarea>
                             </div>
-                             <div class="col-md-6">
+                            <div class="col-md-6" id="pipa-arriba">
+                                <img  src="image/comprobanteRecepcion/PIPA-ARRIBA.png"></img>
+                                <input type="checkbox" id="ubi_Techo" value="0" name="ubi_Techo" ng-model="ubi_Techo">
+                                <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_TechoDesc"></textarea>
+                            </div>
+                            <div class="col-md-3">
                                 <img  src="image/comprobanteRecepcion/PIPA-TRAS.png"></img>
-                                <input type="checkbox" id="acepta" value="0" name="acepta" ng-model="acepta">
-                                <textarea class="descTxt" placeholder="Descripción Trasera" ></textarea>
+                                <input type="checkbox" id="ubi_Trasera" value="0" name="ubi_Trasera" ng-model="ubi_Trasera">
+                                <textarea class="descTxt" placeholder="Descripción Trasera" ng-model="ubi_TraseraDesc"></textarea>
                             </div>
                         </div>
                         <div class="row col-md-12 center">
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <img src="image/comprobanteRecepcion/PIPA-IZQ.png"></img>
-                                <input type="checkbox" id="acepta" value="0" name="acepta" ng-model="acepta">
-                                <textarea class="descTxt" placeholder="Descripción Lateral Izquierda" ></textarea>
+                                <input type="checkbox" id="ubi_ParteIzquierda" value="0" name="ubi_ParteIzquierda" ng-model="ubi_ParteIzquierda">
+                                <textarea class="descTxt" placeholder="Descripción Lateral Izquierda" ng-model="ubi_ParteIzquierdaDesc"></textarea>
                             </div>
                         </div>
                     </tab>
