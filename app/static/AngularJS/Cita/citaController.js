@@ -599,10 +599,12 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
 
     //Modal Adjuntar Formato
     $scope.formatoRecepcion = function (cita) {
+        debugger;
         $scope.idTrabajoUpl = cita.idTrabajo;
         $scope.idCitaUpld = cita.idCita;
         $scope.idUnidadUpl = cita.idUnidad;
-        $('#evidencia').appendTo('body').modal('show');
+        location.href = '/comprobanteRecepcion?state=1';
+       // $('#evidencia').appendTo('body').modal('show');
     }
 
     //obtiene el tipo de cita
