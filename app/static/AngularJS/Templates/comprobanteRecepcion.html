@@ -16,12 +16,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-sm-6">
-                            <!--span>Cliente:</span>
-                            <address>
-                                <strong>{{ClienteData.nombre}}</strong><br>
-                                {{ClienteData.direccion}}<br>
-                                <abbr title="Phone">Tel:</abbr>{{ClienteData.telefono}}<br>
-                            </address-->
                             <h4>Unidad:</h4>
                             <address>
                                 <strong>{{infoCita.marca}} - {{infoCita.modelo}}</strong><br>
@@ -47,8 +41,27 @@
         <div class="row">
             <div class="col-lg-12">
                 <tabset>
-                    <tab heading="Exteriores" index="0">
-                         <div class="space"></div>
+                    <tab heading="Exteriores" index="0" ng-click="menu(0)">
+                    </tab>
+                    <tab heading="Interiores" index="1" ng-click="menu(1)">
+                    </tab>
+                    <tab heading="Accesorios" index="2" ng-click="menu(2)">
+                    </tab>
+                    <tab heading="Componentes Mecanicos" index="3" ng-click="menu(3)">
+                    </tab>
+                    <tab heading="Documentos" index="4" ng-click="menu(4)">
+                    </tab>
+                    <tab heading="Tablero" index="5" ng-click="menu(5)">
+                    </tab>
+                    <tab heading="Unidad" index="6" ng-click="menu(6)">
+                    </tab>
+                </tabset>    
+
+
+
+                    <div ng-show="show_exteriores">
+
+                        <div class="space"></div>
                         <div class="space"></div>
                         <div class="row col-md-3">
                         </div>
@@ -60,7 +73,7 @@
                                     <td>
                                         <div class="input-group m-b center">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="ext_Claxon1" value="1" name="ext_Claxon" checked="" ng-model="ext_Claxon">
+                                                <input type="radio" id="ext_Claxon1" value="1" name="ext_Claxon"  ng-model="ext_Claxon">
                                                 <label for="ext_Claxon1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
@@ -165,8 +178,8 @@
                         </table>
                             
                         </div>
-                    </tab>
-                    <tab heading="Interiores" index="1">
+                    </div>
+                    <div ng-show="show_interiores">
                         <div class="space"></div>
                         <div class="space"></div>
                         <div class="row col-md-3">
@@ -194,7 +207,7 @@
                                     <td>
                                         <div class="input-group m-b">
                                             <div class="radio radio-info radio-inline">
-                                                <input type="radio" id="int_Radio1" value="1" name="int_Radio" checked="" ng-model="int_Radio1">
+                                                <input type="radio" id="int_Radio1" value="1" name="int_Radio" checked="" ng-model="int_Radio">
                                                 <label for="int_Radio"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
@@ -374,9 +387,8 @@
                         </table>
                             
                         </div>
-                    </tab>
-
-                    <tab heading="Accesorios" index="2">
+                    </div>
+                    <div ng-show="show_accesorios">
 
                         <div class="space"></div>
                         <div class="space"></div>
@@ -555,10 +567,10 @@
                             
                         </div>
 
-                        
-                    </tab>
-                    <tab heading="Componentes Mecanicos" index="3">
-                         <div class="space"></div>
+                    </div>
+                    <div ng-show="show_componentes">    
+                    
+                        <div class="space"></div>
                         <div class="space"></div>
                         <div class="row col-md-3">
                         </div>
@@ -614,8 +626,8 @@
                                     <td>Batería</td>
                                     <td>
                                         <div class="input-group m-b">
-                                            <div class="radio radio-info radio-inline1">
-                                                <input type="radio" id="com_Bateria" value="1" name="com_Bateria" checked="" ng-model="com_Bateria">
+                                            <div class="radio radio-info radio-inline">
+                                                <input type="radio" id="com_Bateria1" value="1" name="com_Bateria" checked="" ng-model="com_Bateria">
                                                 <label for="com_Bateria1"> Si </label>
                                             </div>
                                             <div class="radio radio-inline">
@@ -645,9 +657,10 @@
                         </table>
                             
                         </div>
-                    </tab>
-                    <tab heading="Documentos" index="4">
-                         <div class="space"></div>
+                    </div>
+                    <div ng-show="show_documentos">
+                    
+                        <div class="space"></div>
                         <div class="space"></div>
                         <div class="row col-md-3">
                         </div>
@@ -749,8 +762,8 @@
                         </table>
                             
                         </div>
-                    </tab>
-                    <tab heading="Tablero" index="5">
+                    </div>
+                    <div ng-show="show_tablero">
 
                         <div class="space"></div>
                         <div class="space"></div>
@@ -782,8 +795,9 @@
                         </div>
                         <div class="row space"></div>
                         <div class="row space"></div>
-                    </tab>
-                    <tab heading="Unidad" index="6">
+                    
+                    </div>
+                    <div ng-show="show_unidad">
 
                         <div class="space"></div>
                         <div class="space"></div>
@@ -792,24 +806,24 @@
                             <div class="col-md-6">
                                 <img  src="image/comprobanteRecepcion/PIPA-DER.png"></img>
                                 <input type="checkbox" id="ubi_ParteDerecha" value="0" name="ubi_ParteDerecha" ng-model="ubi_ParteDerecha">
-                                <textarea class="descTxt" placeholder="Descripción Lateral Derecha" ng-model="ubi_ParteDerechaDesc" ></textarea>
+                                <textarea class="descTxt" placeholder="Descripción Lateral Derecha" ng-model="ubi_ParteDerechaDesc" ng-disabled="ubi_ParteDerecha==false"></textarea>
                             </div>
                         </div>
                         <div class="row col-md-12 center">
                             <div class="col-md-3">
                                 <img  src="image/comprobanteRecepcion/PIPA-FRENTE.png"></img>
                                 <input type="checkbox" id="ubi_Delantera" value="0" name="ubi_Delantera" ng-model="ubi_Delantera">
-                                <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_DelanteraDesc"></textarea>
+                                <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_DelanteraDesc" ng-disabled="ubi_Delantera==false"></textarea>
                             </div>
                             <div class="col-md-6" id="pipa-arriba">
                                 <img  src="image/comprobanteRecepcion/PIPA-ARRIBA.png"></img>
                                 <input type="checkbox" id="ubi_Techo" value="0" name="ubi_Techo" ng-model="ubi_Techo">
-                                <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_TechoDesc"></textarea>
+                                <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_TechoDesc" ng-disabled="ubi_Techo==false"></textarea>
                             </div>
                             <div class="col-md-3">
                                 <img  src="image/comprobanteRecepcion/PIPA-TRAS.png"></img>
                                 <input type="checkbox" id="ubi_Trasera" value="0" name="ubi_Trasera" ng-model="ubi_Trasera">
-                                <textarea class="descTxt" placeholder="Descripción Trasera" ng-model="ubi_TraseraDesc"></textarea>
+                                <textarea class="descTxt" placeholder="Descripción Trasera" ng-model="ubi_TraseraDesc" ng-disabled="ubi_Trasera==false"></textarea>
                             </div>
                         </div>
                         <div class="row col-md-12 center">
@@ -817,15 +831,15 @@
                             <div class="col-md-6">
                                 <img src="image/comprobanteRecepcion/PIPA-IZQ.png"></img>
                                 <input type="checkbox" id="ubi_ParteIzquierda" value="0" name="ubi_ParteIzquierda" ng-model="ubi_ParteIzquierda">
-                                <textarea class="descTxt" placeholder="Descripción Lateral Izquierda" ng-model="ubi_ParteIzquierdaDesc"></textarea>
+                                <textarea class="descTxt" placeholder="Descripción Lateral Izquierda" ng-model="ubi_ParteIzquierdaDesc" ng-disabled="ubi_ParteIzquierda==false"></textarea>
                             </div>
                         </div>
-                    </tab>
-                </tabset>
+            
             </div>
+            <div class="space"></div>
+            <div class="space"></div>
 
-            <div class="space"></div>
-            <div class="space"></div>
+
 
             <div class="row col-md-12 ">
                 <div class="radio radio-inline col-md-6">
@@ -837,12 +851,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="pull-right">
-                       <button type="button" class="btn btn-success" id="btnLigar"><strong> Aceptar</strong></button> 
+                       <button type="button" class="btn btn-success" id="aprobacion" ng-model="aprobacion" ng-click="addComprobanteRecepcion()" ng-disabled="validateAprobacion()==false"><strong> Aceptar</strong></button> 
                     </div>
                 </div>
                 
             </div>
-        </div>
+            
+            </div>
     </div>                
       
           

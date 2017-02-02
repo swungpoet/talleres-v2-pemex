@@ -272,6 +272,16 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        addComprobanteRecepcion: function (item) {
+            return $http({
+                url: citaUrl + 'addcomprobanterecepcion/',
+                method: "POST",
+                data: item,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });
