@@ -243,6 +243,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
     //    Manda a Generar el PDF con Grafica ultima version (18/nov/2016)
     //////////////////////////////////////////////////////////////////////////////////////////////////
     $scope.generarPdfdata = function () {
+       
         citaRepository.getGeneraPdf($scope.infoCita.idCita).then(function (result) {
            
             if (result.data.length>0) {
