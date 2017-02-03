@@ -804,24 +804,24 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <img  src="image/comprobanteRecepcion/PIPA-DER.png"></img>
-                                <input type="checkbox" id="ubi_ParteDerecha" value="0" name="ubi_ParteDerecha" ng-model="ubi_ParteDerecha">
+                                <input type="checkbox" id="ubi_ParteDerecha" value="0" name="ubi_ParteDerecha" ng-model="ubi_ParteDerecha" ng-change="changeDesc('derecha', ubi_ParteDerecha)">
                                 <textarea class="descTxt" placeholder="Descripción Lateral Derecha" ng-model="ubi_ParteDerechaDesc" ng-disabled="ubi_ParteDerecha==false"></textarea>
                             </div>
                         </div>
                         <div class="row col-md-12 center">
                             <div class="col-md-3">
                                 <img  src="image/comprobanteRecepcion/PIPA-FRENTE.png"></img>
-                                <input type="checkbox" id="ubi_Delantera" value="0" name="ubi_Delantera" ng-model="ubi_Delantera">
+                                <input type="checkbox" id="ubi_Delantera" value="0" name="ubi_Delantera" ng-model="ubi_Delantera" ng-change="changeDesc('delantera', ubi_Delantera)">
                                 <textarea class="descTxt" placeholder="Descripción Frontal" ng-model="ubi_DelanteraDesc" ng-disabled="ubi_Delantera==false"></textarea>
                             </div>
                             <div class="col-md-6" id="pipa-arriba">
                                 <img  src="image/comprobanteRecepcion/PIPA-ARRIBA.png"></img>
-                                <input type="checkbox" id="ubi_Techo" value="0" name="ubi_Techo" ng-model="ubi_Techo">
+                                <input type="checkbox" id="ubi_Techo" value="0" name="ubi_Techo" ng-model="ubi_Techo" ng-change="changeDesc('techo', ubi_Techo)">
                                 <textarea class="descTxt" placeholder="Descripción de la Parte Superior" ng-model="ubi_TechoDesc" ng-disabled="ubi_Techo==false"></textarea>
                             </div>
                             <div class="col-md-3">
                                 <img  src="image/comprobanteRecepcion/PIPA-TRAS.png"></img>
-                                <input type="checkbox" id="ubi_Trasera" value="0" name="ubi_Trasera" ng-model="ubi_Trasera">
+                                <input type="checkbox" id="ubi_Trasera" value="0" name="ubi_Trasera" ng-model="ubi_Trasera" ng-change="changeDesc('trasera', ubi_Trasera)">
                                 <textarea class="descTxt" placeholder="Descripción Trasera" ng-model="ubi_TraseraDesc" ng-disabled="ubi_Trasera==false"></textarea>
                             </div>
                         </div>
@@ -829,7 +829,7 @@
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
                                 <img src="image/comprobanteRecepcion/PIPA-IZQ.png"></img>
-                                <input type="checkbox" id="ubi_ParteIzquierda" value="0" name="ubi_ParteIzquierda" ng-model="ubi_ParteIzquierda">
+                                <input type="checkbox" id="ubi_ParteIzquierda" value="0" name="ubi_ParteIzquierda" ng-model="ubi_ParteIzquierda" ng-change="changeDesc('izquierda', ubi_ParteIzquierda)">
                                 <textarea class="descTxt" placeholder="Descripción Lateral Izquierda" ng-model="ubi_ParteIzquierdaDesc" ng-disabled="ubi_ParteIzquierda==false"></textarea>
                             </div>
                         </div>

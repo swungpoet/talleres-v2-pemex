@@ -62,13 +62,43 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
         }  
 	}
 
+	$scope.changeDesc = function (data, esttus) {
+
+		if (!esttus) {
+			switch(data) {
+              case 'delantera':
+                $scope.ubi_DelanteraDesc='';
+              break;
+
+              case 'tracera':
+                $scope.ubi_TraseraDesc='';
+              break;
+
+              case 'derecha':
+                $scope.ubi_ParteDerechaDesc='';
+              break;
+
+              case 'izquierda':
+                $scope.ubi_ParteIzquierdaDesc='';
+              break;   
+
+              case 'techo':
+                $scope.ubi_TechoDesc='';
+              break;
+	        }  
+		}
+		
+	
+	}
+
 
 	$scope.addComprobanteRecepcion = function () {
-	$scope.class_buttonCeritficado = 'fa fa-spinner fa-spin';
+	
 		var data = {};
 		if (!$scope.acepta) {
 			alertFactory.info("Debe Aceptar las Condiciones.");
 		}else{
+			$scope.class_buttonCeritficado = 'fa fa-spinner fa-spin';
 			data.ext_Claxon=$scope.ext_Claxon;
 			data.ext_TaponGasolina=$scope.ext_TaponGasolina;
 			data.ext_TaponLlantas=$scope.ext_TaponLlantas;
