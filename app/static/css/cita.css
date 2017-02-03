@@ -11,3 +11,8 @@
 #pipa-arriba{
     padding-top: 50px;
 }
+
+#comprobanteRecepcion input[type=checkbox]{
+	width: 5%;
+    height: 2em;
+}

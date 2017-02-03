@@ -16,6 +16,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 		$scope.ubi_ParteIzquierda=false;
 		$scope.ubi_Techo=false;
 		
+		
 	}  
 
 	$scope.menu = function(data){
@@ -155,7 +156,8 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 				
 	            if (rest.data[0].id > 0) {
 	                alertFactory.success("Se insertó correctamente");
-	                location.href = '/tallercita';
+	                $scope.updateEstatusTrabajo();
+	                //location.href = '/tallercita';
 	            }else{
 	            	 alertFactory.error("Error al insertar datos");
 	            }
@@ -166,6 +168,22 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 	    }    
 	}
 
+	 //comprobante recepción cargada
+    $scope.updateEstatusTrabajo = function () {
+        trabajoRepository.insertTrabajo($scope.infoCita.idCita, $scope.userData.idUsuario, $scope.infoCita.idUnidad)
+            .then(function (trabajo) {
+                $scope.idTrabajoNew = trabajo.data[0].idTrabajo;
+                if ($scope.idTrabajoNew != null) {
+                    $scope.dzMethods.processQueue();
+                }
+
+                $scope.generarPdfdata();
+            }, function (error) {
+                alertFactory.error("Error al insertar el trabajo");
+            });
+    }
+
+     $scope.dzMethods = {};
 
 	$scope.validateAprobacion = function(){
 		
@@ -219,6 +237,129 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 			return false;
 		}	
 	}
+
+
+	    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //    Manda a Generar el PDF con Grafica ultima version (18/nov/2016)
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    $scope.generarPdfdata = function () {
+        citaRepository.getGeneraPdf($scope.infoCita.idCita).then(function (result) {
+           
+            if (result.data.length>0) {
+            	var data = {
+					"DatosUnidad": 
+					    {
+					        "ext_Claxon":result.data[0].ext_Claxon,
+					        "ext_TaponGasolina":result.data[0].ext_TaponGasolina,
+					        "ext_TaponLlantas":result.data[0].ext_TaponLlantas,
+					        "ext_FarosDelanteros":result.data[0].ext_FarosDelanteros,
+					        "ext_Antena":result.data[0].ext_Antena,
+					        "ext_Emblemas":result.data[0].ext_Emblemas,
+					        "ext_Cristales":result.data[0].ext_Cristales,
+					        "int_EspejoRetrovisor":result.data[0].int_EspejoRetrovisor,
+					        "int_Radio":result.data[0].int_Radio,
+					        "int_CinturonSeguridad":result.data[0].int_CinturonSeguridad,
+					        "int_ManijasSeguros":result.data[0].int_ManijasSeguros,
+					        "int_Encendedor":result.data[0].int_Encendedor,
+					        "int_Cenicero":result.data[0].int_Cenicero,
+					        "int_Tapetes":result.data[0].int_Tapetes,
+					        "int_Ac":result.data[0].int_Ac,
+					        "int_Lector":result.data[0].int_Lector,
+					        "int_BolsaAireDelantera":result.data[0].int_BolsaAireDelantera,
+					        "int_BolsaAireLateral":result.data[0].int_BolsaAireLateral,
+					        "int_Usb":result.data[0].int_Usb,
+					        "int_LlavesUnidad":result.data[0].int_LlavesUnidad,
+					        "acs_Gato":result.data[0].acs_Gato,
+					        "acs_ManeralGato":result.data[0].acs_ManeralGato,
+					        "acs_LlaveRuedas":result.data[0].acs_LlaveRuedas,
+					        "acs_Reflejantes":result.data[0].acs_Reflejantes,
+					        "acs_Extintor":result.data[0].acs_Extintor,
+					        "acs_LlantaRefaccion":result.data[0].acs_LlantaRefaccion,
+					        "acs_CableCorriente":result.data[0].acs_CableCorriente,
+					        "acs_PeliculaAntiasalto":result.data[0].acs_PeliculaAntiasalto,
+					        "acs_BirlosTuercas":result.data[0].acs_BirlosTuercas,
+					        "acs_ProteccionEspejoLateral":result.data[0].acs_ProteccionEspejoLateral,
+					        "acs_Gps":result.data[0].acs_Gps,
+					        "com_TaponAceite":result.data[0].com_TaponAceite,
+					        "com_TaponRadiador":result.data[0].com_TaponRadiador,
+					        "com_VarillaAceite":result.data[0].com_VarillaAceite,
+					        "com_Bateria":result.data[0].com_Bateria,
+					        "com_TaponMotor":result.data[0].com_TaponMotor,
+					        "doc_PolizaSeguro":result.data[0].doc_PolizaSeguro,
+					        "doc_TarjetaCirculacion":result.data[0].doc_TarjetaCirculacion,
+					        "doc_Engomado":result.data[0].doc_Engomado,
+					        "doc_Verificacion":result.data[0].doc_Verificacion,
+					        "doc_ManualesUnidad":result.data[0].doc_ManualesUnidad,
+					        "doc_PermisoProvisional":result.data[0].doc_PermisoProvisional,
+					        "ubi_Delantera":result.data[0].ubi_Delantera,
+					        "ubi_DelanteraDesc":result.data[0].ubi_DelanteraDesc,
+					        "ubi_Trasera":result.data[0].ubi_Trasera,
+					        "ubi_TraseraDesc":result.data[0].ubi_TraseraDesc,
+					        "ubi_ParteDerecha":result.data[0].ubi_ParteDerecha,
+					        "ubi_ParteDerechaDesc":result.data[0].ubi_ParteDerechaDesc,
+					        "ubi_ParteIzquierda":result.data[0].ubi_ParteIzquierda,
+					        "ubi_ParteIzquierdaDesc":result.data[0].ubi_ParteIzquierdaDesc,
+					        "ubi_Techo":result.data[0].ubi_Techo,
+					        "ubi_TechoDesc":result.data[0].ubi_TechoDesc,
+					        "tab_Descripcion":result.data[0].tab_Descripcion,
+					        "tab_Odometro":result.data[0].tab_Odometro,
+					        "aprobacion":result.data[0].aprobacion,
+					        "fecha":result.data[0].fecha,
+					        "idTrabajo":result.data[0].idTrabajo
+					    },
+					"Taller":
+					       {
+					       	"idTaller":result.data[0].idTaller,
+					        "GAR":result.data[0].GAR,
+					        "TAD":result.data[0].TAR,
+					        "ciudad":result.data[0].ciudad,
+					        "razonSocial":result.data[0].razonSocial,
+					        "idTAR":result.data[0].idTAR,
+					        "idProveedor":result.data[0].idTaller,
+					       },
+					"unidad":
+					       {
+					       "idUnidad":result.data[0].idUnidad,
+					       "idLicitacion":result.data[0].idLicitacion,
+					       "numEconomico":result.data[0].numEconomico,
+					       "modelo":result.data[0].modelo,
+					       "clienteNumInventario":result.data[0].clienteNumInventario,
+					       "numTAR":result.data[0].numTAR,
+					       "TAR":result.data[0].TAR,
+					       "GAR":result.data[0].GAR,
+					       "ubicacion":result.data[0].ubicacion,
+					       "oper_pdes":result.data[0].oper_pdes,
+					       "marca":result.data[0].marca,
+					       "modeloMarca":result.data[0].modeloMarca,
+					       "motor":result.data[0].motor,
+					       "capacidadLts":result.data[0].capacidadLts,
+					       "idTar":result.data[0].idTar
+					       }
+					}	
+				}	
+   
+        var jsonData = {
+            "template": {
+                "name": "talleresUnidad_rpt" 
+            },
+            "data": data
+        }
+            /*
+            var resdata = JSON.stringify(rptStructure);
+            console.log(resdata);
+            */
+           /* contratoDetalleRepository.callExternalPdf(jsonData).then(function (fileName) {
+                setTimeout(function () {
+                    window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
+                    //location.href = '/tallercita';
+                    console.log(fileName.data);
+                    $('#loadModal').modal('hide');
+                }, 5000);
+            });*/
+        }, function (error) {
+	        alertFactory.error("Error al insertar datos");
+	    });
+    }
 
 
 

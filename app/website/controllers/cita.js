@@ -959,5 +959,29 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
     });
 }
 
+//Devuelve la inforción para PDF Comprobante de Recepción
+Cita.prototype.get_generapdf = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Asigno a params el valor de mis variables    
+    var params = [
+        {
+            name: 'idCita',
+            value: req.query.idCita,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_COMPROBANTE_RECEPCION_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 
 module.exports = Cita;

@@ -282,6 +282,18 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getGeneraPdf: function (idCita) {
+            return $http({
+                url: citaUrl + 'generapdf',
+                method: "GET",
+                params: {
+                    idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

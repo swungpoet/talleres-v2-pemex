@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="../../css/cita.css">
-<div ng-init="init()" class="animated bounceInRight">
+<div ng-init="init()" class="animated bounceInRight" id="comprobanteRecepcion">
     <div class="row headTitleTallerCita">
         <div class="col-lg-10">
             <span class="title"> Comprobante de Recepción</span>
@@ -16,19 +16,18 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-sm-6">
-                            <h4>Unidad:</h4>
+                            <strong>Unidad:</strong>
                             <address>
                                 <strong>{{infoCita.marca}} - {{infoCita.modelo}}</strong><br>
-                                No. Económico: {{infoCita.clienteNumEconomico}}<br>
-                                No. Inventario: {{infoCita.clienteNumInventario}}<br>
-                                No. TAR: {{infoCita.numTAR}}<br>
-                                TAR:  {{infoCita.TAR}}<br>
-                                GAR:  {{infoCita.GAR}}
+                                <strong>No. Económico: </strong>{{infoCita.clienteNumEconomico}}<br>
+                                <strong>No. Inventario: </strong> {{infoCita.clienteNumInventario}}<br>
+                                <strong>No. TAR: </strong> {{infoCita.numTAR}}<br>
+                                <strong>TAR: </strong> {{infoCita.TAR}}<br>
+                                <strong>GAR: </strong>  {{infoCita.GAR}}
                             </address>
                         </div>
                         <div class="col-sm-6 text-right">
-                            <h4 class="text-navy">{{infoCita.numeroTrabajo}}</h4>
-                            <h4>Taller: </h4>
+                            <strong>Taller: </strong>
                             <address>
                                {{infoCita.razonSocial}}
                                <br>
@@ -778,7 +777,7 @@
                                         <option value="Lleno">Lleno</option>
                                         <option value="Tres Cuartos">Tres Cuartos</option>
                                         <option value="Mitad">Mitad</option>
-                                        <option value="Un Cuaro">Un Cuaro</option>
+                                        <option value="Un Cuaro">Un Cuarto</option>
                                     </select>
                                 </div>
                                 
@@ -788,7 +787,7 @@
                                     <img  src="image/comprobanteRecepcion/ODOMETRO.jpg"></img>
                                 </div>
                                 <div class="col-md-3">
-                                  <input type="text" placeholder="Kilometraje" ng-model="tab_Odometro" class="form-control">  
+                                  <input type="numeric" placeholder="Kilometraje" ng-model="tab_Odometro" class="form-control" onlynumber>  
                                 </div>
                                 
                             </div>
