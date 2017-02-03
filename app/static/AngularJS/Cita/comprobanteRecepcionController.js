@@ -64,7 +64,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 
 
 	$scope.addComprobanteRecepcion = function () {
-	
+	$scope.class_buttonCeritficado = 'fa fa-spinner fa-spin';
 		var data = {};
 		if (!$scope.acepta) {
 			alertFactory.info("Debe Aceptar las Condiciones.");
@@ -173,10 +173,6 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
         trabajoRepository.insertTrabajo($scope.infoCita.idCita, $scope.userData.idUsuario, $scope.infoCita.idUnidad)
             .then(function (trabajo) {
                 $scope.idTrabajoNew = trabajo.data[0].idTrabajo;
-                if ($scope.idTrabajoNew != null) {
-                    $scope.dzMethods.processQueue();
-                }
-
                 $scope.generarPdfdata();
             }, function (error) {
                 alertFactory.error("Error al insertar el trabajo");
@@ -240,7 +236,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 
 
 	    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //    Manda a Generar el PDF con Grafica ultima version (18/nov/2016)
+    //    Manda a Generar el PDF ultima version (03/feb/2017)
     //////////////////////////////////////////////////////////////////////////////////////////////////
     $scope.generarPdfdata = function () {
        
@@ -345,18 +341,13 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
             },
             "data": data
         }
-            /*
-            var resdata = JSON.stringify(rptStructure);
-            console.log(resdata);
-            */
-           /* contratoDetalleRepository.callExternalPdf(jsonData).then(function (fileName) {
-                setTimeout(function () {
-                    window.open("http://192.168.20.9:5000/api/layout/viewpdf?fileName=" + fileName.data);
-                    //location.href = '/tallercita';
-                    console.log(fileName.data);
-                    $('#loadModal').modal('hide');
-                }, 5000);
-            });*/
+	        citaRepository.callExternalPdf(jsonData).then(function (result) {	        	
+	        	setTimeout(function () {
+		            window.open($rootScope.vIpServer + result.data);
+		            location.href = '/tallercita';
+		         }, 5000);	        	   			
+	        });
+
         }, function (error) {
 	        alertFactory.error("Error al insertar datos");
 	    });

@@ -1,4 +1,5 @@
 var citaUrl = global_settings.urlCORS + '/api/cita/';
+var cotizacionUrl = global_settings.urlCORS + '/api/cotizacion/';
 
 registrationModule.factory('citaRepository', function ($http, $q) {
     var deferred = $q.defer();
@@ -289,6 +290,18 @@ registrationModule.factory('citaRepository', function ($http, $q) {
                 method: "GET",
                 params: {
                     idCita: idCita
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        callExternalPdf: function (jsonData) {
+            return $http({
+                url: cotizacionUrl + 'newpdf/',
+                method: "POST",
+                data: {
+                    values: jsonData
                 },
                 headers: {
                     'Content-Type': 'application/json'
