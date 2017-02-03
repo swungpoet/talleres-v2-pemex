@@ -226,7 +226,9 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 			&& $scope.doc_ManualesUnidad != undefined
 			&& $scope.doc_PermisoProvisional != undefined
 			&& $scope.tab_Descripcion != undefined
-			&& $scope.tab_Odometro != undefined) {
+			&& $scope.tab_Odometro != undefined
+			&& $scope.tab_Descripcion != ''
+			&& $scope.tab_Odometro != '') {
 			return true;
 
 		}else {
