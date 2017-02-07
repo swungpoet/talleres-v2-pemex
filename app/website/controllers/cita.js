@@ -948,6 +948,11 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
             name: 'idCita',
             value: req.body.idCita,
             type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.INT
         }];
 
     this.model.post('INS_DATOS_UNIDAD_SP', params, function (error, result) {

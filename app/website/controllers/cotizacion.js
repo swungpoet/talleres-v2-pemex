@@ -1393,7 +1393,7 @@ Cotizacion.prototype.post_newpdf = function(req, res, next) {
 
             fs.writeFile(filePath, body, function(err) {
                 if (err) return console.log(err);
-                console.log('Archivo creado');
+                //console.log('Archivo creado');
             });
 
         });

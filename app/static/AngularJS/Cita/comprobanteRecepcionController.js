@@ -70,7 +70,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
                 $scope.ubi_DelanteraDesc='';
               break;
 
-              case 'tracera':
+              case 'trasera':
                 $scope.ubi_TraseraDesc='';
               break;
 
@@ -150,6 +150,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 			data.ubi_TechoDesc=$scope.ubi_TechoDesc;
 			data.aprobacion=1;
 			data.idCita=$scope.infoCita.idCita;
+			data.idUsuario=$scope.userData.idUsuario;
 
 			if ($scope.ubi_Techo) {
 				data.ubi_Techo=1;
@@ -333,6 +334,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 					        "tab_Descripcion":result.data[0].tab_Descripcion,
 					        "tab_Odometro":result.data[0].tab_Odometro,
 					        "aprobacion":result.data[0].aprobacion,
+					        "nombreCompleto":result.data[0].nombreCompleto, 		  
 					        "fecha":result.data[0].fecha,
 					        "idTrabajo":result.data[0].idTrabajo
 					    },
