@@ -336,7 +336,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
 		              var url = $rootScope.vIpServer + result.data;
 				      var a = document.createElement('a');
 				      a.href = url;
-				      a.download = 'Comprobante de Recepción';
+				      a.download = 'ComprobanteRecepción';
 				      //a.target = '_blank';
 				      a.click();
 
