@@ -725,16 +725,6 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
             type: self.model.types.INT
         },
         {
-            name: 'int_Encendedor',
-            value: req.body.int_Encendedor,
-            type: self.model.types.INT
-        },
-        {
-            name: 'int_Cenicero',
-            value: req.body.int_Cenicero,
-            type: self.model.types.INT
-        },
-        {
             name: 'int_Tapetes',
             value: req.body.int_Tapetes,
             type: self.model.types.INT
@@ -742,11 +732,6 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
         {
             name: 'int_Ac',
             value: req.body.int_Ac,
-            type: self.model.types.INT
-        },
-        {
-            name: 'int_Lector',
-            value: req.body.int_Lector,
             type: self.model.types.INT
         },
         {
@@ -760,28 +745,8 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
             type: self.model.types.INT
         },
         {
-            name: 'int_Usb',
-            value: req.body.int_Usb,
-            type: self.model.types.INT
-        },
-        {
             name: 'int_LlavesUnidad',
             value: req.body.int_LlavesUnidad,
-            type: self.model.types.INT
-        },
-        {
-            name: 'acs_Gato',
-            value: req.body.acs_Gato,
-            type: self.model.types.INT
-        },
-        {
-            name: 'acs_ManeralGato',
-            value: req.body.acs_ManeralGato,
-            type: self.model.types.INT
-        },
-        {
-            name: 'acs_LlaveRuedas',
-            value: req.body.acs_LlaveRuedas,
             type: self.model.types.INT
         },
         {
@@ -807,21 +772,6 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
         {
             name: 'acs_PeliculaAntiasalto',
             value: req.body.acs_PeliculaAntiasalto,
-            type: self.model.types.INT
-        },
-        {
-            name: 'acs_BirlosTuercas',
-            value: req.body.acs_BirlosTuercas,
-            type: self.model.types.INT
-        },
-        {
-            name: 'acs_ProteccionEspejoLateral',
-            value: req.body.acs_ProteccionEspejoLateral,
-            type: self.model.types.INT
-        },
-        {
-            name: 'acs_Gps',
-            value: req.body.acs_Gps,
             type: self.model.types.INT
         },
         {
@@ -857,26 +807,6 @@ Cita.prototype.post_addcomprobanterecepcion = function (req, res, next) {
         {
             name: 'doc_TarjetaCirculacion',
             value: req.body.doc_TarjetaCirculacion,
-            type: self.model.types.INT
-        },
-        {
-            name: 'doc_Engomado',
-            value: req.body.doc_Engomado,
-            type: self.model.types.INT
-        },
-        {
-            name: 'doc_Verificacion',
-            value: req.body.doc_Verificacion,
-            type: self.model.types.INT
-        },
-        {
-            name: 'doc_ManualesUnidad',
-            value: req.body.doc_ManualesUnidad,
-            type: self.model.types.INT
-        },
-        {
-            name: 'doc_PermisoProvisional',
-            value: req.body.doc_PermisoProvisional,
             type: self.model.types.INT
         },
         {
