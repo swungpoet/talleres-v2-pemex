@@ -333,8 +333,7 @@ registrationModule.controller('comprobanteRecepcionController', function ($scope
         }
 	        citaRepository.callExternalPdf(jsonData).then(function (result) {	        	
 	        	setTimeout(function () {
-		            console.log($rootScope.vIpServer + result.data);
-		            var url = $rootScope.vIpServer + result.data;
+		              var url = $rootScope.vIpServer + result.data;
 				      var a = document.createElement('a');
 				      a.href = url;
 				      a.download = 'Comprobante de Recepción';
