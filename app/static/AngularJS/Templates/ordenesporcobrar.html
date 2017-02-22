@@ -287,6 +287,7 @@
                                                     <th>Precio Venta con IVA</th>
                                                     <th>Abono</th>
                                                     <th>Saldo</th>
+                                                    <th>Fecha Último  Pago</th>
                                                     <th>Fecha COPADE</th>
                                                     <th ng-show="trabajosporCOPADE==1">Números de Órdenes</th>
                                                     <th>Acción</th>
@@ -304,6 +305,7 @@
                                                     <td>{{abono.total | currency}}</td>
                                                     <td>{{abono.abono | currency}}</td>
                                                     <td>{{abono.COP_SALDO | currency}}</td>
+                                                    <td>{{abono.COP_FECHULTPAG | date:'dd-MM-yyyy HH:mm'}}</td>
                                                     <td>{{abono.fechaRecepcionCopade | date:'dd-MM-yyyy'}}</td>
                                                     <td ng-show="trabajosporCOPADE==1">{{abono.numeroTrabajo}}</td>
                                                     <td ng-hide="userData.idTipoUsuario == 4"> 
@@ -330,7 +332,7 @@
                                         <div class="col-md-5 form-group">
                                             <label class="col-sm-3 control-label">Taller </label>
                                             <div class="col-sm-9">
-                                               <input type="text" class="form-control" value="" ng-model="proveedor" >
+                                               <input type="text" class="form-control" value="" ng-model="proveedor" ng-enter="cotizacionesAbonos(fecIniCot, fecFinCot, proveedor)" >
                                                <!--select class="form-control" name="tipo" ng-model="selectedTipo" ng-options="tipo.nombre for tipo in tipos" >
                                                     <option value=''>Selecionar  tipo</option><!--default option -->
                                                 <!--/select-->
@@ -339,7 +341,7 @@
 
                                        
                                         <div class="col-md-6" id="data_5">
-                                            <label class="col-sm-4 control-label">Fecha Inicio a Fecha Fin</label>
+                                            <label class="col-sm-4 control-label">Fecha Último  Pago </label>
                                             <div class="input-daterange input-group" id="datepicker">
                                                 <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fecIniCot"  calendar/>
                                                 <span class="input-group-addon">a</span>
@@ -377,6 +379,7 @@
                                                 <th>Precio Copade con IVA</th>
                                                 <th>Abono COPADE</th>
                                                 <th>Saldo COPADE</th>
+                                                <th>Fecha Último  Pago</th>
                                                 <th>Fecha Ingreso Unidad</th>
                                                 <th>Fecha Inicio Trabajo</th>
                                                 <th>Fecha Fin Trabajo</th>
@@ -405,6 +408,7 @@
                                                 <td>{{cotizacion.COP_CARGO | currency}}</td>
                                                 <td>{{cotizacion.abono | currency}}</td>
                                                 <td>{{cotizacion.COP_SALDO | currency}}</td>
+                                                <td>{{cotizacion.COP_FECHULTPAG | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                                 <td>{{cotizacion.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>
