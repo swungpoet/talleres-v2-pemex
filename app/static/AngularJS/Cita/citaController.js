@@ -599,12 +599,18 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
 
     //Modal Adjuntar Formato
     $scope.formatoRecepcion = function (cita) {
-        //$scope.idTrabajoUpl = cita.idTrabajo;
-        //$scope.idCitaUpld = cita.idCita;
-        //$scope.idUnidadUpl = cita.idUnidad;
-        localStorageService.set('cita', cita);
-        location.href = '/comprobanteRecepcion';
-       // $('#evidencia').appendTo('body').modal('show');
+       
+        if (cita.idTipoCita == 4 ) {
+            $scope.idTrabajoUpl = cita.idTrabajo;
+            $scope.idCitaUpld = cita.idCita;
+            $scope.idUnidadUpl = cita.idUnidad;
+            $('#evidencia').appendTo('body').modal('show');
+
+        }else{
+            localStorageService.set('cita', cita);
+            location.href = '/comprobanteRecepcion';  
+        }
+        
     }
 
     //obtiene el tipo de cita
