@@ -42,7 +42,7 @@
                                         <!-- <th>Generar txt</th> -->
                                         <th>Id Proveedor</th>
                                         <th ng-show="userData.esProveedor == 0" >Editar Costos</th>
-                                        <th ng-show="userData.esProveedor == 0" >Anticipo</th>
+                                       <!--  <th ng-show="userData.esProveedor == 0" >Anticipo</th> -->
                                         <th>Factura</th>
                                         <th ng-show="userData.esProveedor == 0">Comprar</th>
                                         <th ng-show="userData.esProveedor == 1">Enviar a Aprobación</th>
@@ -103,7 +103,7 @@
                                         <td ng-show="userData.esProveedor == 0">
                                             <button class="btn btn-success" type="button" ng-click="lookAt(orden, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>
                                         </td>
-                                        <td ng-show="userData.esProveedor == 0">
+<!--                                         <td ng-show="userData.esProveedor == 0">
                                             <button tooltip="Solicitar Anticipo" type="button" ng-click="getCotizacionesOrden(orden.idTrabajo)" ns-popover ns-popover-template="closeAnctipo" ns-popover-trigger="click" ns-popover-theme="ns-popover-tooltip-theme" ns-popover-timeout="1000" ns-popover-hide-on-inside-click="false" ns-popover-hide-on-outside-click="true" ns-popover-hide-on-button-click="true" ns-popover-placement="left" class="btn btn-warning"><span class="fa fa-money"></span>
                                             </button>
                                             <script type="text/ng-template" id="closeAnctipo">
@@ -129,14 +129,14 @@
                                                                 <td ng-if="cotizacion.existeProveedor > 0">
                                                                     <button ng-disabled="cotizacion.existeAnticipo > 0" type="button" class="btn btn-success" ng-click="getIdCotizacion(cotizacion.idCotizacion, cotizacion.numeroCotizacion); adjuntar(cotizacion, 7, 0, 1)" tooltip="Solicitar Anticipo"><span class="glyphicon glyphicon-upload"></span></button>
 
-                                                                    <!--<button ng-show="userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2" class="btn btn-success" type="button" ng-click="lookAt(trabajo, 0)" data-toggle="tooltip" tooltip="Editar Costos" tooltip-placement="left"><span class="glyphicon glyphicon-usd"></span></button>-->
+                                                                
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </script>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <!--<button class="btn btn-primary" type="button" ng-click="" data-toggle="tooltip" tooltip="Subir factura" tooltip-placement="left"><span class="glyphicon glyphicon-file"></span></button>
                                             
