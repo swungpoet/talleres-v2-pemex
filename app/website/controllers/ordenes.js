@@ -1012,7 +1012,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
 
     var directorioFactura = dirname + req.query.idTrabajo + '/' + req.query.idCotizacion + '/documentos/factura';
     var files = fs.readdirSync(directorioFactura);
-    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
+    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal, rfc;
     var paramsFactura = [];
 
     var existeFacturaXML = files.some(checkExistsXML);
@@ -1048,6 +1048,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                 uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
                                 total = result['cfdi:Comprobante'].$['total'];
                                 subtotal = result['cfdi:Comprobante'].$['subTotal'];
+                                rfc = result['cfdi:Comprobante']['cfdi:Emisor'][0].$['rfc'];
                                 xmlFactura = data;
                                 //var xmlFactura = file;
 
@@ -1091,6 +1092,16 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                         value: req.query.idUsuario,
                                         type: self.model.types.INT
                                                 },
+                                    {
+                                        name: 'idUsuario',
+                                        value: req.query.idUsuario,
+                                        type: self.model.types.INT
+                                    },       
+                                    {
+                                        name: 'rfc',
+                                        value: rfc,
+                                        type: self.model.types.STRING
+                                                 },
                                     {
                                         name: 'xmlFactura',
                                         value: xmlFactura,
@@ -1165,7 +1176,7 @@ Orden.prototype.get_removeFactura = function (req, res, next) {
 
     var directorioFactura = dirname + req.query.idTrabajo + '/' + req.query.idCotizacion + '/documentos/factura';
     var files = fs.readdirSync(directorioFactura);
-    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal;
+    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal, rfc;
 
     var existeFacturaXML = files.some(checkExistsXML);
     if (existeFacturaXML) {

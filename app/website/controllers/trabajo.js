@@ -537,6 +537,11 @@ Trabajo.prototype.post_insertaFactura = function(req, res, next){
                 name: 'xmlFactura',
                 value: req.query.xmlFactura,
                 type: self.model.types.STRING
+                 },
+                {
+                name: 'rfc',
+                value: req.query.rfc,
+                type: self.model.types.STRING
                  }];
     
     this.model.post('INS_COTIZACION_FACTURA_SP',params, function (error, result) {
@@ -644,5 +649,32 @@ Trabajo.prototype.post_generaCertificado = function (req, res, next) {
         });
     });
 } 
+
+//obtiene los trabajos con estatus de terminado
+Trabajo.prototype.get_cotizacionRFC = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Obtención de valores de los parámetros del request
+    var params = [
+    {
+        name: 'idCotizacion',
+        value: req.query.idCotizacion, 
+        type: self.model.types.INT
+    }
+    ];
+    
+    this.model.query('SEL_RFC_COTIZACION_SP', params, function(error, result) {
+                //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
 
 module.exports = Trabajo;

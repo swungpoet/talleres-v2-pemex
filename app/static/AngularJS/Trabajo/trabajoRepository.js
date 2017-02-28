@@ -328,7 +328,7 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        insertaFactura: function (idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura) {
+        insertaFactura: function (idCotizacion, numFactura, UUID, fechaFactura, total, subtotal, idUsuario, xmlFactura, rfc) {
             var objTrabajo = {
                 idCotizacion: idCotizacion,
                 numFactura: numFactura,
@@ -337,7 +337,8 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 total: total,
                 subtotal: subtotal,
                 idUsuario: idUsuario,
-                xmlFactura: xmlFactura
+                xmlFactura: xmlFactura,
+                rfc:rfc
             };
             return $http({
                 url: trabajoUrl + 'insertaFactura',
@@ -442,6 +443,18 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 method: "POST",
                 data: {
                     idTrabajo: idTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        },
+        getRecuperaRFC: function (idCotizacion) {
+            return $http({
+                url: trabajoUrl + 'cotizacionRFC/',
+                method: "GET",
+                params: {
+                    idCotizacion: idCotizacion
                 },
                 headers: {
                     'Content-Type': 'application/json'
