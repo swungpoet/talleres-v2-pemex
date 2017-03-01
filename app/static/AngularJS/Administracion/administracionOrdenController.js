@@ -133,6 +133,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                 $scope.proveedor = result.data;
                 $scope.ideTaller = $scope.proveedor[0].idTaller;
                 $scope.idTipoCotizacion = $scope.proveedor[0].idTipoCotizacion;
+                $scope.razonSocial = $scope.proveedor[0].razonSocial;
             }, function (error) {
                 alertFactory.error("Error al actualizar el IdProveedor");
             });
