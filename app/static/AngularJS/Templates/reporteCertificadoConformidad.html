@@ -60,6 +60,8 @@
                                         <th>Fecha de Emisión</th>
                                         <th>OSUR</th>
                                         <th>Solpe</th>
+                                        <th>Estatus de la Orden</th>
+                                        <th>Copade</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +79,8 @@
                                         <td>{{ordenverificada.fechaGeneracion | date:'dd-MM-yyyy HH:mm'}}</td>
                                         <td>{{ordenverificada.numeroOsur}}</td>
                                         <td>{{ordenverificada.solpe}}</td>
+                                        <td>{{ordenverificada.descripcionLarga}}</td>
+                                        <td>{{ordenverificada.Copade}}</td>
                                         <!-- <td>
                                             <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(ordenverificada, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
 
