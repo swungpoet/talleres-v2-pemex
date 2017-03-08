@@ -84,10 +84,11 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     }
 
     $scope.callReporte = function (tipo) {
-        debugger;
+       
         $scope.ordenes=[];
+         $('.dataTableReporteSaldos').DataTable().destroy();
         reporteRepository.reporteAntiguedad($scope.fechaInicio, $scope.fechaFin, $scope.zona, $scope.tar, $scope.estatus, $scope.numeroTrabajo, tipo, $scope.callCenter).then(function (response) {
-            debugger;
+          
             if (response.data.length > 0) {
                 $scope.ordenes = response.data;
                 globalFactory.waitDrawDocument("dataTableReporteSaldos", "ReporteAntiguedadSaldos");
