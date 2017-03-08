@@ -1012,7 +1012,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
 
     var directorioFactura = dirname + req.query.idTrabajo + '/' + req.query.idCotizacion + '/documentos/factura';
     var files = fs.readdirSync(directorioFactura);
-    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal, rfc;
+    var fechaFactura, numFactura, uuid, xmlFactura, total, subtotal, rfc, rfcase;
     var paramsFactura = [];
 
     var existeFacturaXML = files.some(checkExistsXML);
@@ -1049,6 +1049,7 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                 total = result['cfdi:Comprobante'].$['total'];
                                 subtotal = result['cfdi:Comprobante'].$['subTotal'];
                                 rfc = result['cfdi:Comprobante']['cfdi:Emisor'][0].$['rfc'];
+                                rfcase = result['cfdi:Comprobante']['cfdi:Receptor'][0].$['rfc'];
                                 xmlFactura = data;
                                 //var xmlFactura = file;
 
@@ -1105,6 +1106,11 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                                     {
                                         name: 'xmlFactura',
                                         value: xmlFactura,
+                                        type: self.model.types.STRING
+                                                 },
+                                    {
+                                        name: 'rfcase',
+                                        value: rfcase,
                                         type: self.model.types.STRING
                                                  }
                                         ];
