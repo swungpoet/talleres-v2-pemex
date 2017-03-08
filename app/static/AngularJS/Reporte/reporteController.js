@@ -84,6 +84,11 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     }
 
     $scope.callReporte = function (tipo) {
+
+        if ($scope.fechaInicio=='') {
+            $scope.fechaInicio=null;
+            $scope.fechaFin=null;
+        };
        
         $scope.ordenes=[];
          $('.dataTableReporteSaldos').DataTable().destroy();
