@@ -353,6 +353,110 @@ Reporte.prototype.get_reporteCertificadoConformidad = function (req, res, next) 
     });
 }
 
+    //Reporte Antiguedad de Saldos
+Reporte.prototype.get_reporteAntiguedad = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+         {
+            name: 'estatus',
+            value: req.query.estatus,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'numeroTrabajo',
+            value: req.query.numeroTrabajo,
+            type: self.model.types.STRING
+        },
+         {
+            name: 'tipo',
+            value: req.query.tipo,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'zona',
+            value: req.query.zona,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'tar',
+            value: req.query.tar,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'fechaInicio',
+            value: req.query.fechaInicio,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'fechaFin',
+            value: req.query.fechaFin,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        }
+
+    ];
+
+    this.model.query('SEL_REPORTE_ANTIGUEDAD_SALDOS_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+    //Obtiene Estatus 
+Reporte.prototype.get_estatus = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+    ];
+
+    this.model.query('SEL_ESTATUS_ORDEN_ANTIGUEDAD_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+    //Obtiene lista de callcenter 
+Reporte.prototype.get_callcenter = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+    ];
+
+    this.model.query('SEL_USUARIO_CALLCENTER_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 
 module.exports = Reporte;
 

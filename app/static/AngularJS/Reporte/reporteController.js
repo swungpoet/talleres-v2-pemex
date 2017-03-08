@@ -1,12 +1,14 @@
-registrationModule.controller('reporteController', function ($scope, alertFactory, $rootScope, localStorageService, ordenPorCobrarRepository, reporteRepository,dashBoardRepository) {
+registrationModule.controller('reporteController', function ($scope, alertFactory, $rootScope, globalFactory, localStorageService, ordenPorCobrarRepository, reporteRepository,dashBoardRepository) {
     $scope.message = "Buscando...";
     
     $scope.init = function () {
-        $scope.getReporte();
-        $rootScope.userData = localStorageService.get('userData');
+        //$scope.getReporte();
+        //$rootScope.userData = localStorageService.get('userData');
 
         $scope.devuelveZonas();
-        $scope.devuelveTars();
+        $scope.buscaCallCenter();
+        $scope.buscaEstatus();
+        //$scope.devuelveTars();
     }
 
     $scope.fechaRango = function () {
@@ -55,7 +57,7 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     }
 
     
-$scope.devuelveTars = function (zona) {
+    $scope.devuelveTars = function (zona) {
         if (zona != null) {
             dashBoardRepository.getTars(zona).then(function (tars) {
                 if (tars.data.length > 0) {
@@ -70,7 +72,7 @@ $scope.devuelveTars = function (zona) {
         }
     }
 
-$scope.devuelveZonas = function () {
+    $scope.devuelveZonas = function () {
         dashBoardRepository.getZonas($scope.userData.idUsuario).then(function (zonas) {
             if (zonas.data.length > 0) {
                 $scope.zonas = zonas.data;
@@ -81,14 +83,42 @@ $scope.devuelveZonas = function () {
         });
     }
 
-$scope.buscaCallCenter = function () {
-        reporteRepository.getCallcenter().then(function () {
-            if (callCenter.data.length > 0) {
-                $scope.callCenter = callCenter.data;
+    $scope.callReporte = function (tipo) {
+        debugger;
+        $scope.ordenes=[];
+        reporteRepository.reporteAntiguedad($scope.fechaInicio, $scope.fechaFin, $scope.zona, $scope.tar, $scope.estatus, $scope.numeroTrabajo, tipo, $scope.callCenter).then(function (response) {
+            debugger;
+            if (response.data.length > 0) {
+                $scope.ordenes = response.data;
+                globalFactory.waitDrawDocument("dataTableReporteSaldos", "ReporteAntiguedadSaldos");
 
+            }else{
+                alertFactory.info('No se encontraro información');
             }
         }, function (error) {
             alertFactory.error('No se pudo recuperar información de las zonas');
+        });
+    }
+
+    $scope.buscaCallCenter = function () {
+        reporteRepository.callcenter().then(function (response) {
+            if (response.data.length > 0) {
+                $scope.callCenters = response.data;
+
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de callcenter');
+        });
+    }
+
+    $scope.buscaEstatus = function () {
+        reporteRepository.estatus().then(function (response) {
+            if (response.data.length > 0) {
+                $scope.estatuss = response.data;
+
+            }
+        }, function (error) {
+            alertFactory.error('No se pudo recuperar información de los estatus');
         });
     }
 
