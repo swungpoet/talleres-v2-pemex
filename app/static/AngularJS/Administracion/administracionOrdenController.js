@@ -228,6 +228,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                     $scope.lecturaFactura = result.data;
                                     $scope.totalxml = $scope.lecturaFactura[4].value;
                                      $scope.rfcFactura = $scope.lecturaFactura[8].value;
+                                     $scope.rfcase = $scope.lecturaFactura[10].value;
                                     // alertFactory.success("Proceso Correcto");
                                     if (((parseFloat($scope.totalxml) - 1.0000) <= $scope.totalCotizacionBD) && ($scope.totalCotizacionBD <= (parseFloat($scope.totalxml) + 1.0000))) {
                                            
@@ -253,7 +254,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
 
                                             }else{
                                              $scope.rfcCtoizacion = result.data[0].RFC;
-                                                if ($scope.rfcCtoizacion == $scope.rfcFactura) {
+                                                if ($scope.rfcCtoizacion == $scope.rfcFactura && $scope.rfcase == 'ASE0508051B6') {
 
                                                     $scope.lecturaFactura.forEach(function (sumatoria) {
                                                         if (sumatoria.name == 'idCotizacion') $scope.idCotizacionFac = sumatoria.value;
@@ -291,7 +292,7 @@ registrationModule.controller('administracionOrdenController', function ($scope,
                                                             $scope.dzMethods.removeAllFiles();
                                                             $('#modalCargaArchivos').appendTo('body').modal('hide');
                                                         }, 1500);
-                                                        alertFactory.info("La factura cargada no corresponde con el taller de la cotizacion");
+                                                        alertFactory.info("La factura cargada no corresponde con el taller de la cotizacion y/o la factura no es remitida por ASE");
                                                     
                                                 }
                                             }
