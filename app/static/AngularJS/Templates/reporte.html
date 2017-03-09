@@ -1,3 +1,4 @@
+
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Reporte Antigüedad de Saldos <span class="subtitle"></span></span>
@@ -94,6 +95,8 @@
                                             <th>Precio de la Orden</th>
                                             <th>Descripción de la Orden</th>
                                             <th>Estatus</th>
+                                            <th>Folio Certificado</th>
+                                            <th>Copade</th>
                                             <th>Fecha</th>
                                             <th>0 a 30</th>
                                             <th>31 a 45</th>
@@ -114,6 +117,8 @@
                                             <td>{{orden.precioOrden | currency: "$"}}</td>
                                             <td>{{orden.trabajo}}</td>
                                             <td>{{orden.descripcionLarga}}</td>
+                                            <td>{{orden.folioCertificado}}</td>
+                                            <td>{{orden.numeroCopade}}</td>
                                             <td>{{orden.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
                                             <td class="center"><span ng-class="{'glyphicon glyphicon-remove': orden.primero==1}"></span></td>
                                             <td class="center"><span ng-class="{'glyphicon glyphicon-remove': orden.segundo==1}"></span></td>
