@@ -39,11 +39,12 @@ registrationModule.factory('reporteRepository', function ($http) {
             });
         },
 
-        callcenter: function () {
+        callcenter: function (idUsuario) {
             return $http({
                 url: reporteGralUrl + 'callcenter',
                 method: "GET",
                 params: {
+                    idUsuario: idUsuario
                 },
                 headers: {
                     'Content-Type': 'application/json'

@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-md-2">
                             <label class="font-noraml">Call Center</label>
-                            <select class="form-control" ng-disabled="zona != null || tar != null" id="zona" ng-model="callCenter" ng-options="callCenter.idUsuario as callCenter.nombreCompleto for callCenter in callCenters"> >
+                            <select class="form-control" ng-disabled="zona != null || tar != null" id="callCenter"  name="callCenter" ng-model="callCenter" ng-options="callCenter.idUsuario as callCenter.nombreCompleto for callCenter in callCenters"> >
                                 <option value="">Seleccione CallCenter</option>
                             </select>
                         </div>

@@ -443,9 +443,12 @@ Reporte.prototype.get_callcenter = function (req, res, next) {
     //Objeto que envía los parámetros
     var params = {};
     //Referencia a la clase para callback
-    var self = this;
+    var self = this;  
 
     var params = [
+    {name: 'idUsuario', 
+    value: req.query.idUsuario, 
+    type: self.model.types.INT}
     ];
 
     this.model.query('SEL_USUARIO_CALLCENTER_SP', params, function (error, result) {

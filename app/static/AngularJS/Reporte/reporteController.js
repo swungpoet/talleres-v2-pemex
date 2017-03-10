@@ -2,13 +2,12 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     $scope.message = "Buscando...";
     
     $scope.init = function () {
-        //$scope.getReporte();
-        //$rootScope.userData = localStorageService.get('userData');
+        
 
         $scope.devuelveZonas();
         $scope.buscaCallCenter();
         $scope.buscaEstatus();
-        //$scope.devuelveTars();
+       
     }
 
     $scope.fechaRango = function () {
@@ -89,6 +88,7 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
             $scope.fechaInicio=null;
             $scope.fechaFin=null;
         };
+        var callCenter = $scope.callCenter
        
         $scope.ordenes=[];
          $('.dataTableReporteSaldos').DataTable().destroy();
@@ -106,11 +106,16 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
         });
     }
 
-    $scope.buscaCallCenter = function () {
-        reporteRepository.callcenter().then(function (response) {
-            if (response.data.length > 0) {
-                $scope.callCenters = response.data;
+    $scope.buscaCallCenter = function () {        
 
+        var idUsuario = null;
+        if ($scope.userData.idTipoUsuario==2) {   
+          idUsuario=$scope.userData.idUsuario;
+        }
+
+        reporteRepository.callcenter(idUsuario).then(function (response) {
+            if (response.data.length > 0) {
+                $scope.callCenters=response.data; 
             }
         }, function (error) {
             alertFactory.error('No se pudo recuperar información de callcenter');
