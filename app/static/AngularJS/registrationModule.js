@@ -174,7 +174,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             templateUrl: 'AngularJS/Templates/comprobanteRecepcion.html',
             controller: 'comprobanteRecepcionController'
         });
-        
+
+        $routeProvider.when('/usuarioTar', {
+            templateUrl: 'AngularJS/Templates/usuarioTar.html',
+            controller: 'usuariotarController'
+        });
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false

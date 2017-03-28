@@ -121,7 +121,9 @@
                 <li ng-show="userData.idTipoUsuario == 1 ">
                     <a href="aprobacionProvision" ng-click="showChat = 0"><i class="glyphicon glyphicon-ok-sign"></i> <span class="nav-label">Aprobación Provisión  </span></a>
                 </li>
-
+                <li ng-hide="true">
+                    <a href="usuarioTar" ng-click="showChat = 0"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">Control</span></a>
+                </li>
                 <li>
                     <a href="Tutorial" ng-click="showChat = 0"><i class="glyphicon glyphicon-facetime-video"></i> <span class="nav-label">Tutorial</span></a>
                 </li>
@@ -349,6 +351,8 @@
     <script src="AngularJS/Reporte/reporteCertificadoConformidadController.js"></script>
     <script src="AngularJS/Tutorial/tutorialController.js"></script>
     <script src="AngularJS/Cita/comprobanteRecepcionController.js"></script>
+    <script src="AngularJS/UsuarioTar/usuariotarRepository.js"></script>
+    <script src="AngularJS/UsuarioTar/usuariotarController.js"></script>
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia/slimscroll/jquery.slimscroll.min.js"></script>
