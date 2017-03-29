@@ -17,6 +17,34 @@ registrationModule.factory('usuariotarRepository', function ($http, $q) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        deleteUsuario: function (idTar,idUsuario) {
+            var msgObj = {
+                idTar:idTar,
+                idUsuario:idUsuario
+            }
+            return $http({
+                url: administracionUrl + 'deleteUserTar',
+                method: "POST",
+                data: msgObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        addUsuarioTar: function (idUsuario,idTar) {
+            var msgObj = {
+                idUsuario:idUsuario,
+                idTar:idTar
+            }
+            return $http({
+                url: administracionUrl + 'addUserTar',
+                method: "POST",
+                data: msgObj,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

@@ -46,4 +46,63 @@ Administracion.prototype.get_users = function (req, res, next) {
     });
 }
 
+Administracion.prototype.post_deleteUserTar = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+        var params = [{
+            name: 'idTar',
+            value: req.body.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.INT
+        }];
+
+    this.model.post('DEL_USUARIO_TAR_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+Administracion.prototype.post_addUserTar = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    //Asigno a params el valor de mis variables
+        var params = [
+        {
+            name: 'idUsuario',
+            value: req.body.idUsuario,
+            type: self.model.types.INT
+        },{
+            name: 'idTar',
+            value: req.body.idTar,
+            type: self.model.types.INT
+        }
+        ];
+
+    this.model.post('INS_USUARIO_TAR_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Administracion;

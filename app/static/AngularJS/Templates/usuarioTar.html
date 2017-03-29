@@ -1,3 +1,4 @@
+<link href="../../css/inspinia/sweetalert/sweetalert.css" rel="stylesheet">
 <div ng-init="init()" class="animated bounceInRight">
     <div class="headTitleTallerCita">
         <span class="title"> Administracion de Usuarios<span class="subtitle">Administrador</span></span>
@@ -40,7 +41,7 @@
                 <div class="row col-md-12">
                     <div class="col-md-10"></div>
                     <div class="col-md-2">
-                        <button id="btnBuscar" busy="Buscando.." type="button" tooltip="Nueva Asignacion" class="btn btn-primary" ng-click="asignaUsuario()"><span class=""></span>Nueva Asignacion</button>
+                        <button id="btnBuscar" busy="Buscando.." type="button" tooltip="Nueva Asignacion" class="btn btn-success" ng-click="asignaUsuario()"><span class=""></span>Nueva Asignacion</button>
                     </div>
                 </div>
                 <br><br><br><br><br><br>
@@ -53,6 +54,9 @@
                                     <th>Usuario</th>
                                     <th>Zona</th>
                                     <th>TAR</th>
+                                    <th>Numero TAR</th>
+                                    <th>Domicilio</th>
+                                    <th>Estado</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -62,8 +66,11 @@
                                     <td>{{user.nombreCompleto}}</td>
                                     <td>{{user.zona}}</td>
                                     <td>{{user.TAR}}</td>
+                                    <td>{{user.numTAR}}</td>
+                                    <td>{{user.domicilio}}</td>
+                                    <td>{{user.estado}}</td>
                                     <td>
-                                        <button id="btnBuscar" busy="Buscando.." type="button" tooltip="Desvincular" class="btn btn-danger" ng-click="call()"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button id="btnBuscar" busy="Buscando.." type="button" tooltip="Desvincular" class="btn btn-danger" ng-click="quitaUsuarioTar(user.idTAR,user.idUsuario)"><span class="glyphicon glyphicon-remove"></span></button>
                                     </td>   
                                 </tr>
                             </tbody>
@@ -97,7 +104,7 @@
                             <select class="form-control m-b"
                             id="zona" ng-model="zonaModal" 
                             ng-options="zona.idZona as zona.descripcionZona for zona in zonas" 
-                            ng-change="devuelveTars(zona)">
+                            ng-change="devuelveTar(zonaModal)">
                             <option value="">Seleccione una Zona</option>
                         </select>
                     </div>
@@ -114,7 +121,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-white" data-dismiss="modal">Salir</button>
-            <button type="button" class="btn btn-info btnTerminarTrabajo">Asignar Empleado Usuario</button>
+            <button type="button" class="btn btn-primary" ng-click="asignarUsuarioTar()">Asignar Empleado Usuario</button>
         </div>
     </div>
 </div>
