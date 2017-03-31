@@ -182,7 +182,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
 
         $routeProvider.when('/reporteReclamacion', {
             templateUrl: 'AngularJS/Templates/reporteReclamacion.html',
-            controller: 'usuariotarController'
+            controller: 'reporteReclamacionController'
         });
 
         $locationProvider.html5Mode({

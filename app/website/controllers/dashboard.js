@@ -46,6 +46,37 @@ DashBoard.prototype.get_sumatoriaCitas = function (req, res, next) {
     });
 }
 
+//Obtiene la sumatoria de las citas 
+DashBoard.prototype.get_buscaAnexos = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'anexo',
+            value: req.query.anexo,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('SEL_REPORTE_RECLAMACION_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 //Obtiene la sumatoria de las cotizaciones
 DashBoard.prototype.get_sumatoriaCotizaciones = function (req, res, next) {
     //Referencia a la clase para callback
