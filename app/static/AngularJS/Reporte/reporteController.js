@@ -1,6 +1,7 @@
 registrationModule.controller('reporteController', function ($scope, alertFactory, $rootScope, globalFactory, localStorageService, ordenPorCobrarRepository, reporteRepository,dashBoardRepository) {
     $scope.message = "Buscando...";
-    
+    $scope.tipofecha = "";
+
     $scope.init = function () {
         
 
@@ -83,7 +84,6 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     }
 
     $scope.callReporte = function (tipo) {
-
         if ($scope.fechaInicio=='') {
             $scope.fechaInicio=null;
             $scope.fechaFin=null;
@@ -91,8 +91,9 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
         var callCenter = $scope.callCenter
        
         $scope.ordenes=[];
+        $scope.tipofecha == "" ? $scope.tipofecha = undefined : $scope.tipofecha;
          $('.dataTableReporteSaldos').DataTable().destroy();
-        reporteRepository.reporteAntiguedad($scope.fechaInicio, $scope.fechaFin, $scope.zona, $scope.tar, $scope.estatus, $scope.numeroTrabajo, tipo, $scope.callCenter).then(function (response) {
+        reporteRepository.reporteAntiguedad($scope.fechaInicio, $scope.fechaFin, $scope.zona, $scope.tar, $scope.estatus, $scope.numeroTrabajo, tipo, $scope.callCenter, $scope.tipofecha).then(function (response) {
           
             if (response.data.length > 0) {
                 $scope.ordenes = response.data;

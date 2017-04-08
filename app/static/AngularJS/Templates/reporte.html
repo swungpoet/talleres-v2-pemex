@@ -13,13 +13,21 @@
                     <br/>
                     <br/>
                     <div class="row col-md-12">
-                        <div class="col-md-3" id="data_5">
+                        <div class="col-md-2" id="data_5">
                             <label class="font-noraml">Fecha Inicio a Fecha Fin</label>
-                            <div class="input-daterange input-group" id="datepicker">
+                            <div class="input-daterange input-group" id="datepicker" ng-disabled="">
                                 <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fechaInicio" ng-change="fechaRango" calendar/>
                                 <span class="input-group-addon">a</span>
                                 <input type="text" placeholder="Fecha Fin" class="input-sm form-control" name="end" ng-model="fechaFin" ng-change="fechaRango()" calendar/>
                             </div>
+                        </div>
+                        <div class="col-md-1">
+                                <label class="font-noraml">Filtro Fecha</label>
+                                <select class="form-control" name="tipofecha" ng-model="tipofecha">
+                                    <option value="">Seleccione el tipo de filtro por fecha: </option>
+                                    <option value="1">Cita</option>
+                                    <option value="2">Generacion Certificado</option>
+                                </select>
                         </div>
                         <div class="col-md-2">
                             <label class="font-noraml">Zona</label>
@@ -97,7 +105,12 @@
                                             <th>Estatus</th>
                                             <th>Folio Certificado</th>
                                             <th>Copade</th>
-                                            <th>Fecha</th>
+                                            <th>Fecha Cita</th>
+                                            <th>Fecha Cotización</th>
+                                            <th>Fecha Aprobación Orden</th>
+                                            <th>Fecha Termino Trabajo</th>
+                                            <th>Fecha Salida de la Unidad</th>
+                                            <th>Fecha Generación Certificado</th>
                                             <th>0 a 30</th>
                                             <th>31 a 45</th>
                                             <th>46 a 60</th>
@@ -120,6 +133,11 @@
                                             <td>{{orden.folioCertificado}}</td>
                                             <td>{{orden.numeroCopade}}</td>
                                             <td>{{orden.fechaCita | date:'dd-MM-yyyy HH:mm'}}</td>
+                                            <td>{{orden.fechaMandaAprovacion | date:'dd-MM-yyyy HH:mm'}}</td>
+                                            <td>{{orden.fechaAutorizacion | date:'dd-MM-yyyy HH:mm'}}</td>
+                                            <td>{{orden.fechaTerminacionTrabajo | date:'dd-MM-yyyy HH:mm'}}</td>
+                                            <td>{{orden.fechaSalidaUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
+                                            <td>{{orden.FechaGeneracionCertificado | date:'dd-MM-yyyy HH:mm'}}</td>
                                             <td class="center"><span ng-class="{'glyphicon glyphicon-remove': orden.primero==1}"></span></td>
                                             <td class="center"><span ng-class="{'glyphicon glyphicon-remove': orden.segundo==1}"></span></td>
                                             <td class="center"><span ng-class="{'glyphicon glyphicon-remove': orden.tercero==1}"></span></td>

@@ -402,6 +402,11 @@ Reporte.prototype.get_reporteAntiguedad = function (req, res, next) {
             name: 'idUsuario',
             value: req.query.idUsuario,
             type: self.model.types.INT
+        },
+        {
+            name: 'tipofecha',
+            value: req.query.tipofecha,
+            type: self.model.types.STRING
         }
 
     ];

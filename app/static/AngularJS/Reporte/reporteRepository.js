@@ -9,7 +9,7 @@ registrationModule.factory('reporteRepository', function ($http) {
             });
         },
 
-        reporteAntiguedad: function (fechaInicio, fechaFin, zona, tar, estatus, numeroTrabajo, tipo, idUsuario ) {
+        reporteAntiguedad: function (fechaInicio, fechaFin, zona, tar, estatus, numeroTrabajo, tipo, idUsuario, tipofecha) {
             return $http({
                 url: reporteGralUrl + 'reporteAntiguedad',
                 method: "GET",
@@ -21,7 +21,8 @@ registrationModule.factory('reporteRepository', function ($http) {
                     estatus: estatus,
                     numeroTrabajo: numeroTrabajo,
                     tipo: tipo,
-                    idUsuario: idUsuario
+                    idUsuario: idUsuario,
+                    tipofecha:tipofecha
                 },
                 headers: {
                     'Content-Type': 'application/json'
