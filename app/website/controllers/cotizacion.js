@@ -7,6 +7,7 @@ var nameFile;
 var fs = require('fs');
 var totalFiles = 0;
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
+var direclamacion = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/reclamacion/';
 var dirCopades = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/copades/';
 var nameFile = '';
 var idTrabajo = 0;
@@ -1411,4 +1412,56 @@ Cotizacion.prototype.post_newpdf = function(req, res, next) {
     });
 };
 
+Cotizacion.prototype.post_newpdfReclamacion = function(req, res, next) {
+
+    var http = require('http'),
+        fs = require('fs');
+    var idReclamacion = req.body.values.data.reclamacion.idReclamacion;
+    var filename = 'Reclamacion_'+idReclamacion;
+
+    var filePath = direclamacion + idReclamacion +'/'+ filename + '.pdf';
+    var fileresponse = '/uploads/reclamacion/' + idReclamacion +'/'+ filename + '.pdf';
+    if(idReclamacion != undefined || idReclamacion != null){
+        if (!fs.existsSync(direclamacion + idReclamacion))
+            fs.mkdirSync(direclamacion + idReclamacion);
+    }
+    var options = {
+        "method": "POST",
+        "hostname": "189.204.141.193",
+        "port": "5488",
+        "path": "/api/report",
+        "headers": {
+            "content-type": "application/json"
+        }
+    };
+
+    var request = http.request(options, function(response) {
+        var chunks = [];
+
+        response.on("data", function(chunk) {
+            chunks.push(chunk);
+        });
+
+        response.on("end", function() {
+            var body = Buffer.concat(chunks);
+
+            fs.writeFile(filePath, body, function(err) {
+                if (err) return console.log(err);
+                //console.log('Archivo creado');
+            });
+
+        });
+    });
+
+    request.write(JSON.stringify(req.body.values));
+    request.end();
+
+    var self = this;
+
+    self.view.expositor(res, {
+        error: null,
+        //result: filename
+        result: fileresponse
+    });
+};
 module.exports = Cotizacion;

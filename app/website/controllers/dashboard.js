@@ -366,5 +366,75 @@ DashBoard.prototype.get_porCobrarHistorial = function (req, res, next) {
     });
 }
 
+//Obtiene la sumatoria de las citas 
+DashBoard.prototype.get_informacionAnexos = function (req, res, next) {
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [
+        {
+            name: 'idZona',
+            value: req.query.idZona,
+            type: self.model.types.INT
+        },
+        {
+            name: 'idTar',
+            value: req.query.idTar,
+            type: self.model.types.INT
+        },
+        {
+            name: 'cantidad1',
+            value: req.query.cantidad1,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'noReportes1',
+            value: req.query.noReportes1,
+            type: self.model.types.INT
+        },
+        {
+            name: 'diaMax1',
+            value: req.query.diaMax1,
+            type: self.model.types.INT
+        },
+        {
+            name: 'cantidad2',
+            value: req.query.cantidad2,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'noReportes2',
+            value: req.query.noReportes2,
+            type: self.model.types.INT
+        },
+        {
+            name: 'diaMax2',
+            value: req.query.diaMax2,
+            type: self.model.types.INT
+        },
+        {
+            name: 'cantidad3',
+            value: req.query.cantidad3,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'noReportes3',
+            value: req.query.noReportes3,
+            type: self.model.types.INT
+        },
+        {
+            name: 'diaMax3',
+            value: req.query.diaMax3,
+            type: self.model.types.INT
+        }
+    ];
+
+    this.model.query('INS_RECLAMACION_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
 
 module.exports = DashBoard;
