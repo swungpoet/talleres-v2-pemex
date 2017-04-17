@@ -677,4 +677,54 @@ Trabajo.prototype.get_cotizacionRFC = function(req, res, next){
     });
 }
 
+//Actualiza el trabajo a orden de servicio en garantia
+Trabajo.prototype.post_insertTerminOsur = function(req, res, next){
+    //Referencia a la clase para callback
+    var self = this;
+    //Obtención de valores de los parámetros del request
+    var params = [{
+        name: 'idTar', 
+        value: req.body.idTar,
+        type: self.model.types.INT
+    },
+    {
+        name: 'idOsur', 
+        value: req.body.idOsur, 
+        type: self.model.types.INT
+    },
+    {
+        name: 'idTrabajo', 
+        value: req.body.idTrabajo, 
+        type: self.model.types.INT
+    },
+    {
+        name: 'presupuesto', 
+        value: req.body.presupuesto,
+        type: self.model.types.DECIMAL
+    },
+    {
+        name: 'saldo', 
+        value: req.body.saldo, 
+        type: self.model.types.DECIMAL
+    },
+    {
+        name: 'utilizado', 
+        value: req.body.utilizado, 
+        type: self.model.types.DECIMAL
+    },
+    {
+        name: 'montoOrden', 
+        value: req.body.montoOrden, 
+        type: self.model.types.DECIMAL
+    }];
+    
+    this.model.post('INS_TERMINO_OSUR_SP', params, function (error, result) {
+        //Callback
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}  
+
 module.exports = Trabajo;

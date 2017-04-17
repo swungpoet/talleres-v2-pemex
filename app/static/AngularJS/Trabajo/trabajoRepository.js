@@ -460,6 +460,24 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             })
+        },
+        terminoOsur: function (idTar,idOsur,idTrabajo,presupuesto,saldo,utilizado, montoOrden) {
+            return $http({
+                url: trabajoUrl + 'insertTerminOsur/',
+                method: "POST",
+                data: {
+                    idTar: idTar,
+                    idOsur: idOsur,
+                    idTrabajo: idTrabajo,
+                    presupuesto: presupuesto,
+                    saldo: saldo,
+                    utilizado: utilizado,
+                    montoOrden: montoOrden
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

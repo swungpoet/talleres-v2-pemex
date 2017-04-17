@@ -42,9 +42,11 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     	$scope.anexos1 = '';
     	$scope.anexos2 = '';
     	$scope.anexos3 = '';
+        $scope.anexos4 = '';
 		$scope.Anexo1($scope.zona,$scope.tar,1);
 		$scope.Anexo2($scope.zona,$scope.tar,2);
 		$scope.Anexo3($scope.zona,$scope.tar,3);
+        $scope.Anexo4($scope.zona,$scope.tar,4);
     }
 
     $scope.Anexo1 = function (idZona, idTar, anexo) {
@@ -107,12 +109,37 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             alertFactory.error('Error al recuperar la informacion solicitada');
         });
     }  
+
+    $scope.Anexo4 = function (idZona, idTar, anexo) {
+            $scope.cantidad4 = 0;
+            $scope.noReportes4 = 0;
+            $scope.diaMax4 = 0;
+            $('.dataTableAnexo4').DataTable().destroy();
+        reporteReclamacionRepository.getAnexos(idZona, idTar, anexo).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.anexos4 = result.data;
+                waitDrawDocument("dataTableAnexo4", "Anexo4");
+                $scope.noReportes4 = $scope.anexos4.length;
+                $scope.diaMax4 = $scope.anexos4[0].DiasAtraso;
+                for (var i = 0; i < $scope.anexos4.length; i++) {
+                    $scope.cantidad4 += ($scope.anexos4[i].precioOrden);     
+                }
+            }
+        }, function (error) {
+            alertFactory.error('Error al recuperar la informacion solicitada');
+        });
+    }  
+
     $scope.reporteReclamacion = function () {
         if (($scope.zona != undefined && $scope.zona != null) && ($scope.tar != undefined && $scope.tar != null)) {
                 $scope.class_buttonReclamacion = 'fa fa-spinner fa-spin';
-                    reporteReclamacionRepository.getInfoAnexos($scope.zona, $scope.tar,$scope.cantidad1,$scope.noReportes1,$scope.diaMax1,$scope.cantidad2,$scope.noReportes2,$scope.diaMax2,$scope.cantidad3,$scope.noReportes3,$scope.diaMax3).then(function (result) {
+                    reporteReclamacionRepository.getInfoAnexos($scope.zona, $scope.tar,$scope.cantidad1,$scope.noReportes1,$scope.diaMax1,$scope.cantidad2,$scope.noReportes2,$scope.diaMax2,$scope.cantidad3,$scope.noReportes3,$scope.diaMax3,$scope.cantidad4,$scope.noReportes4,$scope.diaMax4).then(function (result) {
                     //$('.dataTableAnexo3').DataTable().destroy();
                     if (result.data.length > 0) {
+                        result.data[0].noReportes1 == 0 ? result.data[0].noReportes1 = "" : result.data[0].noReportes1;
+                        result.data[0].noReportes2 == 0 ? result.data[0].noReportes2 = "" : result.data[0].noReportes2;
+                        result.data[0].noReportes3 == 0 ? result.data[0].noReportes3 = "" : result.data[0].noReportes3;
+                        result.data[0].noReportes4 == 0 ? result.data[0].noReportes4 = "" : result.data[0].noReportes4;
                     var data = {
                     "reclamacion": 
                         {
@@ -126,6 +153,9 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                             "noReportes3":result.data[0].noReportes3,
                             "cantidad3":result.data[0].cantidad3,
                             "diaMax3":result.data[0].diaMax3,
+                            "noReportes4":result.data[0].noReportes4,
+                            "cantidad4":result.data[0].cantidad4,
+                            "diaMax4":result.data[0].diaMax4,
                             "noReporte":result.data[0].noReporte,
                             "fechaLarga":result.data[0].fechaLarga,
                             "personaPemex":result.data[0].personaPemex,
@@ -181,6 +211,8 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                 indicePorOrdenar = 11;
             } else if (dataTable == 'dataTableAnexo3') {
                 indicePorOrdenar = 12;
+            } else if (dataTable == 'dataTableAnexo4') {
+                indicePorOrdenar = 11;
             } else {
                 indicePorOrdenar = 11;
             }
@@ -188,7 +220,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             $('.' + dataTable).DataTable({
                 order: [[indicePorOrdenar, 'desc']],
                 dom: '<"html5buttons"B>lTfgitp',
-                "iDisplayLength": 10,
+                "iDisplayLength": 5,
                 buttons: [
                     {
                         extend: 'excel',

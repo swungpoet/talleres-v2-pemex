@@ -17,7 +17,7 @@ registrationModule.factory('reporteReclamacionRepository', function ($http) {
                 }
             });
         },
-        getInfoAnexos: function (idZona,idTar,cantidad1,noReportes1,diaMax1,cantidad2,noReportes2,diaMax2,cantidad3,noReportes3,diaMax3) {
+        getInfoAnexos: function (idZona,idTar,cantidad1,noReportes1,diaMax1,cantidad2,noReportes2,diaMax2,cantidad3,noReportes3,diaMax3,cantidad4,noReportes4,diaMax4) {
             return $http({
                 url: reporteOrdenUrl + 'informacionAnexos/',
                 method: "GET",
@@ -32,7 +32,10 @@ registrationModule.factory('reporteReclamacionRepository', function ($http) {
                     diaMax2: diaMax2,
                     cantidad3: cantidad3,
                     noReportes3: noReportes3,
-                    diaMax3: diaMax3
+                    diaMax3: diaMax3,
+                    cantidad4: cantidad4,
+                    noReportes4: noReportes4,
+                    diaMax4: diaMax4
                 },
                 headers: {
                     'Content-Type': 'application/json'

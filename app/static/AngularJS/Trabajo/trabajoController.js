@@ -366,7 +366,8 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     //genera el formato para el certificado de conformidad
     $scope.generaCertificadoConformidadPDF = function (idTrabajo, idTAR, montoOrden, indice, idCita) {
         var saldo = 0;
-
+        $scope.terminotrabajo = idTrabajo;
+        $scope.terminomontoOrden = montoOrden;
         trabajoRepository.getCosecutivoZona(idTrabajo).then(function (res) {
           
             if (res.data.length > 0) {
@@ -425,8 +426,12 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
             }else{
 
                  trabajoRepository.getSaldoTar(idTAR, idCita).then(function (saldoRes) {
-
                     if (saldoRes.data.length > 0) {
+                        $scope.terminotar = saldoRes.data[0].idTAR;
+                        $scope.terminoosur = saldoRes.data[0].idOsur;
+                        $scope.terminopresupuesto = saldoRes.data[0].presupuesto;
+                        $scope.terminosaldo = saldoRes.data[0].saldo;
+                        $scope.terminoutilizado = saldoRes.data[0].utilizado;
                         saldo = saldoRes.data[0].saldo;
                         if (saldo > 0) {
                             saldo = saldo - montoOrden;
@@ -486,14 +491,16 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
                         } else {
 
+                            trabajoRepository.terminoOsur($scope.terminotar, $scope.terminoosur, $scope.terminotrabajo, $scope.terminopresupuesto, $scope.terminosaldo, $scope.terminoutilizado, $scope.terminomontoOrden).then(function (resp) {
+                                if (resp.data[0].ID  > 0) {}
+                            }, function (error) { alertFactory.error("Error al insertar Datos!!"); });
+
                             trabajoRepository.postEstatusOsur(idTAR, idCita).then(function (estatusOsur) {
-
                                 if (estatusOsur.data[0].id = 1) {
-
                                     //regresa
-                                    $scope.generaCertificadoConformidadPDF(idTrabajo, idTAR, montoOrden);
+                         $scope.generaCertificadoConformidadPDF(idTrabajo, idTAR, montoOrden, indice, idCita);
 
-                                } else {
+                         } else {
                                     //correo
 
                                     swal({
@@ -508,8 +515,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                         function (isConfirm) {
                                             if (isConfirm) {
                                                 trabajoRepository.enviarMailOsur(idTAR, idCita).then(function (mail) {
-
-                                                    if (mail.data[0].enviado == 1) {
+                                                    if (mail.data[0].enviado == 1) {  
                                                         swal("Proceso Realizado!");
                                                     }
                                                 }, function (error) {
@@ -518,8 +524,6 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                             }
                                         });
                                 }
-
-
                             }, function (error) {
                                 console.log('error ' + error)
                                 alertFactory.error("Error al cambiar el estatus ");
@@ -546,7 +550,6 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                             function (isConfirm) {
                                 if (isConfirm) {
                                     trabajoRepository.enviarMailOsur(idTAR, idCita).then(function (mail) {
-
                                         if (mail.data[0].enviado == 1) {
                                             swal("Proceso Realizado!");
                                         }
