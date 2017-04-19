@@ -53,6 +53,20 @@ registrationModule.factory('reporteReclamacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        callExternalAnexo: function (jsonData, idReclamacion, nombre) {
+            return $http({
+                url: cotizacionUrl + 'newAnexo/',
+                method: "POST",
+                data: {
+                    values: jsonData,
+                    idReclamacion: idReclamacion,
+                    nombre: nombre
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     }
 });

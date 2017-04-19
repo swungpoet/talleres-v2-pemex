@@ -6,6 +6,10 @@
 
 registrationModule.controller('reporteReclamacionController', function ($scope, alertFactory, $rootScope, localStorageService, reporteReclamacionRepository, dashBoardRepository, globalFactory) {
     $scope.userData = localStorageService.get('userData');
+    $scope.jsonDataAnexo1 = undefined;
+    $scope.jsonDataAnexo2 = undefined;
+    $scope.jsonDataAnexo3 = undefined;
+    $scope.jsonDataAnexo4 = undefined;
 
     //Inicializa la pagina
     $scope.init = function () {
@@ -39,6 +43,10 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     }
 
     $scope.callAnexos = function () {
+        $scope.jsonDataAnexo1 = undefined;
+        $scope.jsonDataAnexo2 = undefined;
+        $scope.jsonDataAnexo3 = undefined;
+        $scope.jsonDataAnexo4 = undefined;
     	$scope.anexos1 = '';
     	$scope.anexos2 = '';
     	$scope.anexos3 = '';
@@ -58,6 +66,39 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {
             	$scope.anexos1 = result.data;
             	waitDrawDocument("dataTableAnexo1", "Anexo1");	
+                var data1 = {};
+                var estructura1 = {};
+                var anexo1 = [];
+                    for (i = 0; i < result.data.length; i++) {
+                        var data1 = {
+                                    "Consecutivo":result.data[i].Consecutivo,
+                                    "Cliente":result.data[i].Cliente,
+                                    "NoOrden":result.data[i].NoOrden,
+                                    "NoEconomico":result.data[i].NoEconomico,
+                                    "Zona":result.data[i].Zona,
+                                    "TAR":result.data[i].TAR,
+                                    "folioCertificado":result.data[i].folioCertificado,
+                                    "FechaGeneracionCertificado":result.data[i].FechaGeneracionCertificado,
+                                    "fechaCargaCertificadoCliente":result.data[i].fechaCargaCertificadoCliente,
+                                    "precioOrden":result.data[i].precioOrden,
+                                    "fechaMaxFirma":result.data[i].fechaMaxFirma,
+                                    "DiasAtraso":result.data[i].DiasAtraso
+                                
+                            } 
+                        anexo1.push(data1);  
+                    } 
+
+                var estructura1 = {
+                    "anexo1": anexo1
+                }
+
+                $scope.jsonDataAnexo1 = {
+                    "template": {
+                        "name": "anexo1_rpt"
+                    },
+                    "data": estructura1
+                }
+
                 $scope.noReportes1 = $scope.anexos1.length;
                 $scope.diaMax1 = $scope.anexos1[0].DiasAtraso;
                 for (var i = 0; i < $scope.anexos1.length; i++) {
@@ -78,6 +119,38 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {   	
             	$scope.anexos2 = result.data;
                 waitDrawDocument("dataTableAnexo2", "Anexo2");
+                var data2 = {};
+                var estructura2 = {};
+                var anexo2 = [];
+                    for (i = 0; i < result.data.length; i++) {
+                        var data2 = {
+                                    "Consecutivo":result.data[i].Consecutivo,
+                                    "Cliente":result.data[i].Cliente,
+                                    "NoOrden":result.data[i].NoOrden,
+                                    "NoEconomico":result.data[i].NoEconomico,
+                                    "Zona":result.data[i].Zona,
+                                    "TAR":result.data[i].TAR,
+                                    "folioCertificado":result.data[i].folioCertificado,
+                                    "FechaGeneracionCertificado":result.data[i].FechaGeneracionCertificado,
+                                    "fechaCargaCertificadoCliente":result.data[i].fechaCargaCertificadoCliente,
+                                    "precioOrden":result.data[i].precioOrden,
+                                    "fechaMaxFirma":result.data[i].fechaMaxFirma,
+                                    "DiasAtraso":result.data[i].DiasAtraso
+                                
+                            } 
+                        anexo2.push(data2);  
+                    } 
+
+                var estructura2 = {
+                    "anexo2": anexo2
+                }
+
+                $scope.jsonDataAnexo2 = {
+                    "template": {
+                        "name": "anexo2_rpt"
+                    },
+                    "data": estructura2
+                }
                 $scope.noReportes2 = $scope.anexos2.length;
                 $scope.diaMax2 = $scope.anexos2[0].DiasAtraso;
                 for (var i = 0; i < $scope.anexos2.length; i++) {
@@ -99,6 +172,39 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {
             	$scope.anexos3 = result.data;
             	waitDrawDocument("dataTableAnexo3", "Anexo3");
+                var data3 = {};
+                var estructura3 = {};
+                var anexo3 = [];
+                    for (i = 0; i < result.data.length; i++) {
+                        var data3 = {
+                                    "Consecutivo":result.data[i].Consecutivo,
+                                    "Cliente":result.data[i].Cliente,
+                                    "NoOrden":result.data[i].NoOrden,
+                                    "NoEconomico":result.data[i].NoEconomico,
+                                    "Zona":result.data[i].Zona,
+                                    "TAR":result.data[i].TAR,
+                                    "Copade":result.data[i].Copade,
+                                    "folioCertificado":result.data[i].folioCertificado,
+                                    "FechaGeneracionCertificado":result.data[i].FechaGeneracionCertificado,
+                                    "fechaCargaCertificadoCliente":result.data[i].fechaCargaCertificadoCliente,
+                                    "precioOrden":result.data[i].precioOrden,
+                                    "fechaMaxFirma":result.data[i].fechaMaxFirma,
+                                    "DiasAtraso":result.data[i].DiasAtraso
+                                
+                            } 
+                        anexo3.push(data3);  
+                    } 
+
+                var estructura3 = {
+                    "anexo3": anexo3
+                }
+
+                $scope.jsonDataAnexo3 = {
+                    "template": {
+                        "name": "anexo3_rpt"
+                    },
+                    "data": estructura3
+                }
                 $scope.noReportes3 = $scope.anexos3.length;
                 $scope.diaMax3 = $scope.anexos3[0].DiasAtraso;
                 for (var i = 0; i < $scope.anexos3.length; i++) {
@@ -119,6 +225,38 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {
                 $scope.anexos4 = result.data;
                 waitDrawDocument("dataTableAnexo4", "Anexo4");
+                var data4 = {};
+                var estructura4 = {};
+                var anexo4 = [];
+                    for (i = 0; i < result.data.length; i++) {
+                        var data4 = {
+                                    "Consecutivo":result.data[i].Consecutivo,
+                                    "Cliente":result.data[i].Cliente,
+                                    "NoOrden":result.data[i].NoOrden,
+                                    "NoEconomico":result.data[i].NoEconomico,
+                                    "Zona":result.data[i].Zona,
+                                    "TAR":result.data[i].TAR,
+                                    "folioCertificado":result.data[i].folioCertificado,
+                                    "FechaTerminoOsur":result.data[i].FechaTerminoOsur,
+                                    "fechaOsurActiva":result.data[i].fechaOsurActiva,
+                                    "precioOrden":result.data[i].precioOrden,
+                                    "fechaMaxFirma":result.data[i].fechaMaxFirma,
+                                    "DiasAtraso":result.data[i].DiasAtraso
+                                
+                            } 
+                        anexo4.push(data4);  
+                    } 
+
+                var estructura4 = {
+                    "anexo4": anexo4
+                }
+
+                $scope.jsonDataAnexo4 = {
+                    "template": {
+                        "name": "anexo4_rpt"
+                    },
+                    "data": estructura4
+                }
                 $scope.noReportes4 = $scope.anexos4.length;
                 $scope.diaMax4 = $scope.anexos4[0].DiasAtraso;
                 for (var i = 0; i < $scope.anexos4.length; i++) {
@@ -179,20 +317,79 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
 
                         reporteReclamacionRepository.callExternalPdf(jsonData).then(function (result) {               
                             setTimeout(function () {
-                                  var url = $rootScope.vIpServer + result.data;
+                                  $scope.idReclamacionAnexos = result.data.idReclamacion;
+                                  var url = $rootScope.vIpServer + result.data.fileresponse;
                                   var a = document.createElement('a');
                                   a.href = url;
                                   a.download = 'reporteReclamacion';
-                                  //a.target = '_blank';
                                   a.click();
-                                     $scope.$apply( function () { 
-                                        $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
-                                     });
-                                  
-                               //  location.href = '/tallercita';
-                             }, 5000);                          
+                                  if($scope.jsonDataAnexo1 != undefined){
+                                            reporteReclamacionRepository.callExternalAnexo($scope.jsonDataAnexo1,$scope.idReclamacionAnexos,'Anexo1').then(function (result) {               
+                                                setTimeout(function () {
+                                                      var url = $rootScope.vIpServer + result.data;
+                                                      var a = document.createElement('a');
+                                                      a.href = url;
+                                                      a.download = 'Anexo1';
+                                                      //a.target = '_blank';
+                                                      a.click();
+                                                      $scope.jsonDataAnexo1 = undefined;
+                                                         $scope.$apply( function () { 
+                                                            $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
+                                                         });
+                                                 }, 4000);                          
+                                            });
+                                        }
+                                    if($scope.jsonDataAnexo2 != undefined){
+                                            reporteReclamacionRepository.callExternalAnexo($scope.jsonDataAnexo2,$scope.idReclamacionAnexos,'Anexo2').then(function (result) {               
+                                                setTimeout(function () {
+                                                      var url = $rootScope.vIpServer + result.data;
+                                                      var a = document.createElement('a');
+                                                      a.href = url;
+                                                      a.download = 'Anexo2';
+                                                      //a.target = '_blank';
+                                                      a.click();
+                                                      $scope.jsonDataAnexo2 = undefined;
+                                                         $scope.$apply( function () { 
+                                                            $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
+                                                         });
+                                                 }, 4000);                          
+                                            });
+                                        }
+                                    if($scope.jsonDataAnexo3 != undefined){
+                                            reporteReclamacionRepository.callExternalAnexo($scope.jsonDataAnexo3,$scope.idReclamacionAnexos,'Anexo3').then(function (result) {               
+                                                setTimeout(function () {
+                                                      var url = $rootScope.vIpServer + result.data;
+                                                      var a = document.createElement('a');
+                                                      a.href = url;
+                                                      a.download = 'Anexo3';
+                                                      //a.target = '_blank';
+                                                      a.click();
+                                                      $scope.jsonDataAnexo3 = undefined;
+                                                         $scope.$apply( function () { 
+                                                            $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
+                                                         });
+                                                 }, 4000);                          
+                                            });
+                                        }
+                                    if($scope.jsonDataAnexo4 != undefined){
+                                            reporteReclamacionRepository.callExternalAnexo($scope.jsonDataAnexo4,$scope.idReclamacionAnexos,'Anexo4').then(function (result) {               
+                                                setTimeout(function () {
+                                                      var url = $rootScope.vIpServer + result.data;
+                                                      var a = document.createElement('a');
+                                                      a.href = url;
+                                                      a.download = 'Anexo4';
+                                                      //a.target = '_blank';
+                                                      a.click();
+                                                      $scope.jsonDataAnexo4 = undefined;
+                                                         $scope.$apply( function () { 
+                                                            $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
+                                                         });
+                                                 }, 4000);                          
+                                            });
+                                        }
+                             }, 3000);                          
                         });
-                   
+
                 }, function (error) {
                     alertFactory.error('Error al recuperar la informacion solicitada');
                 });

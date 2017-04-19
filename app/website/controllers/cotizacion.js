@@ -1416,15 +1416,68 @@ Cotizacion.prototype.post_newpdfReclamacion = function(req, res, next) {
 
     var http = require('http'),
         fs = require('fs');
+    var dataResponse = {};
     var idReclamacion = req.body.values.data.reclamacion.idReclamacion;
     var filename = 'Reclamacion_'+idReclamacion;
-
     var filePath = direclamacion + idReclamacion +'/'+ filename + '.pdf';
     var fileresponse = '/uploads/reclamacion/' + idReclamacion +'/'+ filename + '.pdf';
+    var dataResponse = {
+                "fileresponse":fileresponse,
+                "idReclamacion":idReclamacion     
+        } 
     if(idReclamacion != undefined || idReclamacion != null){
         if (!fs.existsSync(direclamacion + idReclamacion))
             fs.mkdirSync(direclamacion + idReclamacion);
     }
+    var options = {
+        "method": "POST",
+        "hostname": "189.204.141.193",
+        "port": "5488",
+        "path": "/api/report",
+        "headers": {
+            "content-type": "application/json"
+        }
+    };
+
+    var request = http.request(options, function(response) {
+        var chunks = [];
+
+        response.on("data", function(chunk) {
+            chunks.push(chunk);
+        });
+
+        response.on("end", function() {
+            var body = Buffer.concat(chunks);
+
+            fs.writeFile(filePath, body, function(err) {
+                if (err) return console.log(err);
+                //console.log('Archivo creado');
+            });
+
+        });
+    });
+
+    request.write(JSON.stringify(req.body.values));
+    request.end();
+
+    var self = this;
+
+    self.view.expositor(res, {
+        error: null,
+        //result: filename
+        result: dataResponse
+    });
+};
+
+Cotizacion.prototype.post_newAnexo = function(req, res, next) {
+    var http = require('http'),
+        fs = require('fs');
+
+    var idReclamacion = req.body.idReclamacion;
+    var filename = req.body.nombre + '_' + idReclamacion;
+    var filePath = direclamacion + idReclamacion +'/'+ filename + '.xlsx';
+    var fileresponse = '/uploads/reclamacion/'+ idReclamacion +'/'+ filename + '.xlsx';
+
     var options = {
         "method": "POST",
         "hostname": "189.204.141.193",
