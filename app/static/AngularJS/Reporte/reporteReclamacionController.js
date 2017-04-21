@@ -257,6 +257,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                     },
                     "data": estructura4
                 }
+                $scope.idOsur4 = result.data[0].idOsur;
                 $scope.noReportes4 = $scope.anexos4.length;
                 $scope.diaMax4 = $scope.anexos4[0].DiasAtraso;
                 for (var i = 0; i < $scope.anexos4.length; i++) {
@@ -269,15 +270,16 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     }  
 
     $scope.reporteReclamacion = function () {
-        if (($scope.zona != undefined && $scope.zona != null) && ($scope.tar != undefined && $scope.tar != null)) {
+        if (($scope.zona != undefined && $scope.zona != null)) {
                 $scope.class_buttonReclamacion = 'fa fa-spinner fa-spin';
-                    reporteReclamacionRepository.getInfoAnexos($scope.zona, $scope.tar,$scope.cantidad1,$scope.noReportes1,$scope.diaMax1,$scope.cantidad2,$scope.noReportes2,$scope.diaMax2,$scope.cantidad3,$scope.noReportes3,$scope.diaMax3,$scope.cantidad4,$scope.noReportes4,$scope.diaMax4).then(function (result) {
+                    reporteReclamacionRepository.getInfoAnexos($scope.zona, $scope.tar,$scope.cantidad1,$scope.noReportes1,$scope.diaMax1,$scope.cantidad2,$scope.noReportes2,$scope.diaMax2,$scope.cantidad3,$scope.noReportes3,$scope.diaMax3,$scope.cantidad4,$scope.noReportes4,$scope.diaMax4,$scope.idOsur4).then(function (result) {
                     //$('.dataTableAnexo3').DataTable().destroy();
                     if (result.data.length > 0) {
                         result.data[0].noReportes1 == 0 ? result.data[0].noReportes1 = "" : result.data[0].noReportes1;
                         result.data[0].noReportes2 == 0 ? result.data[0].noReportes2 = "" : result.data[0].noReportes2;
                         result.data[0].noReportes3 == 0 ? result.data[0].noReportes3 = "" : result.data[0].noReportes3;
                         result.data[0].noReportes4 == 0 ? result.data[0].noReportes4 = "" : result.data[0].noReportes4;
+                        result.data[0].TAR == null ? result.data[0].TAR = "" : result.data[0].TAR;
                     var data = {
                     "reclamacion": 
                         {
@@ -299,10 +301,11 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                             "personaPemex":result.data[0].personaPemex,
                             "personaPemexA":result.data[0].personaPemexA,
                             "tar":result.data[0].TAR,
+                            "zona":result.data[0].zona,
                             "representanteLegal":result.data[0].representanteLegal,
                             "nombreSAD":result.data[0].nombreSAD,
                             "nombreGAD":result.data[0].nombreGAD,
-                            "letraGAD":result.data[0].zona,
+                            "letraGAD":result.data[0].letraGAD,
                             "nombreTAD":result.data[0].nombreTAD
                         }
                     }   
@@ -394,7 +397,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                     alertFactory.error('Error al recuperar la informacion solicitada');
                 });
         }else{
-        	alertFactory.info('Para generar el reporte de reclamacion es necesario seleccionar una TAR');
+        	alertFactory.info('Para generar el reporte de reclamacion es necesario seleccionar una Zona');
         }
     }
 

@@ -16,3 +16,9 @@
 .sumRepUtilidad{
     margin-top: 300px !important;
 }
+
+.etiquetaTotalesFlex{
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 85%;
+}
