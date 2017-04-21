@@ -185,6 +185,16 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "Local
             controller: 'reporteReclamacionController'
         });
 
+        $routeProvider.when('/resumenReclamacion', {
+            templateUrl: 'AngularJS/Templates/resumenReclamacion.html',
+            controller: 'resumenReclamacionController'
+        });
+
+        $routeProvider.when('/historialReclamacion', {
+            templateUrl: 'AngularJS/Templates/historialReclamacion.html',
+            controller: 'historialReclamacionController'
+        });
+
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false

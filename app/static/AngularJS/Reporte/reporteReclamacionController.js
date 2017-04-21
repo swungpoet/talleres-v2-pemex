@@ -59,13 +59,20 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
 
     $scope.Anexo1 = function (idZona, idTar, anexo) {
             $scope.cantidad1 = 0;
+            $scope.diaTotal1 = 0;
             $scope.noReportes1 = 0;
             $scope.diaMax1 = 0;
             $('.dataTableAnexo1').DataTable().destroy();
         reporteReclamacionRepository.getAnexos(idZona, idTar, anexo).then(function (result) {
             if (result.data.length > 0) {
             	$scope.anexos1 = result.data;
-            	waitDrawDocument("dataTableAnexo1", "Anexo1");	
+            	waitDrawDocument("dataTableAnexo1", "Anexo1");
+                $scope.noReportes1 = $scope.anexos1.length;
+                $scope.diaMax1 = $scope.anexos1[0].DiasAtraso;
+                for (var i = 0; i < $scope.anexos1.length; i++) {
+                    $scope.cantidad1 += ($scope.anexos1[i].precioOrden);
+                    $scope.diaTotal1 += ($scope.anexos1[i].DiasAtraso);      
+                }	
                 var data1 = {};
                 var estructura1 = {};
                 var anexo1 = [];
@@ -82,14 +89,18 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                                     "fechaCargaCertificadoCliente":result.data[i].fechaCargaCertificadoCliente,
                                     "precioOrden":result.data[i].precioOrden,
                                     "fechaMaxFirma":result.data[i].fechaMaxFirma,
-                                    "DiasAtraso":result.data[i].DiasAtraso
-                                
-                            } 
+                                    "DiasAtraso":result.data[i].DiasAtraso            
+                                    } 
                         anexo1.push(data1);  
                     } 
-
+                        var detalle1 = {
+                                    "noReportes":$scope.noReportes1,
+                                    "cantidad":$scope.cantidad1,
+                                    "diaTotal":$scope.diaTotal1 
+                                    } 
                 var estructura1 = {
-                    "anexo1": anexo1
+                    "anexo1": anexo1,
+                    "detalle1": detalle1
                 }
 
                 $scope.jsonDataAnexo1 = {
@@ -97,12 +108,6 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                         "name": "anexo1_rpt"
                     },
                     "data": estructura1
-                }
-
-                $scope.noReportes1 = $scope.anexos1.length;
-                $scope.diaMax1 = $scope.anexos1[0].DiasAtraso;
-                for (var i = 0; i < $scope.anexos1.length; i++) {
-                    $scope.cantidad1 += ($scope.anexos1[i].precioOrden);     
                 }
             }
         }, function (error) {
@@ -112,6 +117,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
 
     $scope.Anexo2 = function (idZona, idTar, anexo) {
             $scope.cantidad2 = 0;
+            $scope.diaTotal2 = 0;
             $scope.noReportes2 = 0;
             $scope.diaMax2 = 0;
             $('.dataTableAnexo2').DataTable().destroy();
@@ -119,6 +125,12 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {   	
             	$scope.anexos2 = result.data;
                 waitDrawDocument("dataTableAnexo2", "Anexo2");
+                $scope.noReportes2 = $scope.anexos2.length;
+                $scope.diaMax2 = $scope.anexos2[0].DiasAtraso;
+                for (var i = 0; i < $scope.anexos2.length; i++) {
+                    $scope.cantidad2 += ($scope.anexos2[i].precioOrden); 
+                    $scope.diaTotal2 += ($scope.anexos2[i].DiasAtraso);     
+                }
                 var data2 = {};
                 var estructura2 = {};
                 var anexo2 = [];
@@ -140,9 +152,15 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                             } 
                         anexo2.push(data2);  
                     } 
+                        var detalle2 = {
+                            "noReportes":$scope.noReportes2,
+                            "cantidad":$scope.cantidad2,
+                            "diaTotal":$scope.diaTotal2 
+                        } 
 
                 var estructura2 = {
-                    "anexo2": anexo2
+                    "anexo2": anexo2,
+                    "detalle2": detalle2
                 }
 
                 $scope.jsonDataAnexo2 = {
@@ -151,12 +169,6 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                     },
                     "data": estructura2
                 }
-                $scope.noReportes2 = $scope.anexos2.length;
-                $scope.diaMax2 = $scope.anexos2[0].DiasAtraso;
-                for (var i = 0; i < $scope.anexos2.length; i++) {
-                    $scope.cantidad2 += ($scope.anexos2[i].precioOrden);     
-                }
-            	
             }
         }, function (error) {
             alertFactory.error('Error al recuperar la informacion solicitada');
@@ -165,6 +177,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
 
     $scope.Anexo3 = function (idZona, idTar, anexo) {
             $scope.cantidad3 = 0;
+            $scope.diaTotal3 = 0;
             $scope.noReportes3 = 0;
             $scope.diaMax3 = 0;
             $('.dataTableAnexo3').DataTable().destroy();
@@ -172,6 +185,12 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {
             	$scope.anexos3 = result.data;
             	waitDrawDocument("dataTableAnexo3", "Anexo3");
+                $scope.noReportes3 = $scope.anexos3.length;
+                $scope.diaMax3 = $scope.anexos3[0].DiasAtraso;
+                for (var i = 0; i < $scope.anexos3.length; i++) {
+                    $scope.cantidad3 += ($scope.anexos3[i].precioOrden); 
+                    $scope.diaTotal3 += ($scope.anexos3[i].DiasAtraso);     
+                }
                 var data3 = {};
                 var estructura3 = {};
                 var anexo3 = [];
@@ -194,9 +213,15 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                             } 
                         anexo3.push(data3);  
                     } 
+                        var detalle3 = {
+                            "noReportes":$scope.noReportes3,
+                            "cantidad":$scope.cantidad3,
+                            "diaTotal":$scope.diaTotal3 
+                        } 
 
                 var estructura3 = {
-                    "anexo3": anexo3
+                    "anexo3": anexo3,
+                    "detalle3": detalle3
                 }
 
                 $scope.jsonDataAnexo3 = {
@@ -204,11 +229,6 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                         "name": "anexo3_rpt"
                     },
                     "data": estructura3
-                }
-                $scope.noReportes3 = $scope.anexos3.length;
-                $scope.diaMax3 = $scope.anexos3[0].DiasAtraso;
-                for (var i = 0; i < $scope.anexos3.length; i++) {
-                    $scope.cantidad3 += ($scope.anexos3[i].precioOrden);     
                 }
             }
         }, function (error) {
@@ -218,6 +238,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
 
     $scope.Anexo4 = function (idZona, idTar, anexo) {
             $scope.cantidad4 = 0;
+            $scope.diaTotal4 = 0;
             $scope.noReportes4 = 0;
             $scope.diaMax4 = 0;
             $('.dataTableAnexo4').DataTable().destroy();
@@ -225,6 +246,13 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
             if (result.data.length > 0) {
                 $scope.anexos4 = result.data;
                 waitDrawDocument("dataTableAnexo4", "Anexo4");
+                $scope.idOsur4 = result.data[0].idOsur;
+                $scope.noReportes4 = $scope.anexos4.length;
+                $scope.diaMax4 = $scope.anexos4[0].DiasAtraso;
+                for (var i = 0; i < $scope.anexos4.length; i++) {
+                    $scope.cantidad4 += ($scope.anexos4[i].precioOrden);   
+                    $scope.diaTotal4 += ($scope.anexos4[i].DiasAtraso);   
+                }
                 var data4 = {};
                 var estructura4 = {};
                 var anexo4 = [];
@@ -246,9 +274,14 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                             } 
                         anexo4.push(data4);  
                     } 
-
+                        var detalle4 = {
+                            "noReportes":$scope.noReportes4,
+                            "cantidad":$scope.cantidad4,
+                            "diaTotal":$scope.diaTotal4 
+                        } 
                 var estructura4 = {
-                    "anexo4": anexo4
+                    "anexo4": anexo4,
+                    "detalle4": detalle4
                 }
 
                 $scope.jsonDataAnexo4 = {
@@ -256,12 +289,6 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                         "name": "anexo4_rpt"
                     },
                     "data": estructura4
-                }
-                $scope.idOsur4 = result.data[0].idOsur;
-                $scope.noReportes4 = $scope.anexos4.length;
-                $scope.diaMax4 = $scope.anexos4[0].DiasAtraso;
-                for (var i = 0; i < $scope.anexos4.length; i++) {
-                    $scope.cantidad4 += ($scope.anexos4[i].precioOrden);     
                 }
             }
         }, function (error) {

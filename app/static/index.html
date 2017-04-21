@@ -91,7 +91,6 @@
                 <li>
                     <a href="#" ng-click="showChat = 0"><i class="fa fa-line-chart"></i> <span class="nav-label">Reporte</span><span class="label label-warning pull-right"></span></a>
                     <ul class="nav nav-second-level">
-                        <li ng-hide="true"><a href="/reporteReclamacion">Reporte Reclamacion</a></li>
                         <li><a href="/reporte" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">Reporte Antigüedad de Saldos</a></li>
                         <li><a href="/reportecita">Reporte Citas</a></li>
                         <li><a href="/reporteorden">Reporte Órdenes</a></li>
@@ -124,6 +123,14 @@
                 </li>
                 <li ng-show="userData.idUsuario == 190  || userData.idUsuario == 213">
                     <a href="usuarioTar" ng-click="showChat = 0"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">Control</span></a>
+                </li>
+                <li ng-show="userData.idUsuario == 189">
+                    <a href="#" ng-click="showChat = 0"><i class="fa fa-gavel"></i> <span class="nav-label">Reclamación</span><span class="label label-warning pull-right"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/reporteReclamacion">Reporte Reclamación</a></li>
+                        <li><a href="/resumenReclamacion">Resumen Reclamación</a></li>
+                        <li><a href="/historialReclamacion">Historial Reclamación</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="Tutorial" ng-click="showChat = 0"><i class="glyphicon glyphicon-facetime-video"></i> <span class="nav-label">Tutorial</span></a>
@@ -356,6 +363,11 @@
     <script src="AngularJS/UsuarioTar/usuariotarController.js"></script>
     <script src="AngularJS/Reporte/reporteReclamacionRepository.js"></script>
     <script src="AngularJS/Reporte/reporteReclamacionController.js"></script>
+    <script src="AngularJS/Reclamacion/resumenReclamacionController.js"></script>
+    <script src="AngularJS/Reclamacion/resumenReclamacionRepository.js"></script>
+    <script src="AngularJS/Reclamacion/historialReclamacionController.js"></script>
+    <script src="AngularJS/Reclamacion/historialReclamacionRepository.js"></script>
+
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/inspinia/slimscroll/jquery.slimscroll.min.js"></script>
