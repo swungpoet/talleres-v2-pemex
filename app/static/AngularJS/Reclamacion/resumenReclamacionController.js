@@ -43,6 +43,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
 	            if (result.data.length > 0) {
 	                $scope.resumenes = result.data;
 					waitDrawDocument("dataTableResumen", "Resumen Certificados");
+                    alertFactory.success('Resumen encontrado correctamente');
 	            }
 	        }, function (error) {
 	            alertFactory.error('No se pudo recuperar información de las zonas');

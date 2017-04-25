@@ -62,8 +62,10 @@ registrationModule.controller('historialReclamacionController', function ($scope
         historialReclamacionRepository.getReclamacion($scope.zona,$scope.tar,$scope.fechaInicio,$scope.fechaFin).then(function (result) {
             if (result.data.length > 0) {
                 $scope.reportes = result.data;
-                alertFactory.success('Datos encontrados');
+                alertFactory.success('Historial recuperado correctamente');
 				globalFactory.waitDrawDocument("dataTableReclamacion", "Reclamación");
+            }else{
+                alertFactory.info('No se encontro información !');
             }
         }, function (error) {
             alertFactory.error('No se pudo recuperar información de las zonas');
