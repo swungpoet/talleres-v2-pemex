@@ -98,7 +98,7 @@
                         <li ng-hide="userData.idTipoUsuario == 4"><a href="/reporteporcobrar">Reporte Órdenes por Cobrar</a></li>
                         <li ng-show="userData.idTipoUsuario == 1"><a href="/reporteutilidad">Reporte Márgenes de Utilidad</a></li>
                         <li ng-show="userData.esProveedor == 0"><a href="/reporteunidad">Historial de la unidad</a></li>
-                        <li><a href="/reporteCertificadoConformidad" ng-hide="userData.idTipoUsuario == 4 || userData.idTipoUsuario == 3">Certificado Conformidad</a></li>
+                        <li><a href="/reporteCertificadoConformidad" ng-hide="userData.idTipoUsuario == 3">Certificado Conformidad</a></li>
                     </ul>
                 </li>
                 <li ng-show="userData.idTipoUsuario == 1">
@@ -254,7 +254,8 @@
         </div>
     </div>
 
-
+    <!-- Libreria de JSZip -->
+   <script src="js/libs/JSZip/jszip.js"></script> 
 
     <!--Librearias JQuery y Bootstrap-->
     <script src="js/libs/jQuery/jquery-2.1.4.js"></script>

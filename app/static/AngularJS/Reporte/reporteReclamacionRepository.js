@@ -68,6 +68,18 @@ registrationModule.factory('reporteReclamacionRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        callZip: function (value) {
+            return $http({
+                url: cotizacionUrl + 'generaZip/',
+                method: "POST",
+                data: {
+                    values: value
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     }
 });

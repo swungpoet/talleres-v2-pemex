@@ -14,6 +14,11 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
         $scope.getCertificados(null, null, null, null);
         $scope.devuelveZonas();
         $scope.devuelveTars();
+        $('.ocultaMontoOrdenCliente').show();
+        if ($scope.userData.idTipoUsuario == 4) {
+            $('.ocultaMontoOrdenCliente').hide();
+        }
+
     }
 
     //Obtiene todas las citas no canceladas generadas para cierta unidad
@@ -24,6 +29,9 @@ registrationModule.controller('reporteCertificadoConformidadController', functio
                 $scope.certificados = certificados.data;
                 alertFactory.success("Certificados Cargados");
                 globalFactory.waitDrawDocument("dataTableCertificadoConformidad", "CertificadoConformidad");
+                    if ($scope.userData.idTipoUsuario == 4) {
+                        $('.ocultaMontoOrdenCliente').hide();
+                    }
             } else {
                 $scope.certificados = [];
                 alertFactory.info("No se encontraron certificados generados con los criterios de búsqueda");

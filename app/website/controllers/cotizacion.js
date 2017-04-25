@@ -5,6 +5,8 @@ multer = require('multer');
 var idTipoArchivo;
 var nameFile;
 var fs = require('fs');
+var JSZip = require("jszip");
+var zip = new JSZip();
 var totalFiles = 0;
 var dirname = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/files/';
 var direclamacion = 'C:/Produccion/Talleres/talleres-v2-pemex/app/static/uploads/reclamacion/';
@@ -1517,4 +1519,108 @@ Cotizacion.prototype.post_newAnexo = function(req, res, next) {
         result: fileresponse
     });
 };
+
+
+Cotizacion.prototype.get_evidenciasByReclamacion = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [
+        {
+            name: 'idReclamacion',
+            value: req.query.idReclamacion,
+            type: self.model.types.DECIMAL
+        },
+        {
+            name: 'idTipoUsuario',
+            value: req.query.idTipoUsuario,
+            type: self.model.types.DECIMAL
+        }
+    ];
+
+    var evidenciasByReclamacion = [];
+
+    cargaEvidencias(req.query.idReclamacion);
+
+    this.model.listaEvidencia(evidenciasByReclamacion, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+
+    function cargaEvidencias(idReclamacion) {
+        var rutaPrincipal = direclamacion + idReclamacion;
+        var carpetas = fs.readdirSync(rutaPrincipal);
+        carpetas.forEach(function (documento) {
+            var ext = obtenerExtArchivo(documento);
+            var idTipoArchivo = obtenerTipoArchivo(ext);
+            var fecha = fs.statSync(rutaPrincipal + '/' + documento).mtime.getTime();
+            evidenciasByReclamacion.push({
+                idTipoEvidencia: 1,
+                idTipoArchivo: idTipoArchivo,
+                nombreArchivo: documento,
+                fecha: fecha,
+                carpeta: 'reclamacion'
+            });
+        });
+    }
+}
+
+
+
+Cotizacion.prototype.post_generaZip = function(req, res, next) {  
+    var object = {};
+
+    var params = {};
+
+    var self = this;
+
+    var nombreArchivos = [];
+    var files = [];
+    var extension = '.pdf';
+    var file = req.body.values;
+
+
+    var response = [];
+        var rutaPrincipal = dirCopades;
+        var carpetas = fs.readdirSync(rutaPrincipal);
+        carpetas.forEach(function (documento) {
+            var ext = obtenerExtArchivo(documento);
+            var idTipoArchivo = obtenerTipoArchivo(ext);
+        create_zip(dirCopades + documento, documento);
+        });    
+
+    function create_zip(file, name) {
+        var contentPromise = new JSZip.external.Promise(function(resolve, reject) {
+            fs.readFile(file, function(err, data) {
+                if (err) {
+                   // reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+        zip.file(name, contentPromise);
+    }
+
+    zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true }).pipe(fs.createWriteStream(dirCopades + 'prueba' + '.zip'))
+        .on('finish', function() {
+            console.log("write");
+        });
+
+
+    this.model.listaEvidencia(dirCopades, function (error, result) {
+        object.error = error;
+        object.result = result;
+        self.view.expositor(res, object);
+    });
+}
+
+
 module.exports = Cotizacion;

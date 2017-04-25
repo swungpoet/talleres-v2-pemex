@@ -10,13 +10,36 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     $scope.jsonDataAnexo2 = undefined;
     $scope.jsonDataAnexo3 = undefined;
     $scope.jsonDataAnexo4 = undefined;
+    $scope.trabajos = {};
+    $scope.idtrabajos = [];
+    $scope.idtrabajosAnexo = {};
 
     //Inicializa la pagina
     $scope.init = function () {
+        // $scope.generarZip();
 		$scope.devuelveZonas();
+        $scope.reclamacion = localStorageService.get('objResumen');
+        if($scope.reclamacion != null){
+           $scope.zona = $scope.reclamacion.idZona;
+           $scope.tar = $scope.reclamacion.idTAR;
+           $scope.devuelveTars($scope.zona);
+             $scope.callAnexos();
+        }
     }
 
-        $scope.devuelveTars = function (zona) {
+/*    $scope.generarZip = function () {
+        var data = [];
+        var data = [{"cop":'COPADE_1'},{"cop":'COPADE_9'}]
+        reporteReclamacionRepository.callZip(data).then(function (tars) {
+                if (tars.data.length > 0) {
+
+                }
+        }, function (error) {
+             alertFactory.error('No se pudo recuperar información de las TARs');
+        });
+    }*/
+
+    $scope.devuelveTars = function (zona) {
         if (zona != null) {
             dashBoardRepository.getTars(zona).then(function (tars) {
                 if (tars.data.length > 0) {
@@ -43,6 +66,8 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     }
 
     $scope.callAnexos = function () {
+        $scope.trabajos = {};
+        $scope.idtrabajos = [];
         $scope.jsonDataAnexo1 = undefined;
         $scope.jsonDataAnexo2 = undefined;
         $scope.jsonDataAnexo3 = undefined;
@@ -55,6 +80,9 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
 		$scope.Anexo2($scope.zona,$scope.tar,2);
 		$scope.Anexo3($scope.zona,$scope.tar,3);
         $scope.Anexo4($scope.zona,$scope.tar,4);
+        if($scope.reclamacion != null){
+            localStorageService.remove('objResumen');
+        }
     }
 
     $scope.Anexo1 = function (idZona, idTar, anexo) {
@@ -71,7 +99,14 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                 $scope.diaMax1 = $scope.anexos1[0].DiasAtraso;
                 for (var i = 0; i < $scope.anexos1.length; i++) {
                     $scope.cantidad1 += ($scope.anexos1[i].precioOrden);
-                    $scope.diaTotal1 += ($scope.anexos1[i].DiasAtraso);      
+                    $scope.diaTotal1 += ($scope.anexos1[i].DiasAtraso); 
+                      $scope.trabajos = {
+                                "idTrabajo":result.data[i].idTrabajo         
+                                }
+                    $scope.idtrabajos.push($scope.trabajos); 
+                    $scope.idtrabajosAnexo = {
+                        "idtrabajoanexo1": $scope.idtrabajos
+                    }
                 }	
                 var data1 = {};
                 var estructura1 = {};
@@ -307,6 +342,25 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                         result.data[0].noReportes3 == 0 ? result.data[0].noReportes3 = "" : result.data[0].noReportes3;
                         result.data[0].noReportes4 == 0 ? result.data[0].noReportes4 = "" : result.data[0].noReportes4;
                         result.data[0].TAR == null ? result.data[0].TAR = "" : result.data[0].TAR;
+                        
+                        if($scope.jsonDataAnexo1 != undefined){
+                            $scope.jsonDataAnexo1.data.detalle1.noReporte =  result.data[0].noReporte;
+                            $scope.jsonDataAnexo1.data.detalle1.fecha = result.data[0].fecha;
+                        }
+                        if($scope.jsonDataAnexo2 != undefined){
+                            $scope.jsonDataAnexo2.data.detalle2.noReporte =  result.data[0].noReporte;
+                            $scope.jsonDataAnexo2.data.detalle2.fecha = result.data[0].fecha;
+                        }
+                        if($scope.jsonDataAnexo3 != undefined){
+                            $scope.jsonDataAnexo3.data.detalle3.noReporte =  result.data[0].noReporte;
+                            $scope.jsonDataAnexo3.data.detalle3.fecha = result.data[0].fecha;
+                        }
+                        if($scope.jsonDataAnexo4 != undefined){
+                            $scope.jsonDataAnexo4.data.detalle4.noReporte =  result.data[0].noReporte;
+                            $scope.jsonDataAnexo4.data.detalle4.fecha = result.data[0].fecha;
+                        }
+
+
                     var data = {
                     "reclamacion": 
                         {

@@ -55,7 +55,7 @@
                                         <th>TAR</th>
                                         <th>Taller</th>
                                         <th>Folio de Certificado</th>
-                                        <th>Costo de la Orden sin IVA</th>
+                                        <th ng-show="userData.idTipoUsuario != 4" class="ocultaMontoOrdenCliente">Costo de la Orden sin IVA</th> 
                                         <th>Precio de la Orden sin IVA</th>
                                         <th>Fecha de Emisión</th>
                                         <th>OSUR</th>
@@ -74,7 +74,7 @@
                                         <td>{{ordenverificada.TAR}}</td>
                                         <td>{{ordenverificada.razonSocial}}</td>
                                         <td>{{ordenverificada.folioCertificado}}</td>
-                                        <td>{{ordenverificada.montoOrden | currency: "$"}}</td>
+                                        <td ng-show="userData.idTipoUsuario != 4" class="ocultaMontoOrdenCliente">{{ordenverificada.montoOrden | currency: "$"}}</td> 
                                         <td>{{ordenverificada.precioOrden | currency: "$"}}</td>
                                         <td>{{ordenverificada.fechaGeneracion | date:'dd-MM-yyyy HH:mm'}}</td>
                                         <td>{{ordenverificada.numeroOsur}}</td>
@@ -83,7 +83,6 @@
                                         <td>{{ordenverificada.Copade}}</td>
                                         <!-- <td>
                                             <button class="btn btn-info" type="button" ng-click="aprobarTrabajo(ordenverificada, 1)" data-toggle="tooltip" tooltip="Ver órden de servicio" tooltip-placement="up"><span class="glyphicon glyphicon-sunglasses"></span></button>
-
                                         </td>-->
                                     </tr>
                                 </tbody>
