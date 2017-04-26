@@ -425,7 +425,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                                                          $scope.$apply( function () { 
                                                             $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
                                                          });
-                                                 }, 4500);                          
+                                                 }, 5300);                          
                                             });
                                         }
                                     if($scope.jsonDataAnexo2 != undefined){
@@ -441,7 +441,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                                                          $scope.$apply( function () { 
                                                             $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
                                                          });
-                                                 }, 4500);                          
+                                                 }, 5300);                          
                                             });
                                         }
                                     if($scope.jsonDataAnexo3 != undefined){
@@ -457,7 +457,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                                                          $scope.$apply( function () { 
                                                             $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
                                                          });
-                                                 }, 4500);                          
+                                                 }, 5300);                          
                                             });
                                         }
                                     if($scope.jsonDataAnexo4 != undefined){
@@ -473,10 +473,10 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                                                          $scope.$apply( function () { 
                                                             $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
                                                          });
-                                                 }, 4500);                          
+                                                 }, 5300);                          
                                             });
                                         }
-                             }, 3500);                          
+                             }, 4000);                          
                         });
 
                 }, function (error) {
