@@ -13,7 +13,7 @@
                     <br/>
                     <br/>
                     <div class="row col-md-12">
-                        <div class="col-md-2" id="data_5">
+                        <div class="col-md-3" id="data_5">
                             <label class="font-noraml">Fecha Inicio a Fecha Fin</label>
                             <div class="input-daterange input-group" id="datepicker" ng-disabled="">
                                 <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fechaInicio" ng-change="fechaRango" calendar/>
@@ -21,7 +21,7 @@
                                 <input type="text" placeholder="Fecha Fin" class="input-sm form-control" name="end" ng-model="fechaFin" ng-change="fechaRango()" calendar/>
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                                 <label class="font-noraml">Filtro Fecha</label>
                                 <select class="form-control" name="tipofecha" ng-model="tipofecha">
                                     <option value="">Seleccione el tipo de filtro por fecha: </option>
@@ -29,7 +29,7 @@
                                     <option value="2">Generacion Certificado</option>
                                 </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="font-noraml">Zona</label>
                             <select class="form-control m-b" ng-disabled="callCenter != null"
                             id="zona" ng-model="zona" 
@@ -38,20 +38,26 @@
                                 <option value="">Seleccione una Zona</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="font-noraml">Tar</label>
                             <select ng-disabled="zona == null" class="form-control m-b" id="tar" ng-model="tar" 
                             ng-options="tar.idTAR as tar.nombreTar for tar in tars">
                                 <option value="">Seleccione una TAR</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                    </div>
+                    <div class="row col-md-12">
+                        <div class="col-md-3">
+                            <label class="font-noraml">Taller</label>
+                            <input type="text" placeholder="Buscar Taller" class="form-control" id="razonSocial" ng-model="razonSocial">
+                        </div>
+                        <div class="col-md-3">
                             <label class="font-noraml">Call Center</label>
                             <select class="form-control" ng-disabled="zona != null || tar != null" id="callCenter"  name="callCenter" ng-model="callCenter" ng-options="callCenter.idUsuario as callCenter.nombreCompleto for callCenter in callCenters"> >
                                 <option value="">Seleccione CallCenter</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="font-noraml">Estatus</label>
                             <select class="form-control " id="estatus" ng-model="estatus" 
                             ng-options="estatus.idEstatus as estatus.descripcionLarga for estatus in estatuss">
@@ -59,7 +65,7 @@
                              </select>
 
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <label class="font-noraml">Buscar</label>
                             <br>
                             <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="callReporte(1)"><span class="glyphicon glyphicon-search"></span></button>
@@ -69,7 +75,7 @@
                     <div class=" row space"></div>
                     
                     <div class="row col-md-12">
-
+                        <br><br>
                         <div class="col-md-3">
                             <label class="font-noraml">Numero de Orden</label>
                             <input type="text" placeholder="Buscar Oden" class="form-control" id="numeroTrabajo" ng-model="numeroTrabajo" ng-enter="callReporte(2)">

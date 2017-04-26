@@ -63,7 +63,7 @@ registrationModule.controller('historialReclamacionController', function ($scope
             if (result.data.length > 0) {
                 $scope.reportes = result.data;
                 alertFactory.success('Historial recuperado correctamente');
-				globalFactory.waitDrawDocument("dataTableReclamacion", "Reclamación");
+				waitDrawDocument("dataTableReclamacion", "Reclamación");
             }else{
                 alertFactory.info('No se encontro información !');
             }
@@ -143,6 +143,41 @@ registrationModule.controller('historialReclamacionController', function ($scope
     //valida si existe algún error
     function checkExistsError(file) {
         return file.status === 'error';
+    }
+
+            //espera que el documento se pinte para llenar el dataTable
+    var waitDrawDocument = function (dataTable, title) {
+        setTimeout(function () {
+            var indicePorOrdenar = 0;
+            if (dataTable == 'dataTableReclamacion') {
+                indicePorOrdenar = 11;
+            } else {
+                indicePorOrdenar = 11;
+            }
+
+            $('.' + dataTable).DataTable({
+                aaSorting: [[indicePorOrdenar, 'desc']],
+                dom: '<"html5buttons"B>lTfgitp',
+                "iDisplayLength": 10,
+                buttons: [
+                    {
+                        extend: 'excel',
+                        title: title
+                    },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        }, 2500);
     }
 
 });

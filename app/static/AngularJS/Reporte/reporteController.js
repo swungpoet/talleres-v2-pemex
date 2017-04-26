@@ -89,11 +89,10 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
             $scope.fechaFin=null;
         };
         var callCenter = $scope.callCenter
-       
         $scope.ordenes=[];
         $scope.tipofecha == "" ? $scope.tipofecha = undefined : $scope.tipofecha;
          $('.dataTableReporteSaldos').DataTable().destroy();
-        reporteRepository.reporteAntiguedad($scope.fechaInicio, $scope.fechaFin, $scope.zona, $scope.tar, $scope.estatus, $scope.numeroTrabajo, tipo, $scope.callCenter, $scope.tipofecha).then(function (response) {
+        reporteRepository.reporteAntiguedad($scope.fechaInicio, $scope.fechaFin, $scope.zona, $scope.tar, $scope.estatus, $scope.numeroTrabajo, tipo, $scope.callCenter, $scope.tipofecha, $scope.razonSocial).then(function (response) {
           
             if (response.data.length > 0) {
                 $scope.ordenes = response.data;

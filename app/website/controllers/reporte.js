@@ -407,8 +407,13 @@ Reporte.prototype.get_reporteAntiguedad = function (req, res, next) {
             name: 'tipofecha',
             value: req.query.tipofecha,
             type: self.model.types.STRING
+        },
+        {
+            name: 'razonSocial',
+            value: req.query.razonSocial,
+            type: self.model.types.STRING
         }
-
+        
     ];
 
     this.model.query('SEL_REPORTE_ANTIGUEDAD_SALDOS_SP', params, function (error, result) {

@@ -41,7 +41,7 @@
                         </div>
                 <div class="row col-md-12">
                     <BR><BR>
-                    <div class="etiquetaTotalesFlex">Precio total: <span class="totales">{{cantidad1 | currency: "$"}}</span></div>
+                    <div class="etiquetaTotalesFlex">Anexo 1: <span class="totales">{{cantidad1 | currency: "$"}}</span></div><BR><BR>
                 <span class="blueStrong">Anexo 1 - Reportes de conformidad firmados con retraso</span>
                     <br/>
                     <br/>
@@ -79,7 +79,7 @@
                             </table>
                         </div>
                     <BR><BR>
-                    <div class="etiquetaTotalesFlex">Precio total: <span class="totales">{{cantidad2 | currency: "$"}}</span></div>
+                    <div class="etiquetaTotalesFlex">Anexo 2: <span class="totales">{{cantidad2 | currency: "$"}}</span></div><BR><BR>
                     <span class="blueStrong">Anexo 2 - Reportes de conformidad generados por callcenter sin firma del cliente</span>
                     <br/>
                     <br/>
@@ -117,7 +117,7 @@
                             </table>
                         </div>
                     <BR><BR>
-                    <div class="etiquetaTotalesFlex">Precio total: <span class="totales">{{cantidad3 | currency: "$"}}</span></div>
+                    <div class="etiquetaTotalesFlex">Anexo 3: <span class="totales">{{cantidad3 | currency: "$"}}</span></div><BR><BR>
                     <span class="blueStrong">Anexo 3 - Reportes de conformidad firmados sin COPADE</span>
                     <br/>
                     <br/>
@@ -157,7 +157,7 @@
                             </table>
                         </div>
                     <BR><BR>
-                    <div class="etiquetaTotalesFlex">Precio total: <span class="totales">{{cantidad4 | currency: "$"}}</span></div>
+                    <div class="etiquetaTotalesFlex">Anexo 4: <span class="totales">{{cantidad4 | currency: "$"}}</span></div><BR><BR>
                     <span class="blueStrong">Anexo 4 - Reportes de conformidad no generado por falta de OSUR</span>
                     <br/>
                     <br/>
@@ -196,9 +196,10 @@
                         </div>
 
                         </div>
+                        <BR><BR>
 <div class="row col-md-12">
-    <div class="etiquetaTotalesFlex">Precio total anexos: <span class="totales">{{cantidadTotal | currency: "$"}}</span></div>
-</div>
+    <div class="totalesFount">Precio Total: <span class="totalesFinal">{{cantidadTotal | currency: "$"}}</span></div>
+</div><BR><BR>
                     </div>
                 </div>
             </div>
