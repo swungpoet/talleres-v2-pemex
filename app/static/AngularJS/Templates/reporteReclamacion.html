@@ -39,7 +39,6 @@
                                 <button id="btnBuscar" busy="Buscando.." data-loading-text="Loading..." type="button" tooltip="Generar reporte reclamacion" class="btn btn-success" ng-click="reporteReclamacion()"><span class="{{class_buttonReclamacion}}"></span> Reporte Reclamación</button>
                             </div>
                         </div>
-                    
                 <div class="row col-md-12">
                     <BR><BR>
                     <div class="etiquetaTotalesFlex">Precio total: <span class="totales">{{cantidad1 | currency: "$"}}</span></div>
@@ -197,6 +196,9 @@
                         </div>
 
                         </div>
+<div class="row col-md-12">
+    <div class="etiquetaTotalesFlex">Precio total anexos: <span class="totales">{{cantidadTotal | currency: "$"}}</span></div>
+</div>
                     </div>
                 </div>
             </div>

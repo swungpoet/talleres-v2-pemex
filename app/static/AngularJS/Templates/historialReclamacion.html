@@ -55,16 +55,16 @@
                                     <th>TAR</th>
                                     <th>Reportes de Conformidad Anexo 1</th>
                                     <th>Precio Total Anexo 1</th>
-                                    <th>Día Máximo Anexo 1</th>
+                                    <!-- <th>Día Máximo Anexo 1</th> -->
                                     <th>Reportes de Conformidad Anexo 2</th>
                                     <th>Precio Total Anexo 2</th>
-                                    <th>Día Máximo Anexo 2</th>
+                                    <!-- <th>Día Máximo Anexo 2</th> -->
                                     <th>Reportes de Conformidad Anexo 3</th>
                                     <th>Precio Total Anexo 3</th>
-                                    <th>Día Máximo Anexo 3</th>
+                                    <!-- <th>Día Máximo Anexo 3</th> -->
                                     <th>Reportes de Conformidad Anexo 4</th>
                                     <th>Precio Total Anexo 4</th>
-                                    <th>Día Máximo Anexo 4</th>
+                                    <!-- <th>Día Máximo Anexo 4</th> -->
                                     <th>Fecha de Emisión </th>
                                     <th>Acción</th>
                                 </thead>
@@ -75,18 +75,18 @@
                                         <td>{{reporte.TAR}}</td>
                                         <td>{{reporte.noReportes1}}</td>
                                         <td>{{reporte.cantidad1  |  currency: "$"}}</td>
-                                        <td>{{reporte.diaMax1}}</td>
+                                        <!-- <td>{{reporte.diaMax1}}</td> -->
                                         <td>{{reporte.noReportes2}}</td>
                                         <td>{{reporte.cantidad2  |  currency: "$"}}</td>
-                                        <td>{{reporte.diaMax2}}</td>
+                                        <!-- <td>{{reporte.diaMax2}}</td> -->
                                         <td>{{reporte.noReportes3}}</td>
                                         <td>{{reporte.cantidad3  |  currency: "$"}}</td>
-                                        <td>{{reporte.diaMax3}}</td>
+                                        <!-- <td>{{reporte.diaMax3}}</td> -->
                                         <td>{{reporte.noReportes4}}</td>
                                         <td>{{reporte.cantidad4  |  currency: "$"}}</td>
-                                        <td>{{reporte.diaMax4}}</td>
+                                        <!-- <td>{{reporte.diaMax4}}</td> -->
                                         <td>{{reporte.fecha | date:'dd-MM-yyyy HH:mm'}}</td>
- 										<td><button id="" busy="Buscando.." tooltip="Evidencia" type="button" class="btn btn-primary" ng-click="verEvidencia(reporte.idReclamacion)"><span class="fa fa-inbox"></span></button></td>
+ 										<td><button id="" busy="Buscando.." tooltip="Ver evidencia" type="button" class="btn btn-primary" ng-click="verEvidencia(reporte.idReclamacion)"><span class="fa fa-inbox"></span></button></td>
                                 </tbody>
                             </table>
                         </div>

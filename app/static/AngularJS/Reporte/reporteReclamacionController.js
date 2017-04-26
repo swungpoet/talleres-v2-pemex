@@ -66,6 +66,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     }
 
     $scope.callAnexos = function () {
+        $scope.cantidadTotal = 0;
         $scope.trabajos = {};
         $scope.idtrabajos = [];
         $scope.jsonDataAnexo1 = undefined;
@@ -108,6 +109,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                         "idtrabajoanexo1": $scope.idtrabajos
                     }
                 }	
+                $scope.cantidadTotal += $scope.cantidad1; 
                 var data1 = {};
                 var estructura1 = {};
                 var anexo1 = [];
@@ -166,6 +168,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                     $scope.cantidad2 += ($scope.anexos2[i].precioOrden); 
                     $scope.diaTotal2 += ($scope.anexos2[i].DiasAtraso);     
                 }
+                $scope.cantidadTotal += $scope.cantidad2; 
                 var data2 = {};
                 var estructura2 = {};
                 var anexo2 = [];
@@ -226,6 +229,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                     $scope.cantidad3 += ($scope.anexos3[i].precioOrden); 
                     $scope.diaTotal3 += ($scope.anexos3[i].DiasAtraso);     
                 }
+                $scope.cantidadTotal += $scope.cantidad3; 
                 var data3 = {};
                 var estructura3 = {};
                 var anexo3 = [];
@@ -288,6 +292,7 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                     $scope.cantidad4 += ($scope.anexos4[i].precioOrden);   
                     $scope.diaTotal4 += ($scope.anexos4[i].DiasAtraso);   
                 }
+                $scope.cantidadTotal += $scope.cantidad4; 
                 var data4 = {};
                 var estructura4 = {};
                 var anexo4 = [];
