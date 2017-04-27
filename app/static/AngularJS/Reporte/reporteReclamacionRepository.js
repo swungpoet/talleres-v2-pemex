@@ -69,12 +69,12 @@ registrationModule.factory('reporteReclamacionRepository', function ($http) {
                 }
             });
         },
-        callZip: function (value) {
+        callZip: function (jsonAnexo1) {
             return $http({
                 url: cotizacionUrl + 'generaZip/',
                 method: "POST",
                 data: {
-                    values: value
+                    jsonAnexo1: jsonAnexo1
                 },
                 headers: {
                     'Content-Type': 'application/json'

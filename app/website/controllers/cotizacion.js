@@ -1581,13 +1581,10 @@ Cotizacion.prototype.post_generaZip = function(req, res, next) { 
 
     var self = this;
 
-    var nombreArchivos = [];
-    var files = [];
     var extension = '.pdf';
-    var file = req.body.values;
 
+    var file = req.body.jsonAnexo1.idTrabajo[i].idTrabajo;
 
-    var response = [];
         var rutaPrincipal = dirCopades;
         var carpetas = fs.readdirSync(rutaPrincipal);
         carpetas.forEach(function (documento) {

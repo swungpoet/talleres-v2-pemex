@@ -10,13 +10,15 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     $scope.jsonDataAnexo2 = undefined;
     $scope.jsonDataAnexo3 = undefined;
     $scope.jsonDataAnexo4 = undefined;
-    $scope.trabajos = {};
-    $scope.idtrabajos = [];
-    $scope.idtrabajosAnexo = {};
+    var trabajos = {};
+    var idTrabajos = [];
+    $scope.idTrabajoAnexo1 = undefined;
+    $scope.idTrabajoAnexo2 = undefined;
+    $scope.idTrabajoAnexo3 = undefined;
+    $scope.idTrabajoAnexo4 = undefined;
 
     //Inicializa la pagina
     $scope.init = function () {
-        // $scope.generarZip();
 		$scope.devuelveZonas();
         $scope.reclamacion = localStorageService.get('objResumen');
         if($scope.reclamacion != null){
@@ -26,18 +28,6 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
              $scope.callAnexos();
         }
     }
-
-/*    $scope.generarZip = function () {
-        var data = [];
-        var data = [{"cop":'COPADE_1'},{"cop":'COPADE_9'}]
-        reporteReclamacionRepository.callZip(data).then(function (tars) {
-                if (tars.data.length > 0) {
-
-                }
-        }, function (error) {
-             alertFactory.error('No se pudo recuperar información de las TARs');
-        });
-    }*/
 
     $scope.devuelveTars = function (zona) {
         if (zona != null) {
@@ -66,21 +56,26 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
     }
 
     $scope.callAnexos = function () {
+        var trabajos = {};
+        var idTrabajos = [];
+        $scope.idTrabajoAnexo1 = undefined;
+        ///////////////////////////////////
         $scope.cantidadTotal = 0;
-        $scope.trabajos = {};
-        $scope.idtrabajos = [];
         $scope.jsonDataAnexo1 = undefined;
         $scope.jsonDataAnexo2 = undefined;
         $scope.jsonDataAnexo3 = undefined;
         $scope.jsonDataAnexo4 = undefined;
+        ///////////////////////////////////
     	$scope.anexos1 = '';
     	$scope.anexos2 = '';
     	$scope.anexos3 = '';
         $scope.anexos4 = '';
+        ///////////////////////////////////
 		$scope.Anexo1($scope.zona,$scope.tar,1);
 		$scope.Anexo2($scope.zona,$scope.tar,2);
 		$scope.Anexo3($scope.zona,$scope.tar,3);
         $scope.Anexo4($scope.zona,$scope.tar,4);
+        ///////////////////////////////////
         if($scope.reclamacion != null){
             localStorageService.remove('objResumen');
         }
@@ -101,12 +96,12 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                 for (var i = 0; i < $scope.anexos1.length; i++) {
                     $scope.cantidad1 += ($scope.anexos1[i].precioOrden);
                     $scope.diaTotal1 += ($scope.anexos1[i].DiasAtraso); 
-                      $scope.trabajos = {
+                      var trabajos = {
                                 "idTrabajo":result.data[i].idTrabajo         
                                 }
-                    $scope.idtrabajos.push($scope.trabajos); 
-                    $scope.idtrabajosAnexo = {
-                        "idtrabajoanexo1": $scope.idtrabajos
+                    idTrabajos.push(trabajos); 
+                    $scope.idTrabajoAnexo1 = {
+                        "idTrabajo": idTrabajos
                     }
                 }	
                 $scope.cantidadTotal += $scope.cantidad1; 
@@ -351,6 +346,14 @@ registrationModule.controller('reporteReclamacionController', function ($scope, 
                         if($scope.jsonDataAnexo1 != undefined){
                             $scope.jsonDataAnexo1.data.detalle1.noReporte =  result.data[0].noReporte;
                             $scope.jsonDataAnexo1.data.detalle1.fecha = result.data[0].fecha;
+
+/*                                reporteReclamacionRepository.callZip($scope.idTrabajoAnexo1).then(function (tars) {
+                                        if (tars.data.length > 0) {
+
+                                        }
+                                }, function (error) {
+                                     alertFactory.error('No se pudo generar el Zip del Anexo 1');
+                                });*/
                         }
                         if($scope.jsonDataAnexo2 != undefined){
                             $scope.jsonDataAnexo2.data.detalle2.noReporte =  result.data[0].noReporte;
