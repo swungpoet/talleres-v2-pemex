@@ -11,7 +11,7 @@
                     <div class="ibox-content">
 
                         <div class="row col-md-12">
-                            <div class="col-md-4">
+<!--                             <div class="col-md-4">
                                 <label class="font-noraml">Zona</label>
                                 <select class="form-control m-b" ng-disabled="callCenter != null"
                                 id="zona" ng-model="zona" 
@@ -19,14 +19,14 @@
                                 ng-change="devuelveTars(zona)">
                                     <option value="">Seleccioné una Zona</option>
                                 </select>
-                            </div>
-                            <div class="col-md-3">
-<!--                                 <label class="font-noraml">Tar</label>
+                            </div> -->
+                    <!--   <div class="col-md-3">
+                               <label class="font-noraml">Tar</label>
                                 <select ng-disabled="zona == null" class="form-control m-b" id="tar" ng-model="tar" 
                                 ng-options="tar.idTAR as tar.nombreTar for tar in tars">
                                     <option value="">Seleccioné una TAR</option>
-                                </select> -->
-                            </div>
+                                </select> 
+                            </div>-->
                             <div class="col-md-1">
                                 <label class="font-noraml">Buscar</label>
                                 <br>
@@ -50,14 +50,12 @@
                                     <th>Precio Anexo 2</th>
                                     <th>Total Anexo 3</th>
                                     <th>Precio Anexo 3</th>
-                                    <th>Total Anexo 4</th>
-                                    <th>Precio Anexo 4</th>
                                     <th>Total</th>
                                     <th>Acción</th>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="resumen in resumenes">
-                                        <td>{{resumen.Zona}}</td>
+                                        <td>{{resumen.zona}}</td>
                                         <td>{{resumen.TAR}}</td>
                                         <td>{{resumen.cantidad1}}</td>
                                         <td>{{resumen.precio1  |  currency: "$"}}</td>
@@ -65,8 +63,6 @@
                                         <td>{{resumen.precio2  |  currency: "$"}}</td>
                                         <td>{{resumen.cantidad3}}</td>
                                         <td>{{resumen.precio3  |  currency: "$"}}</td>
-                                        <td>{{resumen.cantidad4}}</td>
-                                        <td>{{resumen.precio4  |  currency: "$"}}</td>
                                         <td>{{resumen.Total  |  currency: "$"}}</td>
  										<td><button id="" busy="Buscando.." tooltip="Ver detalle" type="button" class="btn btn-info" ng-click="verResumen(resumen)"><span class="glyphicon glyphicon-sunglasses"></span></button></td>
                                 </tbody>

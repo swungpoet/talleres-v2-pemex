@@ -150,9 +150,9 @@ registrationModule.controller('historialReclamacionController', function ($scope
         setTimeout(function () {
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableReclamacion') {
-                indicePorOrdenar = 11;
+                indicePorOrdenar = 9;
             } else {
-                indicePorOrdenar = 11;
+                indicePorOrdenar = 9;
             }
 
             $('.' + dataTable).DataTable({

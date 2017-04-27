@@ -428,21 +428,6 @@ DashBoard.prototype.get_informacionAnexos = function (req, res, next) {
             type: self.model.types.INT
         },
         {
-            name: 'cantidad4',
-            value: req.query.cantidad4,
-            type: self.model.types.DECIMAL
-        },
-        {
-            name: 'noReportes4',
-            value: req.query.noReportes4,
-            type: self.model.types.INT
-        },
-        {
-            name: 'diaMax4',
-            value: req.query.diaMax4,
-            type: self.model.types.INT
-        },
-        {
             name: 'idOsur',
             value: req.query.idOsur,
             type: self.model.types.INT

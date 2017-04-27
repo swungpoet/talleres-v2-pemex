@@ -54,12 +54,7 @@ Reclamacion.prototype.get_resumenReclamcion = function (req, res, next) {
     var object = {};
     var params = {};
     var self = this;
-    var params = [
-        {
-            name: 'idZona',
-            value: req.query.idZona,
-            type: self.model.types.INT
-        }];
+    var params = {};
     
     this.model.query('SEL_RESUMEN_RECLAMACION_SP', params, function (error, result) {
         //Callback

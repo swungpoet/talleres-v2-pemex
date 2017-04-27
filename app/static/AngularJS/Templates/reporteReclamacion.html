@@ -32,17 +32,55 @@
                                 <br>
                                 <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="callAnexos()"><span class="glyphicon glyphicon-search"></span></button>
                             </div>
-                            <div class="col-md-1">
+<!--                             <div class="col-md-1">
                             </div>
                             <div class="col-md-2">
                             <label class="font-noraml">Acción</label><br>
                                 <button id="btnBuscar" busy="Buscando.." data-loading-text="Loading..." type="button" tooltip="Generar reporte reclamacion" class="btn btn-success" ng-click="reporteReclamacion()"><span class="{{class_buttonReclamacion}}"></span> Reporte Reclamación</button>
-                            </div>
+                            </div> -->
                         </div>
                 <div class="row col-md-12">
-                    <BR><BR>
+<!--                     <BR><BR>
                     <div class="etiquetaTotalesFlex">Anexo 1: <span class="totales">{{cantidad1 | currency: "$"}}</span></div><BR><BR>
                 <span class="blueStrong">Anexo 1 - Reportes de conformidad firmados con retraso</span>
+                    <br/>
+                    <br/>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTableAnexo1" cg-busy="{promise:promise,message:message}">
+                                <thead>
+                                    <th>Consecutivo</th>
+                                    <th>Cliente</th>
+                                    <th>Número de Orden</th>
+                                    <th>Número Económico</th>
+                                    <th>Zona</th>
+                                    <th>TAR</th>
+                                    <th>Folio Certificado</th>
+                                    <th>Fecha Generación Certificado</th>
+                                    <th>Fecha Carga Certificado</th>
+                                    <th>Precio Orden</th>
+                                    <th>Fecha Máxima Carga</th>
+                                    <th>Días Atraso</th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="anexo1 in anexos1">
+                                        <td>{{anexo1.Consecutivo}}</td>
+                                        <td>{{anexo1.Cliente}}</td>
+                                        <td>{{anexo1.NoOrden}}</td>
+                                        <td>{{anexo1.NoEconomico}}</td>
+                                        <td>{{anexo1.Zona}}</td>
+                                        <td>{{anexo1.TAR}}</td>
+                                        <td>{{anexo1.folioCertificado}}</td>
+                                        <td>{{anexo1.FechaGeneracionCertificado | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo1.fechaCargaCertificadoCliente | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo1.precioOrden |  currency: "$"}}</td>
+                                        <td>{{anexo1.fechaMaxFirma | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo1.DiasAtraso}}</td>
+                                </tbody>
+                            </table>
+                        </div> -->
+                    <BR><BR>
+                    <div class="etiquetaTotalesFlex">Anexo 1: <span class="totales">{{cantidad1 | currency: "$"}}</span></div><BR><BR>
+                    <span class="blueStrong">Anexo 1 - Reportes de conformidad generados por callcenter sin firma del cliente</span>
                     <br/>
                     <br/>
                         <div class="table-responsive">
@@ -80,49 +118,11 @@
                         </div>
                     <BR><BR>
                     <div class="etiquetaTotalesFlex">Anexo 2: <span class="totales">{{cantidad2 | currency: "$"}}</span></div><BR><BR>
-                    <span class="blueStrong">Anexo 2 - Reportes de conformidad generados por callcenter sin firma del cliente</span>
+                    <span class="blueStrong">Anexo 2 - Reportes de conformidad firmados sin COPADE</span>
                     <br/>
                     <br/>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTableAnexo2" cg-busy="{promise:promise,message:message}">
-                                <thead>
-                                    <th>Consecutivo</th>
-                                    <th>Cliente</th>
-                                    <th>Número de Orden</th>
-                                    <th>Número Económico</th>
-                                    <th>Zona</th>
-                                    <th>TAR</th>
-                                    <th>Folio Certificado</th>
-                                    <th>Fecha Generación Certificado</th>
-                                    <th>Fecha Carga Certificado</th>
-                                    <th>Precio Orden</th>
-                                    <th>Fecha Máxima Carga</th>
-                                    <th>Días Atraso</th>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="anexo2 in anexos2">
-                                        <td>{{anexo2.Consecutivo}}</td>
-                                        <td>{{anexo2.Cliente}}</td>
-                                        <td>{{anexo2.NoOrden}}</td>
-                                        <td>{{anexo2.NoEconomico}}</td>
-                                        <td>{{anexo2.Zona}}</td>
-                                        <td>{{anexo2.TAR}}</td>
-                                        <td>{{anexo2.folioCertificado}}</td>
-                                        <td>{{anexo2.FechaGeneracionCertificado | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo2.fechaCargaCertificadoCliente | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo2.precioOrden |  currency: "$"}}</td>
-                                        <td>{{anexo2.fechaMaxFirma | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo2.DiasAtraso}}</td>
-                                </tbody>
-                            </table>
-                        </div>
-                    <BR><BR>
-                    <div class="etiquetaTotalesFlex">Anexo 3: <span class="totales">{{cantidad3 | currency: "$"}}</span></div><BR><BR>
-                    <span class="blueStrong">Anexo 3 - Reportes de conformidad firmados sin COPADE</span>
-                    <br/>
-                    <br/>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTableAnexo3" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <th>Consecutivo</th>
                                     <th>Cliente</th>
@@ -139,30 +139,30 @@
                                     <th>Días Atraso</th>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="anexo3 in anexos3">
-                                        <td>{{anexo3.Consecutivo}}</td>
-                                        <td>{{anexo3.Cliente}}</td>
-                                        <td>{{anexo3.NoOrden}}</td>
-                                        <td>{{anexo3.NoEconomico}}</td>
-                                        <td>{{anexo3.Zona}}</td>
-                                        <td>{{anexo3.TAR}}</td>
-                                        <td>{{anexo3.Copade}}</td>
-                                        <td>{{anexo3.folioCertificado}}</td>
-                                        <td>{{anexo3.FechaGeneracionCertificado | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo3.fechaCargaCertificadoCliente | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo3.precioOrden |  currency: "$"}}</td>
-                                        <td>{{anexo3.fechaMaxFirma | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo3.DiasAtraso}}</td>
+                                    <tr ng-repeat="anexo2 in anexos2">
+                                        <td>{{anexo2.Consecutivo}}</td>
+                                        <td>{{anexo2.Cliente}}</td>
+                                        <td>{{anexo2.NoOrden}}</td>
+                                        <td>{{anexo2.NoEconomico}}</td>
+                                        <td>{{anexo2.Zona}}</td>
+                                        <td>{{anexo2.TAR}}</td>
+                                        <td>{{anexo2.Copade}}</td>
+                                        <td>{{anexo2.folioCertificado}}</td>
+                                        <td>{{anexo2.FechaGeneracionCertificado | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo2.fechaCargaCertificadoCliente | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo2.precioOrden |  currency: "$"}}</td>
+                                        <td>{{anexo2.fechaMaxFirma | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo2.DiasAtraso}}</td>
                                 </tbody>
                             </table>
                         </div>
                     <BR><BR>
-                    <div class="etiquetaTotalesFlex">Anexo 4: <span class="totales">{{cantidad4 | currency: "$"}}</span></div><BR><BR>
-                    <span class="blueStrong">Anexo 4 - Reportes de conformidad no generado por falta de OSUR</span>
+                    <div class="etiquetaTotalesFlex">Anexo 3: <span class="totales">{{cantidad3 | currency: "$"}}</span></div><BR><BR>
+                    <span class="blueStrong">Anexo 3 - Reportes de conformidad no generado por falta de OSUR</span>
                     <br/>
                     <br/>
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTableAnexo4" cg-busy="{promise:promise,message:message}">
+                            <table class="table table-striped table-bordered table-hover dataTableAnexo3" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <th>Consecutivo</th>
                                     <th>Cliente</th>
@@ -178,19 +178,19 @@
                                     <th>Días Atraso</th>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="anexo4 in anexos4">
-                                        <td>{{anexo4.Consecutivo}}</td>
-                                        <td>{{anexo4.Cliente}}</td>
-                                        <td>{{anexo4.NoOrden}}</td>
-                                        <td>{{anexo4.NoEconomico}}</td>
-                                        <td>{{anexo4.Zona}}</td>
-                                        <td>{{anexo4.TAR}}</td>
-                                        <td>{{anexo4.folioCertificado}}</td>
-                                        <td>{{anexo4.FechaTerminoOsur | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo4.fechaOsurActiva | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo4.precioOrden |  currency: "$"}}</td>
-                                        <td>{{anexo4.fechaMaxFirma | date:'dd-MM-yyyy HH:mm'}}</td>
-                                        <td>{{anexo4.DiasAtraso}}</td>
+                                    <tr ng-repeat="anexo3 in anexos3">
+                                        <td>{{anexo3.Consecutivo}}</td>
+                                        <td>{{anexo3.Cliente}}</td>
+                                        <td>{{anexo3.NoOrden}}</td>
+                                        <td>{{anexo3.NoEconomico}}</td>
+                                        <td>{{anexo3.Zona}}</td>
+                                        <td>{{anexo3.TAR}}</td>
+                                        <td>{{anexo3.folioCertificado}}</td>
+                                        <td>{{anexo3.FechaTerminoOsur | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo3.fechaOsurActiva | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo3.precioOrden |  currency: "$"}}</td>
+                                        <td>{{anexo3.fechaMaxFirma | date:'dd-MM-yyyy HH:mm'}}</td>
+                                        <td>{{anexo3.DiasAtraso}}</td>
                                 </tbody>
                             </table>
                         </div>

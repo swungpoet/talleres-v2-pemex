@@ -33,13 +33,12 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
     }
 
     $scope.callResumen = function () {
-    	$scope.statusResumen($scope.zona);
+    	$scope.statusResumen();
     }
 
-    $scope.statusResumen = function (idZona) {
-    	if(idZona != undefined  && idZona != null ){
+    $scope.statusResumen = function () {
 			$('.dataTableResumen').DataTable().destroy();
-	        resumenReclamacionRepository.getResumen(idZona).then(function (result) {
+	        resumenReclamacionRepository.getResumen().then(function (result) {
 	            if (result.data.length > 0) {
 	                $scope.resumenes = result.data;
 					waitDrawDocument("dataTableResumen", "Resumen Certificados");
@@ -48,9 +47,6 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
 	        }, function (error) {
 	            alertFactory.error('No se pudo recuperar información de las zonas');
 	        });
-	    }else{
-	    	alertFactory.info('Debe seleccionar una Zona');
-	    }
     }
 
     $scope.verResumen = function (resumen) {
@@ -62,15 +58,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
         setTimeout(function () {
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableResumen') {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 8;
             } else {
-                indicePorOrdenar = 10;
+                indicePorOrdenar = 8;
             }
 
             $('.' + dataTable).DataTable({
                 order: [[indicePorOrdenar, 'desc']],
                 dom: '<"html5buttons"B>lTfgitp',
-                "iDisplayLength": 10,
+                "iDisplayLength": 100,
                 buttons: [
                     {
                         extend: 'excel',
