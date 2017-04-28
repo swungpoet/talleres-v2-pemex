@@ -623,6 +623,15 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
                     consecutivoArchivo = obtieneConsecutivo(dirname + idTrabajo + '/' + idCotizacion + '/documentos');
                     cb(null, dirname + idTrabajo + '/' + idCotizacion + '/documentos')
                 }
+            } else if (idCategoria == 4) {
+                var filename = guid();
+                if (!fs.existsSync(direclamacion + idTrabajo)) {
+                    fs.mkdirSync(direclamacion + idTrabajo);
+                }
+                if (idNombreEspecial == 0) {
+                    nameFile = 'Evidencia_'+idTrabajo+'_'+filename;
+                    cb(null, direclamacion + idTrabajo);
+                }
             } else {
                 nameFile = '';
                 cb(null, dirCopades);
@@ -660,6 +669,15 @@ Cotizacion.prototype.post_uploadfiles = function (req, res, next) {
         }
     });
 }
+
+function guid() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4();
+};
 
 //Se obtiene la extensión del archivo
 var obtenerExtArchivo = function (file) {

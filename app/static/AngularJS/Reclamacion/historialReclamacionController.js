@@ -105,7 +105,7 @@ registrationModule.controller('historialReclamacionController', function ($scope
             $scope.newFile = file;
         },
         'sending': function(file, xhr, formData){
-            formData.append('idTrabajo', $scope.sustitutoUploadFile);
+            formData.append('idTrabajo', $scope.reclamacionUploadFile);
             formData.append('idCotizacion', 0);
             formData.append('idCategoria', 4);
             formData.append('idNombreEspecial', 0);//evidenciaTrabajo
@@ -158,7 +158,7 @@ registrationModule.controller('historialReclamacionController', function ($scope
             $('.' + dataTable).DataTable({
                 aaSorting: [[indicePorOrdenar, 'desc']],
                 dom: '<"html5buttons"B>lTfgitp',
-                "iDisplayLength": 10,
+                "iDisplayLength": 100,
                 buttons: [
                     {
                         extend: 'excel',

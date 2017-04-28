@@ -2,14 +2,16 @@
 <link rel="stylesheet" href="../../css/trabajo.css">
 <div ng-init="init()">
     <div class="headTitleTallerCita">
-        <span class="title">Resumen Reclamación<span class="subtitle"></span></span>
+        <span class="title">Emisión de Oficios<span class="subtitle"></span></span>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-
+                    <div class="row col-md-12">
+                        <div class="totalesResumen">Precio Total: <span class="totalesFinal">{{cantidadTotal | currency: "$"}}</span></div>
+                    </div>
                         <div class="row col-md-12">
 <!--                             <div class="col-md-4">
                                 <label class="font-noraml">Zona</label>
@@ -28,15 +30,19 @@
                                 </select> 
                             </div>-->
                             <div class="col-md-1">
-                                <label class="font-noraml">Buscar</label>
+                                <!-- <label class="font-noraml">Buscar</label> -->
                                 <br>
-                                <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="callResumen()"><span class="glyphicon glyphicon-search"></span></button>
+                                <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="callResumen()"><span></span> Buscar</button>
+                            </div>
+                            <div class="col-md-2">
+                            <!-- <label class="font-noraml">Emisio</label> --><br> 
+                                <button id="btnBuscar" busy="Buscando.." data-loading-text="Loading..." type="button" tooltip="Generar reporte reclamacion" class="btn btn-success" ng-click="callAnexos()"><span class="{{class_buttonReclamacion}}"></span> Emitir Oficios</button>
                             </div>
                         </div>
 
                 <div class="row col-md-12">
                     <BR><BR>
-                <span class="blueStrong">Resumen de reportes de conformidad</span>
+                <!-- <span class="blueStrong">Resumen de reportes de conformidad</span> -->
                     <br/>
                     <br/>
                         <div class="table-responsive">
