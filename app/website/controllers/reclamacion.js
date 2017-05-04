@@ -20,16 +20,6 @@ Reclamacion.prototype.get_reclamacion = function (req, res, next) {
     var self = this;
     var params = [
         {
-            name: 'idZona',
-            value: req.query.idZona,
-            type: self.model.types.INT
-        },
-        {
-            name: 'idTar',
-            value: req.query.idTar,
-            type: self.model.types.INT
-        },
-        {
             name: 'fechaInicio',
             value: req.query.fechaInicio,
             type: self.model.types.STRING
@@ -57,6 +47,27 @@ Reclamacion.prototype.get_resumenReclamcion = function (req, res, next) {
     var params = {};
     
     this.model.query('SEL_RESUMEN_RECLAMACION_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+Reclamacion.prototype.get_reclamcionMeastro = function (req, res, next) {
+    var object = {};
+    var params = {};
+    var self = this;
+    var params = [
+        {
+            name: 'idOsur',
+            value: req.query.idOsur,
+            type: self.model.types.INT
+        }
+    ];
+    
+    this.model.query('INS_RECLAMACION_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;

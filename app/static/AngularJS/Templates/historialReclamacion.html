@@ -11,7 +11,7 @@
                     <div class="ibox-content">
 
                         <div class="row col-md-12">
-                            <div class="col-md-3">
+<!--                             <div class="col-md-3">
                                 <label class="font-noraml">Zona</label>
                                 <select class="form-control m-b" ng-disabled="callCenter != null"
                                 id="zona" ng-model="zona" 
@@ -26,7 +26,7 @@
                                 ng-options="tar.idTAR as tar.nombreTar for tar in tars">
                                     <option value="">Seleccioné una TAR</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="col-xs-3" id="data_5">
                                 <label class="font-noraml">Fecha Inicio a Fecha Fin</label>
                                 <div class="input-daterange input-group" id="datepicker">
@@ -51,30 +51,14 @@
                             <table class="table table-striped table-bordered table-hover dataTableReclamacion" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <th>Folio Reporte</th>
-                                    <th>Zona</th>
-                                    <th>TAR</th>
-                                    <th>Reportes de Conformidad Anexo 1</th>
-                                    <th>Monto Anexo 1</th>
-                                    <th>Reportes de Conformidad Anexo 2</th>
-                                    <th>Monto Anexo 2</th>
-                                    <th>Reportes de Conformidad Anexo 3</th>
-                                    <th>Monto Anexo 3</th>
                                     <th>Fecha de Emisión </th>
                                     <th>Acción</th>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="reporte in reportes">
                                         <td>{{reporte.noReporte}}</td>
-                                        <td>{{reporte.zona}}</td>
-                                        <td>{{reporte.TAR}}</td>
-                                        <td>{{reporte.noReportes1}}</td>
-                                        <td>{{reporte.cantidad1  |  currency: "$"}}</td>
-                                        <td>{{reporte.noReportes2}}</td>
-                                        <td>{{reporte.cantidad2  |  currency: "$"}}</td>
-                                        <td>{{reporte.noReportes3}}</td>
-                                        <td>{{reporte.cantidad3  |  currency: "$"}}</td>
                                         <td>{{reporte.fecha | date:'dd-MM-yyyy HH:mm'}}</td>
- 										<td><button id="" busy="Buscando.." tooltip="Ver evidencia" type="button" class="btn btn-primary" ng-click="verEvidencia(reporte.idReclamacion)"><span class="fa fa-inbox"></span></button></td>
+ 										<td><button id="" busy="Buscando.." tooltip="Ver evidencia" type="button" class="btn btn-primary" ng-click="verEvidencia(reporte.identificador)"><span class="fa fa-inbox"></span></button></td>
                                 </tbody>
                             </table>
                         </div>

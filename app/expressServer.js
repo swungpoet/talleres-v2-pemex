@@ -57,8 +57,8 @@ var upload = multer({ storage: storage })*/
       this.expressServer = express();
 
     // middlewares
-    this.expressServer.use(bodyParser.urlencoded({extended: true}))
-    this.expressServer.use(bodyParser.json());
+    this.expressServer.use(bodyParser.urlencoded({limit: '50mb'}));
+    this.expressServer.use(bodyParser.json({limit: '50mb'}));
     for (var middleware in middlewares){
       this.expressServer.use(middlewares[middleware]);
     }
