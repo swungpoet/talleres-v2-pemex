@@ -20,6 +20,11 @@ Reclamacion.prototype.get_reclamacion = function (req, res, next) {
     var self = this;
     var params = [
         {
+            name: 'noReporte',
+            value: req.query.noReporte,
+            type: self.model.types.STRING
+        },
+        {
             name: 'fechaInicio',
             value: req.query.fechaInicio,
             type: self.model.types.STRING
@@ -59,13 +64,6 @@ Reclamacion.prototype.get_reclamcionMeastro = function (req, res, next) {
     var object = {};
     var params = {};
     var self = this;
-    var params = [
-        {
-            name: 'idOsur',
-            value: req.query.idOsur,
-            type: self.model.types.INT
-        }
-    ];
     
     this.model.query('INS_RECLAMACION_SP', params, function (error, result) {
         //Callback

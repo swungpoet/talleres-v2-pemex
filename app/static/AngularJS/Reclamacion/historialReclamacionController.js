@@ -59,7 +59,7 @@ registrationModule.controller('historialReclamacionController', function ($scope
     	$scope.reportes = '';
     	$scope.fechaInicio == '' ? $scope.fechaInicio = null : $scope.fechaInicio;
         $scope.fechaFin == '' ? $scope.fechaFin = null : $scope.fechaFin;
-        historialReclamacionRepository.getReclamacion($scope.fechaInicio,$scope.fechaFin).then(function (result) {
+        historialReclamacionRepository.getReclamacion($scope.numeroReporte,$scope.fechaInicio,$scope.fechaFin).then(function (result) {
             if (result.data.length > 0) {
                 $scope.reportes = result.data;
                 alertFactory.success('Historial recuperado correctamente');
@@ -150,9 +150,9 @@ registrationModule.controller('historialReclamacionController', function ($scope
         setTimeout(function () {
             var indicePorOrdenar = 0;
             if (dataTable == 'dataTableReclamacion') {
-                indicePorOrdenar = 1;
+                indicePorOrdenar = 4;
             } else {
-                indicePorOrdenar = 1;
+                indicePorOrdenar = 4;
             }
 
             $('.' + dataTable).DataTable({

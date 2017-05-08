@@ -5,11 +5,12 @@ registrationModule.factory('historialReclamacionRepository', function ($http, $q
     var deferred = $q.defer();
 
     return {
-        getReclamacion: function (fechaInicio, fechaFin) {
+        getReclamacion: function (noReporte,fechaInicio, fechaFin) {
             return $http({
                 url: reclamacionUrl + 'reclamacion/',
                 method: "GET",
                 params: {
+                    noReporte:noReporte,
                     fechaInicio: fechaInicio,
                     fechaFin: fechaFin
                 },

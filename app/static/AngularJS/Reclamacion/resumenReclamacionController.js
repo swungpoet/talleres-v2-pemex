@@ -2527,28 +2527,28 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                 }
                                 if($scope.anexosInfo[i].idTAR == 59){
                                     if(result.data[i].cantidad1 != null)
-                                        $scope.cantidad1tar1 += result.data[i].cantidad1;
+                                        $scope.cantidad1tar59 += result.data[i].cantidad1;
                                     if(result.data[i].precio1 != null)
-                                        $scope.precio1tar1 += result.data[i].precio1;
+                                        $scope.precio1tar59 += result.data[i].precio1;
                                     if(result.data[i].cantidad2 != null)
-                                        $scope.cantidad2tar1 += result.data[i].cantidad2;
+                                        $scope.cantidad2tar59 += result.data[i].cantidad2;
                                     if(result.data[i].precio2 != null)
-                                        $scope.precio2tar1 += result.data[i].precio2;
+                                        $scope.precio2tar59 += result.data[i].precio2;
                                     if(result.data[i].cantidad3 != null)
-                                        $scope.cantidad3tar1 += result.data[i].cantidad3;
+                                        $scope.cantidad3tar59 += result.data[i].cantidad3;
                                     if(result.data[i].precio3 != null)
-                                        $scope.precio3tar1 += result.data[i].precio3;
+                                        $scope.precio3tar59 += result.data[i].precio3;
                                     if(result.data[i].atrasoAnexo1 != null)
-                                    if($scope.atraso1tar1 <= result.data[i].atrasoAnexo1){
-                                        $scope.atraso1tar1 = result.data[i].atrasoAnexo1;
+                                    if($scope.atraso1tar59 <= result.data[i].atrasoAnexo1){
+                                        $scope.atraso1tar59 = result.data[i].atrasoAnexo1;
                                     }
                                     if(result.data[i].atrasoAnexo2 != null)
-                                        if($scope.atraso2tar1 <= result.data[i].atrasoAnexo2){
-                                            $scope.atraso2tar1 = result.data[i].atrasoAnexo2;
+                                        if($scope.atraso2tar59 <= result.data[i].atrasoAnexo2){
+                                            $scope.atraso2tar59 = result.data[i].atrasoAnexo2;
                                         }
                                     if(result.data[i].atrasoAnexo3 != null)
-                                        if($scope.atraso3tar1 <= result.data[i].atrasoAnexo3){
-                                            $scope.atraso3tar1 = result.data[i].atrasoAnexo3;
+                                        if($scope.atraso3tar59 <= result.data[i].atrasoAnexo3){
+                                            $scope.atraso3tar59 = result.data[i].atrasoAnexo3;
                                         }                                    
                                 }
                                 if($scope.anexosInfo[i].idTAR == 60){
@@ -3105,6 +3105,165 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
 
                             }      
                     }
+
+                    $scope.total1tar1=0;
+                    $scope.total1tar2=0;
+                    $scope.total1tar3=0;
+                    $scope.total1tar4=0;
+                    $scope.total1tar5=0;
+                    $scope.total1tar6=0;
+                    $scope.total1tar7=0;
+                    $scope.total1tar8=0;
+                    $scope.total1tar9=0;
+                    $scope.total1tar10=0;
+                    $scope.total1tar11=0;
+                    $scope.total1tar12=0;
+                    $scope.total1tar13=0;
+                    $scope.total1tar14=0;
+                    $scope.total1tar15=0;
+                    $scope.total1tar16=0;
+                    $scope.total1tar17=0;
+                    $scope.total1tar18=0;
+                    $scope.total1tar19=0;
+                    $scope.total1tar20=0;
+                    $scope.total1tar21=0;
+                    $scope.total1tar22=0;
+                    $scope.total1tar23=0;
+                    $scope.total1tar24=0;
+                    $scope.total1tar25=0;
+                    $scope.total1tar26=0;
+                    $scope.total1tar27=0;
+                    $scope.total1tar28=0;
+                    $scope.total1tar29=0;
+                    $scope.total1tar30=0;
+                    $scope.total1tar31=0;
+                    $scope.total1tar32=0;
+                    $scope.total1tar33=0;
+                    $scope.total1tar34=0;
+                    $scope.total1tar35=0;
+                    $scope.total1tar36=0;
+                    $scope.total1tar37=0;
+                    $scope.total1tar38=0;
+                    $scope.total1tar39=0;
+                    $scope.total1tar40=0;
+                    $scope.total1tar41=0;
+                    $scope.total1tar42=0;
+                    $scope.total1tar43=0;
+                    $scope.total1tar44=0;
+                    $scope.total1tar45=0;
+                    $scope.total1tar46=0;
+                    $scope.total1tar47=0;
+                    $scope.total1tar48=0;
+                    $scope.total1tar49=0;
+                    $scope.total1tar50=0;
+                    $scope.total1tar51=0;
+                    $scope.total1tar52=0;
+                    $scope.total1tar53=0;
+                    $scope.total1tar54=0;
+                    $scope.total1tar55=0;
+                    $scope.total1tar56=0;
+                    $scope.total1tar57=0;
+                    $scope.total1tar58=0;
+                    $scope.total1tar59=0;
+                    $scope.total1tar60=0;
+                    $scope.total1tar61=0;
+                    $scope.total1tar62=0;
+                    $scope.total1tar63=0;
+                    $scope.total1tar64=0;
+                    $scope.total1tar65=0;
+                    $scope.total1tar66=0;
+                    $scope.total1tar67=0;
+                    $scope.total1tar68=0;
+                    $scope.total1tar69=0;
+                    $scope.total1tar70=0;
+                    $scope.total1tar71=0;
+                    $scope.total1tar72=0;
+                    $scope.total1tar73=0;
+                    $scope.total1tar74=0;
+                    $scope.total1tar75=0;
+                    $scope.total1tar76=0;
+                    $scope.total1tar77=0;
+                    $scope.total1tar78=0;
+
+            $scope.total1tar1=$scope.atraso1tar1+$scope.atraso2tar1+$scope.atraso3tar1;
+            $scope.total1tar2=$scope.atraso1tar2+$scope.atraso2tar2+$scope.atraso3tar2;
+            $scope.total1tar3=$scope.atraso1tar3+$scope.atraso2tar3+$scope.atraso3tar3;
+            $scope.total1tar4=$scope.atraso1tar4+$scope.atraso2tar4+$scope.atraso3tar4;
+            $scope.total1tar5=$scope.atraso1tar5+$scope.atraso2tar5+$scope.atraso3tar5;
+            $scope.total1tar6=$scope.atraso1tar6+$scope.atraso2tar6+$scope.atraso3tar6;
+            $scope.total1tar7=$scope.atraso1tar7+$scope.atraso2tar7+$scope.atraso3tar7;
+            $scope.total1tar8=$scope.atraso1tar8+$scope.atraso2tar8+$scope.atraso3tar8;
+            $scope.total1tar9=$scope.atraso1tar9+$scope.atraso2tar9+$scope.atraso3tar9;
+            $scope.total1tar10=$scope.atraso1tar10+$scope.atraso2tar10+$scope.atraso3tar10;
+            $scope.total1tar11=$scope.atraso1tar11+$scope.atraso2tar11+$scope.atraso3tar11;
+            $scope.total1tar12=$scope.atraso1tar12+$scope.atraso2tar12+$scope.atraso3tar12;
+            $scope.total1tar13=$scope.atraso1tar13+$scope.atraso2tar13+$scope.atraso3tar13;
+            $scope.total1tar14=$scope.atraso1tar14+$scope.atraso2tar14+$scope.atraso3tar14;
+            $scope.total1tar15=$scope.atraso1tar15+$scope.atraso2tar15+$scope.atraso3tar15;
+            $scope.total1tar16=$scope.atraso1tar16+$scope.atraso2tar16+$scope.atraso3tar16;
+            $scope.total1tar17=$scope.atraso1tar17+$scope.atraso2tar17+$scope.atraso3tar17;
+            $scope.total1tar18=$scope.atraso1tar18+$scope.atraso2tar18+$scope.atraso3tar18;
+            $scope.total1tar19=$scope.atraso1tar19+$scope.atraso2tar19+$scope.atraso3tar19;
+            $scope.total1tar20=$scope.atraso1tar20+$scope.atraso2tar20+$scope.atraso3tar20;
+            $scope.total1tar21=$scope.atraso1tar21+$scope.atraso2tar21+$scope.atraso3tar21;
+            $scope.total1tar22=$scope.atraso1tar22+$scope.atraso2tar22+$scope.atraso3tar22;
+            $scope.total1tar23=$scope.atraso1tar23+$scope.atraso2tar23+$scope.atraso3tar23;
+            $scope.total1tar24=$scope.atraso1tar24+$scope.atraso2tar24+$scope.atraso3tar24;
+            $scope.total1tar25=$scope.atraso1tar25+$scope.atraso2tar25+$scope.atraso3tar25;
+            $scope.total1tar26=$scope.atraso1tar26+$scope.atraso2tar26+$scope.atraso3tar26;
+            $scope.total1tar27=$scope.atraso1tar27+$scope.atraso2tar27+$scope.atraso3tar27;
+            $scope.total1tar28=$scope.atraso1tar28+$scope.atraso2tar28+$scope.atraso3tar28;
+            $scope.total1tar29=$scope.atraso1tar29+$scope.atraso2tar29+$scope.atraso3tar29;
+            $scope.total1tar30=$scope.atraso1tar30+$scope.atraso2tar30+$scope.atraso3tar30;
+            $scope.total1tar31=$scope.atraso1tar31+$scope.atraso2tar31+$scope.atraso3tar31;
+            $scope.total1tar32=$scope.atraso1tar32+$scope.atraso2tar32+$scope.atraso3tar32;
+            $scope.total1tar33=$scope.atraso1tar33+$scope.atraso2tar33+$scope.atraso3tar33;
+            $scope.total1tar34=$scope.atraso1tar34+$scope.atraso2tar34+$scope.atraso3tar34;
+            $scope.total1tar35=$scope.atraso1tar35+$scope.atraso2tar35+$scope.atraso3tar35;
+            $scope.total1tar36=$scope.atraso1tar36+$scope.atraso2tar36+$scope.atraso3tar36;
+            $scope.total1tar37=$scope.atraso1tar37+$scope.atraso2tar37+$scope.atraso3tar37;
+            $scope.total1tar38=$scope.atraso1tar38+$scope.atraso2tar38+$scope.atraso3tar38;
+            $scope.total1tar39=$scope.atraso1tar39+$scope.atraso2tar39+$scope.atraso3tar39;
+            $scope.total1tar40=$scope.atraso1tar40+$scope.atraso2tar40+$scope.atraso3tar40;
+            $scope.total1tar41=$scope.atraso1tar41+$scope.atraso2tar41+$scope.atraso3tar41;
+            $scope.total1tar42=$scope.atraso1tar42+$scope.atraso2tar42+$scope.atraso3tar42;
+            $scope.total1tar43=$scope.atraso1tar43+$scope.atraso2tar43+$scope.atraso3tar43;
+            $scope.total1tar44=$scope.atraso1tar44+$scope.atraso2tar44+$scope.atraso3tar44;
+            $scope.total1tar45=$scope.atraso1tar45+$scope.atraso2tar45+$scope.atraso3tar45;
+            $scope.total1tar46=$scope.atraso1tar46+$scope.atraso2tar46+$scope.atraso3tar46;
+            $scope.total1tar47=$scope.atraso1tar47+$scope.atraso2tar47+$scope.atraso3tar47;
+            $scope.total1tar48=$scope.atraso1tar48+$scope.atraso2tar48+$scope.atraso3tar48;
+            $scope.total1tar49=$scope.atraso1tar49+$scope.atraso2tar49+$scope.atraso3tar49;
+            $scope.total1tar50=$scope.atraso1tar50+$scope.atraso2tar50+$scope.atraso3tar50;
+            $scope.total1tar51=$scope.atraso1tar51+$scope.atraso2tar51+$scope.atraso3tar51;
+            $scope.total1tar52=$scope.atraso1tar52+$scope.atraso2tar52+$scope.atraso3tar52;
+            $scope.total1tar53=$scope.atraso1tar53+$scope.atraso2tar53+$scope.atraso3tar53;
+            $scope.total1tar54=$scope.atraso1tar54+$scope.atraso2tar54+$scope.atraso3tar54;
+            $scope.total1tar55=$scope.atraso1tar55+$scope.atraso2tar55+$scope.atraso3tar55;
+            $scope.total1tar56=$scope.atraso1tar56+$scope.atraso2tar56+$scope.atraso3tar56;
+            $scope.total1tar57=$scope.atraso1tar57+$scope.atraso2tar57+$scope.atraso3tar57;
+            $scope.total1tar58=$scope.atraso1tar58+$scope.atraso2tar58+$scope.atraso3tar58;
+            $scope.total1tar59=$scope.atraso1tar59+$scope.atraso2tar59+$scope.atraso3tar59;
+            $scope.total1tar60=$scope.atraso1tar60+$scope.atraso2tar60+$scope.atraso3tar60;
+            $scope.total1tar61=$scope.atraso1tar61+$scope.atraso2tar61+$scope.atraso3tar61;
+            $scope.total1tar62=$scope.atraso1tar62+$scope.atraso2tar62+$scope.atraso3tar62;
+            $scope.total1tar63=$scope.atraso1tar63+$scope.atraso2tar63+$scope.atraso3tar63;
+            $scope.total1tar64=$scope.atraso1tar64+$scope.atraso2tar64+$scope.atraso3tar64;
+            $scope.total1tar65=$scope.atraso1tar65+$scope.atraso2tar65+$scope.atraso3tar65;
+            $scope.total1tar66=$scope.atraso1tar66+$scope.atraso2tar66+$scope.atraso3tar66;
+            $scope.total1tar67=$scope.atraso1tar67+$scope.atraso2tar67+$scope.atraso3tar67;
+            $scope.total1tar68=$scope.atraso1tar68+$scope.atraso2tar68+$scope.atraso3tar68;
+            $scope.total1tar69=$scope.atraso1tar69+$scope.atraso2tar69+$scope.atraso3tar69;
+            $scope.total1tar70=$scope.atraso1tar70+$scope.atraso2tar70+$scope.atraso3tar70;
+            $scope.total1tar71=$scope.atraso1tar71+$scope.atraso2tar71+$scope.atraso3tar71;
+            $scope.total1tar72=$scope.atraso1tar72+$scope.atraso2tar72+$scope.atraso3tar72;
+            $scope.total1tar73=$scope.atraso1tar73+$scope.atraso2tar73+$scope.atraso3tar73;
+            $scope.total1tar74=$scope.atraso1tar74+$scope.atraso2tar74+$scope.atraso3tar74;
+            $scope.total1tar75=$scope.atraso1tar75+$scope.atraso2tar75+$scope.atraso3tar75;
+            $scope.total1tar76=$scope.atraso1tar76+$scope.atraso2tar76+$scope.atraso3tar76;
+            $scope.total1tar77=$scope.atraso1tar77+$scope.atraso2tar77+$scope.atraso3tar77;
+            $scope.total1tar78=$scope.atraso1tar78+$scope.atraso2tar78+$scope.atraso3tar78;
+
                 var tar1 = {       
                 "cantidad1":$scope.cantidad1tar1,
                 "precio1":$scope.precio1tar1,
@@ -3114,7 +3273,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar1,
                 "atrasoAnexo1":$scope.atraso1tar1,
                 "atrasoAnexo2":$scope.atraso2tar1,
-                "atrasoAnexo3":$scope.atraso3tar1
+                "atrasoAnexo3":$scope.atraso3tar1,
+                "atrasoAnexo":$scope.total1tar1
                 }
                 var tar2 = { 
                 "cantidad1":$scope.cantidad1tar2,
@@ -3125,7 +3285,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar2,
                 "atrasoAnexo1":$scope.atraso1tar2,
                 "atrasoAnexo2":$scope.atraso2tar2,
-                "atrasoAnexo3":$scope.atraso3tar2
+                "atrasoAnexo3":$scope.atraso3tar2,
+                "atrasoAnexo":$scope.total1tar2
                 }
                 var tar3 = { 
                 "cantidad1":$scope.cantidad1tar3,
@@ -3136,7 +3297,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar3,
                 "atrasoAnexo1":$scope.atraso1tar3,
                 "atrasoAnexo2":$scope.atraso2tar3,
-                "atrasoAnexo3":$scope.atraso3tar3
+                "atrasoAnexo3":$scope.atraso3tar3,
+                "atrasoAnexo":$scope.total1tar3
                 }
                 var tar4 = { 
                 "cantidad1":$scope.cantidad1tar4,
@@ -3147,7 +3309,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar4,
                 "atrasoAnexo1":$scope.atraso1tar4,
                 "atrasoAnexo2":$scope.atraso2tar4,
-                "atrasoAnexo3":$scope.atraso3tar4
+                "atrasoAnexo3":$scope.atraso3tar4,
+                "atrasoAnexo":$scope.total1tar4
                 }
                 var tar5 = { 
                 "cantidad1":$scope.cantidad1tar5,
@@ -3158,7 +3321,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar5,
                 "atrasoAnexo1":$scope.atraso1tar5,
                 "atrasoAnexo2":$scope.atraso2tar5,
-                "atrasoAnexo3":$scope.atraso3tar5
+                "atrasoAnexo3":$scope.atraso3tar5,
+                "atrasoAnexo":$scope.total1tar5
                 }
                 var tar6 = { 
                 "cantidad1":$scope.cantidad1tar6,
@@ -3169,7 +3333,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar6,
                 "atrasoAnexo1":$scope.atraso1tar6,
                 "atrasoAnexo2":$scope.atraso2tar6,
-                "atrasoAnexo3":$scope.atraso3tar6
+                "atrasoAnexo3":$scope.atraso3tar6,
+                "atrasoAnexo":$scope.total1tar6
                 }
                 var tar7 = { 
                 "cantidad1":$scope.cantidad1tar7,
@@ -3180,7 +3345,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar7,
                 "atrasoAnexo1":$scope.atraso1tar7,
                 "atrasoAnexo2":$scope.atraso2tar7,
-                "atrasoAnexo3":$scope.atraso3tar7
+                "atrasoAnexo3":$scope.atraso3tar7,
+                "atrasoAnexo":$scope.total1tar7
                 }
                 var tar8 = { 
                 "cantidad1":$scope.cantidad1tar8,
@@ -3191,7 +3357,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar8,
                 "atrasoAnexo1":$scope.atraso1tar8,
                 "atrasoAnexo2":$scope.atraso2tar8,
-                "atrasoAnexo3":$scope.atraso3tar8
+                "atrasoAnexo3":$scope.atraso3tar8,
+                "atrasoAnexo":$scope.total1tar8
                 }
                 var tar9 = { 
                 "cantidad1":$scope.cantidad1tar9,
@@ -3202,7 +3369,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar9,
                 "atrasoAnexo1":$scope.atraso1tar9,
                 "atrasoAnexo2":$scope.atraso2tar9,
-                "atrasoAnexo3":$scope.atraso3tar9
+                "atrasoAnexo3":$scope.atraso3tar9,
+                "atrasoAnexo":$scope.total1tar9
                 }
                 var tar10 = { 
                 "cantidad1":$scope.cantidad1tar10,
@@ -3213,7 +3381,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar10,
                 "atrasoAnexo1":$scope.atraso1tar10,
                 "atrasoAnexo2":$scope.atraso2tar10,
-                "atrasoAnexo3":$scope.atraso3tar10
+                "atrasoAnexo3":$scope.atraso3tar10,
+                "atrasoAnexo":$scope.total1tar10
                 }
                 var tar11 = { 
                 "cantidad1":$scope.cantidad1tar11,
@@ -3224,7 +3393,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar11,
                 "atrasoAnexo1":$scope.atraso1tar11,
                 "atrasoAnexo2":$scope.atraso2tar11,
-                "atrasoAnexo3":$scope.atraso3tar11
+                "atrasoAnexo3":$scope.atraso3tar11,
+                "atrasoAnexo":$scope.total1tar11
                 }
                 var tar12 = { 
                 "cantidad1":$scope.cantidad1tar12,
@@ -3235,7 +3405,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar12,
                 "atrasoAnexo1":$scope.atraso1tar12,
                 "atrasoAnexo2":$scope.atraso2tar12,
-                "atrasoAnexo3":$scope.atraso3tar12
+                "atrasoAnexo3":$scope.atraso3tar12,
+                "atrasoAnexo":$scope.total1tar12
                 }
                 var tar13 = { 
                 "cantidad1":$scope.cantidad1tar13,
@@ -3246,7 +3417,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar13,
                 "atrasoAnexo1":$scope.atraso1tar13,
                 "atrasoAnexo2":$scope.atraso2tar13,
-                "atrasoAnexo3":$scope.atraso3tar13
+                "atrasoAnexo3":$scope.atraso3tar13,
+                "atrasoAnexo":$scope.total1tar13
                 }
                 var tar14 = { 
                 "cantidad1":$scope.cantidad1tar14,
@@ -3257,7 +3429,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar14,
                 "atrasoAnexo1":$scope.atraso1tar14,
                 "atrasoAnexo2":$scope.atraso2tar14,
-                "atrasoAnexo3":$scope.atraso3tar14
+                "atrasoAnexo3":$scope.atraso3tar14,
+                "atrasoAnexo":$scope.total1tar14
                 }
                 var tar15 = { 
                 "cantidad1":$scope.cantidad1tar15,
@@ -3268,7 +3441,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar15,
                 "atrasoAnexo1":$scope.atraso1tar15,
                 "atrasoAnexo2":$scope.atraso2tar15,
-                "atrasoAnexo3":$scope.atraso3tar15
+                "atrasoAnexo3":$scope.atraso3tar15,
+                "atrasoAnexo":$scope.total1tar15
                 }
                 var tar16 = { 
                 "cantidad1":$scope.cantidad1tar16,
@@ -3279,7 +3453,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar16,
                 "atrasoAnexo1":$scope.atraso1tar16,
                 "atrasoAnexo2":$scope.atraso2tar16,
-                "atrasoAnexo3":$scope.atraso3tar16
+                "atrasoAnexo3":$scope.atraso3tar16,
+                "atrasoAnexo":$scope.total1tar16
                 }
                 var tar17 = { 
                 "cantidad1":$scope.cantidad1tar17,
@@ -3290,7 +3465,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar17,
                 "atrasoAnexo1":$scope.atraso1tar17,
                 "atrasoAnexo2":$scope.atraso2tar17,
-                "atrasoAnexo3":$scope.atraso3tar17
+                "atrasoAnexo3":$scope.atraso3tar17,
+                "atrasoAnexo":$scope.total1tar17
                 }
                 var tar18 = { 
                 "cantidad1":$scope.cantidad1tar18,
@@ -3301,7 +3477,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar18,
                 "atrasoAnexo1":$scope.atraso1tar18,
                 "atrasoAnexo2":$scope.atraso2tar18,
-                "atrasoAnexo3":$scope.atraso3tar18
+                "atrasoAnexo3":$scope.atraso3tar18,
+                "atrasoAnexo":$scope.total1tar18
                 }
                 var tar19 = { 
                 "cantidad1":$scope.cantidad1tar19,
@@ -3312,7 +3489,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar19,
                 "atrasoAnexo1":$scope.atraso1tar19,
                 "atrasoAnexo2":$scope.atraso2tar19,
-                "atrasoAnexo3":$scope.atraso3tar19
+                "atrasoAnexo3":$scope.atraso3tar19,
+                "atrasoAnexo":$scope.total1tar19
                 }
                 var tar20 = { 
                 "cantidad1":$scope.cantidad1tar20,
@@ -3323,7 +3501,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar20,
                 "atrasoAnexo1":$scope.atraso1tar20,
                 "atrasoAnexo2":$scope.atraso2tar20,
-                "atrasoAnexo3":$scope.atraso3tar20
+                "atrasoAnexo3":$scope.atraso3tar20,
+                "atrasoAnexo":$scope.total1tar20
                 }
                 var tar21 = { 
                 "cantidad1":$scope.cantidad1tar21,
@@ -3334,7 +3513,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar21,
                 "atrasoAnexo1":$scope.atraso1tar21,
                 "atrasoAnexo2":$scope.atraso2tar21,
-                "atrasoAnexo3":$scope.atraso3tar21
+                "atrasoAnexo3":$scope.atraso3tar21,
+                "atrasoAnexo":$scope.total1tar21
                 }
                 var tar22 = { 
                 "cantidad1":$scope.cantidad1tar22,
@@ -3345,7 +3525,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar22,
                 "atrasoAnexo1":$scope.atraso1tar22,
                 "atrasoAnexo2":$scope.atraso2tar22,
-                "atrasoAnexo3":$scope.atraso3tar22
+                "atrasoAnexo3":$scope.atraso3tar22,
+                "atrasoAnexo":$scope.total1tar22
                 }
                 var tar23 = { 
                 "cantidad1":$scope.cantidad1tar23,
@@ -3367,7 +3548,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar24,
                 "atrasoAnexo1":$scope.atraso1tar24,
                 "atrasoAnexo2":$scope.atraso2tar24,
-                "atrasoAnexo3":$scope.atraso3tar24
+                "atrasoAnexo3":$scope.atraso3tar24,
+                "atrasoAnexo":$scope.total1tar24
                 }
                 var tar25 = { 
                 "cantidad1":$scope.cantidad1tar25,
@@ -3378,7 +3560,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar25,
                 "atrasoAnexo1":$scope.atraso1tar25,
                 "atrasoAnexo2":$scope.atraso2tar25,
-                "atrasoAnexo3":$scope.atraso3tar25
+                "atrasoAnexo3":$scope.atraso3tar25,
+                "atrasoAnexo":$scope.total1tar25
                 }
                 var tar26 = { 
                 "cantidad1":$scope.cantidad1tar26,
@@ -3389,7 +3572,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar26,
                 "atrasoAnexo1":$scope.atraso1tar26,
                 "atrasoAnexo2":$scope.atraso2tar26,
-                "atrasoAnexo3":$scope.atraso3tar26
+                "atrasoAnexo3":$scope.atraso3tar26,
+                "atrasoAnexo":$scope.total1tar26
                 }
                 var tar27 = { 
                 "cantidad1":$scope.cantidad1tar27,
@@ -3400,7 +3584,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar27,
                 "atrasoAnexo1":$scope.atraso1tar27,
                 "atrasoAnexo2":$scope.atraso2tar27,
-                "atrasoAnexo3":$scope.atraso3tar27
+                "atrasoAnexo3":$scope.atraso3tar27,
+                "atrasoAnexo":$scope.total1tar27
                 }
                 var tar28 = { 
                 "cantidad1":$scope.cantidad1tar28,
@@ -3411,7 +3596,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar28,
                 "atrasoAnexo1":$scope.atraso1tar28,
                 "atrasoAnexo2":$scope.atraso2tar28,
-                "atrasoAnexo3":$scope.atraso3tar28
+                "atrasoAnexo3":$scope.atraso3tar28,
+                "atrasoAnexo":$scope.total1tar28
                 }
                 var tar29 = { 
                 "cantidad1":$scope.cantidad1tar29,
@@ -3422,7 +3608,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar29,
                 "atrasoAnexo1":$scope.atraso1tar29,
                 "atrasoAnexo2":$scope.atraso2tar29,
-                "atrasoAnexo3":$scope.atraso3tar29
+                "atrasoAnexo3":$scope.atraso3tar29,
+                "atrasoAnexo":$scope.total1tar29
                 }
                 var tar30 = { 
                 "cantidad1":$scope.cantidad1tar30,
@@ -3433,7 +3620,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar30,
                 "atrasoAnexo1":$scope.atraso1tar30,
                 "atrasoAnexo2":$scope.atraso2tar30,
-                "atrasoAnexo3":$scope.atraso3tar30
+                "atrasoAnexo3":$scope.atraso3tar30,
+                "atrasoAnexo":$scope.total1tar30
                 }
                 var tar31 = { 
                 "cantidad1":$scope.cantidad1tar31,
@@ -3444,7 +3632,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar31,
                 "atrasoAnexo1":$scope.atraso1tar31,
                 "atrasoAnexo2":$scope.atraso2tar31,
-                "atrasoAnexo3":$scope.atraso3tar31
+                "atrasoAnexo3":$scope.atraso3tar31,
+                "atrasoAnexo":$scope.total1tar31
                 }
                 var tar32 = { 
                 "cantidad1":$scope.cantidad1tar32,
@@ -3455,7 +3644,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar32,
                 "atrasoAnexo1":$scope.atraso1tar32,
                 "atrasoAnexo2":$scope.atraso2tar32,
-                "atrasoAnexo3":$scope.atraso3tar32
+                "atrasoAnexo3":$scope.atraso3tar32,
+                "atrasoAnexo":$scope.total1tar32
                 }
                 var tar33 = { 
                 "cantidad1":$scope.cantidad1tar33,
@@ -3466,7 +3656,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar33,
                 "atrasoAnexo1":$scope.atraso1tar33,
                 "atrasoAnexo2":$scope.atraso2tar33,
-                "atrasoAnexo3":$scope.atraso3tar33
+                "atrasoAnexo3":$scope.atraso3tar33,
+                "atrasoAnexo":$scope.total1tar33
                 }
                 var tar34 = { 
                 "cantidad1":$scope.cantidad1tar34,
@@ -3477,7 +3668,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar34,
                 "atrasoAnexo1":$scope.atraso1tar34,
                 "atrasoAnexo2":$scope.atraso2tar34,
-                "atrasoAnexo3":$scope.atraso3tar34
+                "atrasoAnexo3":$scope.atraso3tar34,
+                "atrasoAnexo":$scope.total1tar34
                 }
                 var tar35 = { 
                 "cantidad1":$scope.cantidad1tar35,
@@ -3488,7 +3680,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar35,
                 "atrasoAnexo1":$scope.atraso1tar35,
                 "atrasoAnexo2":$scope.atraso2tar35,
-                "atrasoAnexo3":$scope.atraso3tar35
+                "atrasoAnexo3":$scope.atraso3tar35,
+                "atrasoAnexo":$scope.total1tar35
                 }
                 var tar36 = { 
                 "cantidad1":$scope.cantidad1tar36,
@@ -3499,7 +3692,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar36,
                 "atrasoAnexo1":$scope.atraso1tar36,
                 "atrasoAnexo2":$scope.atraso2tar36,
-                "atrasoAnexo3":$scope.atraso3tar36
+                "atrasoAnexo3":$scope.atraso3tar36,
+                "atrasoAnexo":$scope.total1tar36
                 }
                 var tar37 = { 
                 "cantidad1":$scope.cantidad1tar37,
@@ -3510,7 +3704,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar37,
                 "atrasoAnexo1":$scope.atraso1tar37,
                 "atrasoAnexo2":$scope.atraso2tar37,
-                "atrasoAnexo3":$scope.atraso3tar37
+                "atrasoAnexo3":$scope.atraso3tar37,
+                "atrasoAnexo":$scope.total1tar37
                 }
                 var tar38 = { 
                 "cantidad1":$scope.cantidad1tar38,
@@ -3521,7 +3716,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar38,
                 "atrasoAnexo1":$scope.atraso1tar38,
                 "atrasoAnexo2":$scope.atraso2tar38,
-                "atrasoAnexo3":$scope.atraso3tar38
+                "atrasoAnexo3":$scope.atraso3tar38,
+                "atrasoAnexo":$scope.total1tar38
                 }
                 var tar39 = { 
                 "cantidad1":$scope.cantidad1tar39,
@@ -3532,7 +3728,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar39,
                 "atrasoAnexo1":$scope.atraso1tar39,
                 "atrasoAnexo2":$scope.atraso2tar39,
-                "atrasoAnexo3":$scope.atraso3tar39
+                "atrasoAnexo3":$scope.atraso3tar39,
+                "atrasoAnexo":$scope.total1tar39
                 }
                 var tar40 = { 
                 "cantidad1":$scope.cantidad1tar40,
@@ -3543,7 +3740,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar40,
                 "atrasoAnexo1":$scope.atraso1tar40,
                 "atrasoAnexo2":$scope.atraso2tar40,
-                "atrasoAnexo3":$scope.atraso3tar40
+                "atrasoAnexo3":$scope.atraso3tar40,
+                "atrasoAnexo":$scope.total1tar40
                 }
                 var tar41 = { 
                 "cantidad1":$scope.cantidad1tar41,
@@ -3554,7 +3752,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar41,
                 "atrasoAnexo1":$scope.atraso1tar41,
                 "atrasoAnexo2":$scope.atraso2tar41,
-                "atrasoAnexo3":$scope.atraso3tar41
+                "atrasoAnexo3":$scope.atraso3tar41,
+                "atrasoAnexo":$scope.total1tar41
                 }
                 var tar42 = { 
                 "cantidad1":$scope.cantidad1tar42,
@@ -3565,7 +3764,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar42,
                 "atrasoAnexo1":$scope.atraso1tar42,
                 "atrasoAnexo2":$scope.atraso2tar42,
-                "atrasoAnexo3":$scope.atraso3tar42
+                "atrasoAnexo3":$scope.atraso3tar42,
+                "atrasoAnexo":$scope.total1tar42
                 }
                 var tar43 = { 
                 "cantidad1":$scope.cantidad1tar43,
@@ -3576,7 +3776,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar43,
                 "atrasoAnexo1":$scope.atraso1tar43,
                 "atrasoAnexo2":$scope.atraso2tar43,
-                "atrasoAnexo3":$scope.atraso3tar43
+                "atrasoAnexo3":$scope.atraso3tar43,
+                "atrasoAnexo":$scope.total1tar43
                 }
                 var tar44 = { 
                 "cantidad1":$scope.cantidad1tar44,
@@ -3587,7 +3788,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar44,
                 "atrasoAnexo1":$scope.atraso1tar44,
                 "atrasoAnexo2":$scope.atraso2tar44,
-                "atrasoAnexo3":$scope.atraso3tar44
+                "atrasoAnexo3":$scope.atraso3tar44,
+                "atrasoAnexo":$scope.total1tar44
                 }
                 var tar45 = { 
                 "cantidad1":$scope.cantidad1tar45,
@@ -3598,7 +3800,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar45,
                 "atrasoAnexo1":$scope.atraso1tar45,
                 "atrasoAnexo2":$scope.atraso2tar45,
-                "atrasoAnexo3":$scope.atraso3tar45
+                "atrasoAnexo3":$scope.atraso3tar45,
+                "atrasoAnexo":$scope.total1tar45
                 }
                 var tar46 = { 
                 "cantidad1":$scope.cantidad1tar46,
@@ -3609,7 +3812,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar46,
                 "atrasoAnexo1":$scope.atraso1tar46,
                 "atrasoAnexo2":$scope.atraso2tar46,
-                "atrasoAnexo3":$scope.atraso3tar46
+                "atrasoAnexo3":$scope.atraso3tar46,
+                "atrasoAnexo":$scope.total1tar46
                 }
                 var tar47 = { 
                 "cantidad1":$scope.cantidad1tar47,
@@ -3620,7 +3824,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar47,
                 "atrasoAnexo1":$scope.atraso1tar47,
                 "atrasoAnexo2":$scope.atraso2tar47,
-                "atrasoAnexo3":$scope.atraso3tar47
+                "atrasoAnexo3":$scope.atraso3tar47,
+                "atrasoAnexo":$scope.total1tar47
                 }
                 var tar48 = { 
                 "cantidad1":$scope.cantidad1tar48,
@@ -3631,7 +3836,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar48,
                 "atrasoAnexo1":$scope.atraso1tar48,
                 "atrasoAnexo2":$scope.atraso2tar48,
-                "atrasoAnexo3":$scope.atraso3tar48
+                "atrasoAnexo3":$scope.atraso3tar48,
+                "atrasoAnexo":$scope.total1tar48
                 }
                 var tar49 = { 
                 "cantidad1":$scope.cantidad1tar49,
@@ -3642,7 +3848,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar49,
                 "atrasoAnexo1":$scope.atraso1tar49,
                 "atrasoAnexo2":$scope.atraso2tar49,
-                "atrasoAnexo3":$scope.atraso3tar49
+                "atrasoAnexo3":$scope.atraso3tar49,
+                "atrasoAnexo":$scope.total1tar49
                 }
                 var tar50 = { 
                 "cantidad1":$scope.cantidad1tar50,
@@ -3653,7 +3860,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar50,
                 "atrasoAnexo1":$scope.atraso1tar50,
                 "atrasoAnexo2":$scope.atraso2tar50,
-                "atrasoAnexo3":$scope.atraso3tar50
+                "atrasoAnexo3":$scope.atraso3tar50,
+                "atrasoAnexo":$scope.total1tar50
                 }
                 var tar51 = { 
                 "cantidad1":$scope.cantidad1tar51,
@@ -3664,7 +3872,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar51,
                 "atrasoAnexo1":$scope.atraso1tar51,
                 "atrasoAnexo2":$scope.atraso2tar51,
-                "atrasoAnexo3":$scope.atraso3tar51
+                "atrasoAnexo3":$scope.atraso3tar51,
+                "atrasoAnexo":$scope.total1tar51
                 }
                 var tar52 = { 
                 "cantidad1":$scope.cantidad1tar52,
@@ -3675,7 +3884,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar52,
                 "atrasoAnexo1":$scope.atraso1tar52,
                 "atrasoAnexo2":$scope.atraso2tar52,
-                "atrasoAnexo3":$scope.atraso3tar52
+                "atrasoAnexo3":$scope.atraso3tar52,
+                "atrasoAnexo":$scope.total1tar52
                 }
                 var tar53 = { 
                 "cantidad1":$scope.cantidad1tar53,
@@ -3686,7 +3896,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar53,
                 "atrasoAnexo1":$scope.atraso1tar53,
                 "atrasoAnexo2":$scope.atraso2tar53,
-                "atrasoAnexo3":$scope.atraso3tar53
+                "atrasoAnexo3":$scope.atraso3tar53,
+                "atrasoAnexo":$scope.total1tar53
                 }
                 var tar54 = { 
                 "cantidad1":$scope.cantidad1tar54,
@@ -3697,7 +3908,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar54,
                 "atrasoAnexo1":$scope.atraso1tar54,
                 "atrasoAnexo2":$scope.atraso2tar54,
-                "atrasoAnexo3":$scope.atraso3tar54
+                "atrasoAnexo3":$scope.atraso3tar54,
+                "atrasoAnexo":$scope.total1tar54
                 }
                 var tar55 = { 
                 "cantidad1":$scope.cantidad1tar55,
@@ -3708,7 +3920,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar55,
                 "atrasoAnexo1":$scope.atraso1tar55,
                 "atrasoAnexo2":$scope.atraso2tar55,
-                "atrasoAnexo3":$scope.atraso3tar55
+                "atrasoAnexo3":$scope.atraso3tar55,
+                "atrasoAnexo":$scope.total1tar55
                 }
                 var tar56 = { 
                 "cantidad1":$scope.cantidad1tar56,
@@ -3719,7 +3932,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar56,
                 "atrasoAnexo1":$scope.atraso1tar56,
                 "atrasoAnexo2":$scope.atraso2tar56,
-                "atrasoAnexo3":$scope.atraso3tar56
+                "atrasoAnexo3":$scope.atraso3tar56,
+                "atrasoAnexo":$scope.total1tar56
                 }
                 var tar57 = { 
                 "cantidad1":$scope.cantidad1tar57,
@@ -3730,7 +3944,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar57,
                 "atrasoAnexo1":$scope.atraso1tar57,
                 "atrasoAnexo2":$scope.atraso2tar57,
-                "atrasoAnexo3":$scope.atraso3tar57
+                "atrasoAnexo3":$scope.atraso3tar57,
+                "atrasoAnexo":$scope.total1tar57
                 }
                 var tar58 = { 
                 "cantidad1":$scope.cantidad1tar58,
@@ -3741,7 +3956,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar58,
                 "atrasoAnexo1":$scope.atraso1tar58,
                 "atrasoAnexo2":$scope.atraso2tar58,
-                "atrasoAnexo3":$scope.atraso3tar58
+                "atrasoAnexo3":$scope.atraso3tar58,
+                "atrasoAnexo":$scope.total1tar58
                 }
                 var tar59 = { 
                 "cantidad1":$scope.cantidad1tar59,
@@ -3752,7 +3968,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar59,
                 "atrasoAnexo1":$scope.atraso1tar59,
                 "atrasoAnexo2":$scope.atraso2tar59,
-                "atrasoAnexo3":$scope.atraso3tar59
+                "atrasoAnexo3":$scope.atraso3tar59,
+                "atrasoAnexo":$scope.total1tar59
                 }
                 var tar60 = { 
                 "cantidad1":$scope.cantidad1tar60,
@@ -3763,7 +3980,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar60,
                 "atrasoAnexo1":$scope.atraso1tar60,
                 "atrasoAnexo2":$scope.atraso2tar60,
-                "atrasoAnexo3":$scope.atraso3tar60
+                "atrasoAnexo3":$scope.atraso3tar60,
+                "atrasoAnexo":$scope.total1tar60
                 }
                 var tar61 = { 
                 "cantidad1":$scope.cantidad1tar61,
@@ -3774,7 +3992,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar61,
                 "atrasoAnexo1":$scope.atraso1tar61,
                 "atrasoAnexo2":$scope.atraso2tar61,
-                "atrasoAnexo3":$scope.atraso3tar61
+                "atrasoAnexo3":$scope.atraso3tar61,
+                "atrasoAnexo":$scope.total1tar61
                 }
                 var tar62 = { 
                 "cantidad1":$scope.cantidad1tar62,
@@ -3785,7 +4004,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar62,
                 "atrasoAnexo1":$scope.atraso1tar62,
                 "atrasoAnexo2":$scope.atraso2tar62,
-                "atrasoAnexo3":$scope.atraso3tar62
+                "atrasoAnexo3":$scope.atraso3tar62,
+                "atrasoAnexo":$scope.total1tar62
                 }
                 var tar63 = { 
                 "cantidad1":$scope.cantidad1tar63,
@@ -3796,7 +4016,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar63,
                 "atrasoAnexo1":$scope.atraso1tar63,
                 "atrasoAnexo2":$scope.atraso2tar63,
-                "atrasoAnexo3":$scope.atraso3tar63
+                "atrasoAnexo3":$scope.atraso3tar63,
+                "atrasoAnexo":$scope.total1tar63
                 }
                 var tar64 = { 
                 "cantidad1":$scope.cantidad1tar64,
@@ -3807,7 +4028,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar64,
                 "atrasoAnexo1":$scope.atraso1tar64,
                 "atrasoAnexo2":$scope.atraso2tar64,
-                "atrasoAnexo3":$scope.atraso3tar64
+                "atrasoAnexo3":$scope.atraso3tar64,
+                "atrasoAnexo":$scope.total1tar64
                 }
                 var tar65 = { 
                 "cantidad1":$scope.cantidad1tar65,
@@ -3818,7 +4040,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar65,
                 "atrasoAnexo1":$scope.atraso1tar65,
                 "atrasoAnexo2":$scope.atraso2tar65,
-                "atrasoAnexo3":$scope.atraso3tar65
+                "atrasoAnexo3":$scope.atraso3tar65,
+                "atrasoAnexo":$scope.total1tar65
                 }
                 var tar66 = { 
                 "cantidad1":$scope.cantidad1tar66,
@@ -3829,7 +4052,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar66,
                 "atrasoAnexo1":$scope.atraso1tar66,
                 "atrasoAnexo2":$scope.atraso2tar66,
-                "atrasoAnexo3":$scope.atraso3tar66
+                "atrasoAnexo3":$scope.atraso3tar66,
+                "atrasoAnexo":$scope.total1tar66
                 }
                 var tar67 = { 
                 "cantidad1":$scope.cantidad1tar67,
@@ -3840,7 +4064,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar67,
                 "atrasoAnexo1":$scope.atraso1tar67,
                 "atrasoAnexo2":$scope.atraso2tar67,
-                "atrasoAnexo3":$scope.atraso3tar67
+                "atrasoAnexo3":$scope.atraso3tar67,
+                "atrasoAnexo":$scope.total1tar67
                 }
                 var tar68 = { 
                 "cantidad1":$scope.cantidad1tar68,
@@ -3851,7 +4076,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar68,
                 "atrasoAnexo1":$scope.atraso1tar68,
                 "atrasoAnexo2":$scope.atraso2tar68,
-                "atrasoAnexo3":$scope.atraso3tar68
+                "atrasoAnexo3":$scope.atraso3tar68,
+                "atrasoAnexo":$scope.total1tar68
                 }
                 var tar69 = { 
                 "cantidad1":$scope.cantidad1tar69,
@@ -3862,7 +4088,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar69,
                 "atrasoAnexo1":$scope.atraso1tar69,
                 "atrasoAnexo2":$scope.atraso2tar69,
-                "atrasoAnexo3":$scope.atraso3tar69
+                "atrasoAnexo3":$scope.atraso3tar69,
+                "atrasoAnexo":$scope.total1tar69
                 }
                 var tar70 = { 
                 "cantidad1":$scope.cantidad1tar70,
@@ -3873,7 +4100,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar70,
                 "atrasoAnexo1":$scope.atraso1tar70,
                 "atrasoAnexo2":$scope.atraso2tar70,
-                "atrasoAnexo3":$scope.atraso3tar70
+                "atrasoAnexo3":$scope.atraso3tar70,
+                "atrasoAnexo":$scope.total1tar70
                 }
                 var tar71 = { 
                 "cantidad1":$scope.cantidad1tar71,
@@ -3884,7 +4112,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar71,
                 "atrasoAnexo1":$scope.atraso1tar71,
                 "atrasoAnexo2":$scope.atraso2tar71,
-                "atrasoAnexo3":$scope.atraso3tar71
+                "atrasoAnexo3":$scope.atraso3tar71,
+                "atrasoAnexo":$scope.total1tar71
                 }
                 var tar72 = { 
                 "cantidad1":$scope.cantidad1tar72,
@@ -3895,7 +4124,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar72,
                 "atrasoAnexo1":$scope.atraso1tar72,
                 "atrasoAnexo2":$scope.atraso2tar72,
-                "atrasoAnexo3":$scope.atraso3tar72
+                "atrasoAnexo3":$scope.atraso3tar72,
+                "atrasoAnexo":$scope.total1tar72
                 }
                 var tar73 = { 
                 "cantidad1":$scope.cantidad1tar73,
@@ -3906,7 +4136,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar73,
                 "atrasoAnexo1":$scope.atraso1tar73,
                 "atrasoAnexo2":$scope.atraso2tar73,
-                "atrasoAnexo3":$scope.atraso3tar73
+                "atrasoAnexo3":$scope.atraso3tar73,
+                "atrasoAnexo":$scope.total1tar73
                 }
                 var tar74 = { 
                 "cantidad1":$scope.cantidad1tar74,
@@ -3917,7 +4148,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar74,
                 "atrasoAnexo1":$scope.atraso1tar74,
                 "atrasoAnexo2":$scope.atraso2tar74,
-                "atrasoAnexo3":$scope.atraso3tar74
+                "atrasoAnexo3":$scope.atraso3tar74,
+                "atrasoAnexo":$scope.total1tar74
                 }
                 var tar75 = { 
                 "cantidad1":$scope.cantidad1tar75,
@@ -3928,7 +4160,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar75,
                 "atrasoAnexo1":$scope.atraso1tar75,
                 "atrasoAnexo2":$scope.atraso2tar75,
-                "atrasoAnexo3":$scope.atraso3tar75
+                "atrasoAnexo3":$scope.atraso3tar75,
+                "atrasoAnexo":$scope.total1tar75
                 }
                 var tar76 = { 
                 "cantidad1":$scope.cantidad1tar76,
@@ -3939,7 +4172,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar76,
                 "atrasoAnexo1":$scope.atraso1tar76,
                 "atrasoAnexo2":$scope.atraso2tar76,
-                "atrasoAnexo3":$scope.atraso3tar76
+                "atrasoAnexo3":$scope.atraso3tar76,
+                "atrasoAnexo":$scope.total1tar76
                 }
                 var tar77 = { 
                 "cantidad1":$scope.cantidad1tar77,
@@ -3950,7 +4184,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar77,
                 "atrasoAnexo1":$scope.atraso1tar77,
                 "atrasoAnexo2":$scope.atraso2tar77,
-                "atrasoAnexo3":$scope.atraso3tar77
+                "atrasoAnexo3":$scope.atraso3tar77,
+                "atrasoAnexo":$scope.total1tar77
                 }
                 var tar78 = { 
                 "cantidad1":$scope.cantidad1tar78,
@@ -3961,7 +4196,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar78,
                 "atrasoAnexo1":$scope.atraso1tar78,
                 "atrasoAnexo2":$scope.atraso2tar78,
-                "atrasoAnexo3":$scope.atraso3tar78
+                "atrasoAnexo3":$scope.atraso3tar78,
+                "atrasoAnexo":$scope.total1tar78
                 }
 
                 var generalN = {
@@ -4008,6 +4244,19 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                     "atrasoAnexo2": $scope.atrasoGAnexo2,
                     "atrasoAnexo3": $scope.atrasoGAnexo3
                         }
+
+                anexo1N = $scope.sortByKey(anexo1N, 'TAR');
+                anexo2N = $scope.sortByKey(anexo2N, 'TAR');
+                anexo3N = $scope.sortByKey(anexo3N, 'TAR');
+                anexo1C = $scope.sortByKey(anexo1C, 'TAR');
+                anexo2C = $scope.sortByKey(anexo2C, 'TAR');
+                anexo3C = $scope.sortByKey(anexo3C, 'TAR');
+                anexo1P = $scope.sortByKey(anexo1P, 'TAR');
+                anexo2P = $scope.sortByKey(anexo2P, 'TAR');
+                anexo3P = $scope.sortByKey(anexo3P, 'TAR');
+                anexo1G = $scope.sortByKey(anexo1G, 'TAR');
+                anexo2G = $scope.sortByKey(anexo2G, 'TAR');
+                anexo3G = $scope.sortByKey(anexo3G, 'TAR');
 
                                     var zona1 = {
                                         "generalN": generalN,
@@ -4132,6 +4381,12 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
 		location.href = '/reporteReclamacion';
     }
 
+    $scope.sortByKey = function(array, key) {
+        return array.sort(function(a, b) {
+            var x = a[key]; var y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
+    }
     $scope.callAnexos = function () {
     if($scope.estructura != undefined){
         $scope.class_buttonReclamacion = 'fa fa-spinner fa-spin';
@@ -4261,7 +4516,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
         var zona4 = {};
         var data1 = {};
 
-        resumenReclamacionRepository.getReclamacion($scope.idOsur3).then(function (result) {
+        //resumenReclamacionRepository.getReclamacion($scope.idOsur3).then(function (result) {
+        resumenReclamacionRepository.getReclamacion().then(function (result) {
             if (result.data.length > 0) {
                 $scope.dataReclamacion = result.data;
                 for (var i = 0; i < $scope.dataReclamacion.length; i++) { 
@@ -7605,7 +7861,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             "tar76":tar76,
                             "tar78":tar78
                         }  
-                        if($scope.anexos1[0].idAnexo == 1){
+                    for (var i = 0; i < $scope.anexos1.length; i++) { 
+                        if($scope.anexos1[i].idAnexo == 1){
                                 $scope.estructura1 = {
                                     "zona1": zona1,
                                     "zona2": zona2,
@@ -7613,7 +7870,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                     "zona4": zona4
                                 }  
                         } 
-                        if($scope.anexos1[0].idAnexo == 2){
+                        if($scope.anexos1[i].idAnexo == 2){
                                 $scope.estructura2 = {
                                     "zona1": zona1,
                                     "zona2": zona2,
@@ -7621,15 +7878,16 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                     "zona4": zona4
                                 }  
                         } 
-                        if($scope.anexos1[0].idAnexo == 3){
-                        $scope.idOsur3 = $scope.anexos1[0].idOsur; 
+                        if($scope.anexos1[i].idAnexo == 3){
+                        //$scope.idOsur3 = $scope.anexos1[0].idOsur; 
                                 $scope.estructura3 = {
                                     "zona1": zona1,
                                     "zona2": zona2,
                                     "zona3": zona3,
                                     "zona4": zona4
                                 }  
-                        } 
+                        }
+                    } 
             }
         }, function (error) {
             alertFactory.error('Error al recuperar la informacion solicitada');

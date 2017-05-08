@@ -14,13 +14,10 @@ registrationModule.factory('resumenReclamacionRepository', function ($http, $q) 
                 }
             })
         },
-        getReclamacion: function (idOsur) {
+        getReclamacion: function () {
             return $http({
                 url: reclamacionUrl + 'reclamcionMeastro/',
                 method: "GET",
-                params: {
-                    idOsur: idOsur
-                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
