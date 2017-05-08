@@ -175,7 +175,7 @@ registrationModule.controller('osurController', function ($scope, alertFactory, 
                          
         for(var i=0;i<$scope.datosOsur.length;i++){
        
-            if ($scope.datosOsur[i].estatus === 'Utilizado'  && $scope.datosOsur[i].idAplicacion === null ) {
+            if ($scope.datosOsur[i].estatus === 'Utilizado'  && $scope.datosOsur[i].idAplicacion === null && $scope.datosOsur[i].saldo > 0 ) {
 
                 obj = new Object();
                 obj.idOsur= $scope.datosOsur[i].idOsur;
