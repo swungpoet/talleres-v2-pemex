@@ -4,6 +4,7 @@ registrationModule.controller('historialReclamacionController', function ($scope
 
     $scope.init = function () {
 		$scope.devuelveZonas();
+        $scope.callReclamacion();
     }
 
     $scope.initEvidencia = function () {

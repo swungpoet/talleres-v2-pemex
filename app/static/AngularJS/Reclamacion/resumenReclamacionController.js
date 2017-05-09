@@ -4,6 +4,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
 
     $scope.init = function () {
 		$scope.devuelveZonas();
+        $scope.callResumen();
     }
 
     $scope.devuelveTars = function (zona) {

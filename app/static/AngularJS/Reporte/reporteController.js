@@ -3,12 +3,9 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     $scope.tipofecha = "";
 
     $scope.init = function () {
-        
-
         $scope.devuelveZonas();
         $scope.buscaCallCenter();
         $scope.buscaEstatus();
-       
     }
 
     $scope.fechaRango = function () {
@@ -107,12 +104,10 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
     }
 
     $scope.buscaCallCenter = function () {        
-
         var idUsuario = null;
         if ($scope.userData.idTipoUsuario==2) {   
           idUsuario=$scope.userData.idUsuario;
         }
-
         reporteRepository.callcenter(idUsuario).then(function (response) {
             if (response.data.length > 0) {
                 $scope.callCenters=response.data; 
@@ -131,12 +126,6 @@ registrationModule.controller('reporteController', function ($scope, alertFactor
         }, function (error) {
             alertFactory.error('No se pudo recuperar información de los estatus');
         });
-    }
-
-
-  
-
-       
-    
+    }    
 });
 
