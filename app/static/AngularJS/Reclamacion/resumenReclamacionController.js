@@ -4418,7 +4418,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                         $scope.$apply( function () { 
                                             $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
                                         });
-                             }, 5000);                          
+                             }, 8000);                          
                         });
             }, 6500);
         }else{
@@ -4524,6 +4524,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                     if($scope.dataReclamacion[i].idZona == 1){
                         if($scope.dataReclamacion[i].idTAR == 1){
                             var tar1 = {
+                                        "identificador":result.data[i].identificador,
                                         "idReclamacion":result.data[i].idReclamacion,
                                         "noReporte":result.data[i].noReporte,
                                         "letraGAD":result.data[i].letraGAD,
