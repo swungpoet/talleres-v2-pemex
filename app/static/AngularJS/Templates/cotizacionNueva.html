@@ -144,10 +144,9 @@
                                     <td>{{piezas.numeroParte}}</td>
                                     <td>{{piezas.item}}</td>
                                     <td>{{piezas.cantidad}}</td>
-
-                                    <td ng-show="userData.idTipoUsuario == 1">{{piezas.precio | currency}}
+                                    <td ng-show="userData.idTipoUsuario == 3 || userData.idTipoUsuario == 1 || userData.idTipoUsuario == 2">{{piezas.precio | currency}}
                                         <div ng-show="userData.esProveedor== 0" >
-                                             <button class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-hide="userData.idTipoUsuario == 3">
+                                             <button ng-hide="userData.idTipoUsuario == 2 || userData.idTipoUsuario == 3" class="btn btn-success" type="button" id="btnCotizar" ng-click="cotizacion(piezas)" data-toggle="tooltip" tooltip-placement="top" tooltip="Cambiar Precio" ng-hide="userData.idTipoUsuario == 3">
                                                 <span class="glyphicon glyphicon-edit"></span>
                                             </button>
                                         </div>
