@@ -262,21 +262,15 @@
                         <table class="table table-bordered table-striped table-hover" >
                             <thead>
                                 <tr>
-                                    <th>OSUR Origen</th>
                                     <th>Folio Origen</th>
-                                    <th>OSUR Destino</th>
                                     <th>Folio Destino</th>
-                                    <th>Folio</th>
                                     <th>Saldo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="fondo in fondos">
-                                    <td>{{fondo.idOsur}}</td>
                                     <td>{{fondo.folio}}</td>
-                                    <td>{{fondo.idAplicacion}}</td>
                                     <td>{{fondo.folioAplica}}</td>
-                                    <td>{{fondo.folio}}</td>
                                     <td>{{fondo.presupuestoAplicacion | currency: "$"}}</td>
                                 </tr>
                             </tbody>        
