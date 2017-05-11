@@ -4390,6 +4390,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
     }
     $scope.callAnexos = function () {
     if($scope.estructura != undefined){
+        if($scope.estructura1 != undefined && $scope.estructura2 != undefined && $scope.estructura3 != undefined){
         $scope.class_buttonReclamacion = 'fa fa-spinner fa-spin';
             $scope.reclamacionMaestro();
             setTimeout(function () {
@@ -4416,14 +4417,20 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                   a.download = 'reporteReclamacion';
                                   a.click();
                                   $scope.estructura = undefined;
+                                  $scope.estructura1 = undefined;
+                                  $scope.estructura2 = undefined;
+                                  $scope.estructura3 = undefined;
                                         $scope.$apply( function () { 
                                             $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
                                         });
-                             }, 8000);                          
+                             }, 15000);                          
                         });
-            }, 6500);
+            }, 5000);
+            }else{
+                alertFactory.info('Por favor espere un momento se esta recuperando la información necesaria, vuelva a intentarlo nuevamente!!');
+            }
         }else{
-            alertFactory.info('Debe buscar el detalle para generar el Reporte y/o hagalo de nuevo en caso de haber generado uno con anterioridad');
+            alertFactory.info('Por favor de actualiza la informacion y intentalo nuevamente!!');
         }
     }
     $scope.reclamacionMaestro = function () {
