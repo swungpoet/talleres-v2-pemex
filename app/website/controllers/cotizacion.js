@@ -1601,40 +1601,51 @@ Cotizacion.prototype.post_generaZip = function(req, res, next) { 
 
     var extension = '.pdf';
 
-    var file = req.body.jsonAnexo1.idTrabajo[i].idTrabajo;
+    var idReclamacion = req.body.jsonAnexos.idReclamacion;
+    var dataParams = req.body.jsonAnexos.Anexo2.Info;
+    var responseUbicacion = direclamacion + idReclamacion + '/Soporte.zip'
 
-        var rutaPrincipal = dirCopades;
-        var carpetas = fs.readdirSync(rutaPrincipal);
-        carpetas.forEach(function (documento) {
-            var ext = obtenerExtArchivo(documento);
-            var idTipoArchivo = obtenerTipoArchivo(ext);
-        create_zip(dirCopades + documento, documento);
-        });    
+    for (var i = 0; i < dataParams.length; i++) { 
+    var rutaPrincipal = dirname + dataParams[i].idTrabajo + '/documentos/certificadoConformidad/';
+        if (fs.existsSync(rutaPrincipal)){
+            var carpetas = fs.readdirSync(rutaPrincipal);
+            carpetas.forEach(function (documento) {
+                var ext = obtenerExtArchivo(documento);
+                var idTipoArchivo = obtenerTipoArchivo(ext);
+                var nombreFile = dataParams[i].DiasAtraso + '-' + dataParams[i].folioCertificado + ext;
+                var nameFolder = dataParams[i].TAR;
+                create_zip(rutaPrincipal + documento, nombreFile, nameFolder);
+            });    
+        }
+    }
 
-    function create_zip(file, name) {
+    function create_zip(file, name, nameFolder) {
         var contentPromise = new JSZip.external.Promise(function(resolve, reject) {
             fs.readFile(file, function(err, data) {
                 if (err) {
-                   // reject(err);
+                    reject(err);
                 } else {
                     resolve(data);
                 }
             });
         });
-        zip.file(name, contentPromise);
+        var img = zip.folder(nameFolder);
+        img.file(name, contentPromise);
     }
-
-    zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true }).pipe(fs.createWriteStream(dirCopades + 'prueba' + '.zip'))
+    
+    zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true }).pipe(fs.createWriteStream(responseUbicacion))
         .on('finish', function() {
             console.log("write");
         });
 
+     zip = new JSZip();
 
-    this.model.listaEvidencia(dirCopades, function (error, result) {
+    this.model.listaEvidencia(responseUbicacion, function (error, result) {
         object.error = error;
         object.result = result;
         self.view.expositor(res, object);
     });
+
 }
 
 

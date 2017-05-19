@@ -35,6 +35,18 @@ registrationModule.factory('resumenReclamacionRepository', function ($http, $q) 
                 }
             });
         },
+        callZip: function (jsonAnexos) {
+            return $http({
+                url: cotizacionUrl + 'generaZip/',
+                method: "POST",
+                data: {
+                    jsonAnexos: jsonAnexos
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 
 });

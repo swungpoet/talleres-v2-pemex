@@ -4407,7 +4407,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                     },
                     "data": $scope.estructuraMaestro
                 }
-            
+
                 resumenReclamacionRepository.callExternalPdf(jsonData).then(function (result) {               
                             setTimeout(function () {
                                   $scope.idReclamacionAnexos = result.data.idReclamacion;
@@ -4416,15 +4416,40 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                   a.href = url;
                                   a.download = 'reporteReclamacion';
                                   a.click();
-                                  $scope.estructura = undefined;
-                                  $scope.estructura1 = undefined;
-                                  $scope.estructura2 = undefined;
-                                  $scope.estructura3 = undefined;
-                                        $scope.$apply( function () { 
-                                            $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
-                                        });
-                             }, 15000);                          
+                                                               $scope.$apply( function () { 
+                                                                    $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
+                                                                });
+                                                $scope.estructuraZip = {
+                                                    "Anexo2": $scope.estructura2,
+                                                    "idReclamacion": $scope.idReclamacionAnexos
+                                                }
+                                                resumenReclamacionRepository.callZip($scope.estructuraZip).then(function (resp) {
+                                                setTimeout(function () {
+                                                if (resp.data.length > 0) {
+                                                    var urlReclamacion = '/uploads/reclamacion/'+$scope.idReclamacionAnexos+'/Soporte.zip'
+                                                            var url = $rootScope.vIpServer + urlReclamacion;
+                                                            var a = document.createElement('a');
+                                                                a.href = url;
+                                                                a.download = 'Soporte';
+                                                                a.click();
+                                                                $scope.$apply( function () { 
+                                                                    $scope.class_buttonReclamacion = 'glyphicon glyphicon-ok';
+                                                                });
+                                                                  $scope.estructura = undefined;
+                                                                  $scope.estructura1 = undefined;
+                                                                  $scope.estructura2 = undefined;
+                                                                  $scope.estructura3 = undefined;
+                                                    }
+                                                }, 2000); 
+                                                }, function (error) {
+                                                    alertFactory.error('No se pudo generar el Zip del Anexo');
+                                                });
+
+                             }, 17000);                          
+                        }, function (error) {
+                            alertFactory.error('No se pudo generar el PDF');
                         });
+
             }, 5000);
             }else{
                 alertFactory.info('Por favor espere un momento se esta recuperando la información necesaria, vuelva a intentarlo nuevamente!!');
@@ -6445,16 +6470,124 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
         var zona2 = {};
         var zona3 = {};
         var zona4 = {};
+        ////////////////////////
+        $scope.valor1= 0;
+        $scope.valor2= 0;
+        $scope.valor3= 0;
+        $scope.valor4= 0;
+        $scope.valor5= 0;
+        $scope.valor6= 0;
+        $scope.valor7= 0;
+        $scope.valor8= 0;
+        $scope.valor9= 0;
+        $scope.valor10= 0;
+        $scope.valor11= 0;
+        $scope.valor12= 0;
+        $scope.valor13= 0;
+        $scope.valor14= 0;
+        $scope.valor15= 0;
+        $scope.valor16= 0;
+        $scope.valor17= 0;
+        $scope.valor18= 0;
+        $scope.valor19= 0;
+        $scope.valor20= 0;
+        $scope.valor21= 0;
+        $scope.valor22= 0;
+        $scope.valor23= 0;
+        $scope.valor24= 0;
+        $scope.valor25= 0;
+        $scope.valor26= 0;
+        $scope.valor27= 0;
+        $scope.valor28= 0;
+        $scope.valor29= 0;
+        $scope.valor30= 0;
+        $scope.valor31= 0;
+        $scope.valor32= 0;
+        $scope.valor33= 0;
+        $scope.valor34= 0;
+        $scope.valor35= 0;
+        $scope.valor36= 0;
+        $scope.valor37= 0;
+        $scope.valor38= 0;
+        $scope.valor39= 0;
+        $scope.valor40= 0;
+        $scope.valor41= 0;
+        $scope.valor42= 0;
+        $scope.valor43= 0;
+        $scope.valor44= 0;
+        $scope.valor45= 0;
+        $scope.valor46= 0;
+        $scope.valor47= 0;
+        $scope.valor48= 0;
+        $scope.valor49= 0;
+        $scope.valor50= 0;
+        $scope.valor51= 0;
+        $scope.valor52= 0;
+        $scope.valor53= 0;
+        $scope.valor54= 0;
+        $scope.valor55= 0;
+        $scope.valor56= 0;
+        $scope.valor57= 0;
+        $scope.valor58= 0;
+        $scope.valor59= 0;
+        $scope.valor60= 0;
+        $scope.valor61= 0;
+        $scope.valor62= 0;
+        $scope.valor63= 0;
+        $scope.valor64= 0;
+        $scope.valor65= 0;
+        $scope.valor66= 0;
+        $scope.valor67= 0;
+        $scope.valor68= 0;
+        $scope.valor69= 0;
+        $scope.valor70= 0;
+        $scope.valor71= 0;
+        $scope.valor72= 0;
+        $scope.valor73= 0;
+        $scope.valor74= 0;
+        $scope.valor75= 0;
+        $scope.valor76= 0;
+        $scope.valor77= 0;
+        $scope.valor78= 0;
+        $scope.valorGnrl= 0;
+        var gneral   = [];
+        ///////////////////////////
         reporteReclamacionRepository.getAnexos(idZona, idTar, anexo).then(function (result) {
             if (result.data.length > 0) {   
                 $scope.anexos1 = result.data;
-                for (var i = 0; i < $scope.anexos1.length; i++) { 
+                for (var i = 0; i < $scope.anexos1.length; i++) {
+                $scope.valorGnrl = $scope.valorGnrl + 1;
+                    var dataGeneral = {
+                        "Consecutivo":result.data[i].Consecutivo,
+                        "Cliente":result.data[i].Cliente,
+                        "NoOrden":result.data[i].NoOrden,
+                        "index": $scope.valorGnrl,
+                        "idTAR":result.data[i].idTAR,
+                        "idZona":result.data[i].idZona,
+                        "idTrabajo":result.data[i].idTrabajo,
+                        "NoEconomico":result.data[i].NoEconomico,
+                        "Zona": result.data[i].Zona, 
+                        "TAR":result.data[i].TAR,
+                        "folioCertificado":result.data[i].folioCertificado,
+                        "FechaGeneracionCertificado":result.data[i].FechaGeneracionCertificado,
+                        "fechaCargaCertificadoCliente":result.data[i].fechaCargaCertificadoCliente,
+                        "precioOrden": result.data[i].precioOrden,
+                        "fechaMaxFirma":result.data[i].fechaMaxFirma,
+                        "DiasAtraso": result.data[i].DiasAtraso 
+                    } 
+                    gneral.push(dataGeneral);
+
                     if($scope.anexos1[i].idZona == 1){
                         if($scope.anexos1[i].idTAR == 1){
+                            $scope.valor1 = $scope.valor1 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor1,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6468,10 +6601,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar1.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 9){
+                            $scope.valor9 = $scope.valor9 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor9,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6485,10 +6623,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar9.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 10){
+                            $scope.valor10 = $scope.valor10 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor10,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6502,10 +6645,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar10.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 11){
+                            $scope.valor11 = $scope.valor11 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor11,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6519,10 +6667,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar11.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 12){
+                            $scope.valor12 = $scope.valor12 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor12,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6536,10 +6689,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar12.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 13){
+                            $scope.valor13 = $scope.valor13 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor13,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6553,10 +6711,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar13.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 14){
+                            $scope.valor14 = $scope.valor14 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor14,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6570,10 +6733,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar14.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 17){
+                            $scope.valor17 = $scope.valor17 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor17,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6587,10 +6755,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar17.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 18){
+                            $scope.valor18 = $scope.valor18 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor18,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6604,10 +6777,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar18.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 41){
+                            $scope.valor41 = $scope.valor41 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor41,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6621,10 +6799,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar41.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 42){
+                            $scope.valor42 = $scope.valor42 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor42,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6638,10 +6821,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar42.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 48){
+                            $scope.valor48 = $scope.valor48 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor48,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6655,10 +6843,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar48.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 49){
+                            $scope.valor49 = $scope.valor49 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor49,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6672,10 +6865,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar49.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 50){
+                            $scope.valor50 = $scope.valor50 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor50,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6689,10 +6887,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar50.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 62){
+                            $scope.valor62 = $scope.valor62 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor62,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6706,10 +6909,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar62.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 63){
+                            $scope.valor63 = $scope.valor63 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor63,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6723,10 +6931,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar63.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 64){
+                            $scope.valor64 = $scope.valor64 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor64,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6740,10 +6953,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar64.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 65){
+                            $scope.valor65 = $scope.valor65 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor65,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6757,10 +6975,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar65.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 66){
+                            $scope.valor66 = $scope.valor66 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor66,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6774,10 +6997,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar66.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 77){
+                            $scope.valor77 = $scope.valor77 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor77,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6793,10 +7021,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                     }
                     if($scope.anexos1[i].idZona == 2){
                         if($scope.anexos1[i].idTAR == 19){
+                            $scope.valor19 = $scope.valor19 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor19,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6810,10 +7043,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar19.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 20){
+                            $scope.valor20 = $scope.valor20 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor20,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6827,10 +7065,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar20.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 21){
+                            $scope.valor21 = $scope.valor21 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor21,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6844,10 +7087,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar21.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 22){
+                            $scope.valor22 = $scope.valor22 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor22,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6861,10 +7109,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar22.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 23){
+                            $scope.valor23 = $scope.valor23 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor23,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6878,10 +7131,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar23.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 24){
+                            $scope.valor24 = $scope.valor24 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor24,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6895,10 +7153,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar24.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 26){
+                            $scope.valor26 = $scope.valor26 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor26,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6912,10 +7175,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar26.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 27){
+                            $scope.valor27 = $scope.valor27 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor27,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6929,10 +7197,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar27.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 28){
+                            $scope.valor28 = $scope.valor28 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor28,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6946,10 +7219,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar28.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 31){
+                            $scope.valor31 = $scope.valor31 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor31,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6963,10 +7241,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar31.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 32){
+                            $scope.valor32 = $scope.valor32 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor32,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6980,10 +7263,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar32.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 33){
+                            $scope.valor33 = $scope.valor33 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor33,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -6997,10 +7285,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar33.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 35){
+                            $scope.valor35 = $scope.valor35 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor35,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7014,10 +7307,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar35.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 36){
+                            $scope.valor36 = $scope.valor36 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor36,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7031,10 +7329,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar36.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 37){
+                            $scope.valor37 = $scope.valor37 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor37,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7048,10 +7351,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar37.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 38){
+                            $scope.valor38 = $scope.valor38 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor38,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7065,10 +7373,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar38.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 39){
+                            $scope.valor39 = $scope.valor39 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor39,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7082,10 +7395,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar39.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 47){
+                            $scope.valor47 = $scope.valor47 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor47,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7099,10 +7417,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar47.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 79){
+                            $scope.valor79 = $scope.valor79 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor79,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7118,10 +7441,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                     }
                     if($scope.anexos1[i].idZona == 3){
                         if($scope.anexos1[i].idTAR == 2){
+                            $scope.valor2 = $scope.valor2 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor2,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7135,10 +7463,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar2.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 3){
+                            $scope.valor3 = $scope.valor3 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor3,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7152,10 +7485,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar3.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 4){
+                            $scope.valor4 = $scope.valor4 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor4,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7169,10 +7507,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar4.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 5){
+                            $scope.valor5 = $scope.valor5 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor5,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7186,10 +7529,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar5.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 15){
+                            $scope.valor15 = $scope.valor15 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor15,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7203,10 +7551,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar15.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 16){
+                            $scope.valor16 = $scope.valor16 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor16,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7220,10 +7573,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar16.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 25){
+                            $scope.valor25 = $scope.valor25 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor25,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7237,10 +7595,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar25.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 29){
+                            $scope.valor29 = $scope.valor29 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor29,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7254,10 +7617,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar29.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 30){
+                            $scope.valor30 = $scope.valor30 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor30,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7271,10 +7639,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar30.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 34){
+                            $scope.valor34 = $scope.valor34 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor34,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7288,10 +7661,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar34.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 40){
+                            $scope.valor40 = $scope.valor40 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor40,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7305,10 +7683,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar40.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 51){
+                            $scope.valor51 = $scope.valor51 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor51,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7322,10 +7705,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar51.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 52){
+                            $scope.valor52 = $scope.valor52 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor52,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7339,10 +7727,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar52.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 53){
+                            $scope.valor53 = $scope.valor53 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor53,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7356,10 +7749,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar53.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 54){
+                            $scope.valor54 = $scope.valor54 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor54,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7373,10 +7771,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar54.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 55){
+                            $scope.valor55 = $scope.valor55 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor55,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7390,10 +7793,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar55.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 56){
+                            $scope.valor56 = $scope.valor56 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor56,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7407,10 +7815,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar56.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 57){
+                            $scope.valor57 = $scope.valor57 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor57,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7424,10 +7837,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar57.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 58){
+                            $scope.valor58 = $scope.valor58 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor58,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7441,10 +7859,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar58.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 59){
+                            $scope.valor59 = $scope.valor59 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor59,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7458,10 +7881,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar59.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 60){
+                            $scope.valor60 = $scope.valor60 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor60,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7477,10 +7905,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                     }
                     if($scope.anexos1[i].idZona == 4){
                         if($scope.anexos1[i].idTAR == 6){
+                            $scope.valor6 = $scope.valor6 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor6,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7494,10 +7927,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar6.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 7){
+                            $scope.valor7 = $scope.valor7 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor7,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7511,10 +7949,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar7.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 8){
+                            $scope.valor8 = $scope.valor8 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor8,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7528,10 +7971,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar8.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 43){
+                            $scope.valor43 = $scope.valor43 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor43,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7545,10 +7993,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar43.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 44){
+                            $scope.valor44 = $scope.valor44 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor44,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7562,10 +8015,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar44.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 45){
+                            $scope.valor45 = $scope.valor45 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor45,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7579,10 +8037,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar45.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 46){
+                            $scope.valor46 = $scope.valor46 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor46,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7596,10 +8059,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar46.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 61){
+                            $scope.valor61 = $scope.valor61 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor61,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7613,10 +8081,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar61.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 67){
+                            $scope.valor67 = $scope.valor67 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor67,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7630,10 +8103,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar67.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 68){
+                            $scope.valor68 = $scope.valor68 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor68,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7647,10 +8125,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar68.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 69){
+                            $scope.valor69 = $scope.valor69 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor69,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7664,10 +8147,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar69.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 70){
+                            $scope.valor70 = $scope.valor70 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor70,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7681,10 +8169,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar70.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 72){
+                            $scope.valor72 = $scope.valor72 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor72,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7698,10 +8191,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar72.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 73){
+                            $scope.valor73 = $scope.valor73 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor73,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7715,10 +8213,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar73.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 74){
+                            $scope.valor74 = $scope.valor74 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor74,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7732,10 +8235,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar74.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 75){
+                            $scope.valor75 = $scope.valor75 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor75,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7749,10 +8257,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar75.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 76){
+                            $scope.valor76 = $scope.valor76 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor76,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7766,10 +8279,15 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             tar76.push(data1);
                         }
                         if($scope.anexos1[i].idTAR == 78){
+                            $scope.valor78 = $scope.valor78 + 1;
                             var data1 = {
                                         "Consecutivo":result.data[i].Consecutivo,
                                         "Cliente":result.data[i].Cliente,
                                         "NoOrden":result.data[i].NoOrden,
+                                        "index": $scope.valor78,
+                                        "idTAR":result.data[i].idTAR,
+                                        "idZona":result.data[i].idZona,
+                                        "idTrabajo":result.data[i].idTrabajo,
                                         "NoEconomico":result.data[i].NoEconomico,
                                         "Zona": result.data[i].Zona, 
                                         "TAR":result.data[i].TAR,
@@ -7781,7 +8299,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                         "DiasAtraso": result.data[i].DiasAtraso 
                                 } 
                             tar78.push(data1);
-                        }                        
+                        }            
                     }
                 }  
                         var zona1 = {
@@ -7870,6 +8388,7 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                             "tar76":tar76,
                             "tar78":tar78
                         }  
+
                     for (var i = 0; i < $scope.anexos1.length; i++) { 
                         if($scope.anexos1[i].idAnexo == 1){
                                 $scope.estructura1 = {
@@ -7884,7 +8403,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                                     "zona1": zona1,
                                     "zona2": zona2,
                                     "zona3": zona3,
-                                    "zona4": zona4
+                                    "zona4": zona4,
+                                    "Info":gneral
                                 }  
                         } 
                         if($scope.anexos1[i].idAnexo == 3){
