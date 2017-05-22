@@ -3538,7 +3538,8 @@ registrationModule.controller('resumenReclamacionController', function ($scope, 
                 "precio3":$scope.precio3tar23,
                 "atrasoAnexo1":$scope.atraso1tar23,
                 "atrasoAnexo2":$scope.atraso2tar23,
-                "atrasoAnexo3":$scope.atraso3tar23
+                "atrasoAnexo3":$scope.atraso3tar23,
+                "atrasoAnexo":$scope.total1tar23
                 }
                 var tar24 = { 
                 "cantidad1":$scope.cantidad1tar24,

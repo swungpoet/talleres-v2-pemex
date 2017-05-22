@@ -46,6 +46,8 @@ var obtenerTipoArchivo = function (ext) {
         type = 2;
     } else if (ext == '.mp4') {
         type = 3;
+    } else if (ext == '.zip' || ext == '.ZIP' ) {
+        type = 4;
     }
     return type;
 }

@@ -49,6 +49,11 @@
                                                             <i class="img-responsive fa fa-film"></i>
                                                         </a>
                                                     </div>
+                                                    <div ng-if="slide.idTipoArchivo == 4" class="icon">
+                                                        <a href="{{vIpServer}}/uploads/{{slide.carpeta}}/{{reclamacionUploadFile}}/{{slide.nombreArchivo}}" download="{{slide.nombreArchivo}}" target="_parent">
+                                                            <i class="img-responsive fa fa-file-archive-o"></i>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                                 <div ng-if="slide.idTipoEvidencia == 2">
                                                     <div ng-if="slide.idTipoArchivo == 1" class="icon">
