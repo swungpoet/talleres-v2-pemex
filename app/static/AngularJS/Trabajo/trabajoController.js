@@ -500,7 +500,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                     //regresa
                          $scope.generaCertificadoConformidadPDF(idTrabajo, idTAR, montoOrden, indice, idCita);
 
-                         } else {
+/*                         } else {
                                     //correo
 
                                     swal({
@@ -522,7 +522,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                                     alertFactory.error("Error al cargar enviar mail");
                                                 });
                                             }
-                                        });
+                                        });*/
                                 }
                             }, function (error) {
                                 console.log('error ' + error)
