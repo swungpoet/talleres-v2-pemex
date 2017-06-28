@@ -167,12 +167,13 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getAbonos: function (idUsuario) {
+        getAbonos: function (idUsuario, abonos) {
             return $http({
                 url: ordenUrl + 'abonados',
                 method: "GET",
                 params: {
-                    idUsuario: idUsuario
+                    idUsuario: idUsuario,
+                    abonos: abonos
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -210,6 +211,21 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     bandera:bandera,
                     razonSocial:razonSocial
                 },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        putFacturaAbonada: function (idTrabajoAgrupado, ordenGlobal) {
+            var objTrabajo = {
+                idTrabajoAgrupado: idTrabajoAgrupado,
+                ordenGlobal: ordenGlobal
+            };
+
+            return $http({
+                url: ordenUrl + 'facturaAbonada',
+                method: "POST",
+                data: objTrabajo,
                 headers: {
                     'Content-Type': 'application/json'
                 }

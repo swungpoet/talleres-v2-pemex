@@ -4,6 +4,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.userData = localStorageService.get('userData');
     $scope.stories= [];
     $scope.checkedTrabajos=[];
+    $scope.checkedFacturas=[];
     $scope.fechaRecepcionCopade = localStorageService.get("fechaRecepcion");
     $scope.onText = 'Copade';
     $scope.offText = 'Cotización';
@@ -31,8 +32,11 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }
         //$scope.limpiaFecha();
         $scope.cleanDatos();
-        $scope.getOrdenesPorCobrar(); 
-        $scope.trabajosAbonados();
+        $scope.getOrdenesPorCobrar();
+            if ($scope.userData.idTipoUsuario == 1) {
+                $scope.trabajosAbonados(0);
+            }
+        $scope.trabajosAbonados(1);
        // $scope.cotizacionesAbonos ();
         $scope.devuelveZonas();
         $scope.devuelveTars();
@@ -478,32 +482,55 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         });
     }
 
-    $scope.trabajosAbonados = function () {
+    $scope.trabajosAbonados = function (abono) {
         var sumatoria= 0;
         var sumatoriaSaldo= 0;
         var sumatoriaAbono= 0;
-        $('.dataTableAbonos').DataTable().destroy();
-        ordenPorCobrarRepository.getAbonos($scope.userData.idUsuario).then(function (result) {
+        var sumatoriaPendiente = 0;
+        var sumatoriaSaldoPendiente = 0;
+        var sumatoriaAbonoPendiente = 0;
+        if(abono == 0){
+            $('.dataTableAbonosPendiente').DataTable().destroy();
+                ordenPorCobrarRepository.getAbonos($scope.userData.idUsuario, abono).then(function (result) {
+                if (result.data.length > 0) {
+                        $scope.abonosPendientes = result.data;
+                        for(var i=0;i<result.data.length;i++){
+                            sumatoriaPendiente += parseFloat(result.data[i].total);
+                            sumatoriaSaldoPendiente += parseFloat(result.data[i].COP_SALDO);
+                            sumatoriaAbonoPendiente += parseFloat(result.data[i].abono);
+                        };
+                        $scope.sumatoriaTotalPendiente=sumatoriaPendiente;
+                        $scope.sumatoriaSaldosPendiente=sumatoriaSaldoPendiente;
+                        $scope.sumatoriaAbonosPendiente=sumatoriaAbonoPendiente;
+                        globalFactory.waitDrawDocument("dataTableAbonosPendiente", "OrdenporCobrar");                    
+                } else {
+                    alertFactory.info('No se encontraron trabajos por cobrar');
+                }
+            }, function (error) {
+                alertFactory.error("Error al obtener trabajos por cobrar");
+            });
+        }else{
+            $('.dataTableAbonos').DataTable().destroy();
+                ordenPorCobrarRepository.getAbonos($scope.userData.idUsuario, abono).then(function (result) {
+                if (result.data.length > 0) {        
+                        $scope.abonos = result.data;
+                        for(var i=0;i<result.data.length;i++){
+                            sumatoria += parseFloat(result.data[i].total);
+                            sumatoriaSaldo += parseFloat(result.data[i].COP_SALDO);
+                            sumatoriaAbono += parseFloat(result.data[i].abono);
+                        };
+                        $scope.sumatoriaTotal=sumatoria;
+                        $scope.sumatoriaSaldos=sumatoriaSaldo;
+                        $scope.sumatoriaAbonos=sumatoriaAbono;
+                        globalFactory.waitDrawDocument("dataTableAbonos", "OrdenporCobrar");
+                } else {
+                    alertFactory.info('No se encontraron trabajos por cobrar');
+                }
+            }, function (error) {
+                alertFactory.error("Error al obtener trabajos por cobrar");
+            });
+        }
 
-            if (result.data.length > 0) {
-                $scope.abonos = result.data;
-                
-                for(var i=0;i<result.data.length;i++){
-                    sumatoria += parseFloat(result.data[i].total);
-                    sumatoriaSaldo += parseFloat(result.data[i].COP_SALDO);
-                    sumatoriaAbono += parseFloat(result.data[i].abono);
-                };
-                $scope.sumatoriaTotal=sumatoria;
-                $scope.sumatoriaSaldos=sumatoriaSaldo;
-                $scope.sumatoriaAbonos=sumatoriaAbono;
-
-                globalFactory.waitDrawDocument("dataTableAbonos", "OrdenporCobrar");
-            } else {
-                alertFactory.info('No se encontraron trabajos por cobrar');
-            }
-        }, function (error) {
-            alertFactory.error("Error al obtener trabajos por cobrar");
-        });
     }
 
     $scope.changeFecha = function (fecha, tipo){
@@ -776,7 +803,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             }
 
             $scope.change_switchFacturas = function () {
-
                 if ($scope.showCopadeFacturas == 2) {
                     $scope.showCopadeFacturas = 1;
                 } else {
@@ -784,7 +810,86 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 }
             };
 
-    
+        //Selecciona una orden en Radio y obtiene idTrabajo
+    $scope.seleccionFacturaAbonada= function (idTrabajoAgrupado, ordenGlobal) {
+         var factura = false;
+        if ($scope.checkedFacturas.length > 0) {
+            for (i = 0; i < $scope.checkedFacturas.length; i++) {
+                if ($scope.checkedFacturas[i].idTrabajoAgrupado == idTrabajoAgrupado) {
+                    factura = true;
+                     if ($scope.checkedFacturas[i].check ) {
+                        $scope.checkedFacturas[i].check= false;
+                    }else{
+                        $scope.checkedFacturas[i].check= true;
+                    } 
+                }
+            } 
+            if (!factura) {
+                 obj = new Object();
+                obj.idTrabajoAgrupado= idTrabajoAgrupado;
+                obj.ordenGlobal= ordenGlobal;
+                obj.check = true;
+                $scope.checkedFacturas.push(obj); 
+            }
+        }else{
+            obj = new Object();
+            obj.idTrabajoAgrupado= idTrabajoAgrupado;
+            obj.ordenGlobal= ordenGlobal;
+            obj.check = true;
+            $scope.checkedFacturas.push(obj); 
+        }
+    }
+
+    $scope.asociarFactura = function () {
+       var idTrabajoAgrupado='';
+       var ordenGlobal='';
+       //var montoOrdenSeleccionadoSuma=0;
+        for (i = 0; i < $scope.checkedFacturas.length; i++) {
+            if ($scope.checkedFacturas[i].check ) {
+                idTrabajoAgrupado+=$scope.checkedFacturas[i].idTrabajoAgrupado+',';
+                ordenGlobal+=$scope.checkedFacturas[i].ordenGlobal+',';
+               // montoOrdenSeleccionadoSuma+=parseFloat($scope.checkedFacturas[i].montoOrdenSeleccionado);
+            }
+        };
+        if (idTrabajoAgrupado != '') {
+            $('.btnTerminarTrabajo').ready(function () {
+                swal({
+                        title: "¿Esta seguro en guardar la Factura selecionada?",
+                        text: "Se cambiará el estatus a 'Facturas Abonadas'",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#65BD10",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            ordenPorCobrarRepository.putFacturaAbonada(idTrabajoAgrupado, ordenGlobal).then(function (result) {
+                                if (result.data.length > 0) {
+                                    swal("Trabajo terminado!", "Las Facturas se han abonado", "success");
+                                         $scope.trabajosAbonados(0);
+                                         $scope.trabajosAbonados(1);
+                                         $scope.checkedFacturas=[];
+                                    alertFactory.success('Factura abonada correctamente');
+                                } else {
+                                    alertFactory.info('No se pudo actualizar la Factura');
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al actualizar la factura");
+                            });
+                        } else {
+                            swal("Factura no asociada", "", "error");
+                            $('#finalizarTrabajoModal').modal('hide');
+                        }
+                    });
+            });
+        } else {
+            alertFactory.error("Debe seleccionar al menos una Factura");
+        }   
+    }
+
 });
 
 

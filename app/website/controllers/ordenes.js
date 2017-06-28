@@ -1410,6 +1410,11 @@ Orden.prototype.get_abonados = function (req, res, next) {
             name: 'idUsuario',
             value: req.query.idUsuario,
             type: self.model.types.INT
+        },
+        {
+            name: 'abonos',
+            value: req.query.abonos,
+            type: self.model.types.INT
         }];
 
     this.model.query('SEL_FACTURAS_ABONOS_SP', params, function (error, result) {
@@ -1450,7 +1455,7 @@ Orden.prototype.get_cotizacionesabonados = function (req, res, next) {
             type: self.model.types.STRING
                         
         }];
-
+        
     this.model.query('SEL_COTIZACION_ABONADOS_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
@@ -1575,6 +1580,36 @@ Orden.prototype.post_insertaNotas = function (req, res, next) {
     ];
 
     this.model.post('INS_NOTA_SP', params, function (error, result) {
+        //Callback
+        object.error = error;
+        object.result = result;
+
+        self.view.expositor(res, object);
+    });
+}
+
+
+//Actualiza el estatus de una órden - cobrada
+Orden.prototype.post_facturaAbonada = function (req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+    //Objeto que envía los parámetros
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+
+    var params = [{
+            name: 'idTrabajoAgrupado',
+            value: req.body.idTrabajoAgrupado,
+            type: self.model.types.STRING
+        },
+        {
+            name: 'ordenGlobal',
+            value: req.body.ordenGlobal,
+            type: self.model.types.STRING
+        }];
+
+    this.model.post('INS_FACTURA_ABONO_SP', params, function (error, result) {
         //Callback
         object.error = error;
         object.result = result;
