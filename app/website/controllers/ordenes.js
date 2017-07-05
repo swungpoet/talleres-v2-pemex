@@ -1599,11 +1599,6 @@ Orden.prototype.post_facturaAbonada = function (req, res, next) {
     var self = this;
 
     var params = [{
-            name: 'idTrabajoAgrupado',
-            value: req.body.idTrabajoAgrupado,
-            type: self.model.types.STRING
-        },
-        {
             name: 'ordenGlobal',
             value: req.body.ordenGlobal,
             type: self.model.types.STRING

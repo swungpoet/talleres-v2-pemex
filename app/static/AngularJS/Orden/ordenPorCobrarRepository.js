@@ -216,9 +216,8 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        putFacturaAbonada: function (idTrabajoAgrupado, ordenGlobal) {
+        putFacturaAbonada: function (ordenGlobal) {
             var objTrabajo = {
-                idTrabajoAgrupado: idTrabajoAgrupado,
                 ordenGlobal: ordenGlobal
             };
 

@@ -850,17 +850,17 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     }
 
     $scope.asociarFactura = function () {
-       var idTrabajoAgrupado='';
+       //var idTrabajoAgrupado='';
        var ordenGlobal='';
        //var montoOrdenSeleccionadoSuma=0;
         for (i = 0; i < $scope.checkedFacturas.length; i++) {
             if ($scope.checkedFacturas[i].check ) {
-                idTrabajoAgrupado+=$scope.checkedFacturas[i].idTrabajoAgrupado+',';
+               // idTrabajoAgrupado+=$scope.checkedFacturas[i].idTrabajoAgrupado+',';
                 ordenGlobal+=$scope.checkedFacturas[i].ordenGlobal+',';
                // montoOrdenSeleccionadoSuma+=parseFloat($scope.checkedFacturas[i].montoOrdenSeleccionado);
             }
         };
-        if (idTrabajoAgrupado != '') {
+        if (ordenGlobal != '') {
             $('.btnTerminarTrabajo').ready(function () {
                 swal({
                         title: "¿Esta seguro en guardar la Factura selecionada?",
@@ -875,7 +875,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     },
                     function (isConfirm) {
                         if (isConfirm) {
-                            ordenPorCobrarRepository.putFacturaAbonada(idTrabajoAgrupado, ordenGlobal).then(function (result) {
+                            ordenPorCobrarRepository.putFacturaAbonada(ordenGlobal).then(function (result) {
                                 if (result.data.length > 0) {
                                     swal("Trabajo terminado!", "Las Facturas se han abonado", "success");
                                          $scope.trabajosAbonados(0);
