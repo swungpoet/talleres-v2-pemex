@@ -16,6 +16,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.fechaInicio= '';
     $scope.fechaFin = '';
     $scope.showCopadeFacturas = 1;
+    $scope.totalSeleccionadoSuma = 0;
    
 
     $scope.init = function () {
@@ -811,8 +812,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             };
 
         //Selecciona una orden en Radio y obtiene idTrabajo
-    $scope.seleccionFacturaAbonada= function (idTrabajoAgrupado, ordenGlobal) {
+    $scope.seleccionFacturaAbonada= function (idTrabajoAgrupado, ordenGlobal, total) {
          var factura = false;
+         $scope.totalSeleccionadoSuma = 0;
         if ($scope.checkedFacturas.length > 0) {
             for (i = 0; i < $scope.checkedFacturas.length; i++) {
                 if ($scope.checkedFacturas[i].idTrabajoAgrupado == idTrabajoAgrupado) {
@@ -828,6 +830,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                  obj = new Object();
                 obj.idTrabajoAgrupado= idTrabajoAgrupado;
                 obj.ordenGlobal= ordenGlobal;
+                obj.total= total;
                 obj.check = true;
                 $scope.checkedFacturas.push(obj); 
             }
@@ -835,8 +838,14 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             obj = new Object();
             obj.idTrabajoAgrupado= idTrabajoAgrupado;
             obj.ordenGlobal= ordenGlobal;
+            obj.total= total;
             obj.check = true;
             $scope.checkedFacturas.push(obj); 
+        }
+        for (i = 0; i < $scope.checkedFacturas.length; i++) {
+            if ($scope.checkedFacturas[i].check ) {
+               $scope.totalSeleccionadoSuma+=parseFloat($scope.checkedFacturas[i].total);
+            }
         }
     }
 
@@ -872,6 +881,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                                          $scope.trabajosAbonados(0);
                                          $scope.trabajosAbonados(1);
                                          $scope.checkedFacturas=[];
+                                         $scope.totalSeleccionadoSuma = 0;
                                     alertFactory.success('Factura abonada correctamente');
                                 } else {
                                     alertFactory.info('No se pudo actualizar la Factura');
