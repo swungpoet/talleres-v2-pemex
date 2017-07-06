@@ -229,6 +229,21 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getCotizacionesAbonosSelect: function (idUsuario, fechaInicio, fechaFin, razonSocial) {
+            return $http({
+                url: ordenUrl + 'cotizacionesabonadosSelect',
+                method: "GET",
+                params: {
+                    idUsuario: idUsuario,
+                    fechaInicio:fechaInicio,
+                    fechaFin:fechaFin,
+                    razonSocial:razonSocial
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
 
     };

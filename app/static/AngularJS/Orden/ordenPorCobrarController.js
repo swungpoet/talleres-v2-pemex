@@ -17,7 +17,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.fechaFin = '';
     $scope.showCopadeFacturas = 1;
     $scope.totalSeleccionadoSuma = 0;
-   
+    $scope.sumatoriaAbonoSelect = 0;
+
 
     $scope.init = function () {
         Dropzone.autoDiscover = false;
@@ -34,10 +35,8 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         //$scope.limpiaFecha();
         $scope.cleanDatos();
         $scope.getOrdenesPorCobrar();
-            if ($scope.userData.idTipoUsuario == 1) {
-                $scope.trabajosAbonados(0);
-            }
         $scope.trabajosAbonados(1);
+        $scope.selectCotizacionesAbonos(null, null, null);
        // $scope.cotizacionesAbonos ();
         $scope.devuelveZonas();
         $scope.devuelveTars();
@@ -878,7 +877,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                             ordenPorCobrarRepository.putFacturaAbonada(ordenGlobal).then(function (result) {
                                 if (result.data.length > 0) {
                                     swal("Trabajo terminado!", "Las Facturas se han abonado", "success");
-                                         $scope.trabajosAbonados(0);
                                          $scope.trabajosAbonados(1);
                                          $scope.checkedFacturas=[];
                                          $scope.totalSeleccionadoSuma = 0;
@@ -899,6 +897,123 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             alertFactory.error("Debe seleccionar al menos una Factura");
         }   
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $scope.selectCotizacionesAbonos = function (fechaInicioCot, fechaFinCot, proveedorS) {
+        $('.dataTableCotAbonosSelect').DataTable().destroy();
+        $scope.selectCotizaciones = [];
+        $scope.checkedFacturasTotal = [];
+        $scope.sumatoriaAbonoSelect = 0;
+        fechaInicioCot == '' ? fechaInicioCot = null : fechaInicioCot;
+        fechaFinCot == '' ? fechaFinCot = null : fechaFinCot;
+       if (fechaInicioCot != undefined || fechaInicioCot != null) {
+            var valoresInicial = fechaInicioCot.split('/');
+            var dateStringInicial = valoresInicial[0] + '/' + valoresInicial[1] + '/' + valoresInicial[2];
+            var valoresFinal = fechaFinCot.split('/');
+            var dateStringFinal = valoresFinal[0] + '/' + valoresFinal[1] + '/' + valoresFinal[2];  
+        };
+        ordenPorCobrarRepository.getCotizacionesAbonosSelect($scope.userData.idUsuario, dateStringInicial,  dateStringFinal,  proveedorS).then(function (result) {
+            if (result.data.length > 0) { 
+                $scope.selectCotizaciones = result.data; 
+               angular.forEach($scope.selectCotizaciones, function(value, key) {
+                  value.selected = false;
+                });
+                //$scope.selectOperaciones = result.data; 
+                for(var i=0;i< result.data.length;i++){
+                   $scope.sumatoriaAbonoSelect += result.data[i].precioCotizacion;
+                    obj = new Object();
+                    obj.idTrabajoAgrupado = result.data[i].idTrabajoAgrupado;
+                    obj.ordenGlobal = result.data[i].COP_ORDENGLOBAL;
+                    obj.total = result.data[i].saldoProveedor;
+                    obj.check = false;
+                    $scope.checkedFacturasTotal.push(obj); 
+                };
+                globalFactory.waitDrawDocument("dataTableCotAbonosSelect", "OrdenporCobrar");
+            } else {
+                alertFactory.info('No se encontraron cotizaciones abonadas');
+            }
+        }, function (error) {
+            alertFactory.error("Error al obtener cotizaciones abonadas");
+        });
+    }
+
+    $scope.seleccionFacturaAbonadaCotizacion= function (idTrabajoAgrupado, ordenGlobal, total) {
+        //Marcar seleccionados
+         //var factura = false;
+         $scope.totalSeleccionadoSuma = 0;
+        if ($scope.checkedFacturasTotal.length > 0) {
+            for (i = 0; i < $scope.checkedFacturasTotal.length; i++) {
+                if ($scope.checkedFacturasTotal[i].ordenGlobal == ordenGlobal) {
+                    //factura = true;
+                     if ($scope.checkedFacturasTotal[i].check == false) {
+                        $scope.checkedFacturasTotal[i].check = true;
+                            angular.forEach($scope.selectCotizaciones, function(value, key) {
+                             if(value.COP_ORDENGLOBAL == ordenGlobal)
+                                value.selected = true;
+                            });
+                    }else{
+                        $scope.checkedFacturasTotal[i].check = false; 
+                            angular.forEach($scope.selectCotizaciones, function(value, key) {
+                             if(value.COP_ORDENGLOBAL == ordenGlobal)
+                                value.selected = false;
+                            });
+                    } 
+                }
+            } 
+        } 
+        for (i = 0; i < $scope.checkedFacturasTotal.length; i++) {
+            if ($scope.checkedFacturasTotal[i].check) {
+               $scope.totalSeleccionadoSuma+=parseFloat($scope.checkedFacturasTotal[i].total);
+            }
+        }
+    }
+
+    $scope.asociarFacturaCotizacion = function () {
+       var ordenGlobal='';
+        for (i = 0; i < $scope.checkedFacturasTotal.length; i++) {
+            if ($scope.checkedFacturasTotal[i].check ) {
+                ordenGlobal+=$scope.checkedFacturasTotal[i].ordenGlobal+',';
+            }
+        };
+        if (ordenGlobal != '') {
+            $('.btnTerminarTrabajo').ready(function () {
+                swal({
+                        title: "¿Esta seguro en guardar la Factura selecionada?",
+                        text: "Se cambiará el estatus a 'Facturas Abonadas'",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#65BD10",
+                        confirmButtonText: "Si",
+                        cancelButtonText: "No",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            ordenPorCobrarRepository.putFacturaAbonada(ordenGlobal).then(function (result) {
+                                if (result.data.length > 0) {
+                                    swal("Trabajo terminado!", "Las Facturas se han abonado", "success");
+                                         $scope.trabajosAbonados(1);
+                                         $scope.checkedFacturas=[];
+                                         $scope.totalSeleccionadoSuma = 0;
+                                    alertFactory.success('Factura abonada correctamente');
+                                } else {
+                                    alertFactory.info('No se pudo actualizar la Factura');
+                                }
+                            }, function (error) {
+                                alertFactory.error("Error al actualizar la factura");
+                            });
+                        } else {
+                            swal("Factura no asociada", "", "error");
+                            $('#finalizarTrabajoModal').modal('hide');
+                        }
+                    });
+            });
+        } else {
+            alertFactory.error("Debe seleccionar al menos una Factura");
+        }   
+    }
+
 
 });
 

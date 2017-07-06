@@ -1613,4 +1613,43 @@ Orden.prototype.post_facturaAbonada = function (req, res, next) {
     });
 }
 
+   //Devuelve los cotizaciones cobrados y listos para facturar con abonos
+Orden.prototype.get_cotizacionesabonadosSelect = function (req, res, next) {
+        //Objeto que almacena la respuesta
+        var object = {};
+        //Referencia a la clase para callback
+        var self = this;
+        //Objeto que envía los parámetros
+        var params = [{
+            name: 'idUsuario',
+            value: req.query.idUsuario,
+            type: self.model.types.INT
+        },
+        {
+            name: 'fechaInicio',
+            value: req.query.fechaInicio,
+            type: self.model.types.STRING
+                        
+        },
+        {
+            name: 'fechaFin',
+            value: req.query.fechaFin,
+            type: self.model.types.STRING
+                        
+        },
+        {
+            name: 'razonSocial',
+            value: req.query.razonSocial,
+            type: self.model.types.STRING
+                        
+        }];
+        
+    this.model.query('SEL_COTIZACION_ABONADOS_SELECT_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+}
+
 module.exports = Orden;
