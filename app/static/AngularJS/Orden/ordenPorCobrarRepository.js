@@ -180,7 +180,7 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                 }
             });
         },
-        getCotizacionesAbonos: function (idUsuario, fechaInicio, fechaFin, razonSocial) {
+        getCotizacionesAbonos: function (idUsuario, fechaInicio, fechaFin, razonSocial, saldoTaller) {
             return $http({
                 url: ordenUrl + 'cotizacionesabonados',
                 method: "GET",
@@ -188,7 +188,8 @@ registrationModule.factory('ordenPorCobrarRepository', function ($http) {
                     idUsuario: idUsuario,
                     fechaInicio:fechaInicio,
                     fechaFin:fechaFin,
-                    razonSocial:razonSocial
+                    razonSocial:razonSocial,
+                    saldoTaller: saldoTaller
                 },
                 headers: {
                     'Content-Type': 'application/json'

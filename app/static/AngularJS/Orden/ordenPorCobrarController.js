@@ -544,7 +544,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     }
 
-    $scope.cotizacionesAbonos = function (fechaInicio, fechaFinal, proveedor) {
+    $scope.cotizacionesAbonos = function (fechaInicio, fechaFinal, proveedor, valor ) {
        
         var sumatoria= 0;
         var fechaInicio = fechaInicio;
@@ -563,9 +563,9 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             var dateStringFinal = valoresFinal[0] + '/' + valoresFinal[1] + '/' + valoresFinal[2];  
         };
 
-       
+      var  saldoTaller = $('input[name=optradio]:checked', '#myForm').val();
 
-        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, dateStringInicial,  dateStringFinal, proveedor).then(function (result) {
+        ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, dateStringInicial,  dateStringFinal, proveedor, saldoTaller).then(function (result) {
             if (result.data.length > 0) {
               
                 $scope.cotizaciones = result.data;

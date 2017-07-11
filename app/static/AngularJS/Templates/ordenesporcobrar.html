@@ -292,13 +292,13 @@
                         <br/>
                         <div class="row col-md-12 ">
                             <div class="col-md-5 form-group">
-                                <label class="col-sm-3 control-label">Taller </label>
+                                <label class="col-sm-2 control-label">Taller </label>
                                 <div class="col-sm-9">
                                    <input type="text" class="form-control" value="" ng-model="proveedorS">
                                </div>
                            </div>
                            <div class="col-md-6" id="data_5">
-                                <label class="col-sm-4 control-label">Fecha Último  Pago </label>
+                                <label class="col-sm-3 control-label">Fecha Último  Pago </label>
                                 <div class="input-daterange input-group" id="datepicker">
                                     <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fechaInicioCot"  calendar/>
                                     <span class="input-group-addon">a</span>
@@ -458,13 +458,13 @@
             <div class=" row etiquetaTotales">Precio Cotización con IVA: <span class="totales"> {{sumatoriaCotizaciones| currency: "$"}}</span></div>
             <br/><br/><br/><br/>
             <div class="row col-md-12 ">
-                <div class="col-md-5 form-group">
+                <div class="col-md-3 form-group">
                     <label class="col-sm-3 control-label">Taller </label>
                     <div class="col-sm-9">
                        <input type="text" class="form-control" value="" ng-model="proveedor" ng-enter="cotizacionesAbonos(fecIniCot, fecFinCot, proveedor)" >
                                            </div>
                                        </div>
-                                       <div class="col-md-6" id="data_5">
+                                       <div class="col-md-4" id="data_5">
                                         <label class="col-sm-4 control-label">Fecha Último  Pago </label>
                                         <div class="input-daterange input-group" id="datepicker">
                                             <input type="text" placeholder="Fecha Inicio" class="input-sm form-control" name="start" ng-model="fecIniCot"  calendar/>
@@ -473,6 +473,14 @@
                                         </div>
                                         
                                     </div>
+                              <div ng-show="userData.idTipoUsuario == 1" class="col-md-3">
+                                <form id="myForm">
+                               &nbsp;&nbsp;&nbsp; Saldo diferente de cero
+                                    <label class="radio-inline"><input type="radio" id="valor" value="1" name="optradio">Si</label>
+                                    <label class="radio-inline"><input type="radio" id="valor" value="0" name="optradio">No</label> 
+                                </form>
+
+                            </div>
                                     <div class="col-md-1">
                                         <button id="btnBuscar" busy="Buscando.." type="button" class="btn btn-primary" ng-click="cotizacionesAbonos(fecIniCot, fecFinCot, proveedor)"><span class="glyphicon glyphicon-search"></span></button>
                                     </div>  
@@ -501,7 +509,7 @@
                                             <th>Precio Copade con IVA</th>
                                             <th>Abono COPADE</th>
                                             <th>Saldo COPADE</th>
-                                            <th>Fecha Último  Pago</th>
+                                           <!--  <th>Fecha Último  Pago</th> -->
                                             <th>Fecha Ingreso Unidad</th>
                                             <th>Fecha Inicio Trabajo</th>
                                             <th>Fecha Fin Trabajo</th>
@@ -530,7 +538,7 @@
                                             <td>{{cotizacion.COP_CARGO | currency}}</td>
                                             <td>{{cotizacion.abono | currency}}</td>
                                             <td>{{cotizacion.COP_SALDO | currency}}</td>
-                                            <td>{{cotizacion.COP_FECHULTPAG | date:'dd-MM-yyyy HH:mm'}}</td>
+                                            <!-- <td>{{cotizacion.COP_FECHULTPAG | date:'dd-MM-yyyy HH:mm'}}</td> -->
                                             <td>{{cotizacion.fechaIngresoUnidad | date:'dd-MM-yyyy HH:mm'}}</td>
                                             <td>{{cotizacion.fechaInicio | date:'dd-MM-yyyy HH:mm'}}</td>
                                             <td>{{cotizacion.fechaFin | date:'dd-MM-yyyy HH:mm'}}</td>

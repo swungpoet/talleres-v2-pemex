@@ -1454,6 +1454,12 @@ Orden.prototype.get_cotizacionesabonados = function (req, res, next) {
             value: req.query.razonSocial,
             type: self.model.types.STRING
                         
+        },
+        {
+            name: 'saldoTaller',
+            value: req.query.saldoTaller,
+            type: self.model.types.STRING
+                        
         }];
         
     this.model.query('SEL_COTIZACION_ABONADOS_SP', params, function (error, result) {
