@@ -1030,27 +1030,29 @@ Orden.prototype.get_generaFactura = function (req, res, next) {
                         //   }
                         var parser = new xml2js.Parser();
                         fs.readFile(directorioFactura + '/' + file, 'utf8', function (err, data) {
-                            parser.parseString(data, function (err, result) {
-                                fechaFactura = result['cfdi:Comprobante'].$['fecha'];
-                                if ((result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') &&
-                                    (result['cfdi:Comprobante'].$['folio'] == undefined ||
-                                        result['cfdi:Comprobante'].$['folio'] == ''
+                            var dataNueva = data;
+                            var dataUpperCase = data.toUpperCase();
+                            parser.parseString(dataUpperCase, function (err, result) {
+                                fechaFactura = result['CFDI:COMPROBANTE'].$['FECHA'];
+                                if ((result['CFDI:COMPROBANTE'].$['SERIE'] == undefined || result['CFDI:COMPROBANTE'].$['SERIE'] == '') &&
+                                    (result['CFDI:COMPROBANTE'].$['FOLIO'] == undefined ||
+                                        result['CFDI:COMPROBANTE'].$['FOLIO'] == ''
                                     )) {
-                                   numFactura = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
+                                numFactura = result['CFDI:COMPROBANTE']['CFDI:COMPLEMENTO'][0]['TFD:TIMBREFISCALDIGITAL'][0].$['UUID'];
                                 var values = numFactura.split('-');
                                 var tamaño = values.length;
                                 numFactura = values[tamaño-1];
-                                } else if (result['cfdi:Comprobante'].$['serie'] == undefined || result['cfdi:Comprobante'].$['serie'] == '') {
-                                    numFactura = result['cfdi:Comprobante'].$['folio'];
+                                } else if (result['CFDI:COMPROBANTE'].$['SERIE'] == undefined || result['CFDI:COMPROBANTE'].$['SERIE'] == '') {
+                                    numFactura = result['CFDI:COMPROBANTE'].$['FOLIO'];
                                 } else {
-                                    numFactura = result['cfdi:Comprobante'].$['serie'] + result['cfdi:Comprobante'].$['folio'];
+                                    numFactura = result['CFDI:COMPROBANTE'].$['SERIE'] + result['CFDI:COMPROBANTE'].$['FOLIO'];
                                 }
-                                uuid = result['cfdi:Comprobante']['cfdi:Complemento'][0]['tfd:TimbreFiscalDigital'][0].$['UUID'];
-                                total = result['cfdi:Comprobante'].$['total'];
-                                subtotal = result['cfdi:Comprobante'].$['subTotal'];
-                                rfc = result['cfdi:Comprobante']['cfdi:Emisor'][0].$['rfc'];
-                                rfcase = result['cfdi:Comprobante']['cfdi:Receptor'][0].$['rfc'];
-                                xmlFactura = data;
+                                uuid = result['CFDI:COMPROBANTE']['CFDI:COMPLEMENTO'][0]['TFD:TIMBREFISCALDIGITAL'][0].$['UUID'];
+                                total = result['CFDI:COMPROBANTE'].$['TOTAL'];
+                                subtotal = result['CFDI:COMPROBANTE'].$['SUBTOTAL'];
+                                rfc = result['CFDI:COMPROBANTE']['CFDI:EMISOR'][0].$['RFC'];
+                                rfcase = result['CFDI:COMPROBANTE']['CFDI:RECEPTOR'][0].$['RFC'];
+                                xmlFactura = dataNueva;
                                 //var xmlFactura = file;
 
                                 console.log('Fecha: ' + fechaFactura);
