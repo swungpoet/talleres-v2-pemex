@@ -18,7 +18,25 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
     $scope.showCopadeFacturas = 1;
     $scope.totalSeleccionadoSuma = 0;
     $scope.sumatoriaAbonoSelect = 0;
-
+    /////////////////////////////////////
+    $scope.cotizacionAbonoSelect = 0;
+    $scope.montoCopAbonoSelect = 0;
+    $scope.abonoCopAbonoSelect = 0;
+    $scope.saldoCopAbonoSelect = 0;
+    $scope.montoProvAbonoSelect = 0;
+    $scope.saldoProvAbonoSelect = 0;
+    $scope.cotizacionAbono = 0;
+    $scope.montoCopAbono = 0;
+    $scope.abonoCopAbono = 0;
+    $scope.saldoCopAbono = 0;
+    $scope.montoProvAbono = 0;
+    $scope.saldoProvAbono = 0;
+    $scope.cotizacionAbonoPago = 0;
+    $scope.montoCopAbonoPago = 0;
+    $scope.abonoCopAbonoPago = 0;
+    $scope.saldoCopAbonoPago = 0;
+    $scope.montoProvAbonoPago = 0;
+    $scope.saldoProvAbonoPago = 0;
 
     $scope.init = function () {
         Dropzone.autoDiscover = false;
@@ -551,7 +569,12 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         var fechaFinal = fechaFinal;
         $('.dataTableCotAbonos').DataTable().destroy();
         $scope.cotizaciones=[];
-
+        $scope.cotizacionAbono = 0;
+        $scope.montoCopAbono = 0;
+        $scope.abonoCopAbono = 0;
+        $scope.saldoCopAbono = 0;
+        $scope.montoProvAbono = 0;
+        $scope.saldoProvAbono = 0;
         fechaInicio== '' ? fechaInicio = null : fechaInicio;
         fechaFinal == '' ? fechaFinal = null : fechaFinal;
 
@@ -569,9 +592,14 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             if (result.data.length > 0) {
               
                 $scope.cotizaciones = result.data;
-              
                 for(var i=0;i<result.data.length;i++){
-                   // sumatoria += parseFloat(result.data[i].precioCotizacion);
+                   $scope.cotizacionAbono += result.data[i].precioCotizacion;
+                   $scope.montoCopAbono += result.data[i].COP_CARGO;
+                   $scope.abonoCopAbono += result.data[i].abono;
+                   $scope.saldoCopAbono += result.data[i].COP_SALDO;
+                   $scope.montoProvAbono += result.data[i].total;
+                   $scope.saldoProvAbono += result.data[i].saldoProveedor;
+
                    sumatoria += result.data[i].precioCotizacion;
                 };
                 $scope.sumatoriaCotizaciones=sumatoria;
@@ -642,7 +670,12 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
     //obtiene el resultado de reporte de utilidad 
     $scope.getMargenUtilidad = function (fechaInicio,fechaFin,fechaMes,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac) {
-      
+        $scope.cotizacionAbonoPago = 0;
+        $scope.montoCopAbonoPago = 0;
+        $scope.abonoCopAbonoPago = 0;
+        $scope.saldoCopAbonoPago = 0;
+        $scope.montoProvAbonoPago = 0;
+        $scope.saldoProvAbonoPago = 0;
        if ($scope.showCopadeFacturas==1) {
            $scope.sumatoriaFacturasPagadas = 0.00;
            $('.dataTablePagadaCopade').DataTable().destroy();
@@ -650,8 +683,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
             $scope.sumatoriaPagadas = 0.00;
             $('.dataTablePagadas').DataTable().destroy();
         }
-
-
         if(fechaMes != '' && fechaMes != null && fechaMes != undefined){
             var fechaPartida = fechaMes.split('-');
             if(fechaPartida[0] == 'Enero'){
@@ -691,21 +722,20 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 fechaMes = '12/01/' + fechaPartida[1];
             }
         }
-             
         ordenPorCobrarRepository.getFacturasPagadas(fechaInicio,fechaFin,fechaMes,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac).then(function (utilidad) { 
-       
-
            var sumatoria = 0.00;
             if (utilidad.data.length > 0) {
-                
-                        
-            
                  for(var i=0;i<utilidad.data.length;i++){
-                    
                     if ($scope.showCopadeFacturas==1) {
                        sumatoria += parseFloat(utilidad.data[i].total);
                     }else{
-                       sumatoria += parseFloat(utilidad.data[i].precioCotizacion);
+                       sumatoria += parseFloat(utilidad.data[i].precioCotizacion);            
+                       $scope.cotizacionAbonoPago += utilidad.data[i].precioCotizacion;
+                       $scope.montoCopAbonoPago += utilidad.data[i].COP_CARGO;
+                       $scope.abonoCopAbonoPago += utilidad.data[i].abono;
+                       $scope.saldoCopAbonoPago += utilidad.data[i].COP_SALDO;
+                       $scope.montoProvAbonoPago += utilidad.data[i].total;
+                       $scope.saldoProvAbonoPago += utilidad.data[i].saldoProveedor;
                     }
                 };
 
@@ -719,7 +749,6 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     waitDrawDocument("dataTablePagadas");
                 }
                 console.log(sumatoria);
-
                 alertFactory.success('Datos encontrados');
             } else {
                 alertFactory.info('No se encontraron datos');
@@ -900,10 +929,16 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
     $scope.selectCotizacionesAbonos = function (fechaInicioCot, fechaFinCot, proveedorS) {
+        $scope.selectAbonoDisabled = 0; 
         $('.dataTableCotAbonosSelect').DataTable().destroy();
         $scope.selectCotizaciones = [];
         $scope.checkedFacturasTotal = [];
-        $scope.sumatoriaAbonoSelect = 0;
+        $scope.cotizacionAbonoSelect = 0;
+        $scope.montoCopAbonoSelect = 0;
+        $scope.abonoCopAbonoSelect = 0;
+        $scope.saldoCopAbonoSelect = 0;
+        $scope.montoProvAbonoSelect = 0;
+        $scope.saldoProvAbonoSelect = 0;
         fechaInicioCot == '' ? fechaInicioCot = null : fechaInicioCot;
         fechaFinCot == '' ? fechaFinCot = null : fechaFinCot;
        if (fechaInicioCot != undefined || fechaInicioCot != null) {
@@ -920,7 +955,12 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                 });
                 //$scope.selectOperaciones = result.data; 
                 for(var i=0;i< result.data.length;i++){
-                   $scope.sumatoriaAbonoSelect += result.data[i].precioCotizacion;
+                   $scope.cotizacionAbonoSelect += result.data[i].precioCotizacion;
+                   $scope.montoCopAbonoSelect += result.data[i].COP_CARGO;
+                   $scope.abonoCopAbonoSelect += result.data[i].abono;
+                   $scope.saldoCopAbonoSelect += result.data[i].COP_SALDO;
+                   $scope.montoProvAbonoSelect += result.data[i].total;
+                   $scope.saldoProvAbonoSelect += result.data[i].saldoProveedor;
                     obj = new Object();
                     obj.idTrabajoAgrupado = result.data[i].idTrabajoAgrupado;
                     obj.ordenGlobal = result.data[i].COP_ORDENGLOBAL;
@@ -928,8 +968,10 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
                     obj.check = false;
                     $scope.checkedFacturasTotal.push(obj); 
                 };
+                $scope.selectAbonoDisabled = 1;
                 globalFactory.waitDrawDocument("dataTableCotAbonosSelect", "OrdenporCobrar");
             } else {
+                $scope.selectAbonoDisabled = 1;
                 alertFactory.info('No se encontraron cotizaciones abonadas');
             }
         }, function (error) {
