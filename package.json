@@ -13,5 +13,9 @@
     "serve-favicon": "^2.1.6",
     "socket.io": "^1.2.0",
     "swig": "^1.4.2"
+  },
+  "scripts": {
+    "start": "node workers.js",
+    "debug": "node --harmony_async_await --debug-brk --inspect workers.js"
   }
 }

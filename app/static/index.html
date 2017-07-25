@@ -135,6 +135,9 @@
                 <li>
                     <a href="Tutorial" ng-click="showChat = 0"><i class="glyphicon glyphicon-facetime-video"></i> <span class="nav-label">Tutorial</span></a>
                 </li>
+                <li ng-show="userData.idTipoUsuario == 1">
+                    <a href="precioventa" ng-click="showChat = 0"><i class="glyphicon glyphicon-usd"></i> <span class="nav-label">Precio de Venta</span></a>
+                </li>
             </ul>
 
         </div>
@@ -255,7 +258,7 @@
     </div>
 
     <!-- Libreria de JSZip -->
-   <script src="js/libs/JSZip/jszip.js"></script> 
+    <script src="js/libs/JSZip/jszip.js"></script>
 
     <!--Librearias JQuery y Bootstrap-->
     <script src="js/libs/jQuery/jquery-2.1.4.js"></script>
@@ -368,6 +371,10 @@
     <script src="AngularJS/Reclamacion/resumenReclamacionRepository.js"></script>
     <script src="AngularJS/Reclamacion/historialReclamacionController.js"></script>
     <script src="AngularJS/Reclamacion/historialReclamacionRepository.js"></script>
+    <!--Precios de Venta  -->
+    <script src="AngularJS/PrecioVenta/precioventaController.js"></script>
+    <script src="AngularJS/PrecioVenta/precioventaRepository.js"></script>
+
 
     <!-- Mainly scripts -->
     <script src="js/inspinia/metisMenu/jquery.metisMenu.js"></script>

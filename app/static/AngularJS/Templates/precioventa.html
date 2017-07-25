@@ -1,0 +1,51 @@
+<div ng-init="init()" class="animated bounceInRight">
+    <div class="headTitleTallerCita">
+        <span class="title"> Consulta de Precios de Venta <span class="subtitle">Administrador</span></span>
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <input type="text" placeholder="Búsqueda: Servicio/Paquete/Refacción" ng-model="pieza" class="form-control" ng-enter="getPieza(pieza)">
+                            </div>
+                            <div class="col-xs-0">
+                                <button id="btnBuscarPieza" busy="Buscando.." type="button" class="btn btn-primary glyphicon glyphicon-search" ng-click="getPieza(pieza)"></button>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row tablaBusqueda tablaAlign" cg-busy="{promise:promise,message:message}">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTablePiezaTaller">
+                                    <thead>
+                                        <th>No.Partida</th>
+                                        <th>No.Parte</th>
+                                        <th>Descripción</th>
+                                        <th>SubTotal</th>
+                                        <th>IVA</th>
+                                        <th>Total</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="pieza in piezas">
+                                            <td>{{ pieza.numeroPartida }}</td>
+                                            <td>{{ pieza.numeroParte }}</td>
+                                            <td> {{ pieza.descripcion }}</td>
+                                            <td> {{ pieza.subtotal }} </td>
+                                            <td> {{ pieza.iva }} </td>
+                                            <td> {{ pieza.total }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
