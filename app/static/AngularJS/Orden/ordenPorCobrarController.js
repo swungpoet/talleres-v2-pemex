@@ -569,6 +569,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         var fechaFinal = fechaFinal;
         $('.dataTableCotAbonos').DataTable().destroy();
         $scope.cotizaciones=[];
+        $scope.totalCotizaciones=[];
         $scope.cotizacionAbono = 0;
         $scope.montoCopAbono = 0;
         $scope.abonoCopAbono = 0;
@@ -590,16 +591,36 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
 
         ordenPorCobrarRepository.getCotizacionesAbonos($scope.userData.idUsuario, dateStringInicial,  dateStringFinal, proveedor, saldoTaller).then(function (result) {
             if (result.data.length > 0) {
-              
                 $scope.cotizaciones = result.data;
+                $scope.cotizaciones2 = result.data;
+
+                if ($scope.cotizaciones2.length > 0){
+                    $scope.cotizaciones2.forEach(function(item) {
+                      var existe = false;
+                      $scope.totalCotizaciones.forEach(function(value){
+                          if (value.numeroCopade == item.numeroCopade){
+                              existe = true;
+                          }
+                      });
+                      if (!existe){
+                          $scope.totalCotizaciones.push(item);
+                           $scope.cotizacionAbono += item.precioCotizacion;
+                           $scope.montoCopAbono += item.COP_CARGO;
+                           $scope.abonoCopAbono += item.abono;
+                           $scope.saldoCopAbono += item.COP_SALDO;
+                           $scope.montoProvAbono += item.total;
+                           $scope.saldoProvAbono += item.saldoProveedor;
+                        }
+                    });
+                }
+
                 for(var i=0;i<result.data.length;i++){
-                   $scope.cotizacionAbono += result.data[i].precioCotizacion;
+                /* $scope.cotizacionAbono += result.data[i].precioCotizacion;
                    $scope.montoCopAbono += result.data[i].COP_CARGO;
                    $scope.abonoCopAbono += result.data[i].abono;
                    $scope.saldoCopAbono += result.data[i].COP_SALDO;
                    $scope.montoProvAbono += result.data[i].total;
-                   $scope.saldoProvAbono += result.data[i].saldoProveedor;
-
+                   $scope.saldoProvAbono += result.data[i].saldoProveedor;*/
                    sumatoria += result.data[i].precioCotizacion;
                 };
                 $scope.sumatoriaCotizaciones=sumatoria;
@@ -724,18 +745,39 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         }
         ordenPorCobrarRepository.getFacturasPagadas(fechaInicio,fechaFin,fechaMes,zona,tar,idTipoCita,estatus,numeroTrabajo,bandera, proveedorFac).then(function (utilidad) { 
            var sumatoria = 0.00;
+           $scope.selectPagadas2 = utilidad.data;
+           $scope.selectPagadas = [];
             if (utilidad.data.length > 0) {
                  for(var i=0;i<utilidad.data.length;i++){
                     if ($scope.showCopadeFacturas==1) {
                        sumatoria += parseFloat(utilidad.data[i].total);
                     }else{
-                       sumatoria += parseFloat(utilidad.data[i].precioCotizacion);            
-                       $scope.cotizacionAbonoPago += utilidad.data[i].precioCotizacion;
-                       $scope.montoCopAbonoPago += utilidad.data[i].COP_CARGO;
-                       $scope.abonoCopAbonoPago += utilidad.data[i].abono;
-                       $scope.saldoCopAbonoPago += utilidad.data[i].COP_SALDO;
-                       $scope.montoProvAbonoPago += utilidad.data[i].total;
-                       $scope.saldoProvAbonoPago += utilidad.data[i].saldoProveedor;
+                        if ($scope.selectPagadas2.length > 0){
+                            $scope.selectPagadas2.forEach(function(item) {
+                              var existe = false;
+                              $scope.selectPagadas.forEach(function(value){
+                                  if (value.numeroCopade == item.numeroCopade){
+                                      existe = true;
+                                  }
+                              });
+                              if (!existe){
+                                  $scope.selectPagadas.push(item);
+                                   $scope.cotizacionAbonoPago += item.precioCotizacion;
+                                   $scope.montoCopAbonoPago += item.COP_CARGO;
+                                   $scope.abonoCopAbonoPago += item.abono;
+                                   $scope.saldoCopAbonoPago += item.COP_SALDO;
+                                   $scope.montoProvAbonoPago += item.total;
+                                   $scope.saldoProvAbonoPago += item.saldoProveedor;
+                                 /*$scope.cotizacionAbonoSelect += item.precioCotizacion;
+                                   $scope.montoCopAbonoSelect += item.COP_CARGO;
+                                   $scope.abonoCopAbonoSelect += item.abono;
+                                   $scope.saldoCopAbonoSelect += item.COP_SALDO;
+                                   $scope.montoProvAbonoSelect += item.total;
+                                   $scope.saldoProvAbonoSelect += item.saldoProveedor;*/
+                                }
+                            });
+                        }
+                       //sumatoria += parseFloat(utilidad.data[i].precioCotizacion);                                   
                     }
                 };
 
@@ -933,6 +975,7 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         $('.dataTableCotAbonosSelect').DataTable().destroy();
         $scope.selectCotizaciones = [];
         $scope.checkedFacturasTotal = [];
+        $scope.totalSelect = [];
         $scope.cotizacionAbonoSelect = 0;
         $scope.montoCopAbonoSelect = 0;
         $scope.abonoCopAbonoSelect = 0;
@@ -950,17 +993,31 @@ registrationModule.controller('ordenPorCobrarController', function ($scope, loca
         ordenPorCobrarRepository.getCotizacionesAbonosSelect($scope.userData.idUsuario, dateStringInicial,  dateStringFinal,  proveedorS).then(function (result) {
             if (result.data.length > 0) { 
                 $scope.selectCotizaciones = result.data; 
+                $scope.selectCotizaciones2 = result.data; 
                angular.forEach($scope.selectCotizaciones, function(value, key) {
                   value.selected = false;
                 });
+                if ($scope.selectCotizaciones2.length > 0){
+                    $scope.selectCotizaciones2.forEach(function(item) {
+                      var existe = false;
+                      $scope.totalSelect.forEach(function(value){
+                          if (value.numeroCopade == item.numeroCopade){
+                              existe = true;
+                          }
+                      });
+                      if (!existe){
+                          $scope.totalSelect.push(item);
+                           $scope.cotizacionAbonoSelect += item.precioCotizacion;
+                           $scope.montoCopAbonoSelect += item.COP_CARGO;
+                           $scope.abonoCopAbonoSelect += item.abono;
+                           $scope.saldoCopAbonoSelect += item.COP_SALDO;
+                           $scope.montoProvAbonoSelect += item.total;
+                           $scope.saldoProvAbonoSelect += item.saldoProveedor;
+                        }
+                    });
+                }
                 //$scope.selectOperaciones = result.data; 
                 for(var i=0;i< result.data.length;i++){
-                   $scope.cotizacionAbonoSelect += result.data[i].precioCotizacion;
-                   $scope.montoCopAbonoSelect += result.data[i].COP_CARGO;
-                   $scope.abonoCopAbonoSelect += result.data[i].abono;
-                   $scope.saldoCopAbonoSelect += result.data[i].COP_SALDO;
-                   $scope.montoProvAbonoSelect += result.data[i].total;
-                   $scope.saldoProvAbonoSelect += result.data[i].saldoProveedor;
                     obj = new Object();
                     obj.idTrabajoAgrupado = result.data[i].idTrabajoAgrupado;
                     obj.ordenGlobal = result.data[i].COP_ORDENGLOBAL;
