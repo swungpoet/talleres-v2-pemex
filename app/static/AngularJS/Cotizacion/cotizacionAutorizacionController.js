@@ -511,8 +511,8 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     //Valida fechas validas de fecha inicio y fin a la de hoy
     //Valida saldo existente y partidas aceptadas VS saldo actual
     $scope.ActualizaCotizacion = function () {
-
-        trabajoRepository.getVerificaPresupuesto().then(function(result){
+        debugger;
+        trabajoRepository.getVerificaPresupuesto($scope.unidadInfo.numEconomico).then(function(result){
             if (result.data.length > 0){
                 if(result.data[0].result == 1){
                     $scope.ActualizaCotizacion2(true);
