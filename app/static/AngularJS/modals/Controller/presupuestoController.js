@@ -11,7 +11,7 @@ registrationModule.controller('presupuestoController', function ($scope, $modalI
 
 	$scope.checkValue = function(){
 		if($scope.valueAdmin == $scope.valorAdmin){
-			alertFactory.success("Es correcto lo has hecho de maravilla!!");
+			alertFactory.success("La contraseña es correcta!!");
 		}else{
 			alertFactory.info("El valor introducido no corresponde, porfavor intentelo nuevamente!!");
 		}
