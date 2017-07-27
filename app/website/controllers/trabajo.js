@@ -734,8 +734,8 @@ Trabajo.prototype.get_verificaPresupuesto = function(req, res, next){
     var self = this;
 
     var params = [{
-        name: 'numeroTrabajo',
-        value: req.query.numeroTrabajo, 
+        name: 'numEconomico',
+        value: req.query.numEconomico, 
         type: self.model.types.STRING
     }];
     
