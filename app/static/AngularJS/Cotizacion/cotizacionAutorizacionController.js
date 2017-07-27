@@ -511,7 +511,6 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
     //Valida fechas validas de fecha inicio y fin a la de hoy
     //Valida saldo existente y partidas aceptadas VS saldo actual
     $scope.ActualizaCotizacion = function () {
-        debugger;
         trabajoRepository.getVerificaPresupuesto($scope.unidadInfo.numEconomico).then(function(result){
             if (result.data.length > 0){
                 if(result.data[0].result == 1){
@@ -524,10 +523,6 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         }, function(error){
 
         });
-
-
-
-
 
         /* $scope.sumaIndividual = 0;
          if ($scope.datosOsur == undefined || $scope.datosOsur == null) {

@@ -170,50 +170,66 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         });
     }
 
+    $scope.openFinishingTrabajoModal = function (idTrabajo, numEco){
+      $scope.paramTrabajo = idTrabajo;
+      trabajoRepository.getVerificaPresupuesto(numEco).then(function(result){
+          if (result.data.length > 0){
+              if(result.data[0].result == 1){
+                $scope.openFinishingTrabajoModal2(true);
+              }else{
+                  modal_presupuesto($scope, $modal, $scope.openFinishingTrabajoModal2, '');
+              }
+          }
+
+      }, function(error){
+
+      });
+    }
+
     //abre el modal para la finalización del trabajo
-    $scope.openFinishingTrabajoModal = function (idTrabajo) {
-        $scope.idTrabajo = idTrabajo;
+    $scope.openFinishingTrabajoModal2 = function (continua) {
+        if (continua){
+            var idTrabajo = $scope.paramTrabajo;
+            $scope.idTrabajo = idTrabajo;
 
-        trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
-            if (resp.data[0].estatus > 0) {
-                swal("No se puede terminar el trabajo porque hay cotizaciones pendientes de autorizar.");
-            } else {
-                ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
+            trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
+                if (resp.data[0].estatus > 0) {
+                    swal("No se puede terminar el trabajo porque hay cotizaciones pendientes de autorizar.");
+                } else {
+                    ordenServicioRepository.getEstatusUtilidad(idTrabajo, 2).then(function (estatus) {
 
-                    if (estatus.data.length > 0) {
+                        if (estatus.data.length > 0) {
 
-                        if (estatus.data[0].estatus == 1) {
+                            if (estatus.data[0].estatus == 1) {
 
-                            modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer, '');
+                                modal_tiket($scope, $modal, estatus.data[0].idAprobacionUtilidad, 'Trabajo', $scope.trabajoTer, '');
+
+                            } else {
+                                $scope.trabajoTer();
+                            }
 
                         } else {
-                            $scope.trabajoTer();
-                        }
 
-                    } else {
-
-                        $scope.trabajos.forEach(function (p, i) {
-                            if (p.idTrabajo == idTrabajo) {
-                                if (p.fechaServicio != null) {
-                                    $('#finalizarTrabajoModal').appendTo("body").modal('show');
-                                    $scope.idTrabajo = idTrabajo;
-                                } else {
-                                    alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                            $scope.trabajos.forEach(function (p, i) {
+                                if (p.idTrabajo == idTrabajo) {
+                                    if (p.fechaServicio != null) {
+                                        $('#finalizarTrabajoModal').appendTo("body").modal('show');
+                                        $scope.idTrabajo = idTrabajo;
+                                    } else {
+                                        alertFactory.info('Debe ingresar la fecha inicio del trabajo');
+                                    }
                                 }
-                            }
-                        });
-                    }
-                }, function (error) {
-                    alertFactory.error("Error al cargar la orden");
-                });
-            }
+                            });
+                        }
+                    }, function (error) {
+                        alertFactory.error("Error al cargar la orden");
+                    });
+                }
 
-        }, function (error) {
-            alertFactory.error("Error al cargar la orden");
-        });
-
-
-
+            }, function (error) {
+                alertFactory.error("Error al cargar la orden");
+            });
+        }
     }
 
     $scope.trabajoTer = function () {
@@ -263,30 +279,56 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
     });
 
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo){
+        $scope.objOrdenParametro = objOrden;
+        $scope.idNombreEspecialParametro = idNombreEspecial;
+        $scope.ejecutaMetodoParametro = ejecutaMetodo;
+        $scope.anticipoParametro = anticipo;
+
+        trabajoRepository.getVerificaPresupuesto(objOrden.numEconomico).then(function(result){
+            if (result.data.length > 0){
+                if(result.data[0].result == 1){
+                    $scope.adjuntar2(true);
+                }else{
+                    modal_presupuesto($scope, $modal, $scope.adjuntar2, '');
+                }
+            }
+
+        }, function(error){
+
+        });
+    }
     //muestra el modal para la carga de archivos
-    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
-        $scope.idTrabajo = objOrden.idTrabajo;
-        //LQMA add 19092016
-        $scope.idEstatusPorCerrar = objOrden.idEstatus;
+    $scope.adjuntar2 = function (continua) {
+        if (continua){
+            var objOrden = $scope.objOrdenParametro;
+            var idNombreEspecial = $scope.idNombreEspecialParametro;
+            var ejecutaMetodo = $scope.ejecutaMetodoParametro;
+            var anticipo = $scope.anticipoParametro;
 
-        $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != undefined ?
-            $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion :
-            $scope.idCotizacion = 0;
+            $scope.idTrabajo = objOrden.idTrabajo;
+            //LQMA add 19092016
+            $scope.idEstatusPorCerrar = objOrden.idEstatus;
 
-        $scope.idCategoria = 2;
-        $scope.idNombreEspecial = idNombreEspecial;
-        $scope.ejecutaMetodo = ejecutaMetodo;
-        if (anticipo == 1) {
-            $scope.anticipo = 1;
-            $scope.tituloModal = 'Solicitud de Anticipo';
-            $scope.textoBoton = 'Solicitar';
-            //$scope.getMontoOrdenTrabajo(objOrden.idCita);
-        } else {
-            $scope.anticipo = 0;
-            $scope.tituloModal = 'Carga Archivo';
-            $scope.textoBoton = 'Cargar';
+            $scope.idCotizacionFactura != null || $scope.idCotizacionFactura != undefined ?
+                $scope.idCotizacion = $scope.idCotizacionFactura + '|' + $scope.numeroCotizacion :
+                $scope.idCotizacion = 0;
+
+            $scope.idCategoria = 2;
+            $scope.idNombreEspecial = idNombreEspecial;
+            $scope.ejecutaMetodo = ejecutaMetodo;
+            if (anticipo == 1) {
+                $scope.anticipo = 1;
+                $scope.tituloModal = 'Solicitud de Anticipo';
+                $scope.textoBoton = 'Solicitar';
+                //$scope.getMontoOrdenTrabajo(objOrden.idCita);
+            } else {
+                $scope.anticipo = 0;
+                $scope.tituloModal = 'Carga Archivo';
+                $scope.textoBoton = 'Cargar';
+            }
+            $('#modalCargaArchivos').appendTo('body').modal('show');
         }
-        $('#modalCargaArchivos').appendTo('body').modal('show');
     }
 
     //cambia el trabajo a estatus a facturado
@@ -369,7 +411,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         $scope.terminotrabajo = idTrabajo;
         $scope.terminomontoOrden = montoOrden;
         trabajoRepository.getCosecutivoZona(idTrabajo).then(function (res) {
-          
+
             if (res.data.length > 0) {
 
                 $scope.trabajosTerminados[indice].class_buttonCeritficado = 'fa fa-circle-o-notch fa-spin';
@@ -515,7 +557,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                                         function (isConfirm) {
                                             if (isConfirm) {
                                                 trabajoRepository.enviarMailOsur(idTAR, idCita).then(function (mail) {
-                                                    if (mail.data[0].enviado == 1) {  
+                                                    if (mail.data[0].enviado == 1) {
                                                         swal("Proceso Realizado!");
                                                     }
                                                 }, function (error) {
@@ -566,9 +608,9 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
          }, function (error) {
             alertFactory.error("Error del precio");
-        })   
-        //idTAR= 31; 
-       
+        })
+        //idTAR= 31;
+
     }
 
     //realiza el cambio de estatus de la orden a certificado de conformidad descargada
