@@ -1,4 +1,4 @@
-registrationModule.controller('cotizacionAutorizacionController', function ($scope, $rootScope, localStorageService, $location, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository, cotizacionConsultaRepository) {
+registrationModule.controller('cotizacionAutorizacionController', function ($scope, $rootScope, localStorageService, $location, $modal, alertFactory, cotizacionAutorizacionRepository, citaRepository, cotizacionRepository, cotizacionMailRepository, cotizacionConsultaRepository, trabajoRepository) {
 
     var cDetalles = [];
     var cPaquetes = [];
@@ -57,7 +57,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         /*$scope.cargaDatosOsur(idCita);*/
     }
 
-    //Obtiene la conversación de la cita 
+    //Obtiene la conversación de la cita
     /*  $scope.cargaChat = function () {
           $scope.promise = cotizacionAutorizacionRepository.getChat(idCita).then(function (result) {
                   if (result.data.length > 0) {
@@ -315,7 +315,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                     });
             }
         }
-        //Submit del botón del Form para subir los archivos        
+        //Submit del botón del Form para subir los archivos
         btnSubmit.click();
         $scope.cargaEvidencias();
 
@@ -397,7 +397,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
                         }
                     }
                 } else {
-                    
+
                 }*/
                 $scope.total = 0;
                 $scope.articulos = articulosUnicos;
@@ -486,26 +486,48 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
         return exists;
     }
 
+    $scope.ActualizaCotizacion2 = function(continua){
+      if(continua){
+            for (i = 0; i < itemsAutorizacionRechazo.length; i++) {
+                cotizacionAutorizacionRepository.putAutorizacionRechazoItem(
+                    itemsAutorizacionRechazo[i].comentarios,
+                    itemsAutorizacionRechazo[i].idEstatus,
+                    itemsAutorizacionRechazo[i].idItem,
+                    itemsAutorizacionRechazo[i].idCotizacion,
+                    itemsAutorizacionRechazo[i].idUsuarioAutorizador
+                   // $scope.datosOsur.idOsur
+                    ).then(function (result) {
+                        var algo = result.data;
+                    },
+                    function (error) {
+
+                    });
+            }
+            location.href = '/trabajo';
+        }
+    }
+
     //Actualiza cotizacion Partidas aceptadas y rechzadas
     //Valida fechas validas de fecha inicio y fin a la de hoy
     //Valida saldo existente y partidas aceptadas VS saldo actual
     $scope.ActualizaCotizacion = function () {
-        for (i = 0; i < itemsAutorizacionRechazo.length; i++) {
-            cotizacionAutorizacionRepository.putAutorizacionRechazoItem(
-                itemsAutorizacionRechazo[i].comentarios,
-                itemsAutorizacionRechazo[i].idEstatus,
-                itemsAutorizacionRechazo[i].idItem,
-                itemsAutorizacionRechazo[i].idCotizacion,
-                itemsAutorizacionRechazo[i].idUsuarioAutorizador
-               // $scope.datosOsur.idOsur
-                ).then(function (result) {
-                    var algo = result.data;
-                },
-                function (error) {
 
-                });
-        }
-        location.href = '/trabajo';
+        trabajoRepository.getVerificaPresupuesto().then(function(result){
+            if (result.data.length > 0){
+                if(result.data[0].result == 1){
+                    $scope.ActualizaCotizacion2(true);
+                }else{
+                    modal_presupuesto($scope, $modal, $scope.ActualizaCotizacion2, '');
+                }
+            }
+
+        }, function(error){
+
+        });
+
+
+
+
 
         /* $scope.sumaIndividual = 0;
          if ($scope.datosOsur == undefined || $scope.datosOsur == null) {
@@ -568,7 +590,7 @@ registrationModule.controller('cotizacionAutorizacionController', function ($sco
             }
         }
     });
-    //Recuperamos los datos de la Osur 
+    //Recuperamos los datos de la Osur
     $scope.cargaDatosOsur = function (idCita) {
         cotizacionAutorizacionRepository.getDatosOsur(idCita).then(function (result) {
             if (result.data.length > 0) {
