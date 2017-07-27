@@ -1061,8 +1061,22 @@ var getidCita = function (idCita) {
         });
     }
 
-    //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion = function (cita) {
+        $scope.enviaAprobacion = cita;
+        trabajoRepository.getVerificaPresupuesto($scope.enviaAprobacion.numEconomico).then(function (resp) {
+            if (resp.data[0].result == 1) {
+                $scope.enviaAprobacion2(true);
+            }else{           
+                $('.modal-dialog').css('width','1050px'); 
+                modal_presupuesto($scope, $modal, $scope.enviaAprobacion2, '');
+            }
+        });
+    }
+
+    //valida el envío de cotizaciones a aprobación
+    $scope.enviaAprobacion2 = function (continua) {
+    if(continua){
+       var cita = $scope.enviaAprobacion;
          var validaUtilidad= false;
         $scope.cita=cita;
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
@@ -1121,7 +1135,7 @@ var getidCita = function (idCita) {
        } else {
             alertFactory.info("No se podrán enviar las cotizaciones a Aprobación, la unidad aún no llega al taller");
         }
-           
+    }    
             
     }
 
