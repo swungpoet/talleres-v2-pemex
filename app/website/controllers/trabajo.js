@@ -739,7 +739,7 @@ Trabajo.prototype.get_verificaPresupuesto = function(req, res, next){
         type: self.model.types.STRING
     }];
     
-    this.model.query('SEL_VERIFICA_PRESUPUESTOS_SP', params, function(error, result) {
+    this.model.query('SEL_SALDO_OSUR_SP', params, function(error, result) {
         object.error = error;
         object.result = result;
         self.view.expositor(res, object);
