@@ -479,12 +479,12 @@ registrationModule.factory('trabajoRepository', function ($http) {
                 }
             });
         },
-        getVerificaPresupuesto: function (idUnidad) {
+        getVerificaPresupuesto: function (numEconomico) {
             return $http({
                 url: trabajoUrl + 'verificaPresupuesto/',
                 method: "GET",
                 params: {
-                    idUnidad: idUnidad
+                    numEconomico: numEconomico
                 },
                 headers: {
                     'Content-Type': 'application/json'
