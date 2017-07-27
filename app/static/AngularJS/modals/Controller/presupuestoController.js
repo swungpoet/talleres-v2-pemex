@@ -1,8 +1,13 @@
 
-registrationModule.controller('presupuestoController', function ($scope, $modalInstance, $modal, idAprobacionUtilidad, origen, callback, error, $http, $sce, $window, ordenServicioRepository, alertFactory) {
-	
-	$scope.init= function (){
+registrationModule.controller('presupuestoController', function ($scope, $modalInstance, $modal, callback, error, $http, $sce, $window, ordenServicioRepository, alertFactory) {
 
+	$scope.init= function (){
+			// 3lCr1st1n0
 	}
 
-});	
+	$scope.close = function(){
+		$modalInstance.dismiss('cancel');
+	}
+
+
+});

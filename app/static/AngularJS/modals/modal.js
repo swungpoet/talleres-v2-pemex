@@ -50,3 +50,21 @@ function modal_detalle_cotizacion($scope, $modal, idTrabajo, origen, utilidad, c
         }
     });
 }
+
+function modal_presupuesto($scope, $modal, callback, error){
+  var modalInstance = $modal.open({
+      templateUrl: '../AngularJS/modals/Template/presupuesto.html',
+      controller: 'presupuestoController',
+      backdrop: 'static',
+      keyboard: false,
+      size: 300,
+      resolve: {
+          callback: function () {
+              return callback;
+          },
+          error: function () {
+              return error;
+          }
+      }
+  });
+}
