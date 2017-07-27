@@ -1,0 +1,29 @@
+#inputValue:focus{
+     border-color: #da6969 !important;
+}
+
+#inputValue{
+  color: #da6969;
+}
+
+.myModalHeader{
+  background-color: #da6969;
+}
+
+.myModalTitle{
+  color: white;
+  font-size: 18px;
+}
+
+.myModalLabel{
+  font-size: 20px;
+}
+
+.myModalTag{
+  font-size: 13px;
+}
+
+.myModalBtn{
+  background: #da6969;
+  border-color: #da6969;
+}

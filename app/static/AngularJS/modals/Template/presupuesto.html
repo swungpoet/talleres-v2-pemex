@@ -1,22 +1,27 @@
-<div class="modal-header barra_popup" ng-init="init()">
+<link rel="stylesheet" href="AngularJS/modals/css/presupuestoModal.css">
+<div class="modal-header barra_popup myModalHeader" ng-init="init()">
     <div class="modal-title">
         <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="close()">×</button>
-        <h4 class="modal-title">¡SALDO INSUFICIENTE!</h4>
-        
+        <h4 class="modal-title myModalTitle" >¡SALDO INSUFICIENTE!</h4>
+
     </div>
 </div>
 <div class="modal-body">
     <div id="content_popDrag">
-       <div class="modal-body">      
+       <div class="modal-body">
             <div class="row">
-                <label class="control-label">La orden de Servicio no puede avanzar por que el saldo en la TAR se agotado.</label>
+                <label class="control-label myModalLabel">La orden de Servicio no puede avanzar por que el saldo en la TAR se ha agotado.</label>
+            </div>
+            <br>
+            <div class="row">
+                <label class="control-label myModalLabel">Para continuar ingrese una nueva OSUR.</label>
             </div>
            <br><br>
             <div class="form-group row">
-                <label class="col-sm-3 control-label">Contraseña de Administrador</label>
+                <label class="col-sm-3 control-label myModalTag">Contraseña de Administrador</label>
                 <div class="col-sm-9">
                     <div class="m-b">
-                        <input type="password" placeholder="Ingrese la contraseña de Administrador" class="form-control" ng-model="valueAdmin">
+                        <input id="inputValue" type="password" placeholder="Ingrese la contraseña de Administrador" class="form-control" ng-model="valueAdmin" >
                        <!--  <input type="text" class="form-control" ng-model="valueAdmin"> -->
                     </div>
                 </div>
@@ -26,7 +31,5 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="close()">Cancelar</button>
-    <button type="button" class="btn btn-success" ng-click="checkValue()">Aceptar</button>
+    <button type="button" class="btn btn-success myModalBtn" ng-click="checkValue()" >Continuar</button>
 </div>
-
-      
