@@ -478,6 +478,18 @@ registrationModule.factory('trabajoRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getVerificaPresupuesto: function (numeroTrabajo) {
+            return $http({
+                url: trabajoUrl + 'verificaPresupuesto/',
+                method: "GET",
+                params: {
+                    numeroTrabajo: numeroTrabajo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
         }
     };
 });

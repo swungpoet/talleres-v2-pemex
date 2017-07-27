@@ -727,4 +727,23 @@ Trabajo.prototype.post_insertTerminOsur = function(req, res, next){
     });
 }  
 
+//INFORMACION MODAL PRESUPUESTOS
+Trabajo.prototype.get_verificaPresupuesto = function(req, res, next){
+    var object = {};
+    var params = {};
+    var self = this;
+
+    var params = [{
+        name: 'numeroTrabajo',
+        value: req.query.numeroTrabajo, 
+        type: self.model.types.STRING
+    }];
+    
+    this.model.query('SEL_VERIFICA_PRESUPUESTOS_SP', params, function(error, result) {
+        object.error = error;
+        object.result = result;
+        self.view.expositor(res, object);
+    });
+}
+
 module.exports = Trabajo;
