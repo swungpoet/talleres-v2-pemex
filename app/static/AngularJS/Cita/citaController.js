@@ -1062,8 +1062,9 @@ var getidCita = function (idCita) {
     }
 
     $scope.enviaAprobacion = function (cita) {
-        $scope.enviaAprobacion = cita;
-        trabajoRepository.getVerificaPresupuesto($scope.enviaAprobacion.numEconomico).then(function (resp) {
+
+        $scope.valorAprobacion = cita;
+        trabajoRepository.getVerificaPresupuesto($scope.valorAprobacion.numEconomico).then(function (resp) {
             if (resp.data[0].result == 1) {
                 $scope.enviaAprobacion2(true);
             }else{           
@@ -1076,7 +1077,7 @@ var getidCita = function (idCita) {
     //valida el envío de cotizaciones a aprobación
     $scope.enviaAprobacion2 = function (continua) {
     if(continua){
-       var cita = $scope.enviaAprobacion;
+       var cita = $scope.valorAprobacion;
          var validaUtilidad= false;
         $scope.cita=cita;
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
