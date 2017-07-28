@@ -38,7 +38,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         localStorageService.remove('ModoEdicion');
         getCliente();
 
-        
+
 
         $scope.idEstadoAutotanque = '';
         $scope.procesAutotanque = '';
@@ -170,7 +170,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
 
     //Se obtienen las citas de la fecha seleccionada
     var getCitaTaller = function (fecha, idCita, idUsuario) {
-    
+
         $('.dataTableCitaTaller').DataTable().destroy();
         $scope.promise = citaRepository.getCitaTaller(fecha, idCita, idUsuario).then(function (cita) {
             if (cita.data.length > 0) {
@@ -215,8 +215,8 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         trabajoRepository.getVerificaPresupuesto($scope.unidadInfo.numEconomico).then(function (resp) {
             if (resp.data[0].result == 1) {
                 $scope.addCita2(true);
-            }else{           
-                $('.modal-dialog').css('width','1050px'); 
+            }else{
+                $('.modal-dialog').css('width','1050px');
                 modal_presupuesto($scope, $modal, $scope.addCita2, '');
             }
         });
@@ -256,7 +256,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
                             citaTaller.trabajo = $scope.datosCita.trabajoCita;
                             citaTaller.observacion = $scope.datosCita.observacionCita;
                             citaTaller.idUsuario = $scope.userData.idUsuario;
-                             
+
                             citaTaller.idTipoCita = $scope.clasificacionCita;
                             $scope.procesAutotanque == "4" ? citaTaller.idTipoCita = $scope.procesAutotanque : citaTaller.idTipoCita;
                             citaTaller.idTrasladoUnidad = $scope.requiereGrua;
@@ -264,11 +264,11 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
                             citaTaller.idCliente= $scope.selectedCliente.idCliente;
                             citaTaller.altace= $scope.altace;
                             //citaTaller.idTipoCita = $scope.tipoCita; check
-                            //citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque; check       
+                            //citaTaller.idEstadoAutotanque = $scope.datosCita.idEstadoAutotanque; check
                             //citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad; check
                             //citaTaller.idEstadoAutotanque == 1 ? citaTaller.idTrasladoUnidad = $scope.datosCita.idTrasladoUnidad : citaTaller.idTrasladoUnidad = null;
                             // if (citaTaller.idEstadoAutotanque == 2 && citaTaller.idTrasladoUnidad == null || citaTaller.idEstadoAutotanque == 1 && citaTaller.idTrasladoUnidad != null) {
-                            
+
                             citaRepository.addCita(citaTaller).then(function (cita) {
 
                                 citaTaller.idCita = cita.data[0].idCita;
@@ -381,7 +381,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
                 idTipoCotizacion: preCotizacion.idTipoCotizacion,
                 idClienteCita: preCotizacion.idCliente
             };
-            localStorageService.set('objEditCotizacion', objEditCotizacion); 
+            localStorageService.set('objEditCotizacion', objEditCotizacion);
         }
         location.href = '/cotizacionnueva';
     }
@@ -395,7 +395,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         }
         localStorageService.set('cita', cita);
         localStorageService.set('isPreCotizacion', $scope.isPreCotizacion);
-        
+
         location.href = '/cotizacionnueva';
     }*/
 
@@ -596,7 +596,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
                         if ($scope.clientes[i].idCliente == $scope.userData.idCliente) {
                             $scope.selectedCliente = $scope.clientes[i];
                         };
-                        
+
                     };
                 };
                 alertFactory.success("Clientes cargados");
@@ -608,20 +608,40 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         });
     }
 
-    //Modal Adjuntar Formato
-    $scope.formatoRecepcion = function (cita) {
-       
-        if (cita.idTipoCita == 4 ) {
-            $scope.idTrabajoUpl = cita.idTrabajo;
-            $scope.idCitaUpld = cita.idCita;
-            $scope.idUnidadUpl = cita.idUnidad;
-            $('#evidencia').appendTo('body').modal('show');
+    $scope.formatoRecepcion =function(cita){
+      $scope.citaParam = cita;
+      
+      trabajoRepository.getVerificaPresupuesto(cita.numEconomico).then(function(result){
+          if (result.data.length > 0){
+              if(result.data[0].result == 1){
+                $scope.formatoRecepcion2(true);
+              }else{
+                  modal_presupuesto($scope, $modal, $scope.formatoRecepcion2, '');
+              }
+          }
 
-        }else{
-            localStorageService.set('cita', cita);
-            location.href = '/comprobanteRecepcion';  
+      }, function(error){
+
+      });
+
+    }
+    //Modal Adjuntar Formato
+    $scope.formatoRecepcion2 = function (continua) {
+        if (continua){
+            var cita = $scope.citaParam;
+
+            if (cita.idTipoCita == 4 ) {
+                $scope.idTrabajoUpl = cita.idTrabajo;
+                $scope.idCitaUpld = cita.idCita;
+                $scope.idUnidadUpl = cita.idUnidad;
+                $('#evidencia').appendTo('body').modal('show');
+
+            }else{
+                localStorageService.set('cita', cita);
+                location.href = '/comprobanteRecepcion';
+            }
         }
-        
+
     }
 
     //obtiene el tipo de cita
@@ -651,8 +671,8 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         trabajoRepository.getVerificaPresupuesto($scope.unidadInfo.numEconomico).then(function (resp) {
             if (resp.data[0].result == 1) {
                 $scope.updateCita2(true);
-            }else{           
-                $('.modal-dialog').css('width','1050px'); 
+            }else{
+                $('.modal-dialog').css('width','1050px');
                 modal_presupuesto($scope, $modal, $scope.updateCita2, '');
             }
         });
@@ -780,7 +800,7 @@ var getidCita = function (idCita) {
                 $scope.datosCita.trabajoCita = citaDato[0].trabajo;
                 $scope.datosCita.observacionCita = citaDato[0].observacion;
                 $scope.datosCita.selectedCliente = citaDato[0].idCliente;
-                
+
                 citaRepository.getCliente($scope.userData.idUsuario).then(function (cliente) {
                     if (cliente.data.length > 0) {
                         $scope.clientes = cliente.data;
@@ -788,7 +808,7 @@ var getidCita = function (idCita) {
                             if ($scope.clientes[i].idCliente == citaDato[0].idCliente ) {
                                 $scope.selectedCliente = $scope.clientes[i];
                             };
-                            
+
                         };
                     } else {
                         alertFactory.info("No se encontraron clientes");
@@ -796,7 +816,7 @@ var getidCita = function (idCita) {
                 }, function (error) {
                     alertFactory.error("Error al cargar clientes");
                 });
-                
+
 
                // $scope.datosCita.idCliente = citaDato[0].idCliente;
 
@@ -1079,8 +1099,8 @@ var getidCita = function (idCita) {
         trabajoRepository.getVerificaPresupuesto($scope.valorAprobacion.numEconomico).then(function (resp) {
             if (resp.data[0].result == 1) {
                 $scope.enviaAprobacion2(true);
-            }else{           
-                $('.modal-dialog').css('width','1050px'); 
+            }else{
+                $('.modal-dialog').css('width','1050px');
                 modal_presupuesto($scope, $modal, $scope.enviaAprobacion2, '');
             }
         });
@@ -1096,7 +1116,7 @@ var getidCita = function (idCita) {
         $scope.margen = ((cita.precioOrden -cita.montoOrden)*100)/ cita.precioOrden;
        // var uitilidad = 100;
         var UtilidadNeta = 0;
-        $scope.idTrabajo=cita.idTrabajo;   
+        $scope.idTrabajo=cita.idTrabajo;
         // var UtilidadNeta = (precioOrden * 0.05)+1;
         if (cita.idEstatus == 15) {
             var existePrecotizacion = $scope.preCotizaciones.some(checkExistsPrecotizacion);
@@ -1110,11 +1130,11 @@ var getidCita = function (idCita) {
                       //  UtilidadNeta = 120;
                             //verifica si la unidad ya llegó al taller
                              ordenServicioRepository.getEstatusUtilidad(cita.idTrabajo, 1).then(function (estatusUtilidad) {
-                               
+
                                 if (estatusUtilidad.data.length > 0) {
 
                                     if (estatusUtilidad.data[0].estatus == 1) {
-                                        
+
                                           modal_tiket($scope, $modal, estatusUtilidad.data[0].idAprobacionUtilidad, 'Cita', $scope.aprobacionCita, '');
 
                                     } else {
@@ -1122,25 +1142,25 @@ var getidCita = function (idCita) {
                                     }
                                 }else{
 
-                                     if (UtilidadNeta >uitilidad) {    
-                                        // if (validaUtilidad) {    
-                                     
+                                     if (UtilidadNeta >uitilidad) {
+                                        // if (validaUtilidad) {
+
                                         //Detalle de la cotiazacion
-                                         $('.modal-dialog').css('width','1050px'); 
+                                         $('.modal-dialog').css('width','1050px');
                                          modal_detalle_cotizacion($scope, $modal, $scope.idTrabajo, 'Cita', $scope.margen , $scope.saveUtilidad, '');
 
                                     }else{
-                                        $scope.aprobacionCita(); 
+                                        $scope.aprobacionCita();
                                     }
-                                } 
-                                    
+                                }
+
                              }, function (error) {
                                 alertFactory.error("Error al cargar la orden");
-                            });    
+                            });
                     }
                 }, function (error) {
                     alertFactory.error("Error en la consulta");
-                }); 
+                });
 
             } else {
                 alertFactory.info("Falta asignar la cotización");
@@ -1148,15 +1168,15 @@ var getidCita = function (idCita) {
        } else {
             alertFactory.info("No se podrán enviar las cotizaciones a Aprobación, la unidad aún no llega al taller");
         }
-    }    
-            
+    }
+
     }
 
 
     $scope.aprobacionCita = function(){
-      
+
         citaRepository.enviaAprobacion($scope.cita.idCita).then(function (result) {
-                
+
             if (result.data[0].respuesta != 0) {
                alertFactory.success('Cotizaciones enviadas a aprobación');
                 location.href = '/cotizacionconsulta';
@@ -1171,7 +1191,7 @@ var getidCita = function (idCita) {
     //UTILIDAD
     $scope.saveUtilidad = function (){
         // $('#cotizacionDetalle').modal('hide');
-         $('.modal-dialog').css('width','600px'); 
+         $('.modal-dialog').css('width','600px');
         ordenServicioRepository.putAprobacionUtilidad($scope.idTrabajo, $scope.userData.idUsuario, 1, $scope.margen).then(function (aprobacionUtilidad) {
             if (aprobacionUtilidad.data[0].id > 0) {
                //CORREO
@@ -1191,7 +1211,7 @@ var getidCita = function (idCita) {
                             closeOnCancel: true
                         });
                        // swal("La orden se envió  a aprobación por margen de utilidad de bajo a lo esperado.");
-                       
+
                     }
                 }, function (error) {
                     alertFactory.error("Error al enviar mail");
