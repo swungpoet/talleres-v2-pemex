@@ -19,9 +19,11 @@
            <br><br>
             <div class="form-group row">
                 <label class="col-sm-3 control-label myModalTag">Contraseña de Administrador</label>
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                     <div class="m-b">
-                        <input id="inputValue" type="password" placeholder="Ingrese la contraseña de Administrador" class="form-control" ng-model="valueAdmin" >
+                        <input type="password" name="password" placeholder="Ingrese la contraseña de Administrador" ng-model="valueAdmin" id="myPassword" size="30" class="form-control"/>
+                        <i class="fa fa-eye" aria-hidden="true" ng-mouseover="mouseoverPass();" ng-mouseleave="mouseoutPass();"></i>
+                        <!-- <input id="inputValue" type="password" placeholder="Ingrese la contraseña de Administrador" class="form-control" ng-model="valueAdmin" > -->
                        <!--  <input type="text" class="form-control" ng-model="valueAdmin"> -->
                     </div>
                 </div>

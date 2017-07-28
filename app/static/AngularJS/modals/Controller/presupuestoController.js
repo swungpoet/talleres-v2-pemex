@@ -18,5 +18,15 @@ registrationModule.controller('presupuestoController', function ($scope, $modalI
 			alertFactory.info("El valor introducido no corresponde, porfavor intentelo nuevamente!!");
 		}
 	}
+	
+	$scope.mouseoverPass = function(obj){
+	  var obj = document.getElementById('myPassword');
+	  obj.type = "text";
+	}
+
+	$scope.mouseoutPass = function(obj){
+	  var obj = document.getElementById('myPassword');
+	  obj.type = "password";
+	}
 
 });
