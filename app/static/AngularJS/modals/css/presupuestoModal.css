@@ -39,9 +39,11 @@
 .myModalBtn{
   background: #da6969;
   border-color: #da6969;
+  color: white;
 }
 
-.myModalBtn:hover{
-  background: #f77e7e;
-  border-color: #f77e7e;
+.myModalBtn:hover, .myModalBtn:active, .myModalBtn:active:hover, .myModalBtn:focus, .myModalBtn:active:focus{
+  background: #f77e7e !important;
+  border-color: #f77e7e !important;
+  color: white;
 }
