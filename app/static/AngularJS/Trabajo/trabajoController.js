@@ -170,7 +170,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         });
     }
 
-    $scope.openFinishingTrabajoModal = function (idTrabajo, numEco){
+    $scope.openFinishingTrabajoModal2 = function (idTrabajo, numEco){
       $scope.paramTrabajo = idTrabajo;
       trabajoRepository.getVerificaPresupuesto(numEco).then(function(result){
           if (result.data.length > 0){
@@ -187,10 +187,10 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     }
 
     //abre el modal para la finalización del trabajo
-    $scope.openFinishingTrabajoModal2 = function (continua) {
-        if (continua){
-            var idTrabajo = $scope.paramTrabajo;
-            $scope.idTrabajo = idTrabajo;
+    $scope.openFinishingTrabajoModal = function (idTrabajo, numEco) {
+        // if (continua){
+        //     var idTrabajo = $scope.paramTrabajo;
+        //     $scope.idTrabajo = idTrabajo;
 
             trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
                 if (resp.data[0].estatus > 0) {
@@ -229,7 +229,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
             }, function (error) {
                 alertFactory.error("Error al cargar la orden");
             });
-        }
+        // }
     }
 
     $scope.trabajoTer = function () {
@@ -279,7 +279,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
 
     });
 
-    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo){
+    $scope.adjuntar2 = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo){
         $scope.objOrdenParametro = objOrden;
         $scope.idNombreEspecialParametro = idNombreEspecial;
         $scope.ejecutaMetodoParametro = ejecutaMetodo;
@@ -299,12 +299,12 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
         });
     }
     //muestra el modal para la carga de archivos
-    $scope.adjuntar2 = function (continua) {
-        if (continua){
-            var objOrden = $scope.objOrdenParametro;
-            var idNombreEspecial = $scope.idNombreEspecialParametro;
-            var ejecutaMetodo = $scope.ejecutaMetodoParametro;
-            var anticipo = $scope.anticipoParametro;
+    $scope.adjuntar = function (objOrden, idNombreEspecial, ejecutaMetodo, anticipo) {
+        // if (continua){
+        //     var objOrden = $scope.objOrdenParametro;
+        //     var idNombreEspecial = $scope.idNombreEspecialParametro;
+        //     var ejecutaMetodo = $scope.ejecutaMetodoParametro;
+        //     var anticipo = $scope.anticipoParametro;
 
             $scope.idTrabajo = objOrden.idTrabajo;
             //LQMA add 19092016
@@ -328,7 +328,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
                 $scope.textoBoton = 'Cargar';
             }
             $('#modalCargaArchivos').appendTo('body').modal('show');
-        }
+        // }
     }
 
     //cambia el trabajo a estatus a facturado
