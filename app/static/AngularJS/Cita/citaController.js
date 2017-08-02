@@ -211,7 +211,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         inicializaListas();
     }
 
-    $scope.addCita = function () {
+    $scope.addCita2 = function () {
         trabajoRepository.getVerificaPresupuesto($scope.unidadInfo.numEconomico).then(function (resp) {
             if (resp.data[0].result == 1) {
                 $scope.addCita2(true);
@@ -222,8 +222,8 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
         });
     }
     //inserta una nueva cita
-    $scope.addCita2 = function(continua){
-        if(continua){
+    $scope.addCita = function(){
+        //if(continua){
             if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") &&
                 ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && ($scope.labelItems > 0) &&
                 ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "") && ($scope.selectedCliente != "") && ($scope.selectedCliente != undefined)) {
@@ -327,7 +327,7 @@ registrationModule.controller('citaController', function ($scope, $route, $modal
             } else {
                 alertFactory.info("Llene todos los campos");
             }
-        }
+        //}
     }
 
     //combina la fecha y hora en una cadena
@@ -608,9 +608,8 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         });
     }
 
-    $scope.formatoRecepcion =function(cita){
-      $scope.citaParam = cita;
-      
+    $scope.formatoRecepcion2 =function(cita){
+      $scope.citaParam = cita;   
       trabajoRepository.getVerificaPresupuesto(cita.numEconomico).then(function(result){
           if (result.data.length > 0){
               if(result.data[0].result == 1){
@@ -619,17 +618,13 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
                   modal_presupuesto($scope, $modal, $scope.formatoRecepcion2, '');
               }
           }
-
       }, function(error){
-
       });
-
     }
     //Modal Adjuntar Formato
-    $scope.formatoRecepcion2 = function (continua) {
-        if (continua){
-            var cita = $scope.citaParam;
-
+    $scope.formatoRecepcion = function (cita) {
+        //if (continua){
+            //var cita = $scope.citaParam;
             if (cita.idTipoCita == 4 ) {
                 $scope.idTrabajoUpl = cita.idTrabajo;
                 $scope.idCitaUpld = cita.idCita;
@@ -640,8 +635,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
                 localStorageService.set('cita', cita);
                 location.href = '/comprobanteRecepcion';
             }
-        }
-
+        //}
     }
 
     //obtiene el tipo de cita
@@ -667,7 +661,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
         location.href = "nuevacita"
     }
 
-    $scope.updateCita = function () {
+    $scope.updateCita2 = function () {
         trabajoRepository.getVerificaPresupuesto($scope.unidadInfo.numEconomico).then(function (resp) {
             if (resp.data[0].result == 1) {
                 $scope.updateCita2(true);
@@ -679,8 +673,8 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
     }
 
     //realiza la actualización de partidas de la cita
-    $scope.updateCita2 = function (continua) {
-        if(continua){
+    $scope.updateCita = function () {
+        //if(continua){
             if (($scope.datosCita.fechaCita != undefined && $scope.datosCita.fechaCita != "") && ($scope.datosCita.horaCita != undefined && $scope.datosCita.horaCita != "") &&
                 ($scope.datosCita.trabajoCita != undefined && $scope.datosCita.trabajoCita != "") && ($scope.labelItems > 0) &&
                 ($scope.procesAutotanque != "") && ($scope.idEstadoAutotanque != "")) {
@@ -772,7 +766,7 @@ $scope.nuevaCotizacion = function (cita, preCotizacion, nvaCotizacion) {
             } else {
                 alertFactory.info("Llene todos los campos");
             }
-        }
+        //}
     }
 
 var getidCita = function (idCita) {
@@ -1093,7 +1087,7 @@ var getidCita = function (idCita) {
         });
     }
 
-    $scope.enviaAprobacion = function (cita) {
+    $scope.enviaAprobacion2 = function (cita) {
 
         $scope.valorAprobacion = cita;
         trabajoRepository.getVerificaPresupuesto($scope.valorAprobacion.numEconomico).then(function (resp) {
@@ -1107,9 +1101,9 @@ var getidCita = function (idCita) {
     }
 
     //valida el envío de cotizaciones a aprobación
-    $scope.enviaAprobacion2 = function (continua) {
-    if(continua){
-       var cita = $scope.valorAprobacion;
+    $scope.enviaAprobacion = function (cita) {
+    //if(continua){
+       //var cita = $scope.valorAprobacion;
          var validaUtilidad= false;
         $scope.cita=cita;
         var uitilidad = (cita.precioOrden - cita.montoOrden)/cita.precioOrden ;
@@ -1168,7 +1162,7 @@ var getidCita = function (idCita) {
        } else {
             alertFactory.info("No se podrán enviar las cotizaciones a Aprobación, la unidad aún no llega al taller");
         }
-    }
+    //}
 
     }
 
