@@ -190,7 +190,7 @@ registrationModule.controller('trabajoController', function ($scope, $modal, $ro
     $scope.openFinishingTrabajoModal = function (idTrabajo, numEco) {
         // if (continua){
         //     var idTrabajo = $scope.paramTrabajo;
-        //     $scope.idTrabajo = idTrabajo;
+             $scope.idTrabajo = idTrabajo;
 
             trabajoRepository.getEstatusCotizacion(idTrabajo).then(function (resp) {
                 if (resp.data[0].estatus > 0) {
