@@ -737,6 +737,11 @@ Trabajo.prototype.get_verificaPresupuesto = function(req, res, next){
         name: 'numeroEconomico',
         value: req.query.numeroEconomico, 
         type: self.model.types.STRING
+    },
+    {
+        name: 'idTrabajo',
+        value: req.query.idTrabajo, 
+        type: self.model.types.INT
     }];
     
     this.model.query('SEL_SALDO_OSUR_SP', params, function(error, result) {
