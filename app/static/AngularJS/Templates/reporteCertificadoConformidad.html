@@ -55,7 +55,6 @@
                                         <th>TAR</th>
                                         <th>Taller</th>
                                         <th>Folio de Certificado</th>
-                                        <th ng-show="userData.idTipoUsuario != 4" class="ocultaMontoOrdenCliente">Costo de la Orden sin IVA</th> 
                                         <th>Precio de la Orden sin IVA</th>
                                         <th>Fecha de Emisión</th>
                                         <th>OSUR</th>
@@ -74,7 +73,6 @@
                                         <td>{{ordenverificada.TAR}}</td>
                                         <td>{{ordenverificada.razonSocial}}</td>
                                         <td>{{ordenverificada.folioCertificado}}</td>
-                                        <td ng-show="userData.idTipoUsuario != 4" class="ocultaMontoOrdenCliente">{{ordenverificada.montoOrden | currency: "$"}}</td> 
                                         <td>{{ordenverificada.precioOrden | currency: "$"}}</td>
                                         <td>{{ordenverificada.fechaGeneracion | date:'dd-MM-yyyy HH:mm'}}</td>
                                         <td>{{ordenverificada.numeroOsur}}</td>
