@@ -1,0 +1,23 @@
+#container {
+  width: 600px;
+  border: 1px solid rgba(153, 153, 153, 0.24);
+  height: 300px;
+  margin-top: 16%;
+  margin-left: calc(50% - 310px);
+  box-shadow: 1px 1px 3px #999;
+  border-radius: 4px;
+  position: relative; }
+
+#logo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40%;
+  height: 300px;
+  margin-top: 72px; }
+
+#texto{
+  margin-left: 50%;
+  margin-top: 21%;
+  font-size: large;
+}

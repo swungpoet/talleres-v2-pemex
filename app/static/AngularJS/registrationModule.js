@@ -2,8 +2,8 @@
 // -- Author:      Vladimir Juárez
 // -- Create date: 18/03/2016
 // -- Description: Is the container of the application
-// -- Modificó: 
-// -- Fecha: 
+// -- Modificó:
+// -- Fecha:
 // -- =============================================
 var registrationModule = angular.module('registrationModule', ['ngRoute', 'LocalStorageModule',
   'ui.bootstrap', 'angularUtils.directives.dirPagination', 'cgBusy', 'frapontillo.bootstrap-switch', 'thatisuday.dropzone', 'nsPopover'])
@@ -11,199 +11,199 @@ var registrationModule = angular.module('registrationModule', ['ngRoute', 'Local
 
     /*change the routes*/
     $routeProvider.when('/', {
-      templateUrl: 'AngularJS/Templates/login.html',
+      templateUrl: 'AngularJS/Templates/home.html',
       controller: 'loginController'
     })
 
-    $routeProvider.when('/cita', {
-      templateUrl: 'AngularJS/Templates/cita.html',
-      controller: 'citaController'
-    })
-
-    $routeProvider.when('/citatrabajo', {
-      templateUrl: 'AngularJS/Templates/citatrabajo.html',
-      controller: 'citaController'
-    })
-
-    $routeProvider.when('/nuevacita', {
-      templateUrl: 'AngularJS/Templates/nuevaCita.html',
-      controller: 'citaController'
-    })
-
-    $routeProvider.when('/citaservicio', {
-      templateUrl: 'AngularJS/Templates/citaServicio.html',
-      controller: 'servicioController'
-    })
-
-    $routeProvider.when('/tallercita', {
-      templateUrl: 'AngularJS/Templates/tallerCita.html',
-      controller: 'citaController'
-    })
-
-    $routeProvider.when('/cotizacionnueva', {
-      templateUrl: 'AngularJS/Templates/cotizacionNueva.html',
-      controller: 'cotizacionController'
-    })
-
-    $routeProvider.when('/cotizacionconsulta', {
-      templateUrl: 'AngularJS/Templates/cotizacionConsulta.html',
-      controller: 'cotizacionConsultaController'
-    })
-
-    $routeProvider.when('/cotizacionautorizacion', {
-      templateUrl: 'AngularJS/Templates/cotizacionAutorizacion.html',
-      controller: 'cotizacionAutorizacionController'
-    })
-
-    $routeProvider.when('/trabajo', {
-      templateUrl: 'AngularJS/Templates/trabajo.html',
-      controller: 'trabajoController'
-    })
-
-    $routeProvider.when('/lineatiempo', {
-      templateUrl: 'AngularJS/Templates/lineaTiempo.html',
-      controller: 'citaController'
-    })
-
-    $routeProvider.when('/ordenservicio', {
-      templateUrl: 'AngularJS/Templates/ordenservicio.html',
-      controller: 'ordenServicioController'
-    })
-
-    $routeProvider.when('/cotizacionevidencias', {
-      templateUrl: 'AngularJS/Templates/cotizacionEvidencias.html',
-      controller: 'cotizacionEvidenciasController'
-    })
-
-    $routeProvider.when('/ordenservicioevidencias', {
-      templateUrl: 'AngularJS/Templates/ordenservicioevidencias.html',
-      controller: 'ordenServicioEvidenciaController'
-    })
-
-    $routeProvider.when('/ordenesporcobrar', {
-      templateUrl: 'AngularJS/Templates/ordenesporcobrar.html',
-      controller: 'ordenPorCobrarController'
-    })
-
-    $routeProvider.when('/reporte', {
-      templateUrl: 'AngularJS/Templates/reporte.html',
-      controller: 'reporteController'
-    })
-
-    $routeProvider.when('/osur', {
-      templateUrl: 'AngularJS/Templates/osur.html',
-      controller: 'osurController'
-    })
-
-    $routeProvider.when('/administracionordenes', {
-      templateUrl: 'AngularJS/Templates/administracionOrdenes.html',
-      controller: 'administracionOrdenController'
-    })
-
-    $routeProvider.when('/administraciontaller', {
-      templateUrl: 'AngularJS/Templates/administracionTaller.html',
-      controller: 'tallerController'
-    })
-
-    $routeProvider.when('/acciontaller', {
-      templateUrl: 'AngularJS/Templates/accionTaller.html',
-      controller: 'tallerController'
-    })
-
-    $routeProvider.when('/ordenanticipo', {
-      templateUrl: 'AngularJS/Templates/ordenAnticipo.html',
-      controller: 'ordenAnticipoController'
-    })
-
-    $routeProvider.when('/aprobacionutilidad', {
-      templateUrl: 'AngularJS/Templates/aprobacionutilidad.html',
-      controller: 'aprobacionutilidadController'
-    })
-
-    $routeProvider.when('/Tutorial', {
-      templateUrl: 'AngularJS/Templates/tutorial.html',
-      controller: 'tutorialController'
-    })
-
-    $routeProvider.when('/aprobacionProvision', {
-      templateUrl: 'AngularJS/Templates/aprobacionProvision.html',
-      controller: 'aprobacionProvisionController'
-    })
-
-    $routeProvider.when('/dashboardgeneral', {
-      templateUrl: 'AngularJS/Templates/dashBoardGeneral.html',
-      controller: 'dashBoardController'
-    })
-
-    $routeProvider.when('/reportecita', {
-      templateUrl: 'AngularJS/Templates/reporteCita.html',
-      controller: 'reporteCitaController'
-    })
-
-    $routeProvider.when('/reporteorden', {
-      templateUrl: 'AngularJS/Templates/reporteOrden.html',
-      controller: 'reporteOrdenController'
-    })
-
-    $routeProvider.when('/reportecotizacion', {
-      templateUrl: 'AngularJS/Templates/reporteCotizacion.html',
-      controller: 'reporteCotizacionController'
-    })
-
-    $routeProvider.when('/reporteporcobrar', {
-      templateUrl: 'AngularJS/Templates/reportePorCobrar.html',
-      controller: 'reportePorCobrarController'
-    })
-
-    $routeProvider.when('/reporteunidad', {
-      templateUrl: 'AngularJS/Templates/reporteUnidad.html',
-      controller: 'reporteUnidadController'
-    })
-
-    $routeProvider.when('/reporteutilidad', {
-      templateUrl: 'AngularJS/Templates/reporteUtilidad.html',
-      controller: 'reporteUtilidadController'
-    })
-
-    $routeProvider.when('/reporteCertificadoConformidad', {
-      templateUrl: 'AngularJS/Templates/reporteCertificadoConformidad.html',
-      controller: 'reporteCertificadoConformidadController'
-    })
-
-    $routeProvider.when('/comprobanteRecepcion', {
-      templateUrl: 'AngularJS/Templates/comprobanteRecepcion.html',
-      controller: 'comprobanteRecepcionController'
-    })
-
-    $routeProvider.when('/usuarioTar', {
-      templateUrl: 'AngularJS/Templates/usuarioTar.html',
-      controller: 'usuariotarController'
-    })
-
-    $routeProvider.when('/reporteReclamacion', {
-      templateUrl: 'AngularJS/Templates/reporteReclamacion.html',
-      controller: 'reporteReclamacionController'
-    })
-
-    $routeProvider.when('/resumenReclamacion', {
-      templateUrl: 'AngularJS/Templates/resumenReclamacion.html',
-      controller: 'resumenReclamacionController'
-    })
-
-    $routeProvider.when('/historialReclamacion', {
-      templateUrl: 'AngularJS/Templates/historialReclamacion.html',
-      controller: 'historialReclamacionController'
-    })
-
-    $routeProvider.when('/evidenciaReclamacion', {
-      templateUrl: 'AngularJS/Templates/evidenciaReclamacion.html',
-      controller: 'historialReclamacionController'
-    })
-
-    $routeProvider.when('/precioventa', {
-      templateUrl: 'AngularJS/Templates/precioventa.html',
-      controller: 'precioventaController'
-    })
+    // $routeProvider.when('/cita', {
+    //   templateUrl: 'AngularJS/Templates/cita.html',
+    //   controller: 'citaController'
+    // })
+    //
+    // $routeProvider.when('/citatrabajo', {
+    //   templateUrl: 'AngularJS/Templates/citatrabajo.html',
+    //   controller: 'citaController'
+    // })
+    //
+    // $routeProvider.when('/nuevacita', {
+    //   templateUrl: 'AngularJS/Templates/nuevaCita.html',
+    //   controller: 'citaController'
+    // })
+    //
+    // $routeProvider.when('/citaservicio', {
+    //   templateUrl: 'AngularJS/Templates/citaServicio.html',
+    //   controller: 'servicioController'
+    // })
+    //
+    // $routeProvider.when('/tallercita', {
+    //   templateUrl: 'AngularJS/Templates/tallerCita.html',
+    //   controller: 'citaController'
+    // })
+    //
+    // $routeProvider.when('/cotizacionnueva', {
+    //   templateUrl: 'AngularJS/Templates/cotizacionNueva.html',
+    //   controller: 'cotizacionController'
+    // })
+    //
+    // $routeProvider.when('/cotizacionconsulta', {
+    //   templateUrl: 'AngularJS/Templates/cotizacionConsulta.html',
+    //   controller: 'cotizacionConsultaController'
+    // })
+    //
+    // $routeProvider.when('/cotizacionautorizacion', {
+    //   templateUrl: 'AngularJS/Templates/cotizacionAutorizacion.html',
+    //   controller: 'cotizacionAutorizacionController'
+    // })
+    //
+    // $routeProvider.when('/trabajo', {
+    //   templateUrl: 'AngularJS/Templates/trabajo.html',
+    //   controller: 'trabajoController'
+    // })
+    //
+    // $routeProvider.when('/lineatiempo', {
+    //   templateUrl: 'AngularJS/Templates/lineaTiempo.html',
+    //   controller: 'citaController'
+    // })
+    //
+    // $routeProvider.when('/ordenservicio', {
+    //   templateUrl: 'AngularJS/Templates/ordenservicio.html',
+    //   controller: 'ordenServicioController'
+    // })
+    //
+    // $routeProvider.when('/cotizacionevidencias', {
+    //   templateUrl: 'AngularJS/Templates/cotizacionEvidencias.html',
+    //   controller: 'cotizacionEvidenciasController'
+    // })
+    //
+    // $routeProvider.when('/ordenservicioevidencias', {
+    //   templateUrl: 'AngularJS/Templates/ordenservicioevidencias.html',
+    //   controller: 'ordenServicioEvidenciaController'
+    // })
+    //
+    // $routeProvider.when('/ordenesporcobrar', {
+    //   templateUrl: 'AngularJS/Templates/ordenesporcobrar.html',
+    //   controller: 'ordenPorCobrarController'
+    // })
+    //
+    // $routeProvider.when('/reporte', {
+    //   templateUrl: 'AngularJS/Templates/reporte.html',
+    //   controller: 'reporteController'
+    // })
+    //
+    // $routeProvider.when('/osur', {
+    //   templateUrl: 'AngularJS/Templates/osur.html',
+    //   controller: 'osurController'
+    // })
+    //
+    // $routeProvider.when('/administracionordenes', {
+    //   templateUrl: 'AngularJS/Templates/administracionOrdenes.html',
+    //   controller: 'administracionOrdenController'
+    // })
+    //
+    // $routeProvider.when('/administraciontaller', {
+    //   templateUrl: 'AngularJS/Templates/administracionTaller.html',
+    //   controller: 'tallerController'
+    // })
+    //
+    // $routeProvider.when('/acciontaller', {
+    //   templateUrl: 'AngularJS/Templates/accionTaller.html',
+    //   controller: 'tallerController'
+    // })
+    //
+    // $routeProvider.when('/ordenanticipo', {
+    //   templateUrl: 'AngularJS/Templates/ordenAnticipo.html',
+    //   controller: 'ordenAnticipoController'
+    // })
+    //
+    // $routeProvider.when('/aprobacionutilidad', {
+    //   templateUrl: 'AngularJS/Templates/aprobacionutilidad.html',
+    //   controller: 'aprobacionutilidadController'
+    // })
+    //
+    // $routeProvider.when('/Tutorial', {
+    //   templateUrl: 'AngularJS/Templates/tutorial.html',
+    //   controller: 'tutorialController'
+    // })
+    //
+    // $routeProvider.when('/aprobacionProvision', {
+    //   templateUrl: 'AngularJS/Templates/aprobacionProvision.html',
+    //   controller: 'aprobacionProvisionController'
+    // })
+    //
+    // $routeProvider.when('/dashboardgeneral', {
+    //   templateUrl: 'AngularJS/Templates/dashBoardGeneral.html',
+    //   controller: 'dashBoardController'
+    // })
+    //
+    // $routeProvider.when('/reportecita', {
+    //   templateUrl: 'AngularJS/Templates/reporteCita.html',
+    //   controller: 'reporteCitaController'
+    // })
+    //
+    // $routeProvider.when('/reporteorden', {
+    //   templateUrl: 'AngularJS/Templates/reporteOrden.html',
+    //   controller: 'reporteOrdenController'
+    // })
+    //
+    // $routeProvider.when('/reportecotizacion', {
+    //   templateUrl: 'AngularJS/Templates/reporteCotizacion.html',
+    //   controller: 'reporteCotizacionController'
+    // })
+    //
+    // $routeProvider.when('/reporteporcobrar', {
+    //   templateUrl: 'AngularJS/Templates/reportePorCobrar.html',
+    //   controller: 'reportePorCobrarController'
+    // })
+    //
+    // $routeProvider.when('/reporteunidad', {
+    //   templateUrl: 'AngularJS/Templates/reporteUnidad.html',
+    //   controller: 'reporteUnidadController'
+    // })
+    //
+    // $routeProvider.when('/reporteutilidad', {
+    //   templateUrl: 'AngularJS/Templates/reporteUtilidad.html',
+    //   controller: 'reporteUtilidadController'
+    // })
+    //
+    // $routeProvider.when('/reporteCertificadoConformidad', {
+    //   templateUrl: 'AngularJS/Templates/reporteCertificadoConformidad.html',
+    //   controller: 'reporteCertificadoConformidadController'
+    // })
+    //
+    // $routeProvider.when('/comprobanteRecepcion', {
+    //   templateUrl: 'AngularJS/Templates/comprobanteRecepcion.html',
+    //   controller: 'comprobanteRecepcionController'
+    // })
+    //
+    // $routeProvider.when('/usuarioTar', {
+    //   templateUrl: 'AngularJS/Templates/usuarioTar.html',
+    //   controller: 'usuariotarController'
+    // })
+    //
+    // $routeProvider.when('/reporteReclamacion', {
+    //   templateUrl: 'AngularJS/Templates/reporteReclamacion.html',
+    //   controller: 'reporteReclamacionController'
+    // })
+    //
+    // $routeProvider.when('/resumenReclamacion', {
+    //   templateUrl: 'AngularJS/Templates/resumenReclamacion.html',
+    //   controller: 'resumenReclamacionController'
+    // })
+    //
+    // $routeProvider.when('/historialReclamacion', {
+    //   templateUrl: 'AngularJS/Templates/historialReclamacion.html',
+    //   controller: 'historialReclamacionController'
+    // })
+    //
+    // $routeProvider.when('/evidenciaReclamacion', {
+    //   templateUrl: 'AngularJS/Templates/evidenciaReclamacion.html',
+    //   controller: 'historialReclamacionController'
+    // })
+    //
+    // $routeProvider.when('/precioventa', {
+    //   templateUrl: 'AngularJS/Templates/precioventa.html',
+    //   controller: 'precioventaController'
+    // })
 
     $locationProvider.html5Mode({
       enabled: true,
@@ -218,9 +218,9 @@ registrationModule.directive('resize', function ($window) {
       element.css('height', (w.height() - 20) + 'px')
     }
     w.bind('resize', function () {
-      changeHeight() // when window size gets changed          	 
+      changeHeight() // when window size gets changed
     })
-    changeHeight() // when page loads          
+    changeHeight() // when page loads
   }
 })
 
